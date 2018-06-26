@@ -75,7 +75,7 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
     $form['cwd_events_format'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Format'),
-      '#description' => $this->t('Choices are: standard (default), compact (omit thumbnail, type and end time), archive (past events in reverse order)'),
+      '#description' => $this->t('Choices are: standard (default), compact (omit thumbnail, type and end time), archive (past events in reverse order), calendar (date on left)'),
       '#default_value' => isset($config['cwd_events_format']) ? $config['cwd_events_format'] : 'standard',
     ];
 
