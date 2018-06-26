@@ -1,0 +1,25 @@
+{
+    "name": "cubear/cwd_events",
+    "description": "A Drupal 8 module to display Localist events in a block",
+    "type": "drupal-module",
+    "homepage": "https://it.cornell.edu/custom-web",
+    "authors": [
+        {
+            "name": "Rich Marisa (richmarisa)",
+            "email": "rjm2@cornell.edu",
+            "homepage": "https://wildgoosechase.net",
+            "role": "Author"
+        },
+        {
+            "name": "Anthony Adinolfi",
+            "email": "ama39@cornell.edu",
+            "role": "Designer"
+        }
+    ],
+    "support": {
+    },
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": {
+    }
+}
