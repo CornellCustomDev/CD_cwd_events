@@ -1,0 +1,10 @@
+cwdeventslib:
+  version: 1.x
+  header: true
+  css:
+    theme:
+      css/cwd_events.css: {}
+  js:
+    js/cwd_events.js: {preprocess: false}
+  dependencies:
+    - core/jquery
