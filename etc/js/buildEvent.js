@@ -15,8 +15,10 @@ export class BuildEvent{
         this.day_array_abb = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
         this.event_time;
         this.event_date_compact;
+        this.event_date;
         this.displayDate;
         this.abbrDay;
+        this.fullDay;
         this.abbrMonth;
         this.month;
         this.day;
@@ -59,6 +61,7 @@ export class BuildEvent{
         var event_date = month+'/'+day+'/'+year; // convert date format
         //event_date_compact = month+'/'+day; // for compact mode (numbers only, e.g., "4/13")
         this.event_date_compact = this.month_array_abb[month-1]+' '+day; // for compact mode (month text, e.g., "Apr 13")
+        this.event_date = this.month_array[month-1]+' '+day;
         this.displayDate = this.setDisplayDate(event_date, this.event_date_compact);
         if (event.event_instances[0].event_instance.all_day) {
             this.event_time = 'all day';
@@ -66,7 +69,8 @@ export class BuildEvent{
         this.abbrDay = event_day;
         this.abbrMonth = this.month_array_abb[month-1];
         this.month=this.month_array[month-1];
-        this.day = this.day_array[event_fulldate.getDay()];
+        this.fullDay = this.day_array[event_fulldate.getDay()];
+        this.day = day;
         this.monthHeader = this.month+' '+year;
     };
 

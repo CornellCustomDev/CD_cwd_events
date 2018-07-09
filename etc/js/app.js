@@ -3,7 +3,40 @@ import { BuildEvent } from "./buildEvent";
 import {standardInner, standardWrapper} from "./templates/standard"
 import { compactInner, compactWrapper} from "./templates/compact";
 import { calendarInner, calendarWrapper} from "./templates/calendar";
+import { modernCompactInner, modernCompactWrapper} from "./templates/modernCompact";
+import { moderStandardInner, modernStandardWrapper} from "./templates/modernStandard";
 
+//expose the localList via run function
+module.exports = {
+    run: function (args) {
+        let LL = new LocalList(args);
+        /*
+         add custom templates here:
+         localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+         build the outer wrapper at a minimum this must contain innerHtml
+         localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+         */
+        LL.renderEvents();
+    }
+}
+
+/*LoacalList typical usage
+
+const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
+let localList = new LocalList( settings ).renderEvents();
+or with custom template 
+let localList = new LocalList()
+//define inner template list of events
+localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+//build the outer wrapper at a minimum this must contain innerHtml
+localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+localList.renderEvents();
+
+or with calendar
+
+const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
+let localList = new LocalList( settings ).renderEvents();
+*/
 class LocalList{
     // define the following arguments
     constructor({
@@ -88,7 +121,16 @@ class LocalList{
                 case 'calendar':
                     this.innerTemplate = calendarInner;
                     this.outerTemplate = calendarWrapper;
-                    break;                    
+                    break; 
+                case 'modern_compact':
+                    this.BE_args.pref_excerpt_length = 125;
+                    this.innerTemplate = modernCompactInner;
+                    this.outerTemplate = modernCompactWrapper;
+                    break;  
+                case 'modern_standard':
+                    this.innerTemplate = moderStandardInner;
+                    this.outerTemplate = modernStandardWrapper;
+                    break;                                                            
                 default:
                     //console.warn("Warning: no format was defined using fallback standard");
             }     
@@ -165,24 +207,3 @@ class LocalList{
         document.getElementById(this.target).innerHTML = html;
     }
 }
-
-//typical usage
-
-const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
-let localList = new LocalList( settings ).renderEvents();
-/*
-or with custom template 
-let localList = new LocalList()
-//define inner template list of events
-localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-//build the outer wrapper at a minimum this must contain innerHtml
-localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-localList.renderEvents();
-*/
-
-/*
-or with calendar
-
-const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
-let localList = new LocalList( settings ).renderEvents();
-*/

@@ -487,13 +487,15 @@ span.fa.fa-map-marker {
 .event-subscribe{
     float: right;
     font-size: 13px;
+    padding-bottom: 20px;
 }
 
 .event-subscribe > a{
     font-size: 20px;
     padding-right: 8px;
     color: #111;
-    text-decoration: none;
+	text-decoration: none;
+	display: inline-block !important;
 }
 
 .event-subscribe a:first-child{

@@ -11,7 +11,9 @@ etcBuild = Object.assign({}, config,{
     entry: './js/app.js',
     output: {
         path: path.resolve(__dirname, './build'),
-        filename: 'app.bundle.js'
+        filename: 'app.bundle.js',
+        libraryTarget: 'var',//expose localList
+        library: 'CWD_LocalList',       
     },
     module: {
         rules: [
@@ -35,7 +37,9 @@ drupalBuild = Object.assign({}, config,{
     entry: './js/app.js',
     output: {
         path: path.resolve(__dirname, '../js'),
-        filename: 'cwd_events.js'
+        filename: 'cwd_events.js',
+        libraryTarget: 'var',//expose LocalList
+        library: 'CWD_LocalList',          
     },
     module: {
         rules: [

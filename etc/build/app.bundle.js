@@ -1,3 +1,4 @@
+var CWD_LocalList =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -110,10 +111,45 @@ var _compact = __webpack_require__(/*! ./templates/compact */ "./js/templates/co
 
 var _calendar = __webpack_require__(/*! ./templates/calendar */ "./js/templates/calendar.js");
 
+var _modernCompact = __webpack_require__(/*! ./templates/modernCompact */ "./js/templates/modernCompact.js");
+
+var _modernStandard = __webpack_require__(/*! ./templates/modernStandard */ "./js/templates/modernStandard.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//expose the localList via run function
+module.exports = {
+    run: function run(args) {
+        var LL = new LocalList(args);
+        /*
+         add custom templates here:
+         localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+         build the outer wrapper at a minimum this must contain innerHtml
+         localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+         */
+        LL.renderEvents();
+    }
+
+    /*LoacalList typical usage
+    
+    const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
+    let localList = new LocalList( settings ).renderEvents();
+    or with custom template 
+    let localList = new LocalList()
+    //define inner template list of events
+    localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+    //build the outer wrapper at a minimum this must contain innerHtml
+    localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+    localList.renderEvents();
+    
+    or with calendar
+    
+    const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
+    let localList = new LocalList( settings ).renderEvents();
+    */
+};
 var LocalList = function () {
     // define the following arguments
     function LocalList(_ref) {
@@ -222,6 +258,15 @@ var LocalList = function () {
                         this.innerTemplate = _calendar.calendarInner;
                         this.outerTemplate = _calendar.calendarWrapper;
                         break;
+                    case 'modern_compact':
+                        this.BE_args.pref_excerpt_length = 125;
+                        this.innerTemplate = _modernCompact.modernCompactInner;
+                        this.outerTemplate = _modernCompact.modernCompactWrapper;
+                        break;
+                    case 'modern_standard':
+                        this.innerTemplate = _modernStandard.moderStandardInner;
+                        this.outerTemplate = _modernStandard.modernStandardWrapper;
+                        break;
                     default:
                     //console.warn("Warning: no format was defined using fallback standard");
                 }
@@ -310,27 +355,6 @@ var LocalList = function () {
     return LocalList;
 }();
 
-//typical usage
-
-var settings = { 'format': 'standard', 'entries': 20, 'heading': 'My Local List', 'addCal': true };
-var localList = new LocalList(settings).renderEvents();
-/*
-or with custom template 
-let localList = new LocalList()
-//define inner template list of events
-localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-//build the outer wrapper at a minimum this must contain innerHtml
-localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-localList.renderEvents();
-*/
-
-/*
-or with calendar
-
-const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
-let localList = new LocalList( settings ).renderEvents();
-*/
-
 /***/ }),
 
 /***/ "./js/buildEvent.js":
@@ -370,8 +394,10 @@ var BuildEvent = exports.BuildEvent = function () {
         this.day_array_abb = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         this.event_time;
         this.event_date_compact;
+        this.event_date;
         this.displayDate;
         this.abbrDay;
+        this.fullDay;
         this.abbrMonth;
         this.month;
         this.day;
@@ -416,6 +442,7 @@ var BuildEvent = exports.BuildEvent = function () {
             var event_date = month + '/' + day + '/' + year; // convert date format
             //event_date_compact = month+'/'+day; // for compact mode (numbers only, e.g., "4/13")
             this.event_date_compact = this.month_array_abb[month - 1] + ' ' + day; // for compact mode (month text, e.g., "Apr 13")
+            this.event_date = this.month_array[month - 1] + ' ' + day;
             this.displayDate = this.setDisplayDate(event_date, this.event_date_compact);
             if (event.event_instances[0].event_instance.all_day) {
                 this.event_time = 'all day';
@@ -423,7 +450,8 @@ var BuildEvent = exports.BuildEvent = function () {
             this.abbrDay = event_day;
             this.abbrMonth = this.month_array_abb[month - 1];
             this.month = this.month_array[month - 1];
-            this.day = this.day_array[event_fulldate.getDay()];
+            this.fullDay = this.day_array[event_fulldate.getDay()];
+            this.day = day;
             this.monthHeader = this.month + ' ' + year;
         }
     }, {
@@ -758,6 +786,67 @@ var compactInner = exports.compactInner = function compactInner(builtData) {
 //this has class compact only difference
 var compactWrapper = exports.compactWrapper = function compactWrapper(inner, args) {
     return '\n    <section title="' + args.title + '">\n        <h2>' + args.heading + '</h2>\n        <div id="main-body">  \n            <div class="events-listing no-thumbnails" id="events-listing compact">\n                ' + (0, _templateHelpers.eventFilters)(args.filters) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
+};
+
+/***/ }),
+
+/***/ "./js/templates/modernCompact.js":
+/*!***************************************!*\
+  !*** ./js/templates/modernCompact.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var modernCompactInner = exports.modernCompactInner = function modernCompactInner(builtData) {
+    return "<div class=\"card\">\n<div class=\"events\">\n    <a href=\"" + builtData.event.localist_url + "\" class=\"group-link-wrapper field-group-link\">\n        <time title=\"" + builtData.event_date + "\" datetime=\"" + builtData.displayDate + "\">\n            <month>" + builtData.abbrMonth + "</month>\n            <day>" + builtData.day + "</day>\n        </time>\n        <div class=\"field title\">\n            <h3>" + builtData.event.title + "</h3>\n        </div>\n        <div class=\"field meta\">\n            <p>" + builtData.event_time + ", " + builtData.event.location_name + "</p>\n        </div>\n        <div class=\"field field-name-summary summary\">\n            <p>" + builtData.description + "...</p>\n        </div>\n    </a>\n</div>\n</div>";
+};
+
+//this has class compact only difference
+var modernCompactWrapper = exports.modernCompactWrapper = function modernCompactWrapper(inner, args) {
+    return "\n    <div class=\"secondary\">\n        <h2 class=\"h1\">" + args.heading + "</h2>\n        <div class=\"cwd-component cwd-card-grid three-card singles compact no-thumbnails\"> \n            <div id=\"cwd-homeEvents-list\" class=\"compact no-thumbnails\">\n                <!--no filters -->\n                <div class=\"events-list\">\n                    " + inner + "\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </div><!--end of section -->";
+};
+
+/***/ }),
+
+/***/ "./js/templates/modernStandard.js":
+/*!****************************************!*\
+  !*** ./js/templates/modernStandard.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.modernStandardWrapper = exports.moderStandardInner = undefined;
+
+var _templateHelpers = __webpack_require__(/*! ./template-helpers */ "./js/templates/template-helpers.js");
+
+var moderStandardInner = exports.moderStandardInner = function moderStandardInner(builtData) {
+    return '<div class="card event-node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '" >\n                            <div class="events">\n                                <a href="' + builtData.event.localist_url + '" class="group-link-wrapper field-group-link">\n                                <time title="' + builtData.event_date + '" datetime="' + builtData.displayDate + '">\n                                    <month>' + builtData.abbrMonth + '</month>\n                                    <day>' + builtData.day + '</day>\n                                    </time>\n                                    <div class="field title">\n                                    <h3>' + builtData.event.title + '</h3>\n                                    </div>\n                                    <div class="field meta">\n                                        <p>' + builtData.event_time + ', ' + builtData.event.location_name + ' ' + tagStr(builtData.event.filters.event_types) + '</p>\n                                    </div>\n                                    <div class="field field-name-summary summary">\n                                        <p>' + builtData.description + '... read more</p> \n                                    </div>\n                                </a>\n                                ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calender)(builtData.event) : '') + '  \n                            </div>\n                        </div>';
+};
+
+var modernStandardWrapper = exports.modernStandardWrapper = function modernStandardWrapper(inner, args) {
+    return '\n    <section title="' + args.title + '">\n        <h2>' + args.heading + '</h2>\n        <div>  \n            <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails" id="events-listing">\n                ' + (0, _templateHelpers.eventFilters)(args.filters) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
+};
+
+var tagStr = function tagStr(event_types) {
+    var spanStr = '';
+    if (event_types) {
+        event_types.forEach(function (element) {
+            spanStr += '<span class="inline-events-type">' + element.name + '</span>';
+        });
+    }
+    return spanStr;
 };
 
 /***/ }),
