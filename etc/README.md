@@ -1,19 +1,20 @@
-transpiling localist ECMAScript 6 with webpack/babel
+# Transpiling localist ECMAScript 6 with webpack/babel
 
-http://ccoenraets.github.io/es6-tutorial-data/babel-webpack/
+babel info: http://ccoenraets.github.io/es6-tutorial-data/babel-webpack/
 
-#typical ussage
+typical ussage
 
-#clone starter pack
-git clone https://github.com/psw58/CD_cwd_events.git
+clone starter pack
+```git clone https://github.com/psw58/CD_cwd_events.git```
 
-cd etc
+move to etc directory
+```cd etc```
 
-#install babel
-npm install
+install babel
+```npm install```
 
-#start server
-npm start
+start server
+```npm start```
 
-# to build cwd_events.js run webpack
-npm run webpack
+to build cwd_events.js run webpack
+```npm run webpack```
