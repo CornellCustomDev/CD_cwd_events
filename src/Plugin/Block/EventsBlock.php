@@ -20,6 +20,8 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class EventsBlock extends BlockBase  implements BlockPluginInterface {
+  //list of supported format options
+  private $format_options = array('standard','compact','archive', 'calendar');
 
   /**
    * {@inheritdoc}
@@ -55,8 +57,8 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $form = parent::blockForm($form, $form_state);
-
     $config = $this->getConfiguration();
+    $format_options = $this->format_options;
 
     $form['cwd_events_depts'] = [
       '#type' => 'textfield',
@@ -72,10 +74,12 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
       '#default_value' => isset($config['cwd_events_entries']) ? $config['cwd_events_entries'] : 3,
     ];
 
+    
     $form['cwd_events_format'] = [
-      '#type' => 'textfield',
+      '#type' => 'select',
       '#title' => $this->t('Format'),
       '#description' => $this->t('Choices are: standard (default), compact (omit thumbnail, type and end time), archive (past events in reverse order), calendar (date on left)'),
+      '#options' => $format_options,
       '#default_value' => isset($config['cwd_events_format']) ? $config['cwd_events_format'] : 'standard',
     ];
 
@@ -109,9 +113,10 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
   public function blockSubmit($form, FormStateInterface $form_state) {
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
+    $format_options = $this->format_options;
     $this->configuration['cwd_events_depts'] = $values['cwd_events_depts'];
     $this->configuration['cwd_events_entries'] = $values['cwd_events_entries'];
-    $this->configuration['cwd_events_format'] = $values['cwd_events_format'];
+    $this->configuration['cwd_events_format'] = $format_options[$values['cwd_events_format']];
     $this->configuration['cwd_events_group'] = $values['cwd_events_group'];
     $this->configuration['cwd_events_singleday'] = $values['cwd_events_singleday'];
     $this->configuration['cwd_events_keyword'] = $values['cwd_events_keyword'];
