@@ -13,10 +13,10 @@ export const calendarInner = (builtEvent)=>`
             <a href="${builtEvent.event.localist_url}" hreflang="en">'${builtEvent.event.title}'</a> 
         </div> 
         <div class="event-times"> 
-            <span class="fa fa-clock-o"></span>${builtEvent.event_time} - ${builtEvent.event_time_end}
+            <span class="fa fa-clock-o"></span>${builtEvent.event_time}${builtEvent.event_time_end ? ` - ${builtEvent.event_time_end}` : ''}
         </div> 
         <div class="event-location"> 
-            <span class="fa fa-map-marker"></span>${builtEvent.event.location_name}
+        ${builtEvent.event.location_name ? `<span class="fa fa-map-marker"></span>${builtEvent.event.location_name}` : ''}  
         </div> 
         </div> 
         </div>  
