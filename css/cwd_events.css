@@ -1,36 +1,8 @@
-body {
-    font-family: 'Roboto', 'Sans Serif';
-    font-size: 16px;
-    padding: 0;
-    margin: 0;
-}
-
-img {
-    width:60px;
-    height:60px;
-    border-radius: 50%;
-    display: inline;
-}
-
-#list>div {
-    display: flex;
-    padding: 12px;
-}
-
-#list>div>div {
-    padding: 8px;
-}
-
-p {
-    margin: 0;
-    padding: 4px 0;
-}
-
 /* begin event */
 /* CWD Localist Events
    ************************************ */
    
-   .events-listing {
+.events-listing {
     position: relative;
     float: left;
     width: 100%;
@@ -186,6 +158,7 @@ p {
 }
 #events-filters ul {
     margin: 0;
+    padding: 0px 0px 5px 0px;
 }
 #events-filters h3 {
     float: left;
@@ -405,13 +378,15 @@ ul.events-filters li a {
 .event-title-and-location .event-times {
     padding: 0 7px;
 }
+/*
 #events-listing.events-listing {
-    background: #fff;
+    /*background: #fff;
     padding: 16px 10px 16px 6px;
     margin-bottom: 0;
     margin-top: 0;
-    /*padding-bottom: 114px;*/
+    /*padding-bottom: 114px;
 }
+*/
 #block-eventsblock {
     padding: 22px;
 }
@@ -542,6 +517,7 @@ span.fa.fa-map-marker {
     margin-bottom: 20px;
 }
 
+#cwd-homeEvents-list > div > div > div > a > span,
 #event_subscribe > a > span.ext,
 #events-listing > div.events-list > div > div > a > span{
     display:  none !important;
@@ -550,4 +526,10 @@ span.fa.fa-map-marker {
 #event_subscribe > a{
     background: none;
     box-shadow: none;
+}
+
+#block-eventsblock-2 > h2{
+    font-weight: 400;
+    font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
+    -webkit-font-smoothing: antialiased;
 }

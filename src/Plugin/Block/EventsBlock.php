@@ -21,7 +21,7 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class EventsBlock extends BlockBase  implements BlockPluginInterface {
   //list of supported format options @todo add support for archive
-  private $format_options = array('standard','compact', 'inline_compact', 'modern_compact', 'modern_standard');
+  private $format_options = array('standard'=>'standard','compact'=>'compact', 'inline_compact'=>'inline_compact', 'modern_compact'=>'modern_compact', 'modern_standard'=>'modern_standard');
 
   /**
    * {@inheritdoc}
