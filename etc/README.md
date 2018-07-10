@@ -18,3 +18,5 @@ start server for testing see index.html:<br/>
 
 to build cwd_events.js run webpack:<br/>
 ```npm run webpack```
+
+@TODO add support for SASS and review css
