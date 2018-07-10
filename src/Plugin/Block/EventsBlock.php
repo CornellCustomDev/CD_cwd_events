@@ -20,8 +20,8 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class EventsBlock extends BlockBase  implements BlockPluginInterface {
-  //list of supported format options
-  private $format_options = array('standard','compact','archive', 'calendar');
+  //list of supported format options @todo add support for archive
+  private $format_options = array('standard','compact', 'inline_compact', 'modern_compact', 'modern_standard');
 
   /**
    * {@inheritdoc}
@@ -29,7 +29,13 @@ class EventsBlock extends BlockBase  implements BlockPluginInterface {
   public function build() {
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
-      '#markup' => $this->t("<div class='events-listing' id='events-listing'></div><script>renderEvents('events-listing',@depts,@entries,'@format',@group,@singleday,'@keyword');</script>", 
+      '#markup' => $this->t("<div class='events-listing' 
+      var settings = { 'target': 'events-listing', 'depts':@depts, 'entries':@entries 'format':'@format', 'entries':20, 'group':@group, 'singleday':@singleday, keyword:''@keyword', 'addCal': true};
+      if (CWD_LocalList){
+      CWD_LocalList.run( settings );
+      }else{
+        console.warn('ERROR can not find events buid');
+      }", 
       	[
       		"@depts" => $this->configuration['cwd_events_depts'],
       		"@entries" =>  $this->configuration['cwd_events_entries'],

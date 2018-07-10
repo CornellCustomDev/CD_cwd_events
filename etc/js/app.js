@@ -46,7 +46,7 @@ class LocalList{
             group=0,
             target = "events-listing", //the id of the HTML target element
             title = "Events List", //the section title of the wrapper
-            heading = "local events", //the h3 displayed heading
+            heading = 'Events', //the h3 displayed heading
             api = '2.1', // Localist API version (e.g., '2' for the latest 2.x, '2.1' for the specific point release) 
             pref_excerpt_length = 250, // use 0 for no truncation, using truncation will force descriptions to plaintext
             pref_excerpt_length_compact = 125, // excerpt length can be made shorter for 'compact' mode
@@ -118,7 +118,7 @@ class LocalList{
                     this.innerTemplate = compactInner;
                     this.outerTemplate = compactWrapper;
                     break;
-                case 'calendar':
+                case 'inline_compact':
                     this.innerTemplate = calendarInner;
                     this.outerTemplate = calendarWrapper;
                     break; 
