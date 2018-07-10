@@ -16,7 +16,8 @@ CWD Events Module
               'singleday':@singleday, 
               'keyword':'@keyword', 
               'addCal': true,
-              'heading':''};
+              'heading':''
+            };
             if (CWD_LocalList){
               CWD_LocalList.run( settings );
             }else{
