@@ -3,11 +3,25 @@ CWD Events Module
 
 ```
   <section>
-      <h2>Localist Events</h2>
-      <p>TODO: Notes on options, API, loading, view modes (standard, archive, compact), etc...</p>
-      <div class="events-listing" id="events-listing"></div>
-      <script>renderEvents('events-listing',0,100,'standard',0,false,'Small Farms Program');</script>
-      <h2>Archive Mode</h2>
-      <p>TODO: Explain "archive" mode.</p>
+      <h2>Block Name</h2>
+      <div id='events-listing' class='events-listing' ></div>
+        <script>
+            //more settings options available see ./etc/js/app.js
+            var settings = { 
+              'target': 'events-listing', 
+              'depts':@depts, 
+              'entries':@entries,
+              'format':'@format',
+              'group':@group, 
+              'singleday':@singleday, 
+              'keyword':'@keyword', 
+              'addCal': true,
+              'heading':''};
+            if (CWD_LocalList){
+              CWD_LocalList.run( settings );
+            }else{
+              console.warn('ERROR: can not find events buid');
+            }
+         </script>
   </section>
 ```
