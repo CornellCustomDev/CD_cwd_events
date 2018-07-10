@@ -1,7 +1,7 @@
 # CWD Events
 CWD Events Module
 
-```
+```HTML
   <section>
       <h2>Block Name</h2>
       <div id='events-listing' class='events-listing' ></div>
