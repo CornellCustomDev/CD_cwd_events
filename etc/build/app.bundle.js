@@ -166,7 +166,7 @@ var LocalList = function () {
             _ref$title = _ref.title,
             title = _ref$title === undefined ? "Events List" : _ref$title,
             _ref$heading = _ref.heading,
-            heading = _ref$heading === undefined ? "local events" : _ref$heading,
+            heading = _ref$heading === undefined ? 'Events' : _ref$heading,
             _ref$api = _ref.api,
             api = _ref$api === undefined ? '2.1' : _ref$api,
             _ref$pref_excerpt_len = _ref.pref_excerpt_length,
@@ -194,6 +194,7 @@ var LocalList = function () {
 
         _classCallCheck(this, LocalList);
 
+        //console.log(arguments);
         // local variables arguments 
         //used in filters
         this.pref_category = pref_category;
@@ -254,7 +255,7 @@ var LocalList = function () {
                         this.innerTemplate = _compact.compactInner;
                         this.outerTemplate = _compact.compactWrapper;
                         break;
-                    case 'calendar':
+                    case 'inline_compact':
                         this.innerTemplate = _calendar.calendarInner;
                         this.outerTemplate = _calendar.calendarWrapper;
                         break;
@@ -315,7 +316,7 @@ var LocalList = function () {
             myObj.events.forEach(function (event) {
                 //built event provides common functions to format the data
                 var builtEvent = new _buildEvent.BuildEvent(event.event, _this2.BE_args);
-                console.log(builtEvent);
+                //console.log( builtEvent );
                 //build the filters array does not support multiple filter entries [0]only
                 if (_this2.pref_category_filters) {
                     if (_this2.pref_category == 'type' && builtEvent.type != 0) {
@@ -754,7 +755,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var calendarInner = exports.calendarInner = function calendarInner(builtEvent) {
-    return '\n        <div class="views-row">  \n        <div class="container-fluid"> \n        <div class="row"> \n        <div class="col-sm-2 event-month-and-day"> \n        <div> \n            <span class="event-month">' + builtEvent.abbrMonth + '</span> \n            <span class="event-day">' + builtEvent.abbrDay + '</span> \n        </div> \n        </div> \n        <div class="col-sm-8 event-title-and-location"> \n        <div class="event-title"> \n            <a href="' + builtEvent.event.localist_url + '" hreflang="en">\'' + builtEvent.event.title + '\'</a> \n        </div> \n        <div class="event-times"> \n            <span class="fa fa-clock-o"></span>' + builtEvent.event_time + (builtEvent.event_time_end ? '- ' + builtEvent.event_time_end : '') + '\n        </div> \n        <div class="event-location"> \n        ' + (builtEvent.event.location_name ? '<span class="fa fa-map-marker"></span>' + builtEvent.event.location_name : '') + '  \n        </div> \n        </div> \n        </div>  \n        </div> \n        </div>';
+    return '\n        <div class="views-row">  \n        <div class="container-fluid"> \n        <div class="row"> \n        <div class="col-sm-2 event-month-and-day"> \n        <div> \n            <span class="event-month">' + builtEvent.abbrMonth + '</span> \n            <span class="event-day">' + builtEvent.abbrDay + '</span> \n        </div> \n        </div> \n        <div class="col-sm-8 event-title-and-location"> \n        <div class="event-title"> \n            <a href="' + builtEvent.event.localist_url + '" hreflang="en">\'' + builtEvent.event.title + '\'</a> \n        </div> \n        <div class="event-times"> \n            <span class="fa fa-clock-o"></span>' + builtEvent.event_time + (builtEvent.event_time_end ? ' - ' + builtEvent.event_time_end : '') + '\n        </div> \n        <div class="event-location"> \n        ' + (builtEvent.event.location_name ? '<span class="fa fa-map-marker"></span>' + builtEvent.event.location_name : '') + '  \n        </div> \n        </div> \n        </div>  \n        </div> \n        </div>';
 };
 
 var calendarWrapper = exports.calendarWrapper = function calendarWrapper(innerHtml, args) {
@@ -804,12 +805,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var modernCompactInner = exports.modernCompactInner = function modernCompactInner(builtData) {
-    return "<div class=\"card\">\n<div class=\"events\">\n    <a href=\"" + builtData.event.localist_url + "\" class=\"group-link-wrapper field-group-link\">\n        <time title=\"" + builtData.event_date + "\" datetime=\"" + builtData.displayDate + "\">\n            <month>" + builtData.abbrMonth + "</month>\n            <day>" + builtData.day + "</day>\n        </time>\n        <div class=\"field title\">\n            <h3>" + builtData.event.title + "</h3>\n        </div>\n        <div class=\"field meta\">\n            <p>" + builtData.event_time + ", " + builtData.event.location_name + "</p>\n        </div>\n        <div class=\"field field-name-summary summary\">\n            <p>" + builtData.description + "...</p>\n        </div>\n    </a>\n</div>\n</div>";
+    return '<div class="card">\n<div class="events">\n    <a href="' + builtData.event.localist_url + '" class="group-link-wrapper field-group-link">\n        <time title="' + builtData.event_date + '" datetime="' + builtData.displayDate + '">\n            <month>' + builtData.abbrMonth + '</month>\n            <day>' + builtData.day + '</day>\n        </time>\n        <div class="field title">\n            <h3>' + builtData.event.title + '</h3>\n        </div>\n        <div class="field meta">\n            <p>' + builtData.event_time + ', ' + builtData.event.location_name + '</p>\n        </div>\n        <div class="field field-name-summary summary">\n            <p>' + builtData.description + '...</p>\n        </div>\n    </a>\n</div>\n</div>';
 };
 
 //this has class compact only difference
 var modernCompactWrapper = exports.modernCompactWrapper = function modernCompactWrapper(inner, args) {
-    return "\n    <div class=\"secondary\">\n        <h2 class=\"h1\">" + args.heading + "</h2>\n        <div class=\"cwd-component cwd-card-grid three-card singles compact no-thumbnails\"> \n            <div id=\"cwd-homeEvents-list\" class=\"compact no-thumbnails\">\n                <!--no filters -->\n                <div class=\"events-list\">\n                    " + inner + "\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </div><!--end of section -->";
+    return '\n    <div class="secondary">\n         ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div class="cwd-component cwd-card-grid three-card singles compact no-thumbnails"> \n            <div id="cwd-homeEvents-list" class="compact no-thumbnails">\n                <!--no filters -->\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </div><!--end of section -->';
 };
 
 /***/ }),
@@ -836,7 +837,7 @@ var moderStandardInner = exports.moderStandardInner = function moderStandardInne
 };
 
 var modernStandardWrapper = exports.modernStandardWrapper = function modernStandardWrapper(inner, args) {
-    return '\n    <section title="' + args.title + '">\n        <h2>' + args.heading + '</h2>\n        <div>  \n            <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails" id="events-listing">\n                ' + (0, _templateHelpers.eventFilters)(args.filters) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
+    return '\n    <section title="' + args.title + '">\n        ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div>  \n            <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails" id="events-listing">\n                ' + (0, _templateHelpers.eventFilters)(args.filters) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
 };
 
 var tagStr = function tagStr(event_types) {

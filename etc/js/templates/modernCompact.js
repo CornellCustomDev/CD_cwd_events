@@ -21,7 +21,7 @@ export const modernCompactInner = ( builtData )=> `<div class="card">
 //this has class compact only difference
 export const modernCompactWrapper = (inner, args) => `
     <div class="secondary">
-        <h2 class="h1">${args.heading}</h2>
+         ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div class="cwd-component cwd-card-grid three-card singles compact no-thumbnails"> 
             <div id="cwd-homeEvents-list" class="compact no-thumbnails">
                 <!--no filters -->

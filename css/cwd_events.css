@@ -1,7 +1,36 @@
+body {
+    font-family: 'Roboto', 'Sans Serif';
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+    display: inline;
+}
+
+#list>div {
+    display: flex;
+    padding: 12px;
+}
+
+#list>div>div {
+    padding: 8px;
+}
+
+p {
+    margin: 0;
+    padding: 4px 0;
+}
+
+/* begin event */
 /* CWD Localist Events
    ************************************ */
    
-.events-listing {
+   .events-listing {
     position: relative;
     float: left;
     width: 100%;
@@ -173,20 +202,21 @@ ul.events-filters li {
     margin: 0 5px 5px 0;
     padding: 0;
 }
-ul.events-filters li a {
+ul.events-filters li button {
     float: left;
-    padding: 2px 13px 1px;
+    padding: 5px 13px 3px;
     background: #e7eff3;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     text-decoration: none !important;
+    border-style: none;
 }
-ul.events-filters li a.active {
+ul.events-filters li button.active {
     color: #fff !important;
     background: #5589aa !important;
 }
-ul.events-filters li a:hover {
+ul.events-filters li button:hover {
     background: #d3e1e8;
     color: #000;
 }
@@ -194,7 +224,7 @@ ul.events-filters li a:hover {
 /* Animated Loading Icon
    -------------------- */
 #loader {
-    display: none;
+    /*display: none;*/
     position: absolute;
     left: 45%;
     left: calc(50% - 25px); 
@@ -326,4 +356,198 @@ ul.events-filters li a {
     padding: 2px 8px 1px;
 }
 
-/* psw test push */
+/* calendar */
+/***** Events *****/
+.event-month-and-day {
+    text-align: center;
+    line-height: 17px;
+    border-left: 4px solid #b31b1b;
+    border-right: 1px solid #eee;
+    padding: 3px 0 8px 8px;
+    margin-left: 18px;
+    margin-top: 4px;
+}
+.event-month-and-day .event-month {
+    float: left;
+    text-transform: uppercase;
+    color: #999;
+    display: block;
+    font-size: 12px;
+    padding-left: 4px;
+}
+.event-month-and-day .event-day {
+    clear: both;
+    color: #000;
+    font-weight: 600;
+    font-size: 18px;
+    display: block;
+    letter-spacing: -3px;
+    text-align: left;
+}
+.event-month-and-day .event-day sup {
+    top: -6px;
+    font-size: 10px;
+    margin-left: 3px;
+    letter-spacing: .005em;
+}
+.event-title-and-location a {
+    text-decoration: underline;
+    font-size: 16px;
+    margin-bottom: 7px;
+    display: inline-block;
+    text-align: left;
+}
+.event-title-and-location a:focus,
+.event-title-and-location a:hover {
+    text-decoration: none !important;
+}
+.event-title-and-location .event-location,
+.event-title-and-location .event-times {
+    padding: 0 7px;
+}
+#events-listing.events-listing {
+    background: #fff;
+    padding: 16px 10px 16px 6px;
+    margin-bottom: 0;
+    margin-top: 0;
+    /*padding-bottom: 114px;*/
+}
+#block-eventsblock {
+    padding: 22px;
+}
+#block-eventsblock h2 {
+    color: #000;
+    margin: 8px 0 0 0;
+    font-size: 34px;
+    float: none;
+    background: #fff;
+    padding: 13px 0 10px 20px;
+}
+#events-listing.events-listing .events-list .views-row {
+    margin-bottom: 23px;
+}
+#events-listing.events-listing .events-list .event-title-and-location {
+    width: 74.66667%;
+}
+
+@media (min-width: 768px){
+.col-sm-2 {
+    width: 16.66667%;
+}
+}
+
+@media (min-width: 768px){
+.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+    float: left;
+}
+}
+
+.col-sm-8.event-title-and-location {
+    /* min-width: 62%; */
+    word-wrap: break-word;
+    width: 300px;
+    padding: 10px;
+}
+.views-row {
+    max-width: 500px;
+}
+
+span.fa.fa-clock-o {
+    margin-right: 10px;
+}
+
+
+span.fa.fa-map-marker {
+    margin-right: 10px;
+}
+
+/* end of calendar */
+
+
+
+/* psw css */
+/* 
+    Created on : May 10, 2018, 9:40:45 AM
+    Author     : PSW58
+*/
+.container{
+    width: 66%;
+    margin: 20px auto;
+    height: auto;
+    max-width: 660px;
+}
+
+#main-body{
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    border: solid 1px #ccc;
+}
+
+.event-subscribe{
+    float: right;
+    font-size: 13px;
+    padding-bottom: 20px;
+}
+
+.event-subscribe > a{
+    font-size: 20px;
+    padding-right: 8px;
+    color: #111;
+    text-decoration: none;
+    display: inline-block !important;
+}
+
+.event-subscribe a:first-child{
+    padding-left: 10px;
+}
+
+.google{
+    color:#3cba54 !important;
+}
+
+.microsoft{
+    color:#00a4ec !important;
+}
+
+.apple{
+    color: #545a5f !important;
+}
+
+/* required change to visually hidden*/
+.hidden {
+    position: absolute;
+    left: -10000em;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+/*@ todo make this actually fade out */
+.fadeOut { 
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 300, opacity 300 linear;
+    display:none;
+  }
+
+.fadeIn { 
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 300 linear;
+    display: block;
+  }
+
+ .events a {
+    margin-bottom: 20px;
+}
+
+#event_subscribe > a > span.ext,
+#events-listing > div.events-list > div > div > a > span{
+    display:  none !important;
+}
+
+#event_subscribe > a{
+    background: none;
+    box-shadow: none;
+}

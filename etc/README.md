@@ -13,7 +13,7 @@ move to etc directory:<br/>
 install requirements:<br/>
 ```npm install```
 
-start server:<br/>
+start server for testing see index.html:<br/>
 ```npm start```
 
 to build cwd_events.js run webpack:<br/>

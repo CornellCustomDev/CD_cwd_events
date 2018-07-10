@@ -29,13 +29,23 @@ class EventsBlock extends BlockBase  implements BlockPluginInterface {
   public function build() {
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
-      '#markup' => $this->t("<div class='events-listing' 
-      var settings = { 'target': 'events-listing', 'depts':@depts, 'entries':@entries 'format':'@format', 'entries':20, 'group':@group, 'singleday':@singleday, keyword:''@keyword', 'addCal': true};
+      '#markup' => $this->t("<div id='events-listing' class='events-listing' ></div>
+        <script>
+      var settings = { 
+        'target': 'events-listing', 
+        'depts':@depts, 
+        'entries':@entries,
+        'format':'@format',
+        'group':@group, 
+        'singleday':@singleday, 
+        'keyword':'@keyword', 
+        'addCal': true,
+        'heading':''};
       if (CWD_LocalList){
       CWD_LocalList.run( settings );
       }else{
-        console.warn('ERROR can not find events buid');
-      }", 
+        console.warn('ERROR: can not find events buid');
+      }</script>", 
       	[
       		"@depts" => $this->configuration['cwd_events_depts'],
       		"@entries" =>  $this->configuration['cwd_events_entries'],

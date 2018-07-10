@@ -22,7 +22,7 @@ export const moderStandardInner = (builtData) =>`<div class="card event-node dep
 
 export const modernStandardWrapper = (inner, args) => `
     <section title="${args.title}">
-        <h2>${args.heading}</h2>
+        ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div>  
             <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails" id="events-listing">
                 ${eventFilters(args.filters)}
