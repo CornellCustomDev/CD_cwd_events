@@ -149,6 +149,8 @@ module.exports = {
     const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
     let localList = new LocalList( settings ).renderEvents();
     */
+
+    //@todo should verify target exists
 };
 var LocalList = function () {
     // define the following arguments
@@ -786,7 +788,7 @@ var compactInner = exports.compactInner = function compactInner(builtData) {
 };
 //this has class compact only difference
 var compactWrapper = exports.compactWrapper = function compactWrapper(inner, args) {
-    return '\n    <section title="' + args.title + '">\n        <h2>' + args.heading + '</h2>\n        <div id="main-body">  \n            <div class="events-listing no-thumbnails" id="events-listing compact">\n                ' + (0, _templateHelpers.eventFilters)(args.filters) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
+    return '\n    <section title="' + args.title + '">\n        <h2>' + args.heading + '</h2>\n        <div id="main-body">  \n            <div class="events-listing no-thumbnails" id="events-listing compact">\n                <!--filters options not supported -->\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
 };
 
 /***/ }),

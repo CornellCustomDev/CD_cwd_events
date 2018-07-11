@@ -17,7 +17,7 @@ export const compactWrapper = (inner, args) => `
         <h2>${args.heading}</h2>
         <div id="main-body">  
             <div class="events-listing no-thumbnails" id="events-listing compact">
-                ${eventFilters(args.filters)}
+                <!--filters options not supported -->
                 <div class="events-list">
                     ${inner}
                 </div>

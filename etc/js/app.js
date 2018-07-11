@@ -37,6 +37,8 @@ or with calendar
 const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
 let localList = new LocalList( settings ).renderEvents();
 */
+
+//@todo should verify target exists
 class LocalList{
     // define the following arguments
     constructor({

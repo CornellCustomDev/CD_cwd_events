@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" type = "text/css" href = "css/fonts/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/framework/base.css">
     <link rel="stylesheet" type="text/css" href="css/framework/cornell.css">
@@ -11,14 +12,39 @@
 </head>
 <body>
 <div class='container'>
-    <div id="events-listing"></div>
+    <p>
+        <h1>CWD_LocalList Example</h1>
+        <p>Supports multiple calenders on same page with different settings options<p></p>
+    </p>
+    <div class="row">
+        
+        <div class='col-md-8'>
+            <div id="standard"></div>
+            <div id="modern_standard"></div>
+            <div id="archive">TODO needs implimentation</div>
+        </div>
+        <div class='col-md-4'>
+            <div id="compact"></div>
+            <div id="modern_compact"></div>
+            <div id="inline_compact"></div>
+        </div>
+    </div>
 </div>
 
 <!--script src="js/app.js"></script-->
 <script src="build/app.bundle.js"></script>
+
 <script>
-    var settings = { 'target': 'events-listing', 'format':'calendar', 'entries':20, 'heading':'Events',  'addCal': true, 'pref_category':'group'};
-    CWD_LocalList.run( settings );  
+    var settings = { 'target': 'standard', 'format':'standard', 'entries':5, 'heading':'standard',  'addCal': true};
+    CWD_LocalList.run( settings );      
+    var settings1 = { 'target': 'modern_standard', 'format':'modern_standard', 'entries':5, 'heading':'modern_standard',  'addCal': true};
+    CWD_LocalList.run( settings1 );  
+    var settings2 = { 'target': 'compact', 'format':'compact', 'entries':3, 'heading':'compact',  'addCal': true, 'pref_excerpt_length':150, 'pref_category_filters':false};
+    CWD_LocalList.run( settings2 );  
+    var settings3 = { 'target': 'modern_compact', 'format':'modern_compact', 'entries':3, 'heading':'modern_compact',  'addCal': true, 'pref_excerpt_length':150};
+    CWD_LocalList.run( settings3 );  
+    var settings4 = { 'target': 'inline_compact', 'format':'inline_compact', 'entries':3, 'heading':'inline_compact',  'addCal': true, 'pref_excerpt_length':150};
+    CWD_LocalList.run( settings4 );              
 </script>
 </body>
 </html>
