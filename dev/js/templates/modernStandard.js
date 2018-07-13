@@ -10,7 +10,7 @@ export const moderStandardInner = (builtData) =>`<div class="card event-node dep
                                     <h3>${builtData.event.title}</h3>
                                     </div>
                                     <div class="field meta">
-                                        <p>${builtData.event_time}, ${builtData.event.location_name} ${tagStr(builtData.event.filters.event_types)}</p>
+                                        <p>${builtData.event_time}${builtData.event.location_name ? `, ${builtData.event.location_name}` : ''} ${tagStr(builtData.event.filters.event_types)}</p>
                                     </div>
                                     <div class="field field-name-summary summary">
                                         <p>${builtData.description}... read more</p> 

@@ -26,7 +26,7 @@ export const calendarInner = (builtEvent)=>`
 export const calendarWrapper = (innerHtml, args)=>`
     <section title="${args.title}">
         <h2 class="block-title">${args.heading}</h2>
-        <div class="events-listing no-thumbnails" id="events-listing">
+        <div class="events-listing inline no-thumbnails" id="events-listing">
             ${innerHtml}
         </div>
     </section>`;

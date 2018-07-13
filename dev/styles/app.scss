@@ -1,0 +1,36 @@
+@import 'components/standard';
+@import 'components/inline';
+//order is an issue here they over ride each other needs fix
+@import 'components/modern';
+
+//common styles
+.google {
+    color: #3cba54 !important;
+  }
+  
+.microsoft {
+  color: #00a4ec !important;
+}
+
+.apple {
+  color: #545a5f !important;
+}
+
+/* required change to visually hidden*/
+.hidden {
+  position: absolute;
+  left: -10000em;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/*@ todo make this actually fade out */
+.fadeOut {
+  display: none;
+}
+
+.fadeIn {
+  display: block;
+}

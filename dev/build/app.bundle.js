@@ -98,6 +98,8 @@ var CWD_LocalList =
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+//load the required styles and bundle @todo do conditional dynamic imports?
+
 
 var _localList = __webpack_require__(/*! ./service/local-list */ "./js/service/local-list.js");
 
@@ -115,6 +117,8 @@ var _modernCompact = __webpack_require__(/*! ./templates/modernCompact */ "./js/
 
 var _modernStandard = __webpack_require__(/*! ./templates/modernStandard */ "./js/templates/modernStandard.js");
 
+__webpack_require__(/*! ../styles/app.scss */ "./styles/app.scss");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -125,29 +129,29 @@ module.exports = {
         var LL = new LocalList(args);
         /*
          add custom templates here:
-         localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+         LL.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
          build the outer wrapper at a minimum this must contain innerHtml
-         localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+         LL.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
          */
         LL.renderEvents();
     }
 
     /*LoacalList typical usage
+        const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
+        let localList = new LocalList( settings ).renderEvents();
+        or with custom template 
+        let localList = new LocalList()
+        //define inner template list of events
+        localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+        //build the outer wrapper at a minimum this must contain innerHtml
+        localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+        localList.renderEvents();
     
-    const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
-    let localList = new LocalList( settings ).renderEvents();
-    or with custom template 
-    let localList = new LocalList()
-    //define inner template list of events
-    localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-    //build the outer wrapper at a minimum this must contain innerHtml
-    localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-    localList.renderEvents();
+        or with calendar
     
-    or with calendar
-    
-    const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
-    let localList = new LocalList( settings ).renderEvents();
+        const settings = { target:'events-listing', depts:0, entries:10, format:'inline_compact', group:0, singleday:false, keyword:'Small Farms Program'};
+        let localList = new LocalList( settings ).renderEvents();
+        @todo add parameters
     */
 
     //@todo should verify target exists
@@ -262,6 +266,7 @@ var LocalList = function () {
                         this.outerTemplate = _calendar.calendarWrapper;
                         break;
                     case 'modern_compact':
+                        //overide exerpt length this should be added to drupal form options
                         this.BE_args.pref_excerpt_length = 125;
                         this.innerTemplate = _modernCompact.modernCompactInner;
                         this.outerTemplate = _modernCompact.modernCompactWrapper;
@@ -342,10 +347,10 @@ var LocalList = function () {
                     }
                 }
 
-                inner += _this2.innerTemplate(builtEvent);
+                inner += _this2.innerTemplate(builtEvent); //returns html string
             });
 
-            var html = this.outerTemplate(inner, this.wrapperArgs);
+            var html = this.outerTemplate(inner, this.wrapperArgs); //returns html string
 
             //remove loading animation timer
             clearTimeout(this.c_loader);
@@ -761,7 +766,7 @@ var calendarInner = exports.calendarInner = function calendarInner(builtEvent) {
 };
 
 var calendarWrapper = exports.calendarWrapper = function calendarWrapper(innerHtml, args) {
-    return '\n    <section title="' + args.title + '">\n        <h2 class="block-title">' + args.heading + '</h2>\n        <div class="events-listing no-thumbnails" id="events-listing">\n            ' + innerHtml + '\n        </div>\n    </section>';
+    return '\n    <section title="' + args.title + '">\n        <h2 class="block-title">' + args.heading + '</h2>\n        <div class="events-listing inline no-thumbnails" id="events-listing">\n            ' + innerHtml + '\n        </div>\n    </section>';
 };
 
 /***/ }),
@@ -835,7 +840,7 @@ exports.modernStandardWrapper = exports.moderStandardInner = undefined;
 var _templateHelpers = __webpack_require__(/*! ./template-helpers */ "./js/templates/template-helpers.js");
 
 var moderStandardInner = exports.moderStandardInner = function moderStandardInner(builtData) {
-    return '<div class="card event-node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '" >\n                            <div class="events">\n                                <a href="' + builtData.event.localist_url + '" class="group-link-wrapper field-group-link">\n                                <time title="' + builtData.event_date + '" datetime="' + builtData.displayDate + '">\n                                    <month>' + builtData.abbrMonth + '</month>\n                                    <day>' + builtData.day + '</day>\n                                    </time>\n                                    <div class="field title">\n                                    <h3>' + builtData.event.title + '</h3>\n                                    </div>\n                                    <div class="field meta">\n                                        <p>' + builtData.event_time + ', ' + builtData.event.location_name + ' ' + tagStr(builtData.event.filters.event_types) + '</p>\n                                    </div>\n                                    <div class="field field-name-summary summary">\n                                        <p>' + builtData.description + '... read more</p> \n                                    </div>\n                                </a>\n                                ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calender)(builtData.event) : '') + '  \n                            </div>\n                        </div>';
+    return '<div class="card event-node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '" >\n                            <div class="events">\n                                <a href="' + builtData.event.localist_url + '" class="group-link-wrapper field-group-link">\n                                <time title="' + builtData.event_date + '" datetime="' + builtData.displayDate + '">\n                                    <month>' + builtData.abbrMonth + '</month>\n                                    <day>' + builtData.day + '</day>\n                                    </time>\n                                    <div class="field title">\n                                    <h3>' + builtData.event.title + '</h3>\n                                    </div>\n                                    <div class="field meta">\n                                        <p>' + builtData.event_time + (builtData.event.location_name ? ', ' + builtData.event.location_name : '') + ' ' + tagStr(builtData.event.filters.event_types) + '</p>\n                                    </div>\n                                    <div class="field field-name-summary summary">\n                                        <p>' + builtData.description + '... read more</p> \n                                    </div>\n                                </a>\n                                ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calender)(builtData.event) : '') + '  \n                            </div>\n                        </div>';
 };
 
 var modernStandardWrapper = exports.modernStandardWrapper = function modernStandardWrapper(inner, args) {
@@ -1103,6 +1108,633 @@ var add_calender = exports.add_calender = function add_calender(myEvent) {
     /* ------------------ END OF BUILD LINKS --------------------------- */
     return '<dd class="event-subscribe" id="event_subscribe">add to calendar\n            ' + buidGoogleStr(myEvent) + ' ' + buildiCal(myEvent) + ' ' + buildOutlookCal(myEvent) + '\n            </dd>';
 };
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./styles/app.scss":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/sass-loader/lib/loader.js!./styles/app.scss ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/* begin event */\n/* CWD Localist Events\r\n   ************************************ */\n.events-listing {\n  position: relative;\n  float: left;\n  width: 100%;\n  margin: 1em 0 2em;\n  min-height: 120px; }\n  .events-listing .node {\n    float: left;\n    width: 100%;\n    margin: 1em 0 2em; }\n    .events-listing .node h3 {\n      margin-bottom: 8px;\n      font-family: Avenir Next, Proxima Nova, 'proxima-nova', Segoe UI Bold, Helvetica Neue, sans-serif;\n      font-weight: 600;\n      font-size: 16px; }\n  .events-listing h4 {\n    text-transform: none; }\n  .events-listing .description {\n    clear: right;\n    padding-left: 112px;\n    /* disable to allow description text to wrap around the thumbnail */\n    font-size: 13px; }\n  .events-listing.hide-descriptions .description {\n    float: left;\n    width: 100%;\n    clear: both;\n    padding: 0 !important; }\n  .events-listing .description-content {\n    padding: 0 1em 1em; }\n  .events-listing .description :last-child {\n    margin-bottom: 0; }\n  .events-listing .event-image {\n    width: 100px;\n    height: auto;\n    float: left;\n    margin: 0 12px 0 0; }\n  .events-listing .meta {\n    font-weight: normal;\n    font-size: 1em;\n    color: #666;\n    margin-bottom: 12px; }\n  .events-listing .type {\n    float: left;\n    display: none; }\n  .events-listing .location {\n    float: right; }\n  .events-listing .date {\n    float: right;\n    margin-left: 20px; }\n    .events-listing .date .fulldate {\n      margin-right: 5px; }\n  .events-listing .event-details {\n    /*float: left;*/\n    clear: right;\n    padding-left: 112px;\n    /* disable to allow this button to clear the thumbnail */ }\n    .events-listing .event-details .fa {\n      font-size: 7px;\n      /*background: #3787b0;*/\n      background: #f0eada;\n      color: #99802b;\n      padding: 3px;\n      margin-right: 4px;\n      -moz-border-radius: 2px;\n      -webkit-border-radius: 2px;\n      border-radius: 2px;\n      position: relative;\n      top: -2px; }\n    .events-listing .event-details a {\n      text-decoration: none; }\n      .events-listing .event-details a:hover .fa {\n        background: #f8f4ec;\n        /*background: rgba(0,0,0,0.7);*/\n        color: #000; }\n    .events-listing .event-details h4 {\n      font-size: 11px;\n      font-weight: 400; }\n  .events-listing .month-header {\n    text-align: center;\n    color: #fff;\n    background: #6c973e;\n    float: left;\n    width: 100%;\n    padding: 9px 0;\n    margin-top: 12px;\n    font-size: 20px; }\n  .events-listing .day-header {\n    font-size: 14px;\n    border-top: 1px solid #e0e0e0;\n    padding: 10px 0 5px;\n    margin-bottom: 5px;\n    float: left;\n    width: 100%;\n    background: #fff;\n    background: -moz-linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);\n    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #ffffff), color-stop(100%, #f2f2f2));\n    background: -webkit-linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);\n    background: -o-linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);\n    background: -ms-linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);\n    background: linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2',GradientType=1 );\n    font-family: Avenir Next, Proxima Nova, 'proxima-nova', Segoe UI Semibold, Helvetica Neue, sans-serif;\n    font-weight: 500; }\n    .events-listing .day-header .fa:before {\n      font-size: 14px;\n      margin: 0 8px 0 0;\n      color: #555;\n      padding-left: 1px; }\n\n/* event details toggle */\n@-moz-document url-prefix() {\n  /* FF */\n  .events-listing .event-details .fa {\n    font-size: 7.1px; } }\n\n/* month and day headers */\n/* Category Filters\r\n\t -------------------- */\n#events-filters {\n  float: left;\n  width: 100%;\n  margin: 10px 0; }\n  #events-filters ul {\n    margin: 0; }\n  #events-filters h3 {\n    float: left;\n    font-size: 14px;\n    line-height: 24px;\n    margin: 0;\n    padding: 2px 8px 2px 0; }\n\nul.events-filters li {\n  float: left;\n  list-style: none;\n  background: none;\n  line-height: 24px;\n  margin: 0 5px 5px 0;\n  padding: 0; }\n  ul.events-filters li button {\n    float: left;\n    padding: 5px 13px 3px;\n    background: #e7eff3;\n    -moz-border-radius: 4px;\n    -webkit-border-radius: 4px;\n    border-radius: 4px;\n    text-decoration: none !important;\n    border-style: none; }\n    ul.events-filters li button.active {\n      color: #fff !important;\n      background: #5589aa !important; }\n    ul.events-filters li button:hover {\n      background: #d3e1e8;\n      color: #000; }\n\n/* Animated Loading Icon\r\n\t -------------------- */\n#loader {\n  /*display: none;*/\n  position: absolute;\n  left: 45%;\n  left: calc(50% - 25px);\n  top: 60px;\n  width: 50px;\n  text-align: center;\n  font-size: 24px;\n  color: #ccc;\n  color: rgba(0, 0, 0, 0.2); }\n\n/* Compact Mode\r\n\t -------------------- */\n.events-listing.compact {\n  margin-top: 0; }\n  .events-listing.compact #events-filters {\n    display: none; }\n  .events-listing.compact .node {\n    border-bottom: 1px solid #e0e0e0;\n    margin: 0.5em 0 0.6em; }\n    .events-listing.compact .node:last-child {\n      border: 0; }\n    .events-listing.compact .node h3 {\n      font-size: 14px; }\n  .events-listing.compact .meta {\n    font-size: 13px; }\n  .events-listing.compact .location {\n    float: left;\n    width: 60%;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap; }\n  .events-listing.compact .description {\n    font-size: 11px;\n    padding-left: 0;\n    clear: both; }\n  .events-listing.compact .event-details {\n    padding-left: 0;\n    clear: both; }\n\n.events-listing.no-thumbnails .description, .events-listing.no-thumbnails .event-details {\n  padding-left: 0;\n  clear: both; }\n\n.events-listing.compact .date .fulldate {\n  margin: 0 0 0 5px;\n  padding: 3px 7px;\n  margin-top: -3px;\n  float: right;\n  background: #f2f2f2;\n  -moz-border-radius: 2px;\n  -webkit-border-radius: 2px;\n  border-radius: 2px; }\n\n.events-listing .type .fa:before {\n  margin-right: 5px;\n  content: '\\F124';\n  font-size: 14px; }\n\n.events-listing .location {\n  float: left;\n  width: 75%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap; }\n\n.events-listing.compact .location {\n  width: 70%; }\n\n.events-listing.compact .date .start, .events-listing.compact .description {\n  display: none; }\n\n/* Extras\r\n\t ************************************ */\n#nymap {\n  float: right;\n  margin: -15px 0 0 50px; }\n\nimg[usemap], map area {\n  outline: none; }\n\n/* compact filters */\nul.events-filters {\n  width: 100%;\n  float: left; }\n  ul.events-filters li {\n    margin-right: 4px; }\n    ul.events-filters li:last-child {\n      border: 0;\n      margin-right: 0; }\n    ul.events-filters li a {\n      padding: 2px 10px 1px;\n      -moz-border-radius: 2px;\n      -webkit-border-radius: 2px;\n      border-radius: 2px;\n      font-size: 13px; }\n\n.win ul.events-filters li {\n  margin-right: 2px; }\n  .win ul.events-filters li:last-child {\n    margin-right: 0; }\n  .win ul.events-filters li a {\n    padding: 2px 8px 1px; }\n\n/* calendar */\n/***** Events *****/\n.event-month-and-day {\n  text-align: center;\n  line-height: 17px;\n  border-left: 4px solid #b31b1b;\n  border-right: 1px solid #eee;\n  padding: 3px 0 8px 8px;\n  margin-left: 18px;\n  margin-top: 4px;\n  height: 50px; }\n  .event-month-and-day .event-month {\n    float: left;\n    text-transform: uppercase;\n    color: #999;\n    display: block;\n    font-size: 12px;\n    padding-left: 4px; }\n  .event-month-and-day .event-day {\n    clear: both;\n    color: #000;\n    font-weight: 600;\n    font-size: 18px;\n    display: block;\n    letter-spacing: -3px;\n    text-align: left; }\n    .event-month-and-day .event-day sup {\n      top: -6px;\n      font-size: 10px;\n      margin-left: 3px;\n      letter-spacing: .005em; }\n\n.event-title-and-location a {\n  text-decoration: underline;\n  font-size: 16px;\n  margin-bottom: 7px;\n  display: inline-block;\n  text-align: left; }\n  .event-title-and-location a:focus, .event-title-and-location a:hover {\n    text-decoration: none !important; }\n\n.event-title-and-location .event-location, .event-title-and-location .event-times {\n  padding: 0 7px; }\n\n#events-listing.inline {\n  background: #fff;\n  padding: 16px 10px 16px 6px;\n  margin-bottom: 0;\n  margin-top: 0;\n  /*padding-bottom: 114px;*/ }\n\n#block-eventsblock {\n  padding: 22px; }\n  #block-eventsblock h2 {\n    color: #000;\n    margin: 8px 0 0 0;\n    font-size: 34px;\n    float: none;\n    background: #fff;\n    padding: 13px 0 10px 20px; }\n\n#events-listing.inline .events-list .views-row {\n  margin-bottom: 23px; }\n\n#events-listing.inline .events-list .event-title-and-location {\n  width: 74.66667%; }\n\n@media (min-width: 768px) {\n  .col-sm-2 {\n    width: 16.66667%; } }\n\n@media (min-width: 768px) {\n  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {\n    float: left; } }\n\n.col-sm-8.event-title-and-location {\n  /* min-width: 62%; */\n  word-wrap: break-word;\n  width: 300px;\n  padding: 10px; }\n\n.views-row {\n  max-width: 500px; }\n\nspan.fa.fa-clock-o, span.fa.fa-map-marker {\n  margin-right: 10px; }\n\n.event-subscribe {\n  float: right;\n  font-size: 13px;\n  padding-bottom: 20px; }\n  .event-subscribe > a {\n    font-size: 20px;\n    padding-right: 8px;\n    color: #111;\n    text-decoration: none;\n    display: inline-block !important; }\n  .event-subscribe a:first-child {\n    padding-left: 10px; }\n\n.events a {\n  margin-bottom: 20px; }\n\ndiv.container-fluid {\n  padding-left: 0px;\n  padding-right: 0px; }\n\n/* Events */\n#home-events {\n  background: #f4f6f8;\n  padding-top: 40px;\n  padding-bottom: 40px;\n  overflow: hidden; }\n  #home-events .header-with-button {\n    -webkit-box-align: center;\n    -ms-flex-align: center;\n    align-items: center; }\n  #home-events .link-more .fa {\n    margin: 0 -0.05em 0 0.5em;\n    position: static; }\n  #home-events .cwd-component {\n    margin: 0 auto 2.5em;\n    max-width: 480px;\n    float: none; }\n\n#home-social .cwd-component, #home-social .twitter {\n  margin: 0 auto 2.5em;\n  max-width: 480px;\n  float: none; }\n\n#elements {\n  margin: 0 auto 2.5em;\n  max-width: 480px;\n  float: none; }\n\n.cwd-component .events .field {\n  clear: both; }\n\n.cwd-component .events time {\n  width: auto;\n  min-height: 0;\n  margin: 0 0 1em; }\n\n.cwd-component .events month {\n  float: left;\n  font-size: 15px;\n  line-height: 1;\n  font-weight: 400;\n  padding: 9px 12px;\n  background: #b83739; }\n\n.cwd-component .events day {\n  float: left;\n  font-size: 15px;\n  line-height: 1;\n  font-weight: 400;\n  padding: 9px 12px;\n  background: #b83739;\n  background: #a63133; }\n\n.cwd-component .events h3 {\n  width: 100%;\n  font-size: 21px;\n  line-height: 1.4;\n  margin-bottom: 0.25em;\n  font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif; }\n\n.cwd-component .events .meta {\n  color: #767676;\n  font-size: 13px;\n  font-weight: 400; }\n\n#events-listing > div.events-list > div > div > a {\n  margin: 0px 0 25px 0 !important; }\n\n.cwd-component .events a {\n  display: block;\n  text-decoration: none;\n  color: #000;\n  transition: background 0.15s, box-shadow 0.15s; }\n  .cwd-component .events a:hover h3, .cwd-component .events a:focus h3 {\n    text-decoration: underline;\n    color: #127cb5; }\n  .cwd-component .events a:active h3 {\n    color: #000; }\n  .cwd-component .events a:hover, .cwd-component .events a:focus {\n    background: rgba(0, 0, 0, 0.05);\n    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.05); }\n  .cwd-component .events a:active {\n    background: rgba(0, 0, 0, 0.09);\n    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.09); }\n\n/* start psw */\na.view-all-events {\n  display: inline-block;\n  text-decoration: none;\n  text-align: right;\n  width: 100%;\n  padding: 5px 0;\n  text-transform: uppercase;\n  font-weight: bold; }\n  a.view-all-events:hover, a.view-all-events:focus, a.view-all-events:active {\n    text-decoration: underline; }\n\n.padded-left {\n  padding-left: 10px; }\n\n#events-filters ul {\n  margin-bottom: 5px !important; }\n\n/*end psw */\n.inline-events-type {\n  float: none;\n  padding: 2px 8px 1px;\n  background: #FCF3E1;\n  -moz-border-radius: 4px;\n  -webkit-border-radius: 4px;\n  border-radius: 4px;\n  text-decoration: none !important;\n  color: #000;\n  margin-left: 10px; }\n\n.google {\n  color: #3cba54 !important; }\n\n.microsoft {\n  color: #00a4ec !important; }\n\n.apple {\n  color: #545a5f !important; }\n\n/* required change to visually hidden*/\n.hidden {\n  position: absolute;\n  left: -10000em;\n  top: auto;\n  width: 1px;\n  height: 1px;\n  overflow: hidden; }\n\n/*@ todo make this actually fade out */\n.fadeOut {\n  display: none; }\n\n.fadeIn {\n  display: block; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/css-base.js":
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader/lib/css-base.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function (useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if (item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function (modules, mediaQuery) {
+		if (typeof modules === "string") modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for (var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if (typeof id === "number") alreadyImportedModules[id] = true;
+		}
+		for (i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if (mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if (mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/addStyles.js":
+/*!****************************************************!*\
+  !*** ./node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getTarget = function (target) {
+  return document.querySelector(target);
+};
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(target) {
+                // If passing function in options, then use it for resolve "head" element.
+                // Useful for Shadow Root style i.e
+                // {
+                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
+                // }
+                if (typeof target === 'function') {
+                        return target();
+                }
+                if (typeof memo[target] === "undefined") {
+			var styleTarget = getTarget.call(this, target);
+			// Special case to return head of iframe instead of iframe itself
+			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+				try {
+					// This will throw an exception if access to iframe is blocked
+					// due to cross-origin restrictions
+					styleTarget = styleTarget.contentDocument.head;
+				} catch(e) {
+					styleTarget = null;
+				}
+			}
+			memo[target] = styleTarget;
+		}
+		return memo[target]
+	};
+})();
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(/*! ./urls */ "./node_modules/style-loader/lib/urls.js");
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+        if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+		var nextSibling = getElement(options.insertInto + " " + options.insertAt.before);
+		target.insertBefore(style, nextSibling);
+	} else {
+		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/urls.js":
+/*!***********************************************!*\
+  !*** ./node_modules/style-loader/lib/urls.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+	// get current location
+	var location = typeof window !== "undefined" && window.location;
+
+	if (!location) {
+		throw new Error("fixUrls requires window.location");
+	}
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+		return css;
+	}
+
+	var baseUrl = location.protocol + "//" + location.host;
+	var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+ This regular expression is just a way to recursively match brackets within
+ a string.
+ 	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+    (  = Start a capturing group
+      (?:  = Start a non-capturing group
+          [^)(]  = Match anything that isn't a parentheses
+          |  = OR
+          \(  = Match a start parentheses
+              (?:  = Start another non-capturing groups
+                  [^)(]+  = Match anything that isn't a parentheses
+                  |  = OR
+                  \(  = Match a start parentheses
+                      [^)(]*  = Match anything that isn't a parentheses
+                  \)  = Match a end parentheses
+              )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+  \)  = Match a close parens
+ 	 /gi  = Get all matches, not the first.  Be case insensitive.
+  */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function (fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl.trim().replace(/^"(.*)"$/, function (o, $1) {
+			return $1;
+		}).replace(/^'(.*)'$/, function (o, $1) {
+			return $1;
+		});
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+			return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+			//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+/***/ }),
+
+/***/ "./styles/app.scss":
+/*!*************************!*\
+  !*** ./styles/app.scss ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../node_modules/css-loader!../node_modules/sass-loader/lib/loader.js!./app.scss */ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./styles/app.scss");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ })
 

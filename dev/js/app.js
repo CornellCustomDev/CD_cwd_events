@@ -5,6 +5,8 @@ import { compactInner, compactWrapper} from "./templates/compact";
 import { calendarInner, calendarWrapper} from "./templates/calendar";
 import { modernCompactInner, modernCompactWrapper} from "./templates/modernCompact";
 import { moderStandardInner, modernStandardWrapper} from "./templates/modernStandard";
+//load the required styles and bundle @todo do conditional dynamic imports?
+import '../styles/app.scss';
 
 //expose the localList via run function
 module.exports = {
@@ -12,30 +14,30 @@ module.exports = {
         let LL = new LocalList(args);
         /*
          add custom templates here:
-         localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+         LL.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
          build the outer wrapper at a minimum this must contain innerHtml
-         localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+         LL.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
          */
         LL.renderEvents();
     }
 }
 
 /*LoacalList typical usage
+    const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
+    let localList = new LocalList( settings ).renderEvents();
+    or with custom template 
+    let localList = new LocalList()
+    //define inner template list of events
+    localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+    //build the outer wrapper at a minimum this must contain innerHtml
+    localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+    localList.renderEvents();
 
-const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
-let localList = new LocalList( settings ).renderEvents();
-or with custom template 
-let localList = new LocalList()
-//define inner template list of events
-localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-//build the outer wrapper at a minimum this must contain innerHtml
-localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-localList.renderEvents();
+    or with calendar
 
-or with calendar
-
-const settings = { target:'events-listing', depts:0, entries:10, format:'calendar', group:0, singleday:false, keyword:'Small Farms Program'};
-let localList = new LocalList( settings ).renderEvents();
+    const settings = { target:'events-listing', depts:0, entries:10, format:'inline_compact', group:0, singleday:false, keyword:'Small Farms Program'};
+    let localList = new LocalList( settings ).renderEvents();
+    @todo add parameters
 */
 
 //@todo should verify target exists
@@ -126,6 +128,7 @@ class LocalList{
                     this.outerTemplate = calendarWrapper;
                     break; 
                 case 'modern_compact':
+                    //overide exerpt length this should be added to drupal form options
                     this.BE_args.pref_excerpt_length = 125;
                     this.innerTemplate = modernCompactInner;
                     this.outerTemplate = modernCompactWrapper;
@@ -171,7 +174,7 @@ class LocalList{
         myObj.events.forEach( (event) => {
             //built event provides common functions to format the data
             let builtEvent = new BuildEvent(event.event, this.BE_args);
-           //console.log( builtEvent );
+            //console.log( builtEvent );
             //build the filters array does not support multiple filter entries [0]only
             if (this.pref_category_filters) {
                 if (this.pref_category == 'type' && builtEvent.type != 0) {
@@ -197,11 +200,11 @@ class LocalList{
                 }
             }
 
-            inner += this.innerTemplate( builtEvent );
+            inner += this.innerTemplate( builtEvent );//returns html string
 
         });
 
-        let html = this.outerTemplate(inner, this.wrapperArgs);
+        let html = this.outerTemplate(inner, this.wrapperArgs);//returns html string
       
         //remove loading animation timer
         clearTimeout(this.c_loader);
