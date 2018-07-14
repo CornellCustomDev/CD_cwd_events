@@ -32,12 +32,6 @@ module.exports = {
     //build the outer wrapper at a minimum this must contain innerHtml
     localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
     localList.renderEvents();
-
-    or with calendar
-
-    const settings = { target:'events-listing', depts:0, entries:10, format:'inline_compact', group:0, singleday:false, keyword:'Small Farms Program'};
-    let localList = new LocalList( settings ).renderEvents();
-    @todo add parameters
 */
 
 //@todo should verify target exists
@@ -64,12 +58,12 @@ class LocalList{
             keyword=false,
             addCal = false //add to google/outlook/ical options
         }) {
-        //console.log(arguments);
-        // local variables arguments 
+
         //used in filters
         this.pref_category = pref_category;
         this.pref_category_filters = pref_category_filters;
 
+        //localist variables
         this.target = target;
         this.format = format;
 
@@ -150,13 +144,19 @@ class LocalList{
     /* 
         inserts throbber after target elem
         this is deleted on localList render
+        warning this.c_loader may be undefined
      */
     addThrobber( target ){
         const loadingNode = '<div id="loader" class="fadeOut"><span class="fa fa-spin fa-cog"></span></div>';
-        document.getElementById(target).insertAdjacentHTML('afterbegin', loadingNode);
-        this.c_loader = setTimeout(function(){ 
+        let tarElem = document.getElementById(target)
+        if (tarElem){
+            tarElem.insertAdjacentHTML('afterbegin', loadingNode) 
+            this.c_loader = setTimeout(function(){ 
                 document.getElementById('loader').classList.remove('fadeOut'); 
-            }, 200); // skip loading animation if under 0.5s
+                }, 200); // skip loading animation if under 0.5s
+        }else{
+            console.log( 'WARNING: can not find target element for loading animation');
+        }
     }
 
     /* get the events */
@@ -210,6 +210,7 @@ class LocalList{
         clearTimeout(this.c_loader);
         //the loader is replaced by html
         //document.getElementById('loader').classList.remove('fadeIn'); 
-        document.getElementById(this.target).innerHTML = html;
+        let tarElem = document.getElementById(this.target);
+        tarElem ? tarElem.innerHTML = html :  console.warn('WARNING: target element does not exist');
     }
 }

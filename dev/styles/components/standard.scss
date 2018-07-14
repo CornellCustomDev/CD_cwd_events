@@ -1,7 +1,10 @@
 /* begin event */
 /* CWD Localist Events
-   ************************************ */
-   .events-listing {
+	 ************************************ */
+	 
+$waLightGreen: #597F34;//4.66:1 on white
+
+.events-listing {
 	position: relative;
 	float: left;
 	width: 100%;
@@ -99,7 +102,7 @@
 	.month-header {
 	  text-align: center;
 	  color: #fff;
-	  background: #6c973e;
+	  background: $waLightGreen;
 	  float: left;
 	  width: 100%;
 	  padding: 9px 0;
@@ -130,200 +133,14 @@
 		padding-left: 1px;
 	  }
 	}
-  }
+}
   
-  /* event details toggle */
-  
-  @-moz-document url-prefix() {
+/* event details toggle */
+
+@-moz-document url-prefix() {
 	/* FF */
 	.events-listing .event-details .fa {
-	  font-size: 7.1px;
+		font-size: 7.1px;
 	}
-  }
-  
-  
-  /* month and day headers */
-  
-  
-  /* Category Filters
-	 -------------------- */
-  
-  #events-filters {
-	float: left;
-	width: 100%;
-	margin: 10px 0;
-	ul {
-	  margin: 0;
-	}
-	h3 {
-	  float: left;
-	  font-size: 14px;
-	  line-height: 24px;
-	  margin: 0;
-	  padding: 2px 8px 2px 0;
-	}
-  }
-  
-  ul.events-filters li {
-	float: left;
-	list-style: none;
-	background: none;
-	line-height: 24px;
-	margin: 0 5px 5px 0;
-	padding: 0;
-	button {
-	  float: left;
-	  padding: 5px 13px 3px;
-	  background: #e7eff3;
-	  -moz-border-radius: 4px;
-	  -webkit-border-radius: 4px;
-	  border-radius: 4px;
-	  text-decoration: none !important;
-	  border-style: none;
-	  &.active {
-		color: #fff !important;
-		background: #5589aa !important;
-	  }
-	  &:hover {
-		background: #d3e1e8;
-		color: #000;
-	  }
-	}
-  }
-  
-  /* Animated Loading Icon
-	 -------------------- */
-  
-  #loader {
-	/*display: none;*/
-	position: absolute;
-	left: 45%;
-	left: calc(50% - 25px);
-	top: 60px;
-	width: 50px;
-	text-align: center;
-	font-size: 24px;
-	color: #ccc;
-	color: rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Compact Mode
-	 -------------------- */
-  
-  .events-listing {
-	&.compact {
-	  #events-filters {
-		display: none;
-	  }
-	  margin-top: 0;
-	  .node {
-		border-bottom: 1px solid #e0e0e0;
-		margin: 0.5em 0 0.6em;
-		&:last-child {
-		  border: 0;
-		}
-		h3 {
-		  font-size: 14px;
-		}
-	  }
-	  .meta {
-		font-size: 13px;
-	  }
-	  .location {
-		float: left;
-		width: 60%;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	  }
-	  .description {
-		font-size: 11px;
-		padding-left: 0;
-		clear: both;
-	  }
-	  .event-details {
-		padding-left: 0;
-		clear: both;
-	  }
-	}
-	&.no-thumbnails {
-	  .description, .event-details {
-		padding-left: 0;
-		clear: both;
-	  }
-	}
-	&.compact .date .fulldate {
-	  margin: 0 0 0 5px;
-	  padding: 3px 7px;
-	  margin-top: -3px;
-	  float: right;
-	  background: #f2f2f2;
-	  -moz-border-radius: 2px;
-	  -webkit-border-radius: 2px;
-	  border-radius: 2px;
-	}
-	.type .fa:before {
-	  margin-right: 5px;
-	  content: '\f124';
-	  font-size: 14px;
-	}
-	.location {
-	  float: left;
-	  width: 75%;
-	  overflow: hidden;
-	  text-overflow: ellipsis;
-	  white-space: nowrap;
-	}
-	&.compact {
-	  .location {
-		width: 70%;
-	  }
-	  .date .start, .description {
-		display: none;
-	  }
-	}
-  }
-  
-  /* Extras
-	 ************************************ */
-  
-  #nymap {
-	float: right;
-	margin: -15px 0 0 50px;
-  }
-  
-  img[usemap], map area {
-	outline: none;
-  }
-  
-  /* compact filters */
-  
-  ul.events-filters {
-	width: 100%;
-	float: left;
-	li {
-	  margin-right: 4px;
-	  &:last-child {
-		border: 0;
-		margin-right: 0;
-	  }
-	  a {
-		padding: 2px 10px 1px;
-		-moz-border-radius: 2px;
-		-webkit-border-radius: 2px;
-		border-radius: 2px;
-		font-size: 13px;
-	  }
-	}
-  }
-  
-  .win ul.events-filters li {
-	margin-right: 2px;
-	&:last-child {
-	  margin-right: 0;
-	}
-	a {
-	  padding: 2px 8px 1px;
-	}
-  }
+}
   

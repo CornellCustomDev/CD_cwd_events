@@ -78,7 +78,7 @@ export const add_calender = (myEvent) => {
     }
 
     const buildiCal=(myObj)=> `
-                        <a class="fa fa-calendar apple" href="${myObj.localist_ics_url}" title="Save to iCal" target="_blank" >
+                        <a class="fa fa-calendar apple" href="${myObj.localist_ics_url}/#" title="Save to iCal" target="_blank" >
                         <span class='sr-only'>iCal</span>
                         </a>
                         `;

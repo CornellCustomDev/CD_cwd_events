@@ -1,22 +1,23 @@
 import {eventFilters, add_calender} from './template-helpers';
 
+//test for empty headings
 export const standardInner = (builtData) => `
     ${checkDate.month(builtData)}
     ${checkDate.day(builtData)}
     <div class="event-node node dept-${builtData.department} type-${builtData.type} group-${builtData.group_id}">
             <h3><a target="_blank" href="${builtData.event.localist_url}">${builtData.event.title}</a></h3>
-            <h4 class="meta date"><span class="start">${builtData.event_time}</span></h4>
-            <h4 class="meta location">${builtData.event.location_name}</h4>
-            <h4 class="meta type"><span class="fa"></span>${builtData.event_types}</h4>
+            ${builtData.event_time ? `<h4 class="meta date"><span class="start">${builtData.event_time}</span></h4>` : ''}
+            ${builtData.event.location_name ? `<h4 class="meta location">${builtData.event.location_name}</h4>` : ''}
+            ${builtData.event_types ? `<h4 class="meta type"><span class="fa"></span>${builtData.event_types}</h4>` : ''}
             <p class="description">${builtData.description} 
-                <a class="read-more more" href="${builtData.event.localist_url}" target="_blank">${builtData.pref_readmore}</a>
+                <a class="read-more more" href="${builtData.event.localist_url}/#" target="_blank">${builtData.pref_readmore}<span class='visually-hidden'> about ${builtData.event.title}</span></a>
             </p>
             ${builtData.addCal ? `${add_calender(builtData.event)}` : ''}  
     </div><!--end of node -->`;
 
 export const standardWrapper = (inner, args) => `
     <section title="${args.title}">
-        <h2>${args.heading}</h2>
+    ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div id="main-body">  
             <div class="events-listing no-thumbnails" id="events-listing">
                 ${eventFilters(args.filters)}

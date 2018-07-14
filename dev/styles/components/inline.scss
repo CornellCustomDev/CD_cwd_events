@@ -1,5 +1,6 @@
   /* calendar */
-  /***** Events *****/
+	/***** Events *****/
+	$waGrey: #767676; //4,54 on white
   
   .event-month-and-day {
 	text-align: center;
@@ -13,7 +14,7 @@
 	.event-month {
 	  float: left;
 	  text-transform: uppercase;
-	  color: #999;
+	  color: $waGrey;
 	  display: block;
 	  font-size: 12px;
 	  padding-left: 4px;
