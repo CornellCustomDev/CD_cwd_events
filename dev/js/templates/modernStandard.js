@@ -1,4 +1,5 @@
 import {eventFilters, add_calender} from './template-helpers';
+//@todo fix issues with time-date format
 export const moderStandardInner = (builtData) =>`<div class="card event-node dept-${builtData.department} type-${builtData.type} group-${builtData.group_id}" >
                             <div class="events">
                                 <a href="${builtData.event.localist_url}" class="group-link-wrapper field-group-link">
@@ -25,7 +26,7 @@ export const modernStandardWrapper = (inner, args) => `
         ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div>  
             <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails" id="events-listing">
-                ${eventFilters(args.filters)}
+                ${eventFilters(args.filters, args.target)}
                 <div class="events-list">
                     ${inner}
                 </div>

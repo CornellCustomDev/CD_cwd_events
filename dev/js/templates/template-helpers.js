@@ -1,14 +1,17 @@
 /* 
 * filterObj has structure: obj.name, obj.id 
   @todo add a unique identifier
-  attaches onClick handlers to window object @todo encapsulate
-*/
-export const eventFilters = (filterObjs) => {
+  attaches onClick handlers to window object
 
+  this should probably be a class
+  also tests that element exists
+*/
+export const eventFilters = (filterObjs, domTarget) => {
+    let targetElem = document.getElementById(domTarget);
     //handles filter events
     const toggleFilters = (id, target) => {
         //remove active class from all filter buttons
-        var allFilterBtns = document.getElementsByClassName('filter-btn');
+        var allFilterBtns = targetElem.getElementsByClassName('filter-btn');
         for (let value of allFilterBtns){
             value.classList.remove('active');
         }
@@ -18,45 +21,46 @@ export const eventFilters = (filterObjs) => {
 
         //onclick button will only hide non target elements
         //hide all filter elements
-        var allEvents = document.getElementsByClassName('event-node');
+        var allEvents = targetElem.getElementsByClassName('event-node');
         for (let value of allEvents){
             value.classList.add('fadeOut');
         }
 
         //show the target elements
-        var targetElems = document.getElementsByClassName(target);
+        var targetElems = targetElem.getElementsByClassName(target);
         for (let value of targetElems){
             value.classList.remove('fadeOut');
         }
     }
     const showAllEvents = () => {
         //remove active class from all filter buttons
-        var allFilterBtns = document.getElementsByClassName('filter-btn');
+        var allFilterBtns = targetElem.getElementsByClassName('filter-btn');
         for (let value of allFilterBtns){
             value.classList.remove('active');
         }    
         
-        var elem = document.getElementById('filterAll');
+        var elem = document.getElementById('filterAll-'+domTarget);
         //set the current item active
         elem.classList.add('active');
 
         //show all filter elements
-        var allEvents = document.getElementsByClassName('event-node');
+        var allEvents = targetElem.getElementsByClassName('event-node');
         for (let value of allEvents){
             value.classList.remove('fadeOut');
         }    
 
     }
     // attach event handlers to window
-    window.toggleFilters = toggleFilters;
-    window.showAllEvents = showAllEvents;    
+
+    window['toggleFilters'+domTarget] = toggleFilters;
+    window['showAllEvents'+domTarget] = showAllEvents;    
     
     return `
         <div class='events-filters-wrap' ><h3 class="hidden">Show:</h3>
             <ul class="events-filters">
-                <li><button id="filterAll" data-filter="all" class="filter-btn active" onClick="showAllEvents()">All Events</button></li>
+                <li><button id="filterAll-${domTarget}" data-filter="all" class="filter-btn active" onClick="showAllEvents${domTarget}()">All Events</button></li>
                 ${filterObjs ? 
-                    Object.keys(filterObjs).map( (key, index)=> `<li><button id='filter${filterObjs[key].id}' data-filter="${filterObjs[key].pref_category}-${filterObjs[key].id}" class="filter-btn" onclick="toggleFilters('filter${filterObjs[key].id}', '${filterObjs[key].pref_category}-${filterObjs[key].id}')">${filterObjs[key].name}</button></li>`).join('')
+                    Object.keys(filterObjs).map( (key, index)=> `<li><button id='filter${filterObjs[key].id}-${domTarget}' data-filter="${filterObjs[key].pref_category}-${filterObjs[key].id}" class="filter-btn" onclick="toggleFilters${domTarget}('filter${filterObjs[key].id}-${domTarget}', '${filterObjs[key].pref_category}-${filterObjs[key].id}')">${filterObjs[key].name}</button></li>`).join('')
                 :''}
             </ul>
         </div>
@@ -73,7 +77,7 @@ export const add_calender = (myEvent) => {
         const gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
         return `
                 <a class="fa fa-google google" 
-                    href='https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=${gDateStart}%2F${gDateStop}&amp;details=${encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />"))}&amp;location=${myObj.location}&amp;sprop=website%3Aevents.cornell.edu&amp;text=${myObj.title}' title="Save to Google Calendar" target="_blank">
+                    href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=${gDateStart}%2F${gDateStop}&amp;details=${encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, `<br />`))}&amp;location=${encodeURIComponent(myObj.location)}&amp;sprop=website%3Aevents.cornell.edu&amp;text=${encodeURIComponent(myObj.title)}" title="Save to Google Calendar" target="_blank">
                 <span class="sr-only">Add ${myObj.title} to Google Calendar</span>
                 </a>
                 `;
@@ -92,7 +96,7 @@ export const add_calender = (myEvent) => {
                         `;
 
     /* ------------------ END OF BUILD LINKS --------------------------- */    
-    return `<dd class="event-subscribe">add to calendar
+    return `<span class="event-subscribe">add to calendar
             ${buidGoogleStr(myEvent)} ${buildiCal(myEvent)} ${buildOutlookCal(myEvent)}
-            </dd>`;
+            </span>`;
 }

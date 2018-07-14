@@ -20,7 +20,7 @@ export const standardWrapper = (inner, args) => `
     ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div class="main-body">  
             <div class="events-listing no-thumbnails" >
-                ${eventFilters(args.filters)}
+                ${eventFilters(args.filters, args.target)}
                 <div class="events-list">
                     ${inner}
                 </div>

@@ -1,3 +1,4 @@
+//@todo fix issues with time-date format
 export const modernCompactInner = ( builtData )=> `<div class="card">
 <div class="events">
     <a href="${builtData.event.localist_url}" class="group-link-wrapper field-group-link">

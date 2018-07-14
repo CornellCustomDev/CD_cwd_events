@@ -1,4 +1,4 @@
-import {eventFilters, add_calender} from './template-helpers';
+import {add_calender} from './template-helpers';
 
 export const compactInner=(builtData)=>`
     <div class="event-node node dept-${builtData.department} type-${builtData.type} group-${builtData.group_id}">

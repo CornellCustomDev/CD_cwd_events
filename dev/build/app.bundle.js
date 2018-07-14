@@ -203,7 +203,7 @@ var LocalList = function () {
         this.format = format;
 
         //standard wrapper variables 
-        this.wrapperArgs = {};
+        this.wrapperArgs = { 'target': this.target }; //pass unique target id};
         this.wrapperArgs.title = title;
         this.wrapperArgs.heading = heading;
         this.wrapperArgs.filters = {};
@@ -844,7 +844,7 @@ var moderStandardInner = exports.moderStandardInner = function moderStandardInne
 };
 
 var modernStandardWrapper = exports.modernStandardWrapper = function modernStandardWrapper(inner, args) {
-    return '\n    <section title="' + args.title + '">\n        ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div>  \n            <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails" id="events-listing">\n                ' + (0, _templateHelpers.eventFilters)(args.filters) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
+    return '\n    <section title="' + args.title + '">\n        ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div>  \n            <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails" id="events-listing">\n                ' + (0, _templateHelpers.eventFilters)(args.filters, args.target) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
 };
 
 var tagStr = function tagStr(event_types) {
@@ -882,7 +882,7 @@ var standardInner = exports.standardInner = function standardInner(builtData) {
 };
 
 var standardWrapper = exports.standardWrapper = function standardWrapper(inner, args) {
-    return '\n    <section title="' + args.title + '">\n    ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div class="main-body">  \n            <div class="events-listing no-thumbnails" >\n                ' + (0, _templateHelpers.eventFilters)(args.filters) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
+    return '\n    <section title="' + args.title + '">\n    ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div class="main-body">  \n            <div class="events-listing no-thumbnails" >\n                ' + (0, _templateHelpers.eventFilters)(args.filters, args.target) + '\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
 };
 
 /* 
@@ -928,14 +928,17 @@ Object.defineProperty(exports, "__esModule", {
 /* 
 * filterObj has structure: obj.name, obj.id 
   @todo add a unique identifier
-  attaches onClick handlers to window object @todo encapsulate
-*/
-var eventFilters = exports.eventFilters = function eventFilters(filterObjs) {
+  attaches onClick handlers to window object
 
+  this should probably be a class
+  also tests that element exists
+*/
+var eventFilters = exports.eventFilters = function eventFilters(filterObjs, domTarget) {
+    var targetElem = document.getElementById(domTarget);
     //handles filter events
     var toggleFilters = function toggleFilters(id, target) {
         //remove active class from all filter buttons
-        var allFilterBtns = document.getElementsByClassName('filter-btn');
+        var allFilterBtns = targetElem.getElementsByClassName('filter-btn');
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -967,7 +970,7 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs) {
 
         //onclick button will only hide non target elements
         //hide all filter elements
-        var allEvents = document.getElementsByClassName('event-node');
+        var allEvents = targetElem.getElementsByClassName('event-node');
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
         var _iteratorError2 = undefined;
@@ -995,7 +998,7 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs) {
             }
         }
 
-        var targetElems = document.getElementsByClassName(target);
+        var targetElems = targetElem.getElementsByClassName(target);
         var _iteratorNormalCompletion3 = true;
         var _didIteratorError3 = false;
         var _iteratorError3 = undefined;
@@ -1023,7 +1026,7 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs) {
     };
     var showAllEvents = function showAllEvents() {
         //remove active class from all filter buttons
-        var allFilterBtns = document.getElementsByClassName('filter-btn');
+        var allFilterBtns = targetElem.getElementsByClassName('filter-btn');
         var _iteratorNormalCompletion4 = true;
         var _didIteratorError4 = false;
         var _iteratorError4 = undefined;
@@ -1049,12 +1052,12 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs) {
             }
         }
 
-        var elem = document.getElementById('filterAll');
+        var elem = document.getElementById('filterAll-' + domTarget);
         //set the current item active
         elem.classList.add('active');
 
         //show all filter elements
-        var allEvents = document.getElementsByClassName('event-node');
+        var allEvents = targetElem.getElementsByClassName('event-node');
         var _iteratorNormalCompletion5 = true;
         var _didIteratorError5 = false;
         var _iteratorError5 = undefined;
@@ -1081,11 +1084,12 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs) {
         }
     };
     // attach event handlers to window
-    window.toggleFilters = toggleFilters;
-    window.showAllEvents = showAllEvents;
 
-    return '\n        <div class=\'events-filters-wrap\' ><h3 class="hidden">Show:</h3>\n            <ul class="events-filters">\n                <li><button id="filterAll" data-filter="all" class="filter-btn active" onClick="showAllEvents()">All Events</button></li>\n                ' + (filterObjs ? Object.keys(filterObjs).map(function (key, index) {
-        return '<li><button id=\'filter' + filterObjs[key].id + '\' data-filter="' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '" class="filter-btn" onclick="toggleFilters(\'filter' + filterObjs[key].id + '\', \'' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '\')">' + filterObjs[key].name + '</button></li>';
+    window['toggleFilters' + domTarget] = toggleFilters;
+    window['showAllEvents' + domTarget] = showAllEvents;
+
+    return '\n        <div class=\'events-filters-wrap\' ><h3 class="hidden">Show:</h3>\n            <ul class="events-filters">\n                <li><button id="filterAll-' + domTarget + '" data-filter="all" class="filter-btn active" onClick="showAllEvents' + domTarget + '()">All Events</button></li>\n                ' + (filterObjs ? Object.keys(filterObjs).map(function (key, index) {
+        return '<li><button id=\'filter' + filterObjs[key].id + '-' + domTarget + '\' data-filter="' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '" class="filter-btn" onclick="toggleFilters' + domTarget + '(\'filter' + filterObjs[key].id + '-' + domTarget + '\', \'' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '\')">' + filterObjs[key].name + '</button></li>';
     }).join('') : '') + '\n            </ul>\n        </div>\n    ';
 };
 
@@ -1097,7 +1101,7 @@ var add_calender = exports.add_calender = function add_calender(myEvent) {
         //this may not work as intended for repeating events
         var myED = myObj.last_date;
         var gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
-        return '\n                <a class="fa fa-google google" \n                    href=\'https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=' + gDateStart + '%2F' + gDateStop + '&amp;details=' + encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />")) + '&amp;location=' + myObj.location + '&amp;sprop=website%3Aevents.cornell.edu&amp;text=' + myObj.title + '\' title="Save to Google Calendar" target="_blank">\n                <span class="sr-only">Add ' + myObj.title + ' to Google Calendar</span>\n                </a>\n                ';
+        return '\n                <a class="fa fa-google google" \n                    href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=' + gDateStart + '%2F' + gDateStop + '&amp;details=' + encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, '<br />')) + '&amp;location=' + encodeURIComponent(myObj.location) + '&amp;sprop=website%3Aevents.cornell.edu&amp;text=' + encodeURIComponent(myObj.title) + '" title="Save to Google Calendar" target="_blank">\n                <span class="sr-only">Add ' + myObj.title + ' to Google Calendar</span>\n                </a>\n                ';
     };
 
     var buildiCal = function buildiCal(myObj) {
@@ -1109,7 +1113,7 @@ var add_calender = exports.add_calender = function add_calender(myEvent) {
     };
 
     /* ------------------ END OF BUILD LINKS --------------------------- */
-    return '<dd class="event-subscribe">add to calendar\n            ' + buidGoogleStr(myEvent) + ' ' + buildiCal(myEvent) + ' ' + buildOutlookCal(myEvent) + '\n            </dd>';
+    return '<span class="event-subscribe">add to calendar\n            ' + buidGoogleStr(myEvent) + ' ' + buildiCal(myEvent) + ' ' + buildOutlookCal(myEvent) + '\n            </span>';
 };
 
 /***/ }),

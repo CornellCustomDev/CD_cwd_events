@@ -68,10 +68,10 @@ class LocalList{
         this.format = format;
 
         //standard wrapper variables 
-        this.wrapperArgs = {};
+        this.wrapperArgs = {'target':this.target};//pass unique target id};
         this.wrapperArgs.title = title; 
         this.wrapperArgs.heading = heading;
-        this.wrapperArgs.filters = {};
+        this.wrapperArgs.filters = {}
 
         //required by service findall to request localist data
         this.requestArgs = {};
