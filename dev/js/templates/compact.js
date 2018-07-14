@@ -15,8 +15,8 @@ export const compactInner=(builtData)=>`
 export const compactWrapper = (inner, args) => `
     <section title="${args.title}">
         <h2>${args.heading}</h2>
-        <div id="main-body">  
-            <div class="events-listing no-thumbnails" id="events-listing compact">
+        <div class="main-body">  
+            <div class="events-listing no-thumbnails compact">
                 <!--filters options not supported -->
                 <div class="events-list">
                     ${inner}

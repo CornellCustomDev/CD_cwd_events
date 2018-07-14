@@ -18,8 +18,8 @@ export const standardInner = (builtData) => `
 export const standardWrapper = (inner, args) => `
     <section title="${args.title}">
     ${args.heading ? `<h2>${args.heading}</h2>` : ''}
-        <div id="main-body">  
-            <div class="events-listing no-thumbnails" id="events-listing">
+        <div class="main-body">  
+            <div class="events-listing no-thumbnails" >
                 ${eventFilters(args.filters)}
                 <div class="events-list">
                     ${inner}

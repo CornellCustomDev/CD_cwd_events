@@ -1,5 +1,7 @@
 /* 
-* filterObj has structer obj.name obj.id 
+* filterObj has structure: obj.name, obj.id 
+  @todo add a unique identifier
+  attaches onClick handlers to window object @todo encapsulate
 */
 export const eventFilters = (filterObjs) => {
 
@@ -50,7 +52,7 @@ export const eventFilters = (filterObjs) => {
     window.showAllEvents = showAllEvents;    
     
     return `
-        <div id="events-filters"><h3 class="hidden">Show:</h3>
+        <div class='events-filters-wrap' ><h3 class="hidden">Show:</h3>
             <ul class="events-filters">
                 <li><button id="filterAll" data-filter="all" class="filter-btn active" onClick="showAllEvents()">All Events</button></li>
                 ${filterObjs ? 
@@ -72,25 +74,25 @@ export const add_calender = (myEvent) => {
         return `
                 <a class="fa fa-google google" 
                     href='https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=${gDateStart}%2F${gDateStop}&amp;details=${encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />"))}&amp;location=${myObj.location}&amp;sprop=website%3Aevents.cornell.edu&amp;text=${myObj.title}' title="Save to Google Calendar" target="_blank">
-                <span class="sr-only">Google Calendar</span>
+                <span class="sr-only">Add ${myObj.title} to Google Calendar</span>
                 </a>
                 `;
     }
 
     const buildiCal=(myObj)=> `
                         <a class="fa fa-calendar apple" href="${myObj.localist_ics_url}/#" title="Save to iCal" target="_blank" >
-                        <span class='sr-only'>iCal</span>
+                        <span class='sr-only'>Add ${myObj.title} to iCal</span>
                         </a>
                         `;
 
     const buildOutlookCal=(myObj)=> `
                         <a class="fa fa-clock-o microsoft" href="${myObj.localist_ics_url}" title="Save to Outlook" target="_blank" >
-                            <span class='sr-only'>Outlook</span>
+                            <span class='sr-only'>Add ${myObj.title} to Outlook</span>
                         </a>
                         `;
 
     /* ------------------ END OF BUILD LINKS --------------------------- */    
-    return `<dd class="event-subscribe" id="event_subscribe">add to calendar
+    return `<dd class="event-subscribe">add to calendar
             ${buidGoogleStr(myEvent)} ${buildiCal(myEvent)} ${buildOutlookCal(myEvent)}
             </dd>`;
 }
