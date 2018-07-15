@@ -7,7 +7,7 @@ Typical ussage:
 clone repository:<br/>
 ```git clone https://github.com/psw58/CD_cwd_events.git```
 
-move to etc directory:<br/>
+move to dev directory:<br/>
 ```cd dev```
 
 install requirements:<br/>
