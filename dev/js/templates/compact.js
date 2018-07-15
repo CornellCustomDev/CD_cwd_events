@@ -1,4 +1,4 @@
-import {add_calender} from './template-helpers';
+import {add_calendar} from './template-helpers';
 
 export const compactInner=(builtData)=>`
     <div class="event-node node dept-${builtData.department} type-${builtData.type} group-${builtData.group_id}">
@@ -8,7 +8,7 @@ export const compactInner=(builtData)=>`
     <p class="description">${builtData.description} 
     <a class="read-more more" href="${builtData.event.localist_url}/#" target="_blank">${builtData.pref_readmore}<span class='visually-hidden'> about ${builtData.event.title}</span></a>
     </p>
-    ${builtData.addCal ? `${add_calender(builtData.event)}` : ''}  
+    ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}  
     </div><!--end of node -->
     `;
 //this has class compact only difference

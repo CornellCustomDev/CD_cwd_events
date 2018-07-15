@@ -791,7 +791,7 @@ exports.compactWrapper = exports.compactInner = undefined;
 var _templateHelpers = __webpack_require__(/*! ./template-helpers */ "./js/templates/template-helpers.js");
 
 var compactInner = exports.compactInner = function compactInner(builtData) {
-    return '\n    <div class="event-node node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '">\n    <h3><a target="_blank" href="' + builtData.event.localist_url + '">' + builtData.event.title + '</a></h3>\n    ' + (builtData.event_date_compact ? '<h4 class="meta date"><span class="fulldate">' + builtData.event_date_compact + '</span></h4>' : '') + '\n    ' + (builtData.event.location_name ? '<h4 class="meta location">' + builtData.event.location_name + '</h4>' : '') + '    \n    <p class="description">' + builtData.description + ' \n    <a class="read-more more" href="' + builtData.event.localist_url + '/#" target="_blank">' + builtData.pref_readmore + '<span class=\'visually-hidden\'> about ' + builtData.event.title + '</span></a>\n    </p>\n    ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calender)(builtData.event) : '') + '  \n    </div><!--end of node -->\n    ';
+    return '\n    <div class="event-node node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '">\n    <h3><a target="_blank" href="' + builtData.event.localist_url + '">' + builtData.event.title + '</a></h3>\n    ' + (builtData.event_date_compact ? '<h4 class="meta date"><span class="fulldate">' + builtData.event_date_compact + '</span></h4>' : '') + '\n    ' + (builtData.event.location_name ? '<h4 class="meta location">' + builtData.event.location_name + '</h4>' : '') + '    \n    <p class="description">' + builtData.description + ' \n    <a class="read-more more" href="' + builtData.event.localist_url + '/#" target="_blank">' + builtData.pref_readmore + '<span class=\'visually-hidden\'> about ' + builtData.event.title + '</span></a>\n    </p>\n    ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calendar)(builtData.event) : '') + '  \n    </div><!--end of node -->\n    ';
 };
 //this has class compact only difference
 var compactWrapper = exports.compactWrapper = function compactWrapper(inner, args) {
@@ -846,7 +846,7 @@ exports.modernStandardWrapper = exports.moderStandardInner = undefined;
 var _templateHelpers = __webpack_require__(/*! ./template-helpers */ "./js/templates/template-helpers.js");
 
 var moderStandardInner = exports.moderStandardInner = function moderStandardInner(builtData) {
-    return '<div class="card event-node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '" >\n                            <div class="events">\n                                <a href="' + builtData.event.localist_url + '" class="group-link-wrapper field-group-link">\n                                    <time title="' + builtData.event_date + '" datetime="' + builtData.dateTime + '">\n                                        <span class=\'month\'>' + builtData.abbrMonth + '</span>\n                                        <span class=\'day\'>' + builtData.day + '</span>\n                                    </time>\n                                    <div class="field title">\n                                        <h3>' + builtData.event.title + '</h3>\n                                    </div>\n                                    <div class="field meta">\n                                            <p>' + builtData.event_time + (builtData.event.location_name ? ', ' + builtData.event.location_name : '') + ' ' + tagStr(builtData.event.filters.event_types) + '</p>\n                                    </div>\n                                    <div class="field field-name-summary summary">\n                                        <p>' + builtData.description + '... read more</p> \n                                    </div>\n                                </a>\n                                ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calender)(builtData.event) : '') + '  \n                            </div><!--events-->\n                        </div><!--card-->';
+    return '<div class="card event-node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '" >\n                            <div class="events">\n                                <a href="' + builtData.event.localist_url + '" class="group-link-wrapper field-group-link">\n                                    <time title="' + builtData.event_date + '" datetime="' + builtData.dateTime + '">\n                                        <span class=\'month\'>' + builtData.abbrMonth + '</span>\n                                        <span class=\'day\'>' + builtData.day + '</span>\n                                    </time>\n                                    <div class="field title">\n                                        <h3>' + builtData.event.title + '</h3>\n                                    </div>\n                                    <div class="field meta">\n                                            <p>' + builtData.event_time + (builtData.event.location_name ? ', ' + builtData.event.location_name : '') + ' ' + tagStr(builtData.event.filters.event_types) + '</p>\n                                    </div>\n                                    <div class="field field-name-summary summary">\n                                        <p>' + builtData.description + '... read more</p> \n                                    </div>\n                                </a>\n                                ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calendar)(builtData.event) : '') + '  \n                            </div><!--events-->\n                        </div><!--card-->';
 };
 
 var modernStandardWrapper = exports.modernStandardWrapper = function modernStandardWrapper(inner, args) {
@@ -884,7 +884,7 @@ var _templateHelpers = __webpack_require__(/*! ./template-helpers */ "./js/templ
 
 //test for empty headings
 var standardInner = exports.standardInner = function standardInner(builtData) {
-    return '\n    ' + checkDate.month(builtData) + '\n    ' + checkDate.day(builtData) + '\n    <div class="event-node node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '">\n            <h3><a target="_blank" href="' + builtData.event.localist_url + '">' + builtData.event.title + '</a></h3>\n            ' + (builtData.event_time ? '<h4 class="meta date"><span class="start">' + builtData.event_time + '</span></h4>' : '') + '\n            ' + (builtData.event.location_name ? '<h4 class="meta location">' + builtData.event.location_name + '</h4>' : '') + '\n            ' + (builtData.event_types ? '<h4 class="meta type"><span class="fa"></span>' + builtData.event_types + '</h4>' : '') + '\n            <p class="description">' + builtData.description + ' \n                <a class="read-more more" href="' + builtData.event.localist_url + '/#" target="_blank">' + builtData.pref_readmore + '<span class=\'visually-hidden\'> about ' + builtData.event.title + '</span></a>\n            </p>\n            ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calender)(builtData.event) : '') + '  \n    </div><!--end of node -->';
+    return '\n    ' + checkDate.month(builtData) + '\n    ' + checkDate.day(builtData) + '\n    <div class="event-node node dept-' + builtData.department + ' type-' + builtData.type + ' group-' + builtData.group_id + '">\n            <h3><a target="_blank" href="' + builtData.event.localist_url + '">' + builtData.event.title + '</a></h3>\n            ' + (builtData.event_time ? '<h4 class="meta date"><span class="start">' + builtData.event_time + '</span></h4>' : '') + '\n            ' + (builtData.event.location_name ? '<h4 class="meta location">' + builtData.event.location_name + '</h4>' : '') + '\n            ' + (builtData.event_types ? '<h4 class="meta type"><span class="fa"></span>' + builtData.event_types + '</h4>' : '') + '\n            <p class="description">' + builtData.description + ' \n                <a class="read-more more" href="' + builtData.event.localist_url + '/#" target="_blank">' + builtData.pref_readmore + '<span class=\'visually-hidden\'> about ' + builtData.event.title + '</span></a>\n            </p>\n            ' + (builtData.addCal ? '' + (0, _templateHelpers.add_calendar)(builtData.event) : '') + '  \n    </div><!--end of node -->';
 };
 
 var standardWrapper = exports.standardWrapper = function standardWrapper(inner, args) {
@@ -932,12 +932,13 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 /* 
-* filterObj has structure: obj.name, obj.id 
-  @todo add a unique identifier
-  attaches onClick handlers to window object
+ @param filterObj has structure: obj.name, obj.id 
+ @param domTarget: string of html id #id should exist and be unique
+ attaches onClick handlers to window object
 
-  this should probably be a class
-  also tests that element exists
+ @todo  Add wai-aria controls support,
+        this should probably be a class,
+        also tests that element exists,
 */
 var eventFilters = exports.eventFilters = function eventFilters(filterObjs, domTarget) {
     var targetElem = document.getElementById(domTarget);
@@ -1090,7 +1091,6 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs, domT
         }
     };
     // attach event handlers to window
-
     window['toggleFilters' + domTarget] = toggleFilters;
     window['showAllEvents' + domTarget] = showAllEvents;
 
@@ -1099,7 +1099,7 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs, domT
     }).join('') : '') + '\n            </ul>\n        </div>\n    ';
 };
 
-var add_calender = exports.add_calender = function add_calender(myEvent) {
+var add_calendar = exports.add_calendar = function add_calendar(myEvent) {
     /* ----------------- build calander links -------------------------- */
     var buidGoogleStr = function buidGoogleStr(myObj) {
         var mySD = myObj.event_instances[0].event_instance.start.split('T')[0];

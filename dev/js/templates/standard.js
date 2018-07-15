@@ -1,4 +1,4 @@
-import {eventFilters, add_calender} from './template-helpers';
+import {eventFilters, add_calendar} from './template-helpers';
 
 //test for empty headings
 export const standardInner = (builtData) => `
@@ -12,7 +12,7 @@ export const standardInner = (builtData) => `
             <p class="description">${builtData.description} 
                 <a class="read-more more" href="${builtData.event.localist_url}/#" target="_blank">${builtData.pref_readmore}<span class='visually-hidden'> about ${builtData.event.title}</span></a>
             </p>
-            ${builtData.addCal ? `${add_calender(builtData.event)}` : ''}  
+            ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}  
     </div><!--end of node -->`;
 
 export const standardWrapper = (inner, args) => `

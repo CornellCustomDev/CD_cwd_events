@@ -1,10 +1,11 @@
 /* 
-* filterObj has structure: obj.name, obj.id 
-  @todo add a unique identifier
-  attaches onClick handlers to window object
+ @param filterObj has structure: obj.name, obj.id 
+ @param domTarget: string of html id #id should exist and be unique
+ attaches onClick handlers to window object
 
-  this should probably be a class
-  also tests that element exists
+ @todo  Add wai-aria controls support,
+        this should probably be a class,
+        also tests that element exists,
 */
 export const eventFilters = (filterObjs, domTarget) => {
     let targetElem = document.getElementById(domTarget);
@@ -51,7 +52,6 @@ export const eventFilters = (filterObjs, domTarget) => {
 
     }
     // attach event handlers to window
-
     window['toggleFilters'+domTarget] = toggleFilters;
     window['showAllEvents'+domTarget] = showAllEvents;    
     
@@ -67,7 +67,7 @@ export const eventFilters = (filterObjs, domTarget) => {
     `;    
             }  
 
-export const add_calender = (myEvent) => {
+export const add_calendar = (myEvent) => {
     /* ----------------- build calander links -------------------------- */
     const buidGoogleStr=(myObj)=> {
         let mySD = myObj.event_instances[0].event_instance.start.split('T')[0];

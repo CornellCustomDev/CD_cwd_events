@@ -1,4 +1,4 @@
-import {eventFilters, add_calender} from './template-helpers';
+import {eventFilters, add_calendar} from './template-helpers';
 
 export const moderStandardInner = (builtData) =>`<div class="card event-node dept-${builtData.department} type-${builtData.type} group-${builtData.group_id}" >
                             <div class="events">
@@ -17,7 +17,7 @@ export const moderStandardInner = (builtData) =>`<div class="card event-node dep
                                         <p>${builtData.description}... read more</p> 
                                     </div>
                                 </a>
-                                ${builtData.addCal ? `${add_calender(builtData.event)}` : ''}  
+                                ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}  
                             </div><!--events-->
                         </div><!--card-->`;
 
