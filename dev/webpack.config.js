@@ -51,7 +51,7 @@ devBuild = Object.assign({}, config,{
 
 //builds into drupal module file locations
 drupalBuild = Object.assign({}, config,{
-    mode: 'development',
+    mode: 'production',
     entry: './js/app.js',
     output: {
         path: path.resolve(__dirname, '../js'),

@@ -17,6 +17,7 @@ export class BuildEvent{
         this.event_date_compact;
         this.event_date;
         this.displayDate;
+        this.dateTime;//yyyy-mm-dd
         this.abbrDay;
         this.fullDay;
         this.abbrMonth;
@@ -53,6 +54,7 @@ export class BuildEvent{
         var event_fulldate = new Date(event.event_instances[0].event_instance.start);
         var event_day = this.day_array_abb[event_fulldate.getDay()];
         var event_date = event.event_instances[0].event_instance.start.split('T')[0];
+        this.dateTime = event_date;
         this.event_time = event.event_instances[0].event_instance.start.split('T')[1];
         this.event_time = convertTime(this.event_time); // convert to 12-hour format
         var year = event_date.split('-')[0];
