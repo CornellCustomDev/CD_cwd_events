@@ -21,7 +21,7 @@ CWD Events Module
             if (CWD_LocalList){
               CWD_LocalList.run( settings );
             }else{
-              console.warn('ERROR: can not find events buid');
+              console.warn('ERROR: can not find events build');
             }
          </script>
   </section>
