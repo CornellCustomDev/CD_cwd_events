@@ -20,3 +20,5 @@ to build cwd_events.js run webpack:<br/>
 ```npm run webpack```
 
 includes webpack sass support, does not support image loading
+
+## DEV Folder can be removed for production distribution of Drupal Module 
