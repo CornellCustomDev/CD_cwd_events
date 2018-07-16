@@ -9,6 +9,8 @@
 */
 export const eventFilters = (filterObjs, domTarget) => {
     let targetElem = document.getElementById(domTarget);
+    //make sure function names are safe strings
+    const domStr = domTarget.replace(/[^\w]/gi, '')
     //handles filter events
     const toggleFilters = (id, target) => {
         //remove active class from all filter buttons
@@ -40,7 +42,7 @@ export const eventFilters = (filterObjs, domTarget) => {
             value.classList.remove('active');
         }    
         
-        var elem = document.getElementById('filterAll-'+domTarget);
+        var elem = document.getElementById('filterAll-'+domStr);
         //set the current item active
         elem.classList.add('active');
 
@@ -52,15 +54,15 @@ export const eventFilters = (filterObjs, domTarget) => {
 
     }
     // attach event handlers to window
-    window['toggleFilters'+domTarget] = toggleFilters;
-    window['showAllEvents'+domTarget] = showAllEvents;    
+    window['toggleFilters'+domStr] = toggleFilters;
+    window['showAllEvents'+domStr] = showAllEvents;
     
     return `
         <div class='events-filters-wrap' ><h3 class="hidden">Show:</h3>
             <ul class="events-filters">
-                <li><button id="filterAll-${domTarget}" data-filter="all" class="filter-btn active" onClick="showAllEvents${domTarget}()">All Events</button></li>
+                <li><button id="filterAll-${domStr}" data-filter="all" class="filter-btn active" onClick="showAllEvents${domStr}()">All Events</button></li>
                 ${filterObjs ? 
-                    Object.keys(filterObjs).map( (key, index)=> `<li><button id='filter${filterObjs[key].id}-${domTarget}' data-filter="${filterObjs[key].pref_category}-${filterObjs[key].id}" class="filter-btn" onclick="toggleFilters${domTarget}('filter${filterObjs[key].id}-${domTarget}', '${filterObjs[key].pref_category}-${filterObjs[key].id}')">${filterObjs[key].name}</button></li>`).join('')
+                    Object.keys(filterObjs).map( (key, index)=> `<li><button id='filter${filterObjs[key].id}-${domStr}' data-filter="${filterObjs[key].pref_category}-${filterObjs[key].id}" class="filter-btn" onclick="toggleFilters${domStr}('filter${filterObjs[key].id}-${domStr}', '${filterObjs[key].pref_category}-${filterObjs[key].id}')">${filterObjs[key].name}</button></li>`).join('')
                 :''}
             </ul>
         </div>

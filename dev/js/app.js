@@ -34,7 +34,6 @@ module.exports = {
     localList.renderEvents();
 */
 
-//@todo should verify target exists
 class LocalList{
     // define the following arguments
     constructor({
@@ -105,7 +104,7 @@ class LocalList{
         this.addThrobber( this.target );
         //test  to see if custom templates are defined
         if ( !('innerTemplate' in this) && !('outerTemplate' in this)){
-            //if not set format of template
+            //if not defined set format of template
             this.innerTemplate = standardInner;
             this.outerTemplate = standardWrapper;
             switch(this.format) {
@@ -138,7 +137,7 @@ class LocalList{
             console.log('using custom templates');
         }
         //fetch localist events and build the event nodes
-        this.getAndBuildList( );
+        this.getAndBuildList();
     }
 
     /* 

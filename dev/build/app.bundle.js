@@ -148,7 +148,6 @@ module.exports = {
         localList.renderEvents();
     */
 
-    //@todo should verify target exists
 };
 var LocalList = function () {
     // define the following arguments
@@ -242,7 +241,7 @@ var LocalList = function () {
             this.addThrobber(this.target);
             //test  to see if custom templates are defined
             if (!('innerTemplate' in this) && !('outerTemplate' in this)) {
-                //if not set format of template
+                //if not defined set format of template
                 this.innerTemplate = _standard.standardInner;
                 this.outerTemplate = _standard.standardWrapper;
                 switch (this.format) {
@@ -942,6 +941,8 @@ Object.defineProperty(exports, "__esModule", {
 */
 var eventFilters = exports.eventFilters = function eventFilters(filterObjs, domTarget) {
     var targetElem = document.getElementById(domTarget);
+    //make sure function names are safe strings
+    var domStr = domTarget.replace(/[^\w]/gi, '');
     //handles filter events
     var toggleFilters = function toggleFilters(id, target) {
         //remove active class from all filter buttons
@@ -1059,7 +1060,7 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs, domT
             }
         }
 
-        var elem = document.getElementById('filterAll-' + domTarget);
+        var elem = document.getElementById('filterAll-' + domStr);
         //set the current item active
         elem.classList.add('active');
 
@@ -1091,11 +1092,11 @@ var eventFilters = exports.eventFilters = function eventFilters(filterObjs, domT
         }
     };
     // attach event handlers to window
-    window['toggleFilters' + domTarget] = toggleFilters;
-    window['showAllEvents' + domTarget] = showAllEvents;
+    window['toggleFilters' + domStr] = toggleFilters;
+    window['showAllEvents' + domStr] = showAllEvents;
 
-    return '\n        <div class=\'events-filters-wrap\' ><h3 class="hidden">Show:</h3>\n            <ul class="events-filters">\n                <li><button id="filterAll-' + domTarget + '" data-filter="all" class="filter-btn active" onClick="showAllEvents' + domTarget + '()">All Events</button></li>\n                ' + (filterObjs ? Object.keys(filterObjs).map(function (key, index) {
-        return '<li><button id=\'filter' + filterObjs[key].id + '-' + domTarget + '\' data-filter="' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '" class="filter-btn" onclick="toggleFilters' + domTarget + '(\'filter' + filterObjs[key].id + '-' + domTarget + '\', \'' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '\')">' + filterObjs[key].name + '</button></li>';
+    return '\n        <div class=\'events-filters-wrap\' ><h3 class="hidden">Show:</h3>\n            <ul class="events-filters">\n                <li><button id="filterAll-' + domStr + '" data-filter="all" class="filter-btn active" onClick="showAllEvents' + domStr + '()">All Events</button></li>\n                ' + (filterObjs ? Object.keys(filterObjs).map(function (key, index) {
+        return '<li><button id=\'filter' + filterObjs[key].id + '-' + domStr + '\' data-filter="' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '" class="filter-btn" onclick="toggleFilters' + domStr + '(\'filter' + filterObjs[key].id + '-' + domStr + '\', \'' + filterObjs[key].pref_category + '-' + filterObjs[key].id + '\')">' + filterObjs[key].name + '</button></li>';
     }).join('') : '') + '\n            </ul>\n        </div>\n    ';
 };
 
