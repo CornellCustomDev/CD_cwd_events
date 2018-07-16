@@ -174,7 +174,7 @@ class LocalList{
         myObj.events.forEach( (event) => {
             //built event provides common functions to format the data
             let builtEvent = new BuildEvent(event.event, this.BE_args);
-            console.log( builtEvent );
+            //console.log( builtEvent );
             //build the filters array does not support multiple filter entries [0]only
             if (this.pref_category_filters) {
                 if (this.pref_category == 'type' && builtEvent.type != 0) {

@@ -87,14 +87,20 @@ ul.events-filters li {
   -----------------*/
 .google {
     color: $waGoogleGreen !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
   
 .microsoft {
   color: $waLightBlue !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 .apple {
   color: #545a5f !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /* required change to visually hidden*/
