@@ -9,7 +9,7 @@ var config = {
 //builds into dev sourc location
 devBuild = Object.assign({}, config,{
     mode: 'development',
-    entry: './js/app.js',
+    entry: ["babel-polyfill", './js/app.js'],
     output: {
         path: path.resolve(__dirname, './build'),
         filename: 'app.bundle.js',
@@ -52,7 +52,7 @@ devBuild = Object.assign({}, config,{
 //builds into drupal module file locations
 drupalBuild = Object.assign({}, config,{
     mode: 'production',
-    entry: './js/app.js',
+    entry: ["babel-polyfill", './js/app.js'],
     output: {
         path: path.resolve(__dirname, '../js'),
         filename: 'cwd_events.js',
@@ -93,5 +93,5 @@ drupalBuild = Object.assign({}, config,{
 });
 
 module.exports =  [
-    devBuild, drupalBuild,  	
+    devBuild, drupalBuild
 ];
