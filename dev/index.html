@@ -7,6 +7,14 @@
     <link rel="stylesheet" type = "text/css" href = "css/fonts/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/framework/base.css">
     <link rel="stylesheet" type="text/css" href="css/framework/cornell.css">
+    <style>
+        .well{
+            border: solid 1px #ededed87;
+        }
+        .events-listing{
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class='container'>
@@ -15,26 +23,26 @@
         <p>Supports multiple calenders on same page with different settings options<p>
     </p>
     <div class="row">
-        <div class='col-md-8'>
+        <div class='col-md-8 well'>
             <div id="standard"></div>
         </div>
-        <div class='col-md-4'>
+        <div class='col-md-4 well'>
             <div id="compact"></div>
         </div>
     </div>
     <div class="row">
-        <div class='col-md-8'>
+        <div class='col-md-8 well'>
             <div id="modern_standard"></div>
         </div>
-        <div class='col-md-4'>
+        <div class='col-md-4 well'>
             <div id="modern_compact"></div>
         </div>
     </div>
     <div class="row">
-        <div class='col-md-8'>
+        <div class='col-md-8 well'>
             <div id="archive">TODO Archive needs implimentation</div>
         </div>
-        <div class='col-md-4'>
+        <div class='col-md-4 well'>
             <div id="inline_compact"></div>
         </div>
     </div>        
@@ -44,7 +52,7 @@
 <script src="build/app.bundle.js"></script>
 
 <script>
-    var settings = { 'target': 'standard', 'format':'standard', 'entries':4, 'heading':'standard',  'addCal': false};
+    var settings = { 'target': 'standard', 'format':'standard', 'entries':50, 'heading':'standard',  'addCal': false};
     CWD_LocalList.run( settings );      
     var settings1 = { 'target': 'modern_standard', 'format':'modern_standard', 'entries':3, 'heading':'modern_standard',  'addCal': true};
     CWD_LocalList.run( settings1 );  

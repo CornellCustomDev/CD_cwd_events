@@ -127,16 +127,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 module.exports = {
     run: function run(args) {
         var LL = new LocalList(args);
+
+        // Define a custom templates here to overide templates:
+        // for a list of all data elements see buildEvent
         /*
-         add custom templates here:
-         LL.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-         build the outer wrapper at a minimum this must contain innerHtml
-         LL.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-         */
+        LL.innerTemplate = (data)=>`${(data.event.photo_url)?`<p><p>${data.event.title}</p><img src=${data.event.photo_url} width='250'></p>`:''}`;
+        //LL.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+        //build the outer wrapper at a minimum this must contain innerHtml
+        LL.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+        */
+
         LL.renderEvents();
     }
 
-    /*LoacalList typical usage
+    //LL.innerTemplate(data)=>`${(data.event.photo_url)?`<img src=${data.event.photo_url} height='200'>`:''}`
+
+
+    //LoacalList typical usage example
+    /*
         const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
         let localList = new LocalList( settings ).renderEvents();
         or with custom template 
@@ -344,7 +352,7 @@ var LocalList = function () {
                         };
                     }
                 }
-
+                //console.log(builtEvent);
                 inner += _this2.innerTemplate(builtEvent); //returns html string
             });
 
@@ -382,6 +390,83 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * @returns {obj} with params of
+ *  abbrDay:
+    abbrMonth: 
+    addCal: 
+    args: 
+    dateTime:
+    day: 
+    day_array:
+    day_array_abb: 
+    department:
+    description: 
+    displayDate:
+    event_date: 
+    event_date_compact: 
+    event_time: 
+    event_time_end: 
+    event_types: 
+    format: 
+    fullDay: 
+    group_id: 
+    group_name:
+    month: 
+    monthHeader: 
+    month_array: 
+    month_array_abb: 
+    pref_eventdetails: "event details"
+    pref_readmore: "read more"
+    ticket_cost:    
+    event:
+        address:
+        allows_attendance:
+        allows_reviews:
+        campus_id:
+        city_id:
+        created_at:
+        created_by:
+        custom_fields: 
+        description: 
+        description_text: 
+        detail_views: 
+        directions: 
+        event_instances: 
+        facebook_id: 
+        featured: 
+        filters: 
+        first_date: 
+        free: 
+        geo: 
+        hashtag: 
+        id: 
+        keywords: 
+        last_date: 
+        localist_ics_url: 
+        localist_url: 
+        location: 
+        location_name: 
+        neighborhood_id:
+        photo_id:
+        photo_url:
+        private: 
+        recurring:
+        rejected:
+        room_number:
+        school_id:
+        sponsored:
+        tags: 
+        ticket_cost: 
+        ticket_url: 
+        title: 
+        url: 
+        urlname: 
+        user_id:
+        venue_id:
+        venue_url:
+        verified: 
+ */
 var BuildEvent = exports.BuildEvent = function () {
     function BuildEvent(event, args) {
         _classCallCheck(this, BuildEvent);

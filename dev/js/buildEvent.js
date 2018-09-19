@@ -1,3 +1,80 @@
+/**
+ * @returns {obj} with params of
+ *  abbrDay:
+    abbrMonth: 
+    addCal: 
+    args: 
+    dateTime:
+    day: 
+    day_array:
+    day_array_abb: 
+    department:
+    description: 
+    displayDate:
+    event_date: 
+    event_date_compact: 
+    event_time: 
+    event_time_end: 
+    event_types: 
+    format: 
+    fullDay: 
+    group_id: 
+    group_name:
+    month: 
+    monthHeader: 
+    month_array: 
+    month_array_abb: 
+    pref_eventdetails: "event details"
+    pref_readmore: "read more"
+    ticket_cost:    
+    event:
+        address:
+        allows_attendance:
+        allows_reviews:
+        campus_id:
+        city_id:
+        created_at:
+        created_by:
+        custom_fields: 
+        description: 
+        description_text: 
+        detail_views: 
+        directions: 
+        event_instances: 
+        facebook_id: 
+        featured: 
+        filters: 
+        first_date: 
+        free: 
+        geo: 
+        hashtag: 
+        id: 
+        keywords: 
+        last_date: 
+        localist_ics_url: 
+        localist_url: 
+        location: 
+        location_name: 
+        neighborhood_id:
+        photo_id:
+        photo_url:
+        private: 
+        recurring:
+        rejected:
+        room_number:
+        school_id:
+        sponsored:
+        tags: 
+        ticket_cost: 
+        ticket_url: 
+        title: 
+        url: 
+        urlname: 
+        user_id:
+        venue_id:
+        venue_url:
+        verified: 
+ */
 export class BuildEvent{
     constructor( event, args ) {
         this.event = event;

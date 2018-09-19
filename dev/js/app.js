@@ -12,17 +12,25 @@ import '../styles/app.scss';
 module.exports = {
     run: function (args) {
         let LL = new LocalList(args);
+        
+        // Define a custom templates here to overide templates:
+        // for a list of all data elements see buildEvent
         /*
-         add custom templates here:
-         LL.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-         build the outer wrapper at a minimum this must contain innerHtml
-         LL.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-         */
+        LL.innerTemplate = (data)=>`${(data.event.photo_url)?`<p><p>${data.event.title}</p><img src=${data.event.photo_url} width='250'></p>`:''}`;
+        //LL.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+        //build the outer wrapper at a minimum this must contain innerHtml
+        LL.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+        */
+         
         LL.renderEvents();
     }
 }
 
-/*LoacalList typical usage
+//LL.innerTemplate(data)=>`${(data.event.photo_url)?`<img src=${data.event.photo_url} height='200'>`:''}`
+
+
+//LoacalList typical usage example
+/*
     const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
     let localList = new LocalList( settings ).renderEvents();
     or with custom template 
@@ -198,7 +206,7 @@ class LocalList{
                     };               
                 }
             }
-
+            //console.log(builtEvent);
             inner += this.innerTemplate( builtEvent );//returns html string
 
         });
