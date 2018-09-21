@@ -1,0 +1,139 @@
+  /* calendar */
+	/***** Events *****/
+	$waGrey: #767676; //4,54 on white
+  
+  .event-month-and-day {
+	text-align: center;
+	line-height: 17px;
+	border-left: 4px solid #b31b1b;
+	border-right: 1px solid #eee;
+	padding: 3px 0 8px 8px;
+	margin-left: 18px;
+    margin-top: 4px;
+    height: 50px;//added psw
+	.event-month {
+	  float: left;
+	  text-transform: uppercase;
+	  color: $waGrey;
+	  display: block;
+	  font-size: 12px;
+	  padding-left: 4px;
+	}
+	.event-day {
+	  clear: both;
+	  color: #000;
+	  font-weight: 600;
+	  font-size: 18px;
+	  display: block;
+	  letter-spacing: -3px;
+	  text-align: left;
+	  sup {
+		top: -6px;
+		font-size: 10px;
+		margin-left: 3px;
+		letter-spacing: .005em;
+	  }
+	}
+  }
+  
+  .event-title-and-location {
+	a {
+	  text-decoration: underline;
+	  font-size: 16px;
+	  margin-bottom: 7px;
+	  display: inline-block;
+	  text-align: left;
+	  &:focus, &:hover {
+		text-decoration: none !important;
+	  }
+	}
+	.event-location, .event-times {
+	  padding: 0 7px;
+	}
+  }
+	
+	//@todo events listing should have unique identifier inline
+  .events-listing-inline {
+	background: #fff;
+	padding: 16px 10px 16px 6px;
+	margin-bottom: 0;
+	margin-top: 0;
+	/*padding-bottom: 114px;*/
+  }
+  
+  #block-eventsblock {
+	padding: 22px;
+	h2 {
+	  color: #000;
+	  margin: 8px 0 0 0;
+	  font-size: 34px;
+	  float: none;
+	  background: #fff;
+	  padding: 13px 0 10px 20px;
+	}
+  }
+  
+  .events-listing-inline .events-list {
+	.views-row {
+	  margin-bottom: 23px;
+	}
+	.event-title-and-location {
+	  width: 74.66667%;
+	}
+  }
+  
+  @media (min-width: 768px) {
+	.col-sm-2 {
+	  width: 16.66667%;
+	}
+  }
+  
+  @media (min-width: 768px) {
+	.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+	  float: left;
+	}
+  }
+  
+  .col-sm-8.event-title-and-location {
+	/* min-width: 62%; */
+	word-wrap: break-word;
+	width: 300px;
+	padding: 10px;
+  }
+  
+  .views-row {
+	max-width: 500px;
+  }
+  
+  span.fa {
+	&.fa-clock-o, &.fa-map-marker {
+	  margin-right: 10px;
+	}
+  }
+  
+  .event-subscribe {
+	float: right;
+	font-size: 13px;
+	padding-bottom: 20px;
+	> a {
+	  font-size: 20px;
+	  padding-right: 8px;
+	  color: #111;
+	  text-decoration: none;
+	  display: inline-block !important;
+	}
+	a:first-child {
+	  padding-left: 10px;
+	}
+  }
+  
+  .events a {
+	margin-bottom: 20px;
+  }
+
+//overide base styles
+ div.container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+}    
+    

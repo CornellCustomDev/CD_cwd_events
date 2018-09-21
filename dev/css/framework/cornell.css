@@ -1,0 +1,763 @@
+/* CWD Cornell Branding
+   ************************************ */
+/* Utility */
+.vertical-align, .cu-search .container, .cu-search .container-fluid, #cu-header .cu-brand {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+/* Cornell Search */
+#cu-search {
+  margin-top: -7em;
+  transition: margin-top 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+  -moz-transition: margin-top 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+  -ms-transition: margin-top 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+  -o-transition: margin-top 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+  -webkit-transition: margin-top 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+#cu-search.open {
+  margin-top: 0;
+}
+
+.cu-search {
+  background: #a01114;
+  font-family: Avenir Next, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica Neue, sans-serif;
+}
+
+.cu-seal .cu-search {
+  border-bottom: 4px solid #b31b1b;
+}
+
+.cu-search .container, .cu-search .container-fluid {
+  background: url("../images/cornell/cuseal_full_white480_dimmed.png") 15px -66px no-repeat;
+  height: 7em;
+}
+
+.cu-search form {
+  width: 100%;
+  text-align: right;
+  margin: 0;
+  position: relative;
+}
+
+.cu-search label {
+  font-family: Avenir Next, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica Neue, sans-serif;
+  color: #ebccd1;
+  font-weight: normal;
+  margin: 0;
+}
+
+.cu-search form > label {
+  font-size: 22px;
+  line-height: 22px;
+  color: #e3b8bf;
+  vertical-align: middle;
+}
+
+.cu-search .search-filters {
+  margin-top: 0.5em;
+}
+
+.cu-search .search-filters label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.cu-search .search-filters input {
+  margin: 0 0.1em 0 1.1em;
+}
+
+.cu-search #cu-search-query {
+  font-family: Verdana, sans-serif;
+  color: #444;
+  background: #ededed;
+  border: 0;
+  width: 100%;
+  height: 2.4em;
+  margin: 0;
+  padding: 4px 2.7em 4px 10px;
+  -webkit-appearance: none;
+}
+
+.cu-search #cu-search-query:focus {
+  outline-offset: 2px;
+}
+
+.cu-search button[type='submit'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.4em;
+  height: 2.4em;
+  margin: 0;
+  background: #b31b1b url("../images/cornell/icon_chevron_right_white.svg") 52% 50% no-repeat;
+  color: #fff;
+  border: 0;
+  border: 1px solid #fff;
+}
+
+.cu-search button[type='submit']:active {
+  background-color: #780001;
+}
+
+/* Brand Header */
+.cu-seal #cu-header {
+  background: #ebebeb;
+}
+
+#cu-header .cu-brand {
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  font-family: Avenir Next, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica Neue, sans-serif;
+  font-weight: 500;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+#cu-header .cu45-helper {
+  position: relative;
+}
+
+#cu-header .cu45-helper:before {
+  content: '';
+  background: #ebebeb;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+}
+
+.cu-seal #cu-header .cu45-helper {
+  display: none;
+}
+
+#cu-header .cu-brand h1 {
+  width: 100%;
+  margin: 0;
+}
+
+.cu-seal #cu-header .cu-brand h1 {
+  margin: 0 0 8px;
+}
+
+.cu-seal #cu-header .cu-brand h1 a {
+  margin: 0 auto;
+}
+
+#cu-header .cu-brand h2 {
+  margin: 6px 0 0 -0.05em;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+#cu-header .cu-brand h3 {
+  margin: 0.3em 0 0;
+  font-size: 12px;
+  color: #92929f;
+  font-weight: 500;
+}
+
+#cu-header .cu-brand .cu-unit {
+  margin: 16px auto 11px;
+  text-align: center;
+}
+
+.cu-seal #cu-header .cu-brand .cu-unit {
+  margin: 0 auto 4px;
+}
+
+.cu-seal #cu-header .cu-brand {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.cu-seal #cu-header .cu-brand .cu-unit {
+  display: block;
+}
+
+.cu-unit a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cu-unit a:focus, .cu-unit a:active {
+  text-decoration: underline;
+}
+
+/* ~45px University Lockup */
+.cu-logo a {
+  background: url("../images/cornell/cornell-reduced-red.svg") 0 0 no-repeat;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+  display: block;
+  width: 168px;
+  height: 38px;
+  min-width: 168px;
+}
+
+/* University Standalone Seal */
+.cu-seal .cu-logo a {
+  background: url("../images/cornell/bold_cornell_seal_simple_b31b1b.svg") 0 0 no-repeat;
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+}
+
+/* Full Size University Lockup
+.cu-lockup .cu-logo a {
+	background: url('../images/cornell/bold_cornell_logo_simple_b31b1b.svg') 0 0 no-repeat;
+	background-size: 100%;
+	width: 245px;
+	height: 62px;
+} */
+/* Cornell Unit Signature */
+.cu-seal #cu-header .cu-unit-lockup, .cu-seal #cu-header .cu-unit-lockup h2 {
+  margin: 0 auto;
+}
+
+.cu-seal #cu-header .cu-unit-lockup h2 {
+  font-family: Iowan Old Style, Georgia, serif;
+  font-size: 23px;
+}
+
+.cu-seal #cu-header .cu-unit-lockup h2 a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin-top: 5px;
+}
+
+.cu-unit-lockup a img {
+  vertical-align: middle;
+  width: 100%;
+}
+
+.cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-cornell {
+  display: none;
+}
+
+.cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-unit img {
+  display: none;
+}
+
+#cu-header .cu-unit-signature .cu-unit {
+  width: 100%;
+}
+
+/* Cornell Unit Signature Width Breakpoints (must be customized to suit the length of your unit title) */
+@media (min-width: 768px) {
+  .cu-seal #cu-header .cu-unit-lockup h2 a {
+    width: 400px;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 {
+    max-width: 338px;
+  }
+}
+@media (min-width: 992px) {
+  .cu-seal #cu-header .cu-unit-lockup h2 a {
+    width: 440px;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 {
+    max-width: 370px;
+  }
+}
+@media (min-width: 1200px) {
+  .cu-seal #cu-header .cu-unit-lockup h2 a {
+    width: 480px;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 {
+    max-width: 404px;
+  }
+}
+/* Color Options (red background, black background, gray background, black logo) */
+.cu-red .cu-logo a, .cu-black .cu-logo a, .cu-gray .cu-logo a {
+  background-image: url("../images/cornell/cornell-reduced-white.svg");
+}
+
+.cu-logo.black a {
+  background-image: url("../images/cornell/cornell-reduced-black.svg");
+}
+
+.cu-seal.cu-red .cu-logo a, .cu-seal.cu-black .cu-logo a, .cu-seal.cu-gray .cu-logo a {
+  background-image: url("../images/cornell/bold_cornell_seal_simple_white.svg");
+}
+
+.cu-seal .cu-logo.black a {
+  background-image: url("../images/cornell/bold_cornell_seal_simple_black.svg");
+}
+
+.cu-seal.cu-red #cu-header {
+  background: #b31b1b;
+  color: #fff;
+}
+
+.cu-seal.cu-black #cu-header {
+  background: #000;
+  color: #fff;
+}
+
+.cu-seal.cu-gray #cu-header {
+  background: #222;
+  color: #fff;
+}
+
+.cu-red #cu-header .cu45-helper:before {
+  background: #b31b1b;
+}
+
+.cu-black #cu-header .cu45-helper:before {
+  background: #000;
+}
+
+.cu-gray #cu-header .cu45-helper:before {
+  background: #222;
+}
+
+.cu-red #cu-header .cu-brand h2, .cu-black #cu-header .cu-brand h2, .cu-gray #cu-header .cu-brand h2 {
+  font-weight: 400;
+}
+
+.ios #cu-header .cu-brand h2 {
+  font-weight: 500;
+}
+
+.cu-seal.cu-red #cu-header .cu-brand h3 {
+  color: #e4c7ae;
+}
+
+.cu-seal.cu-black #cu-header .cu-brand h3, .cu-seal.cu-gray #cu-header .cu-brand h3 {
+  color: #a7e6ff;
+}
+
+/* Header Buttons */
+#cu-header .buttons {
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+
+.mobile-button {
+  float: right;
+  border: 0;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  text-indent: -1000em;
+  background: #a01114 url("../images/cornell/icon_search32.png") 50% 50% no-repeat;
+  -webkit-background-size: 16px;
+  -moz-background-size: 16px;
+  -o-background-size: 16px;
+  background-size: 16px;
+}
+
+.cu-45 .mobile-button {
+  background-color: #999;
+}
+
+.cu-45.cu-red .mobile-button {
+  background-color: #a01114;
+}
+
+.cu-45.cu-black .mobile-button {
+  background-color: #444;
+}
+
+.cu-45.cu-gray .mobile-button {
+  background-color: #4a4a4a;
+}
+
+.cu-seal .mobile-button {
+  width: 40px;
+  height: 39px;
+  margin-top: -4px;
+  background-color: #b31b1b;
+  background-position: 50% 55%;
+}
+
+.cu-red.cu-seal .mobile-button {
+  background-color: #a01114;
+  background-position: 50% 50%;
+}
+
+.no-backgroundsize #cu-search-button {
+  background-image: url("../images/cornell/icon_search_sm.png");
+}
+
+#mobile-nav {
+  margin-left: 3px;
+  background-image: url("../images/cornell/icon_veggieburger_white.png");
+  -webkit-background-size: 20px;
+  -moz-background-size: 20px;
+  -o-background-size: 20px;
+  background-size: 20px;
+}
+
+.no-backgroundsize #mobile-nav {
+  background-image: url("../images/cornell/icon_veggieburger_white_sm.png");
+}
+
+#cu-search-button:active, #mobile-nav:active {
+  background-color: #891113;
+}
+
+#cu-search-button.open {
+  background-color: #a01114;
+}
+
+.open #mobile-nav {
+  background-color: transparent;
+}
+
+#cu-search-button.open:active {
+  background-color: #961114;
+}
+
+/* Option to Force 45px Branding for Mobile */
+@media (max-width: 767px) {
+  .cu-45-mobile.cu-seal .cu-search {
+    border: 0;
+  }
+
+  .cu-45-mobile #cu-header {
+    background: transparent !important;
+  }
+
+  .cu-45-mobile #cu-header .cu-brand {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+
+  .cu-45-mobile #cu-header .cu45-helper {
+    display: block;
+  }
+
+  .cu-45-mobile #cu-header .cu-brand .cu-unit {
+    margin: 16px auto 11px;
+  }
+
+  .cu-45-mobile #cu-header .cu-unit-signature .cu-unit {
+    margin: -5px auto 12px;
+  }
+
+  .cu-45-mobile #cu-header .cu-brand h1 {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .cu-45-mobile .cu-logo a {
+    background: url("../images/cornell/cornell-reduced-red.svg") 0 0 no-repeat !important;
+    width: 168px !important;
+    height: 38px !important;
+    min-width: 168px !important;
+    margin: 0 !important;
+  }
+
+  .cu-45-mobile.cu-red .cu-logo a, .cu-45-mobile.cu-black .cu-logo a, .cu-45-mobile.cu-gray .cu-logo a {
+    background-image: url("../images/cornell/cornell-reduced-white.svg") !important;
+  }
+
+  .cu-45-mobile .cu-logo.black a {
+    background-image: url("../images/cornell/cornell-reduced-black.svg") !important;
+  }
+
+  .cu-45-mobile .mobile-button {
+    background-color: #999;
+  }
+
+  .cu-45-mobile.cu-black .mobile-button {
+    background-color: #444;
+  }
+
+  .cu-45-mobile.cu-gray .mobile-button {
+    background-color: #4a4a4a;
+  }
+
+  .cu-45-mobile .mobile-button {
+    width: 48px;
+    height: 48px;
+    margin-top: 0;
+    background-position: 50% 50%;
+  }
+
+  .cu-45-mobile #cu-header .cu-brand h2 {
+    color: #333;
+  }
+
+  .cu-45-mobile #cu-header .cu-brand h3 {
+    color: #92929f !important;
+  }
+
+  .cu-45-mobile.cu-black #cu-header .cu-brand h3, .cu-45-mobile.cu-gray #cu-header .cu-brand h3 {
+    color: #a7e6ff !important;
+  }
+
+  .cu-45-mobile.cu-45-mobile-red #cu-header .cu45-helper:before {
+    background: #b31b1b !important;
+  }
+
+  .cu-45-mobile.cu-45-mobile-red .cu-logo a {
+    background-image: url("../images/cornell/cornell-reduced-white.svg") !important;
+  }
+
+  .cu-45-mobile.cu-45-mobile-red .mobile-button {
+    background-color: #a01114;
+  }
+
+  .cu-45-mobile #cu-header .cu-unit-lockup h2 {
+    margin: 19px 0 5px !important;
+  }
+}
+@media (min-width: 480px) {
+  .cu-search form {
+    margin: 0 0 0 auto;
+  }
+
+  .cu-search form > label {
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    padding-bottom: 2px;
+  }
+
+  .cu-search #cu-search-query {
+    width: 23em;
+    margin-left: 1em;
+  }
+
+  #cu-header .cu-brand h2 {
+    font-size: 30px;
+  }
+
+  #cu-header .cu-brand h3 {
+    font-size: 15px;
+  }
+
+  .cu-seal .cu-logo a {
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+  }
+}
+@media (min-width: 768px) {
+  .sr-and-mobile-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .cu-seal #cu-header .cu-brand {
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+  }
+
+  .cu-seal #cu-header .cu-brand h1 {
+    width: auto;
+    margin: 0;
+  }
+
+  .cu-red.cu-seal #cu-header .cu-brand h1 {
+    margin-top: -2px;
+    margin-bottom: 2px;
+  }
+
+  #cu-header .cu-brand .cu-unit {
+    margin: 20px auto 16px 1px;
+    text-align: left;
+  }
+
+  .cu-seal #cu-header .cu-brand .cu-unit {
+    margin: 0 70px 0 auto;
+  }
+
+  #cu-header .cu-brand h3 {
+    font-weight: 400;
+  }
+
+  .cu-seal .cu-logo a {
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+    margin: 0 50px 0 0 !important;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup {
+    margin: 0;
+  }
+
+  .cu-unit-signature .cu-logo a {
+    min-width: 125px;
+    margin: 0 22px 0 0 !important;
+    border-right: 2px solid #d9d9d9;
+    border-right: 2px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .cu-black .cu-unit-signature .cu-logo a, .cu-gray .cu-unit-signature .cu-logo a {
+    border-right: 2px solid #555;
+    border-right: 2px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .cu-search .container-fluid {
+    background-position: 30px -66px;
+  }
+
+  #cu-header .container-fluid .buttons {
+    right: 30px;
+  }
+
+  /* seal aligned right */
+  .cu-seal-right #cu-header .cu-brand {
+    flex-direction: row-reverse;
+  }
+
+  .cu-seal-right #cu-header .cu-brand .cu-unit {
+    margin: 0;
+  }
+
+  .cu-seal-right #cu-header .cu-brand h1 {
+    margin: 0 0 0 auto;
+  }
+
+  .cu-seal-right .cu-logo a {
+    margin: 0 60px 0 40px !important;
+  }
+
+  #cu-header .cu-unit-signature .cu-unit {
+    padding-left: 40px;
+    width: auto;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 {
+    overflow: hidden;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a {
+    height: 36px;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-cornell {
+    margin: 12px 0 0;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-unit {
+    margin: 1px 0 0;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-cornell, .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-unit img {
+    display: block;
+  }
+}
+@media (min-width: 992px) {
+  #mobile-nav {
+    display: none;
+  }
+
+  .cu-seal .cu-logo a {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    margin: 0 60px 0 0 !important;
+  }
+
+  #cu-header .cu-brand h2 {
+    font-size: 32px;
+  }
+
+  #cu-header .cu-brand h3 {
+    font-size: 16px;
+  }
+
+  #cu-header .container-fluid .buttons {
+    right: 60px;
+  }
+
+  .cu-unit-signature .cu-logo a {
+    width: 110px;
+    height: 110px;
+    min-width: 136px;
+    margin: 0 22px 0 0 !important;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-cornell {
+    margin: 13px 0 3px;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-unit {
+    margin: 0;
+  }
+}
+@media (min-width: 1200px) {
+  #cu-header .cu-brand h2 {
+    font-size: 36px;
+  }
+
+  #cu-header .cu-brand h3 {
+    font-size: 18px;
+  }
+
+  .cu-unit-signature .cu-logo a {
+    width: 120px;
+    height: 120px;
+    min-width: 150px;
+    margin: 0 27px 0 0 !important;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-cornell {
+    margin: 10px 0 6px;
+  }
+
+  .cu-seal #cu-header .cu-unit-lockup h2 a.cu-unit-unit {
+    margin: 0 0 2px;
+  }
+}
+@media only print {
+  #cu-search, .cu-logo a:after {
+    display: none;
+  }
+
+  #cu-header {
+    background: #f6f6f6 !important;
+  }
+
+  .cu-seal .cu-logo a {
+    background-image: url("../images/cornell/bold_cornell_seal_simple_b31b1b.svg") !important;
+  }
+}
+@media (max-width: 767px) {
+  #cu-search #cu-search-query {
+    width: 20.125em;
+    font-size: 16px;
+    height: 2.1em;
+  }
+}
+@media (max-width: 479px) {
+  #cu-search #cu-search-query {
+    width: 100%;
+  }
+}
