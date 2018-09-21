@@ -140,9 +140,6 @@ module.exports = {
         LL.renderEvents();
     }
 
-    //LL.innerTemplate(data)=>`${(data.event.photo_url)?`<img src=${data.event.photo_url} height='200'>`:''}`
-
-
     //LoacalList typical usage example
     /*
         const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
