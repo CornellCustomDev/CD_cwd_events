@@ -24,7 +24,7 @@ export const modernCompactInner = ( builtData )=> `<div class="card">
 
 //this has class compact and no filters option
 export const modernCompactWrapper = (inner, args) => `
-    <div class="secondary">
+    <div id='eventsModernCompact' class="secondary modern">
          ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div class="cwd-component cwd-card-grid three-card singles compact no-thumbnails"> 
             <div id="cwd-homeEvents-list" class="compact no-thumbnails">

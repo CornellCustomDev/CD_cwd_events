@@ -22,7 +22,7 @@ export const moderStandardInner = (builtData) =>`<div class="card event-node dep
                         </div><!--card-->`;
 
 export const modernStandardWrapper = (inner, args) => `
-    <section title="${args.title}">
+    <section id='eventsModernStandard' class='modern' title="${args.title}">
         ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div>  
             <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails">

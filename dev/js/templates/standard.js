@@ -16,7 +16,7 @@ export const standardInner = (builtData) => `
     </div><!--end of node -->`;
 
 export const standardWrapper = (inner, args) => `
-    <section title="${args.title}">
+    <section class='standard' id='eventStandard' title="${args.title}">
     ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div class="main-body">  
             <div class="events-listing no-thumbnails" >

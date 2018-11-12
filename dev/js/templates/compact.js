@@ -13,7 +13,7 @@ export const compactInner=(builtData)=>`
     `;
 //this has class compact only difference
 export const compactWrapper = (inner, args) => `
-    <section title="${args.title}">
+    <section class='standard' id="standarCompact" title="${args.title}">
         <h2>${args.heading}</h2>
         <div class="main-body">  
             <div class="events-listing no-thumbnails compact">

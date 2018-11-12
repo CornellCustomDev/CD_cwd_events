@@ -1,6 +1,6 @@
  /* Compact Mode
-	 -------------------- */
-.events-listing {
+     -------------------- */
+section.standard .events-listing {
     &.compact {
         #events-filters {
             display: none;
@@ -75,7 +75,7 @@
 }
 
 /* compact filters */
-
+#standarCompact{
 ul.events-filters {
     width: 100%;
     float: left;
@@ -104,3 +104,5 @@ ul.events-filters {
         padding: 2px 8px 1px;
     }
 }	
+
+}
