@@ -849,7 +849,7 @@ var calendarInner = exports.calendarInner = function calendarInner(builtEvent) {
 };
 
 var calendarWrapper = exports.calendarWrapper = function calendarWrapper(innerHtml, args) {
-    return '\n    <section id=\'eventsInlineCompact\' title="' + args.title + '">\n        <h2 class="block-title">' + args.heading + '</h2>\n        <div class="events-listing events-listing-inline inline no-thumbnails">\n            ' + innerHtml + '\n        </div>\n    </section>';
+    return '\n    <section id=\'eventsInlineCompact\' title="' + args.title + '">\n        ' + (args.heading ? '<h2 class="block-title">' + args.heading + '</h2>' : '') + '\n        <div class="events-listing events-listing-inline inline no-thumbnails">\n            ' + innerHtml + '\n        </div>\n    </section>';
 };
 
 /***/ }),
@@ -876,7 +876,7 @@ var compactInner = exports.compactInner = function compactInner(builtData) {
 };
 //this has class compact only difference
 var compactWrapper = exports.compactWrapper = function compactWrapper(inner, args) {
-    return '\n    <section class=\'standard\' id="standarCompact" title="' + args.title + '">\n        <h2>' + args.heading + '</h2>\n        <div class="main-body">  \n            <div class="events-listing no-thumbnails compact">\n                <!--filters options not supported -->\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
+    return '\n    <section class=\'standard\' id="standarCompact" title="' + args.title + '">\n    ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div class="main-body">  \n            <div class="events-listing no-thumbnails compact">\n                <!--filters options not supported -->\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->';
 };
 
 /***/ }),
@@ -904,7 +904,7 @@ var modernCompactInner = exports.modernCompactInner = function modernCompactInne
 
 //this has class compact and no filters option
 var modernCompactWrapper = exports.modernCompactWrapper = function modernCompactWrapper(inner, args) {
-    return '\n    <div id=\'eventsModernCompact\' class="secondary modern">\n         ' + (args.heading ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div class="cwd-component cwd-card-grid three-card singles compact no-thumbnails"> \n            <div id="cwd-homeEvents-list" class="compact no-thumbnails">\n                <!--no filters -->\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </div><!--end of section -->';
+    return '\n    <div id=\'eventsModernCompact\' class="secondary modern">\n         ' + (args.heading && args.heading != '' ? '<h2>' + args.heading + '</h2>' : '') + '\n        <div class="cwd-component cwd-card-grid three-card singles compact no-thumbnails"> \n            <div id="cwd-homeEvents-list" class="compact no-thumbnails">\n                <!--no filters -->\n                <div class="events-list">\n                    ' + inner + '\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </div><!--end of section -->';
 };
 
 /***/ }),
