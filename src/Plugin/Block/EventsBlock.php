@@ -27,7 +27,7 @@ class EventsBlock extends BlockBase  implements BlockPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
-    $teaser = $this->configuration['cwd_events_teaser']?'<a class="cwd_events_teaser" href='.$this->configuration['cwd_events_url'].'>'.$this->configuration['cwd_events_teaser'].'</a>':'';
+    $teaser = $this->configuration['cwd_events_readmore']?'<a class="cwd_events_readmore" href='.$this->configuration['cwd_events_url'].'>'.$this->configuration['cwd_events_readmore'].'</a>':'';
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
       '#markup' => $this->t($teaser."<div id='events-listing' class='events-listing' ></div>
@@ -77,11 +77,11 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
     $config = $this->getConfiguration();
     $format_options = $this->format_options;
 
-    $form['cwd_events_teaser'] = [
+    $form['cwd_events_readmore'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Read More Title'),
       '#description' => $this->t('Read More Title to be used with readmore url to link to the events page. Leave blank to remove from display.'),
-      '#default_value' => isset($config['cwd_events_teaser']) ? $config['cwd_events_teaser'] : 'Read More',
+      '#default_value' => isset($config['cwd_events_readmore']) ? $config['cwd_events_readmore'] : 'Read More',
     ];
 
     $form['cwd_events_url'] = [
@@ -146,7 +146,7 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
     $format_options = $this->format_options;
-    $this->configuration['cwd_events_teaser'] = $values['cwd_events_teaser'];
+    $this->configuration['cwd_events_readmore'] = $values['cwd_events_readmore'];
     $this->configuration['cwd_events_url'] = $values['cwd_events_url'];
     $this->configuration['cwd_events_depts'] = $values['cwd_events_depts'];
     $this->configuration['cwd_events_entries'] = $values['cwd_events_entries'];
