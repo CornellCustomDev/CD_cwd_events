@@ -5,7 +5,7 @@ export const calendarInner = (builtEvent)=>`
         <div class="col-sm-2 event-month-and-day"> 
         <div> 
             <span class="event-month">${builtEvent.abbrMonth}</span> 
-            <span class="event-day">${builtEvent.abbrDay}</span> 
+            <span class="event-day">${builtEvent.day}</span> 
         </div> 
         </div> 
         <div class="col-sm-8 event-title-and-location"> 
