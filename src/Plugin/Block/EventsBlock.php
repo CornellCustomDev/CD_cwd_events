@@ -27,25 +27,26 @@ class EventsBlock extends BlockBase  implements BlockPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
+    $teaser = $this->configuration['cwd_events_readmore']?'<a class="cwd_events_readmore" href='.$this->configuration['cwd_events_url'].'>'.$this->configuration['cwd_events_readmore'].'</a>':'';
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
-      '#markup' => $this->t("<div id='events-listing' class='events-listing' ></div>
+      '#markup' => $this->t($teaser."<div id='events-listing' class='events-listing' ></div>
         <script>
-      var settings = { 
-        'target': 'events-listing', 
-        'depts':@depts, 
+      var settings = {
+        'target': 'events-listing',
+        'depts':@depts,
         'entries':@entries,
         'format':'@format',
-        'group':@group, 
-        'singleday':@singleday, 
-        'keyword':'@keyword', 
+        'group':@group,
+        'singleday':@singleday,
+        'keyword':'@keyword',
         'addCal': true,
         'heading':''};
       if (CWD_LocalList){
       CWD_LocalList.run( settings );
       }else{
         console.warn('ERROR: can not find events buid');
-      }</script>", 
+      }</script>",
       	[
       		"@depts" => $this->configuration['cwd_events_depts'],
       		"@entries" =>  $this->configuration['cwd_events_entries'],
@@ -76,6 +77,21 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
     $config = $this->getConfiguration();
     $format_options = $this->format_options;
 
+    $form['cwd_events_readmore'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Read More Title'),
+      '#description' => $this->t('Read More Title to be used with readmore url to link to the events page. Leave blank to remove from display.'),
+      '#default_value' => isset($config['cwd_events_readmore']) ? $config['cwd_events_readmore'] : 'Read More',
+    ];
+
+    $form['cwd_events_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Read More URL'),
+      '#description' => $this->t('The Read More URL, provides href to main events page used in read more title.'),
+      '#default_value' => isset($config['cwd_events_url']) ? $config['cwd_events_url'] : '/events',
+    ];
+
+
     $form['cwd_events_depts'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Departments'),
@@ -90,7 +106,7 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
       '#default_value' => isset($config['cwd_events_entries']) ? $config['cwd_events_entries'] : 3,
     ];
 
-    
+
     $form['cwd_events_format'] = [
       '#type' => 'select',
       '#title' => $this->t('Format'),
@@ -130,6 +146,8 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
     $format_options = $this->format_options;
+    $this->configuration['cwd_events_readmore'] = $values['cwd_events_readmore'];
+    $this->configuration['cwd_events_url'] = $values['cwd_events_url'];
     $this->configuration['cwd_events_depts'] = $values['cwd_events_depts'];
     $this->configuration['cwd_events_entries'] = $values['cwd_events_entries'];
     $this->configuration['cwd_events_format'] = $format_options[$values['cwd_events_format']];
