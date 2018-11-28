@@ -24,28 +24,28 @@
     </p>
     <div class="row">
         <div class='col-md-8 well'>
-            <div id="standard"></div>
+            <div id="standard" class='events-listing'></div>
         </div>
         <div class='col-md-4 well'>
-            <div id="compact"></div>
+            <div id="compact" class='events-listing'></div>
         </div>
     </div>
     <div class="row">
         <div class='col-md-8 well'>
-            <div id="modern_standard"></div>
+            <div id="modern_standard" class='events-listing'></div>
         </div>
         <div class='col-md-4 well'>
-            <div id="modern_compact"></div>
+            <div id="modern_compact" class='events-listing'></div>
         </div>
     </div>
     <div class="row">
         <div class='col-md-8 well'>
-            <div id="archive">TODO Archive needs implimentation</div>
+            <div id="archive" class='events-listing'>TODO Archive needs implimentation</div>
         </div>
         <div class='col-md-4 well'>
-            <div id="inline_compact"></div>
+            <div id="inline_compact" class='events-listing'></div>
         </div>
-    </div>        
+    </div>
 </div>
 
 <!--script src="js/app.js"></script-->
@@ -59,18 +59,20 @@
         'format':'standard',
         'group':0,
         'singleday':false,
-        'keyword':'ENERGY INSTITUTE',
+        'keyword':'Sustainability',
         'addCal': true,
         'heading':''};
-    CWD_LocalList.run( settings );      
+    CWD_LocalList.run( settings );
     var settings1 = { 'target': 'modern_standard', 'format':'modern_standard', 'entries':3, 'heading':'modern_standard',  'addCal': true};
-    CWD_LocalList.run( settings1 );  
+    CWD_LocalList.run( settings1 );
     var settings2 = { 'target': 'compact', 'format':'compact', 'entries':3, 'heading':'compact',  'addCal': true, 'pref_excerpt_length':150, 'pref_category_filters':false};
-    CWD_LocalList.run( settings2 );  
+    CWD_LocalList.run( settings2 );
     var settings3 = { 'target': 'modern_compact', 'format':'modern_compact', 'entries':4, 'heading':'modern_compact',  'addCal': true, 'pref_excerpt_length':150};
-    CWD_LocalList.run( settings3 );  
+    CWD_LocalList.run( settings3 );
     var settings4 = { 'target': 'inline_compact', 'format':'inline_compact', 'entries':3, 'heading':'inline_compact',  'addCal': true, 'pref_excerpt_length':150};
-    CWD_LocalList.run( settings4 );              
+    CWD_LocalList.run( settings4 );
+    var settings5 = { 'target': 'archive', 'format':'archive', 'entries':10, 'heading':'Archive',  'addCal': false, 'keyword':'ENERGY INSTITUTE'};
+    CWD_LocalList.run( settings5 );
 </script>
 </body>
 </html>

@@ -12,6 +12,7 @@ export let findAll = (
     const today = new Date();
     const today_month = today.getMonth();
     const today_year = today.getFullYear();
+    const supports_direction = true;
     var past_year = today_year;
     var past_month = today_month - pref_archive_range; // past x months (legacy API 2.0)
     if (past_month < 0) {

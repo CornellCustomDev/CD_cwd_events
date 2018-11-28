@@ -21,19 +21,31 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class EventsBlock extends BlockBase  implements BlockPluginInterface {
   //list of supported format options @todo add support for archive
-  private $format_options = array('standard'=>'standard','compact'=>'compact', 'inline_compact'=>'inline_compact', 'modern_compact'=>'modern_compact', 'modern_standard'=>'modern_standard');
+  private $format_options = array(
+    'standard'=>'standard',
+    'compact'=>'compact',
+    'inline_compact'=>'inline_compact',
+    'modern_compact'=>'modern_compact',
+    'modern_standard'=>'modern_standard',
+    'simple_standard'=>'simple_standard',
+    'simple_compact'=>'simple_compact',
+    'archive'=>'archive'
+  );
 
   /**
    * {@inheritdoc}
    */
   public function build() {
     $teaser = $this->configuration['cwd_events_readmore']?'<a class="cwd_events_readmore" href='.$this->configuration['cwd_events_url'].'>'.$this->configuration['cwd_events_readmore'].'</a>':'';
+    //generate a unique id
+    $uuid = \Drupal::service('uuid');
+    $id = $uuid->generate();
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
-      '#markup' => $this->t($teaser."<div id='events-listing' class='events-listing' ></div>
+      '#markup' => $this->t($teaser."<div id='@target' class='events-listing' ></div>
         <script>
       var settings = {
-        'target': 'events-listing',
+        'target':'@target',
         'depts':@depts,
         'entries':@entries,
         'format':'@format',
@@ -48,6 +60,7 @@ class EventsBlock extends BlockBase  implements BlockPluginInterface {
         console.warn('ERROR: can not find events buid');
       }</script>",
       	[
+          "@target"=>"events-listing-".$id,
       		"@depts" => $this->configuration['cwd_events_depts'],
       		"@entries" =>  $this->configuration['cwd_events_entries'],
       		"@format" =>  $this->configuration['cwd_events_format'],
