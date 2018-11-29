@@ -3,5 +3,4 @@ cwd_events:
   entries: 3
   format: standard
   group: 0
-  singleday: false
   keyword: "Sustainability"

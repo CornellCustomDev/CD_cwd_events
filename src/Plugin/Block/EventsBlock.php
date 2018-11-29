@@ -50,7 +50,6 @@ class EventsBlock extends BlockBase  implements BlockPluginInterface {
         'entries':@entries,
         'format':'@format',
         'group':@group,
-        'singleday':@singleday,
         'keyword':'@keyword',
         'addCal': true,
         'heading':''};
@@ -65,21 +64,10 @@ class EventsBlock extends BlockBase  implements BlockPluginInterface {
       		"@entries" =>  $this->configuration['cwd_events_entries'],
       		"@format" =>  $this->configuration['cwd_events_format'],
       		"@group" =>  $this->configuration['cwd_events_group'],
-      		"@singleday" =>  $this->configuration['cwd_events_singleday'] ? 'true' : 'false',
       		"@keyword" =>  $this->configuration['cwd_events_keyword']
       	]),
     ];
   }
-
-/*
-function renderEvents(target, depts, entries, format, group, singleday, keyword) {
-    depts = (typeof depts === 'undefined') ? 0 : depts;
-    entries = (typeof entries === 'undefined') ? 3 : entries;
-    format = (typeof format === 'undefined') ? 'standard' : format;
-    group = (typeof group === 'undefined') ? 0 : group;
-    singleday = (typeof singleday === 'undefined') ? false : singleday;
-    keyword = (typeof keyword === 'undefined') ? false : keyword;
- */
 
 
   /**
@@ -135,13 +123,6 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
       '#default_value' => isset($config['cwd_events_group']) ? $config['cwd_events_group'] : 0,
     ];
 
-    $form['cwd_events_singleday'] = [
-      '#type' => 'boolean',
-      '#title' => $this->t('Single Day'),
-      '#description' => $this->t('Format is YYYY-MM-DD to limit to specific day'),
-      '#default_value' => isset($config['cwd_events_singleday']) ? $config['cwd_events_singleday'] : false,
-    ];
-
     $form['cwd_events_keyword'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Keyword'),
@@ -165,7 +146,6 @@ function renderEvents(target, depts, entries, format, group, singleday, keyword)
     $this->configuration['cwd_events_entries'] = $values['cwd_events_entries'];
     $this->configuration['cwd_events_format'] = $format_options[$values['cwd_events_format']];
     $this->configuration['cwd_events_group'] = $values['cwd_events_group'];
-    $this->configuration['cwd_events_singleday'] = $values['cwd_events_singleday'];
     $this->configuration['cwd_events_keyword'] = $values['cwd_events_keyword'];
   }
 
