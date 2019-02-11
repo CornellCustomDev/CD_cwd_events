@@ -22,3 +22,15 @@ to build cwd_events.js run webpack:<br/>
 includes webpack sass support, does not support image loading
 
 ## DEV Folder can be removed for production distribution of Drupal Module 
+
+## NPM Security 
+https://docs.npmjs.com/auditing-package-dependencies-for-security-vulnerabilities
+
+Check package for vulnerabilities<br/>
+```npm audit```
+
+Check package for vulnerabilities<br/>
+```npm audit```
+
+If security vulnerabilities are found and updates are available<br/>
+```npm audit fix```
