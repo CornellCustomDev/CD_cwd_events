@@ -1,4 +1,7 @@
-# CWD Events
+[![Latest Stable Version](https://poser.pugx.org/cubear/cwd_events/v/stable)](https://packagist.org/packages/cubear/cwd_events)
+[![Latest Unstable Version](https://poser.pugx.org/cubear/cwd_events/v/unstable)](https://packagist.org/packages/cubear/cwd_events)
+
+​# CWD Events
 CWD Events Module
 
 ```HTML
