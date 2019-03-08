@@ -1,6 +1,6 @@
 {
     "name": "cubear/cwd_events",
-    "description": "A Drupal 8 module to display Localist events in a block",
+    "description": "A Drupal 8 module to embed Localist events in a block.",
     "type": "drupal-module",
     "homepage": "https://it.cornell.edu/custom-web",
     "authors": [
