@@ -3,10 +3,10 @@ import request from './request';
 
 export let findAll = (
         {depts=0, entries=3, format='standard', group=0, singleday=false, keyword=false, api='2.1'}
-    ) => {    
+    ) => {
     /* More Params */
     // calculate date ranges (including archive options)
-    const pref_archive_range = 6; 
+    const pref_archive_range = 6;
     var pref_days = 365; // range of days to retrieve (overridden by "singleday" requests)
     const pref_distinct = true; // controls the "distinct" filter for the events query ('true' only returns one instance of a repeating event)
     const today = new Date();
@@ -14,6 +14,9 @@ export let findAll = (
     const today_year = today.getFullYear();
     const supports_direction = true;
     var past_year = today_year;
+    // add support for multiple types https://developer.localist.com/doc/api
+    // To specify multiple values for type, keyword or exclude_type, the parameter may be repeated with brackets ([]) after the name.
+    var type = ''
     var past_month = today_month - pref_archive_range; // past x months (legacy API 2.0)
     if (past_month < 0) {
         past_month += 12;
@@ -39,23 +42,26 @@ export let findAll = (
             start_results = past_year + '-' + addLeadingZero(parseInt(past_month+1)) + '-' + addLeadingZero(today.getDate());
         }
     }
-                
+
     // single day option
     if (singleday) {
         start_results = singleday;
         pref_days = 1;
-    }   
-     
+    }
     let query = {
         api_key: 'KLhy2GtuSAGirYGY',
         days: pref_days,
         distinct: pref_distinct,
         pp: entries,
-        start: start_results,        
+        start: start_results,
     };
-    
     if (depts && depts != 0) {
-        query.type = depts;
+        //query.type = depts;
+        //query.type=//"&type[]=39623&type[]=139827&type[]=139828&type[]=4865&type[]=5124"
+        let depts_array = depts.split(",").map(function(item) {
+            type += '&type[]='+encodeURIComponent(item.trim());//these should be integers they shouldnt need encolde
+          });
+        console.log(type);
     }
     if (group != 0) {
         query.group_id = group;
@@ -70,7 +76,7 @@ export let findAll = (
     }
     if (format == 'archive' && supports_direction) {
         query.direction = 'desc';
-    }    
+    }
     //Get helper function
     const formatParams = (params) => {
         return "?" + Object
@@ -79,8 +85,8 @@ export let findAll = (
                 return key+"="+encodeURIComponent(params[key])
               })
               .join("&")
-      } 
-    var url = '//events.cornell.edu/api/'+api+'/events'+formatParams(query);   
+      }
+    var url = '//events.cornell.edu/api/'+api+'/events'+formatParams(query)+type;
    // return request({url:"testData.json"})
    return request({
             url: url,

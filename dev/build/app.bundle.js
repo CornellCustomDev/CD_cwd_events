@@ -729,6 +729,9 @@ var findAll = exports.findAll = function findAll(_ref) {
     var today_year = today.getFullYear();
     var supports_direction = true;
     var past_year = today_year;
+    // add support for multiple types https://developer.localist.com/doc/api
+    // To specify multiple values for type, keyword or exclude_type, the parameter may be repeated with brackets ([]) after the name.
+    var type = '';
     var past_month = today_month - pref_archive_range; // past x months (legacy API 2.0)
     if (past_month < 0) {
         past_month += 12;
@@ -760,7 +763,6 @@ var findAll = exports.findAll = function findAll(_ref) {
         start_results = singleday;
         pref_days = 1;
     }
-
     var query = {
         api_key: 'KLhy2GtuSAGirYGY',
         days: pref_days,
@@ -768,9 +770,13 @@ var findAll = exports.findAll = function findAll(_ref) {
         pp: entries,
         start: start_results
     };
-
     if (depts && depts != 0) {
-        query.type = depts;
+        //query.type = depts;
+        //query.type=//"&type[]=39623&type[]=139827&type[]=139828&type[]=4865&type[]=5124"
+        var depts_array = depts.split(",").map(function (item) {
+            type += '&type[]=' + encodeURIComponent(item.trim()); //these should be integers they shouldnt need encolde
+        });
+        console.log(type);
     }
     if (group != 0) {
         query.group_id = group;
@@ -792,7 +798,7 @@ var findAll = exports.findAll = function findAll(_ref) {
             return key + "=" + encodeURIComponent(params[key]);
         }).join("&");
     };
-    var url = '//events.cornell.edu/api/' + api + '/events' + formatParams(query);
+    var url = '//events.cornell.edu/api/' + api + '/events' + formatParams(query) + type;
     // return request({url:"testData.json"})
     return (0, _request2.default)({
         url: url,

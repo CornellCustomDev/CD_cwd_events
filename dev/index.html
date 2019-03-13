@@ -28,7 +28,7 @@
                 </p>
                 <div class="row">
                     <div class='col-md-8 well'>
-                        <div id="modern_standard" class='events-listing' data-keyword='' data-depts='39623' data-entries='5'></div>
+                        <div id="modern_standard" class='events-listing' data-keyword='' data-depts='39623,139827,139828,4865,5124' data-entries='20'></div>
                     </div>
                     <div class='col-md-4 well'>
                         <div id="modern_compact" class='events-listing' data-keyword='' data-depts='39623'
@@ -44,6 +44,7 @@
                     if (typeof CWD_LocalList !== 'undefined' && standard) {
                         var entries = standard.dataset.entries ? standard.dataset.entries : 20;
                         var depts = standard.dataset.depts ? standard.dataset.depts : '';
+                        console.log(depts);
                         var keyword = standard.dataset.keyword ? standard.dataset.keyword : '';
                         var settings1 = {
                             'target': 'modern_standard',
