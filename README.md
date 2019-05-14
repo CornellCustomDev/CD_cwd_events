@@ -1,5 +1,9 @@
-# CWD Events
-CWD Events Module
+[![Latest Stable Version](https://img.shields.io/packagist/v/cubear/cwd_events.svg?style=flat-square)](https://packagist.org/packages/cubear/cwd_events)
+
+# CWD Events Embed Block
+Drupal 8 module to embed a block of events from CU Calendar (Localist).
+
+Essentially, the module renders the following code, based on settings in the Drupal block configuration:
 
 ```HTML
   <section>
