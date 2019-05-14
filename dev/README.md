@@ -26,11 +26,17 @@ includes webpack sass support, does not support image loading
 ## NPM Security 
 https://docs.npmjs.com/auditing-package-dependencies-for-security-vulnerabilities
 
-Check package for vulnerabilities<br/>
+Check package for vulnerabilities
+
 ```npm audit```
 
-Check package for vulnerabilities<br/>
+Check package for vulnerabilities
 ```npm audit```
 
-If security vulnerabilities are found and updates are available<br/>
+If security vulnerabilities are found and updates are available
+
 ```npm audit fix```
+
+remove http-server dev dpendency due to github warning you must run
+
+`npm install http-server -g`
