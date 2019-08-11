@@ -1,5 +1,5 @@
-/* 
- @param filterObj has structure: obj.name, obj.id 
+/*
+ @param filterObj has structure: obj.name, obj.id
  @param domTarget: string of html id #id should exist and be unique
  attaches onClick handlers to window object
 
@@ -40,8 +40,8 @@ export const eventFilters = (filterObjs, domTarget) => {
         var allFilterBtns = targetElem.getElementsByClassName('filter-btn');
         for (let value of allFilterBtns){
             value.classList.remove('active');
-        }    
-        
+        }
+
         var elem = document.getElementById('filterAll-'+domStr);
         //set the current item active
         elem.classList.add('active');
@@ -50,24 +50,24 @@ export const eventFilters = (filterObjs, domTarget) => {
         var allEvents = targetElem.getElementsByClassName('event-node');
         for (let value of allEvents){
             value.classList.remove('fadeOut');
-        }    
+        }
 
     }
     // attach event handlers to window
     window['toggleFilters'+domStr] = toggleFilters;
     window['showAllEvents'+domStr] = showAllEvents;
-    
+
     return `
         <div class='events-filters-wrap' ><h3 class="hidden">Show:</h3>
             <ul class="events-filters">
                 <li><button id="filterAll-${domStr}" data-filter="all" class="filter-btn active" onClick="showAllEvents${domStr}()">All Events</button></li>
-                ${filterObjs ? 
-                    Object.keys(filterObjs).map( (key, index)=> `<li><button id='filter${filterObjs[key].id}-${domStr}' data-filter="${filterObjs[key].pref_category}-${filterObjs[key].id}" class="filter-btn" onclick="toggleFilters${domStr}('filter${filterObjs[key].id}-${domStr}', '${filterObjs[key].pref_category}-${filterObjs[key].id}')">${filterObjs[key].name}</button></li>`).join('')
-                :''}
+                ${filterObjs ?
+        Object.keys(filterObjs).map( (key, index)=> `<li><button id='filter${filterObjs[key].id}-${domStr}' data-filter="${filterObjs[key].pref_category}-${filterObjs[key].id}" class="filter-btn" onclick="toggleFilters${domStr}('filter${filterObjs[key].id}-${domStr}', '${filterObjs[key].pref_category}-${filterObjs[key].id}')">${filterObjs[key].name}</button></li>`).join('')
+        :''}
             </ul>
         </div>
-    `;    
-            }  
+    `;
+}
 
 export const add_calendar = (myEvent) => {
     /* ----------------- build calander links -------------------------- */
@@ -78,7 +78,7 @@ export const add_calendar = (myEvent) => {
         let myED = myObj.last_date;
         const gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
         return `
-                <a class="fa fa-google google" 
+                <a class="fa fa-google google"
                     href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=${gDateStart}%2F${gDateStop}&amp;details=${encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, `<br />`))}&amp;location=${encodeURIComponent(myObj.location)}&amp;sprop=website%3Aevents.cornell.edu&amp;text=${encodeURIComponent(myObj.title)}" title="Save to Google Calendar" target="_blank">
                 <span class="sr-only">Add ${myObj.title} to Google Calendar</span>
                 </a>
@@ -97,7 +97,7 @@ export const add_calendar = (myEvent) => {
                         </a>
                         `;
 
-    /* ------------------ END OF BUILD LINKS --------------------------- */    
+    /* ------------------ END OF BUILD LINKS --------------------------- */
     return `<span class="event-subscribe">add to calendar
             ${buidGoogleStr(myEvent)} ${buildiCal(myEvent)} ${buildOutlookCal(myEvent)}
             </span>`;

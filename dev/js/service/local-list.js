@@ -2,11 +2,11 @@ import request from './request';
 
 
 export let findAll = (
-        {depts=0, entries=3, format='standard', group=0, singleday=false, keyword=false, api='2.1'}
-    ) => {    
+    {depts=0, entries=3, format='standard', group=0, singleday=false, keyword=false, api='2.1'}
+) => {
     /* More Params */
     // calculate date ranges (including archive options)
-    const pref_archive_range = 6; 
+    const pref_archive_range = 6;
     var pref_days = 365; // range of days to retrieve (overridden by "singleday" requests)
     const pref_distinct = true; // controls the "distinct" filter for the events query ('true' only returns one instance of a repeating event)
     const today = new Date();
@@ -39,21 +39,21 @@ export let findAll = (
             start_results = past_year + '-' + addLeadingZero(parseInt(past_month+1)) + '-' + addLeadingZero(today.getDate());
         }
     }
-                
+
     // single day option
     if (singleday) {
         start_results = singleday;
         pref_days = 1;
-    }   
-     
+    }
+
     let query = {
         api_key: 'KLhy2GtuSAGirYGY',
         days: pref_days,
         distinct: pref_distinct,
         pp: entries,
-        start: start_results,        
+        start: start_results,
     };
-    
+
     if (depts && depts != 0) {
         query.type = depts;
     }
@@ -70,25 +70,25 @@ export let findAll = (
     }
     if (format == 'archive' && supports_direction) {
         query.direction = 'desc';
-    }    
+    }
     //Get helper function
     const formatParams = (params) => {
         return "?" + Object
-              .keys(params)
-              .map(function(key){
+            .keys(params)
+            .map(function(key){
                 return key+"="+encodeURIComponent(params[key])
-              })
-              .join("&")
-      } 
-    var url = '//events.cornell.edu/api/'+api+'/events'+formatParams(query);   
-   // return request({url:"testData.json"})
-   return request({
-            url: url,
-            method: "GET",
-			dataType: 'jsonp',
-			crossDomain: true,
-			data: query,            
-        }).then(retData => retData = JSON.parse(retData))
+            })
+            .join("&")
+    }
+    var url = '//events.cornell.edu/api/'+api+'/events'+formatParams(query);
+    // return request({url:"testData.json"})
+    return request({
+        url: url,
+        method: "GET",
+        dataType: 'jsonp',
+        crossDomain: true,
+        data: query,
+    }).then(retData => retData = JSON.parse(retData))
 
 }
 

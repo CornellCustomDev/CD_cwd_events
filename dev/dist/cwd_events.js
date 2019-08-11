@@ -95,298 +95,25 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _service_local_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./service/local-list */ "./js/service/local-list.js");
-/* harmony import */ var _buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./buildEvent */ "./js/buildEvent.js");
-/* harmony import */ var _templates_standard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./templates/standard */ "./js/templates/standard.js");
-/* harmony import */ var _templates_compact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./templates/compact */ "./js/templates/compact.js");
-/* harmony import */ var _templates_calendar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./templates/calendar */ "./js/templates/calendar.js");
-/* harmony import */ var _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./templates/modernCompact */ "./js/templates/modernCompact.js");
-/* harmony import */ var _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./templates/modernStandard */ "./js/templates/modernStandard.js");
-/* harmony import */ var _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./templates/cuenergy */ "./js/templates/cuenergy.js");
-/* harmony import */ var _templates_archive__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./templates/archive */ "./js/templates/archive.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* harmony import */ var _localist__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./localist */ "./js/localist.js");
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+var eventListings = document.getElementsByClassName('events-listing');
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-
-
-
-
-
- //expose the localList via run function
-
-module.exports = {
-  run: function run(args) {
-    var LL = new LocalList(args); // Define a custom templates here to overide templates:
-    // for a list of all data elements see buildEvent
-
-    /*
-    LL.innerTemplate = (data)=>`${(data.event.photo_url)?`<p><p>${data.event.title}</p><img src=${data.event.photo_url} width='250'></p>`:''}`;
-    //LL.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-    //build the outer wrapper at a minimum this must contain innerHtml
-    LL.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-    */
-
-    LL.renderEvents();
-  } //LoacalList typical usage example
-
-  /*
-      const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
-      let localList = new LocalList( settings ).renderEvents();
-      or with custom template
-      let localList = new LocalList()
-      //define inner template list of events
-      localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-      //build the outer wrapper at a minimum this must contain innerHtml
-      localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-      localList.renderEvents();
-  */
-
-};
-
-var LocalList =
-/*#__PURE__*/
-function () {
-  // define the following arguments
-  function LocalList(_ref) {
-    var _ref$depts = _ref.depts,
-        depts = _ref$depts === void 0 ? 0 : _ref$depts,
-        _ref$entries = _ref.entries,
-        entries = _ref$entries === void 0 ? 10 : _ref$entries,
-        _ref$format = _ref.format,
-        format = _ref$format === void 0 ? 'standard' : _ref$format,
-        _ref$group = _ref.group,
-        group = _ref$group === void 0 ? 0 : _ref$group,
-        _ref$target = _ref.target,
-        target = _ref$target === void 0 ? "events-listing" : _ref$target,
-        _ref$title = _ref.title,
-        title = _ref$title === void 0 ? "Events List" : _ref$title,
-        _ref$heading = _ref.heading,
-        heading = _ref$heading === void 0 ? 'Events' : _ref$heading,
-        _ref$api = _ref.api,
-        api = _ref$api === void 0 ? '2.1' : _ref$api,
-        _ref$pref_excerpt_len = _ref.pref_excerpt_length,
-        pref_excerpt_length = _ref$pref_excerpt_len === void 0 ? 250 : _ref$pref_excerpt_len,
-        _ref$pref_excerpt_len2 = _ref.pref_excerpt_length_compact,
-        pref_excerpt_length_compact = _ref$pref_excerpt_len2 === void 0 ? 125 : _ref$pref_excerpt_len2,
-        _ref$pref_allow_rich = _ref.pref_allow_rich,
-        pref_allow_rich = _ref$pref_allow_rich === void 0 ? true : _ref$pref_allow_rich,
-        _ref$pref_readmore = _ref.pref_readmore,
-        pref_readmore = _ref$pref_readmore === void 0 ? 'read more' : _ref$pref_readmore,
-        _ref$pref_eventdetail = _ref.pref_eventdetails,
-        pref_eventdetails = _ref$pref_eventdetail === void 0 ? 'event details' : _ref$pref_eventdetail,
-        _ref$pref_category = _ref.pref_category,
-        pref_category = _ref$pref_category === void 0 ? 'group' : _ref$pref_category,
-        _ref$pref_category_fi = _ref.pref_category_filters,
-        pref_category_filters = _ref$pref_category_fi === void 0 ? true : _ref$pref_category_fi,
-        _ref$pref_date_header = _ref.pref_date_headers,
-        pref_date_headers = _ref$pref_date_header === void 0 ? true : _ref$pref_date_header,
-        _ref$singleday = _ref.singleday,
-        singleday = _ref$singleday === void 0 ? false : _ref$singleday,
-        _ref$keyword = _ref.keyword,
-        keyword = _ref$keyword === void 0 ? false : _ref$keyword,
-        _ref$addCal = _ref.addCal,
-        addCal = _ref$addCal === void 0 ? false : _ref$addCal;
-
-    _classCallCheck(this, LocalList);
-
-    //used in filters
-    this.pref_category = pref_category;
-    this.pref_category_filters = pref_category_filters; //localist variables
-
-    this.target = target;
-    this.format = format; //standard wrapper variables
-
-    this.wrapperArgs = {
-      'target': this.target
-    }; //pass unique target id};
-
-    this.wrapperArgs.title = title;
-    this.wrapperArgs.heading = heading;
-    this.wrapperArgs.filters = {}; //required by service findall to request localist data
-
-    this.requestArgs = {};
-    this.requestArgs.depts = depts;
-    this.requestArgs.entries = entries;
-    this.requestArgs.format = format;
-    this.requestArgs.group = group;
-    this.requestArgs.singleday = singleday;
-    this.requestArgs.keyword = keyword;
-    this.requestArgs.api = api;
-    this.requestArgs.pref_allow_rich = pref_allow_rich; // build event variables required for inner HTML logic
-
-    this.BE_args = {};
-    this.BE_args.supports_rich = false;
-    this.BE_args.supports_direction = false;
-    this.BE_args.pref_date_headers = pref_date_headers;
-    this.BE_args.pref_excerpt_length = pref_excerpt_length;
-    this.BE_args.pref_excerpt_length_compact = pref_excerpt_length_compact;
-    this.BE_args.pref_readmore = pref_readmore;
-    this.BE_args.pref_eventdetails = pref_eventdetails; //is this used?
-
-    this.BE_args.addCal = addCal;
-
-    if (parseFloat(api) >= 2.1) {
-      this.BE_args.supports_rich = true; // rich text descriptions (HTML) were added in API 2.1
-
-      this.BE_args.supports_direction = true; // "direction" (asc/desc) was added in API 2.1
-    }
-  }
-
-  _createClass(LocalList, [{
-    key: "renderEvents",
-    value: function renderEvents() {
-      //add the loading throbber
-      this.addThrobber(this.target); //test  to see if custom templates are defined
-
-      if (!('innerTemplate' in this) && !('outerTemplate' in this)) {
-        //if not defined set format of template
-        this.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardInner"];
-        this.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardWrapper"];
-
-        switch (this.format) {
-          case 'standard':
-            this.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardInner"];
-            this.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardWrapper"];
-            break;
-
-          case 'compact':
-            this.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_3__["compactInner"];
-            this.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_3__["compactWrapper"];
-            break;
-
-          case 'inline_compact':
-            this.innerTemplate = _templates_calendar__WEBPACK_IMPORTED_MODULE_4__["calendarInner"];
-            this.outerTemplate = _templates_calendar__WEBPACK_IMPORTED_MODULE_4__["calendarWrapper"];
-            break;
-
-          case 'modern_compact':
-            //overide exerpt length this should be added to drupal form options
-            this.BE_args.pref_excerpt_length = 125;
-            this.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__["modernCompactInner"];
-            this.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__["modernCompactWrapper"];
-            break;
-
-          case 'modern_standard':
-            this.innerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__["moderStandardInner"];
-            this.outerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__["modernStandardWrapper"];
-            break;
-
-          case 'simple_standard':
-            this.innerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyEventsInner"];
-            this.outerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyEventsWrapper"];
-            break;
-
-          case 'simple_compact':
-            this.innerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyCompactInner"];
-            this.outerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyCompactWrapper"];
-            break;
-
-          case 'archive':
-            this.innerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_8__["archiveInner"];
-            this.outerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_8__["archiveWrapper"];
-            break;
-
-          default: //console.warn("Warning: no format was defined using fallback standard");
-
-        }
-      } else {
-        console.warn('using custom templates');
-      } //fetch localist events and build the event nodes
-
-
-      this.getAndBuildList();
-    }
-    /*
-        inserts throbber after target elem
-        this is deleted on localList render
-        warning this.c_loader may be undefined
-     */
-
-  }, {
-    key: "addThrobber",
-    value: function addThrobber(target) {
-      var loadingNode = '<div id="loader" class="fadeOut"><span class="fa fa-spin fa-cog"></span></div>';
-      var tarElem = document.getElementById(target);
-
-      if (tarElem) {
-        tarElem.insertAdjacentHTML('afterbegin', loadingNode);
-        this.c_loader = setTimeout(function () {
-          document.getElementById('loader').classList.remove('fadeOut');
-        }, 200); // skip loading animation if under 0.5s
-      } else {
-        console.warn('WARNING: can not find target element for loading animation');
-      }
-    }
-    /* get the events */
-
-  }, {
-    key: "getAndBuildList",
-    value: function getAndBuildList() {
-      var _this = this;
-
-      _service_local_list__WEBPACK_IMPORTED_MODULE_0__["findAll"](this.requestArgs).then(function (eventsObj) {
-        _this.buildEventsList(eventsObj);
-      })["catch"](function (error) {
-        return console.error(error);
-      });
-    }
-  }, {
-    key: "buildEventsList",
-    value: function buildEventsList(myObj) {
-      var _this2 = this;
-
-      var inner = ''; //loop through each event () => required to give access to 'this'
-
-      myObj.events.forEach(function (event) {
-        //built event provides common functions to format the data
-        var builtEvent = new _buildEvent__WEBPACK_IMPORTED_MODULE_1__["BuildEvent"](event.event, _this2.BE_args); //console.log( builtEvent );
-        //build the filters array does not support multiple filter entries [0]only
-
-        if (_this2.pref_category_filters) {
-          if (_this2.pref_category == 'type' && builtEvent.type != 0) {
-            _this2.wrapperArgs.filters[event.filters.event_types[0].name] = {
-              'id': event.filters.event_types[0].id,
-              'name': event.filters.event_types[0].name,
-              'pref_category': _this2.pref_category
-            };
-          } else if (_this2.pref_category == 'dept' && builtEvent.department != 0) {
-            _this2.wrapperArgs.filters[event.filters.departments[0].name] = {
-              'id': event.filters.departments[0].id,
-              'name': event.filters.departments[0].name,
-              'pref_category': _this2.pref_category
-            };
-          } else if (_this2.pref_category == 'group' && builtEvent.group_name != '') {
-            _this2.wrapperArgs.filters[builtEvent.group_name] = {
-              'id': builtEvent.group_id,
-              'name': builtEvent.group_name,
-              'pref_category': _this2.pref_category
-            };
-          }
-        } //console.log(builtEvent);
-
-
-        inner += _this2.innerTemplate(builtEvent); //returns html string
-      });
-      var html = this.outerTemplate(inner, this.wrapperArgs); //returns html string
-      //remove loading animation timer
-
-      clearTimeout(this.c_loader); //the loader is replaced by html
-      //document.getElementById('loader').classList.remove('fadeIn');
-
-      var tarElem = document.getElementById(this.target);
-      tarElem ? tarElem.innerHTML = html : console.warn('WARNING: target element does not exist');
-    }
-  }]);
-
-  return LocalList;
-}();
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
+for (var i = 0; i < eventListings.length; i++) {
+  var elem = eventListings[i];
+  var settings = {
+    'target': elem.dataset.target,
+    'format': elem.dataset.format,
+    'entries': elem.dataset.entries,
+    'heading': elem.dataset.heading,
+    'addCal': elem.dataset.addCal,
+    'keyword': elem.dataset.keyword,
+    'pref_excerpt_length': elem.dataset.prefExcerptLength,
+    'pref_category_filters': elem.dataset.prefCategoryFilters
+  };
+  var LL = new _localist__WEBPACK_IMPORTED_MODULE_0__["default"](settings);
+  LL.renderEvents();
+}
 
 /***/ }),
 
@@ -625,6 +352,295 @@ var convertTime = function convertTime(time) {
     return parseInt(time_hour) + ':' + time_min + ' a.m.';
   }
 };
+
+/***/ }),
+
+/***/ "./js/localist.js":
+/*!************************!*\
+  !*** ./js/localist.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalList; });
+/* harmony import */ var _service_local_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./service/local-list */ "./js/service/local-list.js");
+/* harmony import */ var _buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./buildEvent */ "./js/buildEvent.js");
+/* harmony import */ var _templates_standard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./templates/standard */ "./js/templates/standard.js");
+/* harmony import */ var _templates_compact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./templates/compact */ "./js/templates/compact.js");
+/* harmony import */ var _templates_calendar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./templates/calendar */ "./js/templates/calendar.js");
+/* harmony import */ var _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./templates/modernCompact */ "./js/templates/modernCompact.js");
+/* harmony import */ var _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./templates/modernStandard */ "./js/templates/modernStandard.js");
+/* harmony import */ var _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./templates/cuenergy */ "./js/templates/cuenergy.js");
+/* harmony import */ var _templates_archive__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./templates/archive */ "./js/templates/archive.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+
+
+ //LoacalList typical usage example
+
+/*
+    const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
+    let localList = new LocalList( settings ).renderEvents();
+    or with custom template
+    let localList = new LocalList()
+    //define inner template list of events
+    localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
+    //build the outer wrapper at a minimum this must contain innerHtml
+    localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
+    localList.renderEvents();
+*/
+
+var LocalList =
+/*#__PURE__*/
+function () {
+  // define the following arguments
+  function LocalList(_ref) {
+    var _ref$depts = _ref.depts,
+        depts = _ref$depts === void 0 ? 0 : _ref$depts,
+        _ref$entries = _ref.entries,
+        entries = _ref$entries === void 0 ? 10 : _ref$entries,
+        _ref$format = _ref.format,
+        format = _ref$format === void 0 ? 'standard' : _ref$format,
+        _ref$group = _ref.group,
+        group = _ref$group === void 0 ? 0 : _ref$group,
+        _ref$target = _ref.target,
+        target = _ref$target === void 0 ? 'events-listing' : _ref$target,
+        _ref$title = _ref.title,
+        title = _ref$title === void 0 ? 'Events List' : _ref$title,
+        _ref$heading = _ref.heading,
+        heading = _ref$heading === void 0 ? 'Events' : _ref$heading,
+        _ref$api = _ref.api,
+        api = _ref$api === void 0 ? '2.1' : _ref$api,
+        _ref$pref_excerpt_len = _ref.pref_excerpt_length,
+        pref_excerpt_length = _ref$pref_excerpt_len === void 0 ? 250 : _ref$pref_excerpt_len,
+        _ref$pref_excerpt_len2 = _ref.pref_excerpt_length_compact,
+        pref_excerpt_length_compact = _ref$pref_excerpt_len2 === void 0 ? 125 : _ref$pref_excerpt_len2,
+        _ref$pref_allow_rich = _ref.pref_allow_rich,
+        pref_allow_rich = _ref$pref_allow_rich === void 0 ? true : _ref$pref_allow_rich,
+        _ref$pref_readmore = _ref.pref_readmore,
+        pref_readmore = _ref$pref_readmore === void 0 ? 'read more' : _ref$pref_readmore,
+        _ref$pref_eventdetail = _ref.pref_eventdetails,
+        pref_eventdetails = _ref$pref_eventdetail === void 0 ? 'event details' : _ref$pref_eventdetail,
+        _ref$pref_category = _ref.pref_category,
+        pref_category = _ref$pref_category === void 0 ? 'group' : _ref$pref_category,
+        _ref$pref_category_fi = _ref.pref_category_filters,
+        pref_category_filters = _ref$pref_category_fi === void 0 ? true : _ref$pref_category_fi,
+        _ref$pref_date_header = _ref.pref_date_headers,
+        pref_date_headers = _ref$pref_date_header === void 0 ? true : _ref$pref_date_header,
+        _ref$singleday = _ref.singleday,
+        singleday = _ref$singleday === void 0 ? false : _ref$singleday,
+        _ref$keyword = _ref.keyword,
+        keyword = _ref$keyword === void 0 ? false : _ref$keyword,
+        _ref$addCal = _ref.addCal,
+        addCal = _ref$addCal === void 0 ? false : _ref$addCal;
+
+    _classCallCheck(this, LocalList);
+
+    //used in filters
+    this.pref_category = pref_category;
+    this.pref_category_filters = pref_category_filters; //localist variables
+
+    this.target = target;
+    this.format = format; //standard wrapper variables
+
+    this.wrapperArgs = {
+      target: this.target
+    }; //pass unique target id};
+
+    this.wrapperArgs.title = title;
+    this.wrapperArgs.heading = heading;
+    this.wrapperArgs.filters = {}; //required by service findall to request localist data
+
+    this.requestArgs = {};
+    this.requestArgs.depts = depts;
+    this.requestArgs.entries = entries;
+    this.requestArgs.format = format;
+    this.requestArgs.group = group;
+    this.requestArgs.singleday = singleday;
+    this.requestArgs.keyword = keyword;
+    this.requestArgs.api = api;
+    this.requestArgs.pref_allow_rich = pref_allow_rich; // build event variables required for inner HTML logic
+
+    this.BE_args = {};
+    this.BE_args.supports_rich = false;
+    this.BE_args.supports_direction = false;
+    this.BE_args.pref_date_headers = pref_date_headers;
+    this.BE_args.pref_excerpt_length = pref_excerpt_length;
+    this.BE_args.pref_excerpt_length_compact = pref_excerpt_length_compact;
+    this.BE_args.pref_readmore = pref_readmore;
+    this.BE_args.pref_eventdetails = pref_eventdetails; //is this used?
+
+    this.BE_args.addCal = addCal;
+
+    if (parseFloat(api) >= 2.1) {
+      this.BE_args.supports_rich = true; // rich text descriptions (HTML) were added in API 2.1
+
+      this.BE_args.supports_direction = true; // "direction" (asc/desc) was added in API 2.1
+    }
+  }
+
+  _createClass(LocalList, [{
+    key: "renderEvents",
+    value: function renderEvents() {
+      //add the loading throbber
+      this.addThrobber(this.target); //test  to see if custom templates are defined
+
+      if (!('innerTemplate' in this) && !('outerTemplate' in this)) {
+        //if not defined set format of template
+        this.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardInner"];
+        this.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardWrapper"];
+
+        switch (this.format) {
+          case 'standard':
+            this.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardInner"];
+            this.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardWrapper"];
+            break;
+
+          case 'compact':
+            this.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_3__["compactInner"];
+            this.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_3__["compactWrapper"];
+            break;
+
+          case 'inline_compact':
+            this.innerTemplate = _templates_calendar__WEBPACK_IMPORTED_MODULE_4__["calendarInner"];
+            this.outerTemplate = _templates_calendar__WEBPACK_IMPORTED_MODULE_4__["calendarWrapper"];
+            break;
+
+          case 'modern_compact':
+            //overide exerpt length this should be added to drupal form options
+            this.BE_args.pref_excerpt_length = 125;
+            this.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__["modernCompactInner"];
+            this.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__["modernCompactWrapper"];
+            break;
+
+          case 'modern_standard':
+            this.innerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__["moderStandardInner"];
+            this.outerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__["modernStandardWrapper"];
+            break;
+
+          case 'simple_standard':
+            this.innerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyEventsInner"];
+            this.outerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyEventsWrapper"];
+            break;
+
+          case 'simple_compact':
+            this.innerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyCompactInner"];
+            this.outerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyCompactWrapper"];
+            break;
+
+          case 'archive':
+            this.innerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_8__["archiveInner"];
+            this.outerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_8__["archiveWrapper"];
+            break;
+
+          default: //console.warn("Warning: no format was defined using fallback standard");
+
+        }
+      } else {
+        console.warn('using custom templates');
+      } //fetch localist events and build the event nodes
+
+
+      this.getAndBuildList();
+    }
+    /*
+        inserts throbber after target elem
+        this is deleted on localList render
+        warning this.c_loader may be undefined
+     */
+
+  }, {
+    key: "addThrobber",
+    value: function addThrobber(target) {
+      var loadingNode = '<div id="loader" class="fadeOut"><span class="fa fa-spin fa-cog"></span></div>';
+      var tarElem = document.getElementById(target);
+
+      if (tarElem) {
+        tarElem.insertAdjacentHTML('afterbegin', loadingNode);
+        this.c_loader = setTimeout(function () {
+          document.getElementById('loader').classList.remove('fadeOut');
+        }, 200); // skip loading animation if under 0.5s
+      } else {
+        console.warn('WARNING: can not find target element for loading animation');
+      }
+    }
+    /* get the events */
+
+  }, {
+    key: "getAndBuildList",
+    value: function getAndBuildList() {
+      var _this = this;
+
+      _service_local_list__WEBPACK_IMPORTED_MODULE_0__["findAll"](this.requestArgs).then(function (eventsObj) {
+        _this.buildEventsList(eventsObj);
+      })["catch"](function (error) {
+        return console.error(error);
+      });
+    }
+  }, {
+    key: "buildEventsList",
+    value: function buildEventsList(myObj) {
+      var _this2 = this;
+
+      var inner = ''; //loop through each event () => required to give access to 'this'
+
+      myObj.events.forEach(function (event) {
+        //built event provides common functions to format the data
+        var builtEvent = new _buildEvent__WEBPACK_IMPORTED_MODULE_1__["BuildEvent"](event.event, _this2.BE_args); //console.log( builtEvent );
+        //build the filters array does not support multiple filter entries [0]only
+
+        if (_this2.pref_category_filters) {
+          if (_this2.pref_category == 'type' && builtEvent.type != 0) {
+            _this2.wrapperArgs.filters[event.filters.event_types[0].name] = {
+              id: event.filters.event_types[0].id,
+              name: event.filters.event_types[0].name,
+              pref_category: _this2.pref_category
+            };
+          } else if (_this2.pref_category == 'dept' && builtEvent.department != 0) {
+            _this2.wrapperArgs.filters[event.filters.departments[0].name] = {
+              id: event.filters.departments[0].id,
+              name: event.filters.departments[0].name,
+              pref_category: _this2.pref_category
+            };
+          } else if (_this2.pref_category == 'group' && builtEvent.group_name != '') {
+            _this2.wrapperArgs.filters[builtEvent.group_name] = {
+              id: builtEvent.group_id,
+              name: builtEvent.group_name,
+              pref_category: _this2.pref_category
+            };
+          }
+        } //console.log(builtEvent);
+
+
+        inner += _this2.innerTemplate(builtEvent); //returns html string
+      });
+      var html = this.outerTemplate(inner, this.wrapperArgs); //returns html string
+      //remove loading animation timer
+
+      clearTimeout(this.c_loader); //the loader is replaced by html
+      //document.getElementById('loader').classList.remove('fadeIn');
+
+      var tarElem = document.getElementById(this.target);
+      tarElem ? tarElem.innerHTML = html : console.warn('WARNING: target element does not exist');
+    }
+  }]);
+
+  return LocalList;
+}();
+
+
 
 /***/ }),
 
@@ -1206,41 +1222,6 @@ var add_calendar = function add_calendar(myEvent) {
 
   return "<span class=\"event-subscribe\">add to calendar\n            ".concat(buidGoogleStr(myEvent), " ").concat(buildiCal(myEvent), " ").concat(buildOutlookCal(myEvent), "\n            </span>");
 };
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/harmony-module.js":
-/*!*******************************************!*\
-  !*** (webpack)/buildin/harmony-module.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(originalModule) {
-	if (!originalModule.webpackPolyfill) {
-		var module = Object.create(originalModule);
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		Object.defineProperty(module, "exports", {
-			enumerable: true
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
 
 /***/ }),
 

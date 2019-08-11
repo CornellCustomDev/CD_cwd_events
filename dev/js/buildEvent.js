@@ -1,79 +1,10 @@
 /**
- * @returns {obj} with params of
- *  abbrDay:
-    abbrMonth: 
-    addCal: 
-    args: 
-    dateTime:
-    day: 
-    day_array:
-    day_array_abb: 
-    department:
-    description: 
-    displayDate:
-    event_date: 
-    event_date_compact: 
-    event_time: 
-    event_time_end: 
-    event_types: 
-    format: 
-    fullDay: 
-    group_id: 
-    group_name:
-    month: 
-    monthHeader: 
-    month_array: 
-    month_array_abb: 
-    pref_eventdetails: "event details"
-    pref_readmore: "read more"
-    ticket_cost:    
-    event:
-        address:
-        allows_attendance:
-        allows_reviews:
-        campus_id:
-        city_id:
-        created_at:
-        created_by:
-        custom_fields: 
-        description: 
-        description_text: 
-        detail_views: 
-        directions: 
-        event_instances: 
-        facebook_id: 
-        featured: 
-        filters: 
-        first_date: 
-        free: 
-        geo: 
-        hashtag: 
-        id: 
-        keywords: 
-        last_date: 
-        localist_ics_url: 
-        localist_url: 
-        location: 
-        location_name: 
-        neighborhood_id:
-        photo_id:
-        photo_url:
-        private: 
-        recurring:
-        rejected:
-        room_number:
-        school_id:
-        sponsored:
-        tags: 
-        ticket_cost: 
-        ticket_url: 
-        title: 
-        url: 
-        urlname: 
-        user_id:
-        venue_id:
-        venue_url:
-        verified: 
+ *A Helper function to convert localist event data into usable formats.
+ *
+ * @param {obj} event The localist event json data
+ * @param {obj} args Formating instructions.
+ *
+ * @returns {obj} see docs/buildEvent.config
  */
 export class BuildEvent{
     constructor( event, args ) {
@@ -128,7 +59,9 @@ export class BuildEvent{
     setDateTime(){
         let event = this.event;
         // date and time
-        var event_fulldate = new Date(event.event_instances[0].event_instance.start);
+        var event_fulldate = new Date(
+            event.event_instances[0].event_instance.start
+        );
         var event_day = this.day_array_abb[event_fulldate.getDay()];
         var event_date = event.event_instances[0].event_instance.start.split('T')[0];
         this.dateTime = event_date;
@@ -137,11 +70,13 @@ export class BuildEvent{
         var year = event_date.split('-')[0];
         var month = event_date.split('-')[1].replace(/\b0+/g, ''); // remove leading zeroes
         var day = event_date.split('-')[2].replace(/\b0+/g, ''); // remove leading zeroes
-        var event_date = month+'/'+day+'/'+year; // convert date format
+        event_date = month+'/'+day+'/'+year; // convert date format
         //event_date_compact = month+'/'+day; // for compact mode (numbers only, e.g., "4/13")
         this.event_date_compact = this.month_array_abb[month-1]+' '+day; // for compact mode (month text, e.g., "Apr 13")
         this.event_date = this.month_array[month-1]+' '+day;
-        this.displayDate = this.setDisplayDate(event_date, this.event_date_compact);
+        this.displayDate = this.setDisplayDate(
+            event_date, this.event_date_compact
+        );
         if (event.event_instances[0].event_instance.all_day) {
             this.event_time = 'all day';
         }
@@ -151,7 +86,7 @@ export class BuildEvent{
         this.fullDay = this.day_array[event_fulldate.getDay()];
         this.day = day;
         this.monthHeader = this.month+' '+year;
-    };
+    }
 
     //set date time helper
     setDisplayDate(event_date, event_date_compact ){
@@ -162,10 +97,10 @@ export class BuildEvent{
             }
             return event_date;
         }else{
-            console.log("warning no date headers");
-            console.log( event_date_compact );
+            console.warn("warning no date headers");
+            console.warn( event_date_compact );
         }
-    }    
+    }
 
     setTruncDesc(){
         let event = this.event;
@@ -173,11 +108,19 @@ export class BuildEvent{
         if (this.format == 'compact') {
             excerpt_length = this.args.pref_excerpt_length_compact;
         }
-        
+
         if (!this.args.supports_rich) {
-            if (excerpt_length > 0 && event.description.length > excerpt_length) {
-                this.description = event.description.trim().substring(0, excerpt_length).split(' ').slice(0, -1).join(' ');
-                //console.log(description)
+            if (
+                excerpt_length > 0
+                &&
+                event.description.length > excerpt_length
+            ) {
+                this.description = event.description
+                    .trim()
+                    .substring(0, excerpt_length)
+                    .split(' ')
+                    .slice(0, -1)
+                    .join(' ');
             }
             else {
                 this.description = event.description;
@@ -186,8 +129,12 @@ export class BuildEvent{
         else {
             if (excerpt_length > 0) {
                 if (event.description_text.length > excerpt_length) {
-                    this.description = event.description_text.trim().substring(0, excerpt_length).split(' ').slice(0, -1).join(' ');
-                    //console.log(this.description)
+                    this.description = event.description_text
+                        .trim()
+                        .substring(0, excerpt_length)
+                        .split(' ')
+                        .slice(0, -1)
+                        .join(' ');
                 }
                 else {
                     this.description = event.description_text;
@@ -203,7 +150,7 @@ export class BuildEvent{
                 }
             }
         }
-    };
+    }
 
     setOptionFields(){
         let event = this.event;
@@ -218,7 +165,7 @@ export class BuildEvent{
             this.group_name = event.group_name;
             this.group_id = event.group_id;
         }
-    };
+    }
 
     setEventType(){
         let event = this.event;
@@ -231,22 +178,22 @@ export class BuildEvent{
         if (this.args.pref_category == 'group' && this.group_name != '') {
             this.event_types = this.group_name;
         }
-    };
+    }
 
     setTimeEnd(){
         let event = this.event;
         if (typeof event.event_instances[0].event_instance.end !== 'undefined' && event.event_instances[0].event_instance.end != null) {
             this.event_time_end = event.event_instances[0].event_instance.end.split('T')[1];
             this.event_time_end = convertTime(this.event_time_end); // convert to 12-hour format
-        }      
-    };
+        }
+    }
 
     setTicketCost(){
         let event = this.event;
         if (typeof event.ticket_cost !== 'undefined') {
             this.ticket_cost = event.ticket_cost;
         }
-    };
+    }
 
 }
 

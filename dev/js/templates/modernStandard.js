@@ -14,17 +14,17 @@ export const moderStandardInner = (builtData) =>`<div class="card event-node dep
                                             <p>${builtData.event_time}${builtData.event.location_name ? `, ${builtData.event.location_name}` : ''} ${tagStr(builtData.event.filters.event_types)}</p>
                                     </div>
                                     <div class="field field-name-summary summary">
-                                        <p>${builtData.description}... read more</p> 
+                                        <p>${builtData.description}... read more</p>
                                     </div>
                                 </a>
-                                ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}  
+                                ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}
                             </div><!--events-->
                         </div><!--card-->`;
 
 export const modernStandardWrapper = (inner, args) => `
     <section id='eventsModernStandard' class='modern' title="${args.title}">
         ${args.heading ? `<h2>${args.heading}</h2>` : ''}
-        <div>  
+        <div>
             <div class="cwd-component cwd-card-grid three-card singles events-listing no-thumbnails">
                 ${eventFilters(args.filters, args.target)}
                 <div class="events-list">
@@ -37,8 +37,8 @@ export const modernStandardWrapper = (inner, args) => `
 const tagStr = (event_types) => {
     let spanStr = ''
     if (event_types){
-            event_types.forEach(element => {
-                spanStr  += '<span class="inline-events-type">'+element.name+'</span>';
+        event_types.forEach(element => {
+            spanStr  += '<span class="inline-events-type">'+element.name+'</span>';
         })
     }
     return spanStr;
