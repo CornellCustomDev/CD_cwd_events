@@ -93,4 +93,4 @@ This project is licensed under the GNU General Public License v2.0 - see the [LI
 
 ## Acknowledgments
 
-* Hat tip to Alison Jo McCauley.
+* Hat tip to Anthony M. Adinolfi for his work on localist event in theme.
