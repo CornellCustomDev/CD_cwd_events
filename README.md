@@ -42,7 +42,7 @@ enable the module with drush
 drush en cwd_events
 ```
 
-add a cwd_events block and configure block settings.
+add a Events block and configure block settings.
 
 This is an example of the block output:
 
