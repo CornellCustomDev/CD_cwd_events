@@ -25,10 +25,14 @@
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
     "laravel-mix": "^4.0.14",
     "prop-types": "^15.7.2",
+    "resolve-url-loader": "^3.1.0",
     "sass": "^1.17.2",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.6.10"
   }
 }
