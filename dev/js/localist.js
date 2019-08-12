@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 import * as service from './service/local-list';
-import { BuildEvent } from './buildEvent';
+import BuildEvent from './buildEvent';
 import { standardInner, standardWrapper } from './templates/standard';
 import { compactInner, compactWrapper } from './templates/compact';
 import { calendarInner, calendarWrapper } from './templates/calendar';
@@ -19,8 +20,8 @@ import {
 } from './templates/cuenergy';
 import { archiveInner, archiveWrapper } from './templates/archive';
 
-//LoacalList typical usage example
 /*
+  LoacalList typical usage example.
     const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
     let localList = new LocalList( settings ).renderEvents();
     or with custom template
@@ -39,9 +40,9 @@ export default class LocalList {
         entries = 10,
         format = 'standard',
         group = 0,
-        target = 'events-listing', //the id of the HTML target element
-        title = 'Events List', //the section title of the wrapper
-        heading = 'Events', //the h3 displayed heading
+        target = 'events-listing', // the id of the HTML target element
+        title = 'Events List', // the section title of the wrapper
+        heading = 'Events', // the h3 displayed heading
         api = '2.1', // Localist API version (e.g., '2' for the latest 2.x, '2.1' for the specific point release)
         pref_excerpt_length = 250, // use 0 for no truncation, using truncation will force descriptions to plaintext
         pref_excerpt_length_compact = 125, // excerpt length can be made shorter for 'compact' mode
@@ -53,26 +54,26 @@ export default class LocalList {
         pref_date_headers = true,
         singleday = false,
         keyword = false,
-        addCal = false //add to google/outlook/ical options
+        addCal = false // add to google/outlook/ical options
     }) {
-        //used in filters
+        // used in filters
         this.pref_category = pref_category;
         this.pref_category_filters = pref_category_filters;
 
-        //localist variables
+        // localist variables
         this.target = target;
         this.format = format;
 
-        //standard wrapper variables
-        this.wrapperArgs = { target: this.target }; //pass unique target id};
+        // standard wrapper variables
+        this.wrapperArgs = { target: this.target }; // pass unique target id};
         this.wrapperArgs.title = title;
         this.wrapperArgs.heading = heading;
         this.wrapperArgs.filters = {};
 
-        //required by service findall to request localist data
+        // required by service findall to request localist data
         this.requestArgs = {};
         this.requestArgs.depts = depts;
-        this.requestArgs.entries = entries;
+        this.requestArgs.entries = parseInt(entries, 10);
         this.requestArgs.format = format;
         this.requestArgs.group = group;
         this.requestArgs.singleday = singleday;
@@ -88,7 +89,7 @@ export default class LocalList {
         this.BE_args.pref_excerpt_length = pref_excerpt_length;
         this.BE_args.pref_excerpt_length_compact = pref_excerpt_length_compact;
         this.BE_args.pref_readmore = pref_readmore;
-        this.BE_args.pref_eventdetails = pref_eventdetails; //is this used?
+        this.BE_args.pref_eventdetails = pref_eventdetails; // is this used?
         this.BE_args.addCal = addCal;
         if (parseFloat(api) >= 2.1) {
             this.BE_args.supports_rich = true; // rich text descriptions (HTML) were added in API 2.1
@@ -97,11 +98,11 @@ export default class LocalList {
     }
 
     renderEvents() {
-        //add the loading throbber
+        // add the loading throbber
         this.addThrobber(this.target);
-        //test  to see if custom templates are defined
+        // test  to see if custom templates are defined
         if (!('innerTemplate' in this) && !('outerTemplate' in this)) {
-            //if not defined set format of template
+            // if not defined set format of template
             this.innerTemplate = standardInner;
             this.outerTemplate = standardWrapper;
             switch (this.format) {
@@ -118,7 +119,7 @@ export default class LocalList {
                     this.outerTemplate = calendarWrapper;
                     break;
                 case 'modern_compact':
-                    //overide exerpt length this should be added to drupal form options
+                    // overide exerpt length this should be added to drupal form options
                     this.BE_args.pref_excerpt_length = 125;
                     this.innerTemplate = modernCompactInner;
                     this.outerTemplate = modernCompactWrapper;
@@ -140,12 +141,12 @@ export default class LocalList {
                     this.outerTemplate = archiveWrapper;
                     break;
                 default:
-                //console.warn("Warning: no format was defined using fallback standard");
+                // console.warn("Warning: no format was defined using fallback standard");
             }
         } else {
             console.warn('using custom templates');
         }
-        //fetch localist events and build the event nodes
+        // fetch localist events and build the event nodes
         this.getAndBuildList();
     }
 
@@ -157,10 +158,10 @@ export default class LocalList {
     addThrobber(target) {
         const loadingNode =
             '<div id="loader" class="fadeOut"><span class="fa fa-spin fa-cog"></span></div>';
-        let tarElem = document.getElementById(target);
+        const tarElem = document.getElementById(target);
         if (tarElem) {
             tarElem.insertAdjacentHTML('afterbegin', loadingNode);
-            this.c_loader = setTimeout(function() {
+            this.c_loader = setTimeout(() => {
                 document.getElementById('loader').classList.remove('fadeOut');
             }, 200); // skip loading animation if under 0.5s
         } else {
@@ -182,14 +183,14 @@ export default class LocalList {
 
     buildEventsList(myObj) {
         let inner = '';
-        //loop through each event () => required to give access to 'this'
+        // loop through each event () => required to give access to 'this'
         myObj.events.forEach(event => {
-            //built event provides common functions to format the data
-            let builtEvent = new BuildEvent(event.event, this.BE_args);
-            //console.log( builtEvent );
-            //build the filters array does not support multiple filter entries [0]only
+            // built event provides common functions to format the data
+            const builtEvent = new BuildEvent(event.event, this.BE_args);
+            // console.log( builtEvent );
+            // build the filters array does not support multiple filter entries [0]only
             if (this.pref_category_filters) {
-                if (this.pref_category == 'type' && builtEvent.type != 0) {
+                if (this.pref_category === 'type' && builtEvent.type !== 0) {
                     this.wrapperArgs.filters[
                         event.filters.event_types[0].name
                     ] = {
@@ -198,8 +199,8 @@ export default class LocalList {
                         pref_category: this.pref_category
                     };
                 } else if (
-                    this.pref_category == 'dept' &&
-                    builtEvent.department != 0
+                    this.pref_category === 'dept' &&
+                    builtEvent.department !== 0
                 ) {
                     this.wrapperArgs.filters[
                         event.filters.departments[0].name
@@ -209,8 +210,8 @@ export default class LocalList {
                         pref_category: this.pref_category
                     };
                 } else if (
-                    this.pref_category == 'group' &&
-                    builtEvent.group_name != ''
+                    this.pref_category === 'group' &&
+                    builtEvent.group_name !== ''
                 ) {
                     this.wrapperArgs.filters[builtEvent.group_name] = {
                         id: builtEvent.group_id,
@@ -219,19 +220,21 @@ export default class LocalList {
                     };
                 }
             }
-            //console.log(builtEvent);
-            inner += this.innerTemplate(builtEvent); //returns html string
+            // console.log(builtEvent);
+            inner += this.innerTemplate(builtEvent); // returns html string
         });
 
-        let html = this.outerTemplate(inner, this.wrapperArgs); //returns html string
+        const html = this.outerTemplate(inner, this.wrapperArgs); // returns html string
 
-        //remove loading animation timer
+        // remove loading animation timer
         clearTimeout(this.c_loader);
-        //the loader is replaced by html
-        //document.getElementById('loader').classList.remove('fadeIn');
-        let tarElem = document.getElementById(this.target);
-        tarElem
-            ? (tarElem.innerHTML = html)
-            : console.warn('WARNING: target element does not exist');
+        // the loader is replaced by html
+        // document.getElementById('loader').classList.remove('fadeIn');
+        const tarElem = document.getElementById(this.target);
+        if (tarElem) {
+            tarElem.innerHTML = html;
+        } else {
+            console.warn('WARNING: target element does not exist');
+        }
     }
 }

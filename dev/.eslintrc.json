@@ -41,6 +41,11 @@
     }],
     "no-unused-vars": ["warn"],
     "operator-linebreak": ["error", "after", { "overrides": { "?": "ignore", ":": "ignore" } }],
-    "no-console": ["error", { "allow": ["warn", "error" ]}]
+    "no-console": ["error", { "allow": ["warn", "error" ]}],
+    "camelcase": [
+        "error",
+        {"properties": "never"
+        }
+    ]
   }
 }

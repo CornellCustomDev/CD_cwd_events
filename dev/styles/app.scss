@@ -1,8 +1,4 @@
-@import 'components/standard';
-@import 'components/compact';
-@import 'components/inline';
-@import 'components/modern';
-@import 'components/cuenergy';
+
 
 //common styles
 $waThemeBlue: #4B7995;//4:70:1 on white
@@ -11,7 +7,12 @@ $waLightBlue: #017bb1;
 
 /* Category Filters
   -------------------- */
-.events-listing{
+.cwd-events-style{
+    @import 'components/standard';
+    @import 'components/compact';
+    @import 'components/inline';
+    @import 'components/modern';
+    @import 'components/cuenergy';
 
   .event-subscribe {
     float: right;
@@ -44,7 +45,7 @@ $waLightBlue: #017bb1;
       padding: 2px 8px 2px 0;
     }
     }
-    
+
   ul.events-filters li {
     float: left;
     list-style: none;
@@ -72,8 +73,8 @@ $waLightBlue: #017bb1;
     }
   }
 
-  /* hide / show 
-      -used for filtered event nodes 
+  /* hide / show
+      -used for filtered event nodes
     -------------------------------------*/
   /*@ todo make this actually fade out */
   .fadeOut {
@@ -83,10 +84,10 @@ $waLightBlue: #017bb1;
   .fadeIn {
     display: block;
   }
-    
+
     /* Animated Loading Icon
       -------------------- */
-    
+
   #loader {
     /*display: none;*/
     position: absolute;
@@ -101,14 +102,14 @@ $waLightBlue: #017bb1;
     }
 
 
-  /* Add To Calendar 
+  /* Add To Calendar
     -----------------*/
   .google {
       color: $waGoogleGreen !important;
       background: transparent !important;
       box-shadow: none !important;
     }
-    
+
   .microsoft {
     color: $waLightBlue !important;
       background: transparent !important;

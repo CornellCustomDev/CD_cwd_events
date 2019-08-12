@@ -1,8 +1,8 @@
 // XMLHttpRequest wrapper using callbacks
 export default obj => {
     return new Promise((resolve, reject) => {
-        let xhr = new XMLHttpRequest();
-        xhr.open(obj.method || "GET", obj.url);
+        const xhr = new XMLHttpRequest();
+        xhr.open(obj.method || 'GET', obj.url);
         if (obj.headers) {
             Object.keys(obj.headers).forEach(key => {
                 // console.log( key, obj.headers[key] )

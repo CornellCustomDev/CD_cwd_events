@@ -1,11 +1,31 @@
 @charset "UTF-8";
 
-/* begin event */
+/* Category Filters
+  -------------------- */
 
-/* CWD Localist Events
-	 ************************************ */
+.cwd-events-style {
+  /* begin event */
+  /* CWD Localist Events
+  	 ************************************ */
+  /* event details toggle */
+  /* Compact Mode
+      -------------------- */
+  /* compact filters */
+  /* calendar */
+  /***** Events *****/
+  /* Events */
+  /* hide / show
+      -used for filtered event nodes
+    -------------------------------------*/
+  /*@ todo make this actually fade out */
+  /* Animated Loading Icon
+    -------------------- */
+  /* Add To Calendar
+    -----------------*/
+  /* required change to visually hidden*/
+}
 
-section.standard .events-listing {
+.cwd-events-style section.standard .events-listing {
   position: relative;
   float: left;
   width: 100%;
@@ -13,85 +33,85 @@ section.standard .events-listing {
   min-height: 120px;
 }
 
-section.standard .events-listing .node {
+.cwd-events-style section.standard .events-listing .node {
   float: left;
   width: 100%;
   margin: 1em 0 2em;
 }
 
-section.standard .events-listing .node h3 {
+.cwd-events-style section.standard .events-listing .node h3 {
   margin-bottom: 8px;
   font-family: Avenir Next, Proxima Nova, "proxima-nova", Segoe UI Bold, Helvetica Neue, sans-serif;
   font-weight: 600;
   font-size: 16px;
 }
 
-section.standard .events-listing h4 {
+.cwd-events-style section.standard .events-listing h4 {
   text-transform: none;
 }
 
-section.standard .events-listing .description {
+.cwd-events-style section.standard .events-listing .description {
   clear: right;
   padding-left: 112px;
   /* disable to allow description text to wrap around the thumbnail */
   font-size: 13px;
 }
 
-section.standard .events-listing.hide-descriptions .description {
+.cwd-events-style section.standard .events-listing.hide-descriptions .description {
   float: left;
   width: 100%;
   clear: both;
   padding: 0 !important;
 }
 
-section.standard .events-listing .description-content {
+.cwd-events-style section.standard .events-listing .description-content {
   padding: 0 1em 1em;
 }
 
-section.standard .events-listing .description :last-child {
+.cwd-events-style section.standard .events-listing .description :last-child {
   margin-bottom: 0;
 }
 
-section.standard .events-listing .event-image {
+.cwd-events-style section.standard .events-listing .event-image {
   width: 100px;
   height: auto;
   float: left;
   margin: 0 12px 0 0;
 }
 
-section.standard .events-listing .meta {
+.cwd-events-style section.standard .events-listing .meta {
   font-weight: normal;
   font-size: 1em;
   color: #666;
   margin-bottom: 12px;
 }
 
-section.standard .events-listing .type {
+.cwd-events-style section.standard .events-listing .type {
   float: left;
   display: none;
 }
 
-section.standard .events-listing .location {
+.cwd-events-style section.standard .events-listing .location {
   float: right;
 }
 
-section.standard .events-listing .date {
+.cwd-events-style section.standard .events-listing .date {
   float: right;
   margin-left: 20px;
 }
 
-section.standard .events-listing .date .fulldate {
+.cwd-events-style section.standard .events-listing .date .fulldate {
   margin-right: 5px;
 }
 
-section.standard .events-listing .event-details {
+.cwd-events-style section.standard .events-listing .event-details {
   /*float: left;*/
   clear: right;
   padding-left: 112px;
   /* disable to allow this button to clear the thumbnail */
 }
 
-section.standard .events-listing .event-details .fa {
+.cwd-events-style section.standard .events-listing .event-details .fa {
   font-size: 7px;
   /*background: #3787b0;*/
   background: #f0eada;
@@ -103,22 +123,22 @@ section.standard .events-listing .event-details .fa {
   top: -2px;
 }
 
-section.standard .events-listing .event-details a {
+.cwd-events-style section.standard .events-listing .event-details a {
   text-decoration: none;
 }
 
-section.standard .events-listing .event-details a:hover .fa {
+.cwd-events-style section.standard .events-listing .event-details a:hover .fa {
   background: #f8f4ec;
   /*background: rgba(0,0,0,0.7);*/
   color: #000;
 }
 
-section.standard .events-listing .event-details h4 {
+.cwd-events-style section.standard .events-listing .event-details h4 {
   font-size: 11px;
   font-weight: 400;
 }
 
-section.standard .events-listing .month-header {
+.cwd-events-style section.standard .events-listing .month-header {
   text-align: center;
   color: #fff;
   background: #597F34;
@@ -129,7 +149,7 @@ section.standard .events-listing .month-header {
   font-size: 20px;
 }
 
-section.standard .events-listing .day-header {
+.cwd-events-style section.standard .events-listing .day-header {
   font-size: 14px;
   border-top: 1px solid #e0e0e0;
   padding: 10px 0 5px;
@@ -143,52 +163,49 @@ section.standard .events-listing .day-header {
   font-weight: 500;
 }
 
-section.standard .events-listing .day-header .fa:before {
+.cwd-events-style section.standard .events-listing .day-header .fa:before {
   font-size: 14px;
   margin: 0 8px 0 0;
   color: #555;
   padding-left: 1px;
 }
 
-/* event details toggle */
-
 @-moz-document url-prefix()  {
-  /* FF */
+  .cwd-events-style {
+    /* FF */
+  }
 
-  .events-listing .event-details .fa {
+  .cwd-events-style .events-listing .event-details .fa {
     font-size: 7.1px;
   }
 }
 
-/* Compact Mode
-    -------------------- */
-
-section.standard .events-listing.compact {
+.cwd-events-style section.standard .events-listing.compact {
   margin-top: 0;
 }
 
-section.standard .events-listing.compact #events-filters {
+.cwd-events-style section.standard .events-listing.compact #events-filters {
   display: none;
 }
 
-section.standard .events-listing.compact .node {
+.cwd-events-style section.standard .events-listing.compact .node {
   border-bottom: 1px solid #e0e0e0;
   margin: 0.5em 0 0.6em;
 }
 
-section.standard .events-listing.compact .node:last-child {
+.cwd-events-style section.standard .events-listing.compact .node:last-child {
   border: 0;
 }
 
-section.standard .events-listing.compact .node h3 {
+.cwd-events-style section.standard .events-listing.compact .node h3 {
   font-size: 14px;
 }
 
-section.standard .events-listing.compact .meta {
+.cwd-events-style section.standard .events-listing.compact .meta {
   font-size: 13px;
 }
 
-section.standard .events-listing.compact .location {
+.cwd-events-style section.standard .events-listing.compact .location {
   float: left;
   width: 60%;
   overflow: hidden;
@@ -196,24 +213,24 @@ section.standard .events-listing.compact .location {
   white-space: nowrap;
 }
 
-section.standard .events-listing.compact .description {
+.cwd-events-style section.standard .events-listing.compact .description {
   font-size: 11px;
   padding-left: 0;
   clear: both;
 }
 
-section.standard .events-listing.compact .event-details {
+.cwd-events-style section.standard .events-listing.compact .event-details {
   padding-left: 0;
   clear: both;
 }
 
-section.standard .events-listing.no-thumbnails .description,
-section.standard .events-listing.no-thumbnails .event-details {
+.cwd-events-style section.standard .events-listing.no-thumbnails .description,
+.cwd-events-style section.standard .events-listing.no-thumbnails .event-details {
   padding-left: 0;
   clear: both;
 }
 
-section.standard .events-listing.compact .date .fulldate {
+.cwd-events-style section.standard .events-listing.compact .date .fulldate {
   margin: 0 0 0 5px;
   padding: 3px 7px;
   margin-top: -3px;
@@ -222,13 +239,13 @@ section.standard .events-listing.compact .date .fulldate {
   border-radius: 2px;
 }
 
-section.standard .events-listing .type .fa:before {
+.cwd-events-style section.standard .events-listing .type .fa:before {
   margin-right: 5px;
   content: "\F124";
   font-size: 14px;
 }
 
-section.standard .events-listing .location {
+.cwd-events-style section.standard .events-listing .location {
   float: left;
   width: 75%;
   overflow: hidden;
@@ -236,54 +253,48 @@ section.standard .events-listing .location {
   white-space: nowrap;
 }
 
-section.standard .events-listing.compact .location {
+.cwd-events-style section.standard .events-listing.compact .location {
   width: 70%;
 }
 
-section.standard .events-listing.compact .date .start,
-section.standard .events-listing.compact .description {
+.cwd-events-style section.standard .events-listing.compact .date .start,
+.cwd-events-style section.standard .events-listing.compact .description {
   display: none;
 }
 
-/* compact filters */
-
-#standarCompact ul.events-filters {
+.cwd-events-style #standarCompact ul.events-filters {
   width: 100%;
   float: left;
 }
 
-#standarCompact ul.events-filters li {
+.cwd-events-style #standarCompact ul.events-filters li {
   margin-right: 4px;
 }
 
-#standarCompact ul.events-filters li:last-child {
+.cwd-events-style #standarCompact ul.events-filters li:last-child {
   border: 0;
   margin-right: 0;
 }
 
-#standarCompact ul.events-filters li a {
+.cwd-events-style #standarCompact ul.events-filters li a {
   padding: 2px 10px 1px;
   border-radius: 2px;
   font-size: 13px;
 }
 
-#standarCompact .win ul.events-filters li {
+.cwd-events-style #standarCompact .win ul.events-filters li {
   margin-right: 2px;
 }
 
-#standarCompact .win ul.events-filters li:last-child {
+.cwd-events-style #standarCompact .win ul.events-filters li:last-child {
   margin-right: 0;
 }
 
-#standarCompact .win ul.events-filters li a {
+.cwd-events-style #standarCompact .win ul.events-filters li a {
   padding: 2px 8px 1px;
 }
 
-/* calendar */
-
-/***** Events *****/
-
-#eventsInlineCompact .event-month-and-day {
+.cwd-events-style #eventsInlineCompact .event-month-and-day {
   text-align: center;
   line-height: 17px;
   border-left: 4px solid #b31b1b;
@@ -294,7 +305,7 @@ section.standard .events-listing.compact .description {
   height: 50px;
 }
 
-#eventsInlineCompact .event-month-and-day .event-month {
+.cwd-events-style #eventsInlineCompact .event-month-and-day .event-month {
   float: left;
   text-transform: uppercase;
   color: #767676;
@@ -303,7 +314,7 @@ section.standard .events-listing.compact .description {
   padding-left: 4px;
 }
 
-#eventsInlineCompact .event-month-and-day .event-day {
+.cwd-events-style #eventsInlineCompact .event-month-and-day .event-day {
   clear: both;
   color: #000;
   font-weight: 600;
@@ -313,14 +324,14 @@ section.standard .events-listing.compact .description {
   text-align: left;
 }
 
-#eventsInlineCompact .event-month-and-day .event-day sup {
+.cwd-events-style #eventsInlineCompact .event-month-and-day .event-day sup {
   top: -6px;
   font-size: 10px;
   margin-left: 3px;
   letter-spacing: 0.005em;
 }
 
-#eventsInlineCompact .event-title-and-location a {
+.cwd-events-style #eventsInlineCompact .event-title-and-location a {
   text-decoration: underline;
   font-size: 16px;
   margin-bottom: 7px;
@@ -328,17 +339,17 @@ section.standard .events-listing.compact .description {
   text-align: left;
 }
 
-#eventsInlineCompact .event-title-and-location a:focus,
-#eventsInlineCompact .event-title-and-location a:hover {
+.cwd-events-style #eventsInlineCompact .event-title-and-location a:focus,
+.cwd-events-style #eventsInlineCompact .event-title-and-location a:hover {
   text-decoration: none !important;
 }
 
-#eventsInlineCompact .event-title-and-location .event-location,
-#eventsInlineCompact .event-title-and-location .event-times {
+.cwd-events-style #eventsInlineCompact .event-title-and-location .event-location,
+.cwd-events-style #eventsInlineCompact .event-title-and-location .event-times {
   padding: 0 7px;
 }
 
-#eventsInlineCompact .events-listing-inline {
+.cwd-events-style #eventsInlineCompact .events-listing-inline {
   background: #fff;
   padding: 16px 10px 16px 6px;
   margin-bottom: 0;
@@ -346,11 +357,11 @@ section.standard .events-listing.compact .description {
   /*padding-bottom: 114px;*/
 }
 
-#eventsInlineCompact #block-eventsblock {
+.cwd-events-style #eventsInlineCompact #block-eventsblock {
   padding: 22px;
 }
 
-#eventsInlineCompact #block-eventsblock h2 {
+.cwd-events-style #eventsInlineCompact #block-eventsblock h2 {
   color: #000;
   margin: 8px 0 0 0;
   font-size: 34px;
@@ -359,85 +370,83 @@ section.standard .events-listing.compact .description {
   padding: 13px 0 10px 20px;
 }
 
-#eventsInlineCompact .events-listing-inline .events-list .views-row {
+.cwd-events-style #eventsInlineCompact .events-listing-inline .events-list .views-row {
   margin-bottom: 23px;
 }
 
-#eventsInlineCompact .events-listing-inline .events-list .event-title-and-location {
+.cwd-events-style #eventsInlineCompact .events-listing-inline .events-list .event-title-and-location {
   width: 74.66667%;
 }
 
 @media (min-width: 768px) {
-  #eventsInlineCompact .col-sm-2 {
+  .cwd-events-style #eventsInlineCompact .col-sm-2 {
     width: 16.66667%;
   }
 }
 
 @media (min-width: 768px) {
-  #eventsInlineCompact .col-sm-1,
-  #eventsInlineCompact .col-sm-2,
-  #eventsInlineCompact .col-sm-3,
-  #eventsInlineCompact .col-sm-4,
-  #eventsInlineCompact .col-sm-5,
-  #eventsInlineCompact .col-sm-6,
-  #eventsInlineCompact .col-sm-7,
-  #eventsInlineCompact .col-sm-8,
-  #eventsInlineCompact .col-sm-9,
-  #eventsInlineCompact .col-sm-10,
-  #eventsInlineCompact .col-sm-11,
-  #eventsInlineCompact .col-sm-12 {
+  .cwd-events-style #eventsInlineCompact .col-sm-1,
+  .cwd-events-style #eventsInlineCompact .col-sm-2,
+  .cwd-events-style #eventsInlineCompact .col-sm-3,
+  .cwd-events-style #eventsInlineCompact .col-sm-4,
+  .cwd-events-style #eventsInlineCompact .col-sm-5,
+  .cwd-events-style #eventsInlineCompact .col-sm-6,
+  .cwd-events-style #eventsInlineCompact .col-sm-7,
+  .cwd-events-style #eventsInlineCompact .col-sm-8,
+  .cwd-events-style #eventsInlineCompact .col-sm-9,
+  .cwd-events-style #eventsInlineCompact .col-sm-10,
+  .cwd-events-style #eventsInlineCompact .col-sm-11,
+  .cwd-events-style #eventsInlineCompact .col-sm-12 {
     float: left;
   }
 }
 
-#eventsInlineCompact .col-sm-8.event-title-and-location {
+.cwd-events-style #eventsInlineCompact .col-sm-8.event-title-and-location {
   /* min-width: 62%; */
   word-wrap: break-word;
   width: 300px;
   padding: 10px;
 }
 
-#eventsInlineCompact .views-row {
+.cwd-events-style #eventsInlineCompact .views-row {
   max-width: 500px;
 }
 
-#eventsInlineCompact span.fa.fa-clock-o,
-#eventsInlineCompact span.fa.fa-map-marker {
+.cwd-events-style #eventsInlineCompact span.fa.fa-clock-o,
+.cwd-events-style #eventsInlineCompact span.fa.fa-map-marker {
   margin-right: 10px;
 }
 
-#eventsInlineCompact .events a {
+.cwd-events-style #eventsInlineCompact .events a {
   margin-bottom: 20px;
 }
 
-#eventsInlineCompact div.container-fluid {
+.cwd-events-style #eventsInlineCompact div.container-fluid {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-/* Events */
-
-#eventsModernCompact #elements,
-#eventsModernStandard #elements {
+.cwd-events-style #eventsModernCompact #elements,
+.cwd-events-style #eventsModernStandard #elements {
   margin: 0 auto 2.5em;
   max-width: 480px;
   float: none;
 }
 
-#eventsModernCompact .cwd-component .events .field,
-#eventsModernStandard .cwd-component .events .field {
+.cwd-events-style #eventsModernCompact .cwd-component .events .field,
+.cwd-events-style #eventsModernStandard .cwd-component .events .field {
   clear: both;
 }
 
-#eventsModernCompact .cwd-component .events time,
-#eventsModernStandard .cwd-component .events time {
+.cwd-events-style #eventsModernCompact .cwd-component .events time,
+.cwd-events-style #eventsModernStandard .cwd-component .events time {
   width: auto;
   min-height: 0;
   margin: 0 0 1em;
 }
 
-#eventsModernCompact .cwd-component .events time .month,
-#eventsModernStandard .cwd-component .events time .month {
+.cwd-events-style #eventsModernCompact .cwd-component .events time .month,
+.cwd-events-style #eventsModernStandard .cwd-component .events time .month {
   float: left;
   font-size: 15px;
   line-height: 1;
@@ -448,8 +457,8 @@ section.standard .events-listing.compact .description {
   text-transform: uppercase;
 }
 
-#eventsModernCompact .cwd-component .events time .day,
-#eventsModernStandard .cwd-component .events time .day {
+.cwd-events-style #eventsModernCompact .cwd-component .events time .day,
+.cwd-events-style #eventsModernStandard .cwd-component .events time .day {
   float: left;
   font-size: 15px;
   line-height: 1;
@@ -459,8 +468,8 @@ section.standard .events-listing.compact .description {
   background: #a63133;
 }
 
-#eventsModernCompact .cwd-component .events h3,
-#eventsModernStandard .cwd-component .events h3 {
+.cwd-events-style #eventsModernCompact .cwd-component .events h3,
+.cwd-events-style #eventsModernStandard .cwd-component .events h3 {
   width: 100%;
   font-size: 21px;
   line-height: 1.4;
@@ -468,55 +477,55 @@ section.standard .events-listing.compact .description {
   font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
 }
 
-#eventsModernCompact .cwd-component .events .meta,
-#eventsModernStandard .cwd-component .events .meta {
+.cwd-events-style #eventsModernCompact .cwd-component .events .meta,
+.cwd-events-style #eventsModernStandard .cwd-component .events .meta {
   color: #767676;
   font-size: 13px;
   font-weight: 400;
 }
 
-#eventsModernCompact .events-listing > div.events-list > div > div > a,
-#eventsModernStandard .events-listing > div.events-list > div > div > a {
+.cwd-events-style #eventsModernCompact .events-listing > div.events-list > div > div > a,
+.cwd-events-style #eventsModernStandard .events-listing > div.events-list > div > div > a {
   margin: 0px 0 25px 0 !important;
 }
 
-#eventsModernCompact .cwd-component .events a,
-#eventsModernStandard .cwd-component .events a {
+.cwd-events-style #eventsModernCompact .cwd-component .events a,
+.cwd-events-style #eventsModernStandard .cwd-component .events a {
   display: block;
   text-decoration: none;
   color: #000;
   transition: background 0.15s, box-shadow 0.15s;
 }
 
-#eventsModernCompact .cwd-component .events a:hover h3,
-#eventsModernCompact .cwd-component .events a:focus h3,
-#eventsModernStandard .cwd-component .events a:hover h3,
-#eventsModernStandard .cwd-component .events a:focus h3 {
+.cwd-events-style #eventsModernCompact .cwd-component .events a:hover h3,
+.cwd-events-style #eventsModernCompact .cwd-component .events a:focus h3,
+.cwd-events-style #eventsModernStandard .cwd-component .events a:hover h3,
+.cwd-events-style #eventsModernStandard .cwd-component .events a:focus h3 {
   text-decoration: underline;
   color: #127cb5;
 }
 
-#eventsModernCompact .cwd-component .events a:active h3,
-#eventsModernStandard .cwd-component .events a:active h3 {
+.cwd-events-style #eventsModernCompact .cwd-component .events a:active h3,
+.cwd-events-style #eventsModernStandard .cwd-component .events a:active h3 {
   color: #000;
 }
 
-#eventsModernCompact .cwd-component .events a:hover,
-#eventsModernCompact .cwd-component .events a:focus,
-#eventsModernStandard .cwd-component .events a:hover,
-#eventsModernStandard .cwd-component .events a:focus {
+.cwd-events-style #eventsModernCompact .cwd-component .events a:hover,
+.cwd-events-style #eventsModernCompact .cwd-component .events a:focus,
+.cwd-events-style #eventsModernStandard .cwd-component .events a:hover,
+.cwd-events-style #eventsModernStandard .cwd-component .events a:focus {
   background: rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
-#eventsModernCompact .cwd-component .events a:active,
-#eventsModernStandard .cwd-component .events a:active {
+.cwd-events-style #eventsModernCompact .cwd-component .events a:active,
+.cwd-events-style #eventsModernStandard .cwd-component .events a:active {
   background: rgba(0, 0, 0, 0.09);
   box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.09);
 }
 
-#eventsModernCompact a.view-all-events,
-#eventsModernStandard a.view-all-events {
+.cwd-events-style #eventsModernCompact a.view-all-events,
+.cwd-events-style #eventsModernStandard a.view-all-events {
   display: inline-block;
   text-decoration: none;
   text-align: right;
@@ -526,27 +535,27 @@ section.standard .events-listing.compact .description {
   font-weight: bold;
 }
 
-#eventsModernCompact a.view-all-events:hover,
-#eventsModernCompact a.view-all-events:focus,
-#eventsModernCompact a.view-all-events:active,
-#eventsModernStandard a.view-all-events:hover,
-#eventsModernStandard a.view-all-events:focus,
-#eventsModernStandard a.view-all-events:active {
+.cwd-events-style #eventsModernCompact a.view-all-events:hover,
+.cwd-events-style #eventsModernCompact a.view-all-events:focus,
+.cwd-events-style #eventsModernCompact a.view-all-events:active,
+.cwd-events-style #eventsModernStandard a.view-all-events:hover,
+.cwd-events-style #eventsModernStandard a.view-all-events:focus,
+.cwd-events-style #eventsModernStandard a.view-all-events:active {
   text-decoration: underline;
 }
 
-#eventsModernCompact .padded-left,
-#eventsModernStandard .padded-left {
+.cwd-events-style #eventsModernCompact .padded-left,
+.cwd-events-style #eventsModernStandard .padded-left {
   padding-left: 10px;
 }
 
-#eventsModernCompact .events-filters-wrap ul,
-#eventsModernStandard .events-filters-wrap ul {
+.cwd-events-style #eventsModernCompact .events-filters-wrap ul,
+.cwd-events-style #eventsModernStandard .events-filters-wrap ul {
   margin-bottom: 5px !important;
 }
 
-#eventsModernCompact .inline-events-type,
-#eventsModernStandard .inline-events-type {
+.cwd-events-style #eventsModernCompact .inline-events-type,
+.cwd-events-style #eventsModernStandard .inline-events-type {
   float: none;
   padding: 2px 8px 1px;
   background: #FCF3E1;
@@ -556,16 +565,16 @@ section.standard .events-listing.compact .description {
   margin-left: 10px;
 }
 
-.events-listing .cuenergy-events .event-title-and-location a {
+.cwd-events-style .events-listing .cuenergy-events .event-title-and-location a {
   font-size: 24px;
   margin-bottom: unset;
 }
 
-.events-listing .cuenergy-events .views-row {
+.cwd-events-style .events-listing .cuenergy-events .views-row {
   margin-bottom: 20px;
 }
 
-.events-listing .event-month-and-day > div {
+.cwd-events-style .events-listing .event-month-and-day > div {
   color: #20417b;
   padding: 0;
   text-align: center;
@@ -573,28 +582,13 @@ section.standard .events-listing.compact .description {
   width: 80%;
 }
 
-/* Category Filters
-  -------------------- */
-
-.events-listing {
-  /* hide / show 
-      -used for filtered event nodes 
-    -------------------------------------*/
-  /*@ todo make this actually fade out */
-  /* Animated Loading Icon
-    -------------------- */
-  /* Add To Calendar 
-    -----------------*/
-  /* required change to visually hidden*/
-}
-
-.events-listing .event-subscribe {
+.cwd-events-style .event-subscribe {
   float: right;
   font-size: 13px;
   padding-bottom: 20px;
 }
 
-.events-listing .event-subscribe > a {
+.cwd-events-style .event-subscribe > a {
   font-size: 20px;
   padding-right: 8px;
   color: #111;
@@ -602,21 +596,21 @@ section.standard .events-listing.compact .description {
   display: inline-block !important;
 }
 
-.events-listing .event-subscribe a:first-child {
+.cwd-events-style .event-subscribe a:first-child {
   padding-left: 10px;
 }
 
-.events-listing .events-filters-wrap {
+.cwd-events-style .events-filters-wrap {
   float: left;
   width: 100%;
   margin: 10px 0;
 }
 
-.events-listing .events-filters-wrap ul {
+.cwd-events-style .events-filters-wrap ul {
   margin: 0;
 }
 
-.events-listing .events-filters-wrap h3 {
+.cwd-events-style .events-filters-wrap h3 {
   float: left;
   font-size: 14px;
   line-height: 24px;
@@ -624,7 +618,7 @@ section.standard .events-listing.compact .description {
   padding: 2px 8px 2px 0;
 }
 
-.events-listing ul.events-filters li {
+.cwd-events-style ul.events-filters li {
   float: left;
   list-style: none;
   background: none;
@@ -633,7 +627,7 @@ section.standard .events-listing.compact .description {
   padding: 0;
 }
 
-.events-listing ul.events-filters li button {
+.cwd-events-style ul.events-filters li button {
   float: left;
   padding: 5px 13px 5px;
   background: #e7eff3;
@@ -642,25 +636,25 @@ section.standard .events-listing.compact .description {
   border-style: none;
 }
 
-.events-listing ul.events-filters li button.active {
+.cwd-events-style ul.events-filters li button.active {
   color: #fff !important;
   background: #4B7995 !important;
 }
 
-.events-listing ul.events-filters li button:hover {
+.cwd-events-style ul.events-filters li button:hover {
   background: #d3e1e8;
   color: #000;
 }
 
-.events-listing .fadeOut {
+.cwd-events-style .fadeOut {
   display: none;
 }
 
-.events-listing .fadeIn {
+.cwd-events-style .fadeIn {
   display: block;
 }
 
-.events-listing #loader {
+.cwd-events-style #loader {
   /*display: none;*/
   position: absolute;
   left: 45%;
@@ -673,25 +667,25 @@ section.standard .events-listing.compact .description {
   color: rgba(0, 0, 0, 0.2);
 }
 
-.events-listing .google {
+.cwd-events-style .google {
   color: #2d863e !important;
   background: transparent !important;
   box-shadow: none !important;
 }
 
-.events-listing .microsoft {
+.cwd-events-style .microsoft {
   color: #017bb1 !important;
   background: transparent !important;
   box-shadow: none !important;
 }
 
-.events-listing .apple {
+.cwd-events-style .apple {
   color: #545a5f !important;
   background: transparent !important;
   box-shadow: none !important;
 }
 
-.events-listing .hidden {
+.cwd-events-style .hidden {
   position: absolute;
   left: -10000em;
   top: auto;
