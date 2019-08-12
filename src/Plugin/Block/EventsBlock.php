@@ -56,7 +56,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
                 data-format = '" . $this->configuration['cwd_events_format'] . "'
                 data-group = " . $this->configuration['cwd_events_group'] . "
                 data-keyword = '" . $this->configuration['cwd_events_keyword'] . "'
-                data-styling = '" . $this->configuration['cwd_events_styling'] . "'
                 data-heading = ''
               ></div>",
     ];

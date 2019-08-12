@@ -50,25 +50,16 @@ This is an example of the block output:
   <section>
       <h2>Block Name</h2>
       <a class="cwd_events_readmore" href="/events">Read More</a>
-      <div id='events-listing' class='events-listing' ></div>
-        <script>
-            var settings = {
-              'target': 'events-listing',
-              'depts':@depts,
-              'entries':@entries,
-              'format':'@format',
-              'group':@group,
-              'singleday':@singleday,
-              'keyword':'@keyword',
-              'addCal': true,
-              'heading':''
-            };
-            if (CWD_LocalList){
-              CWD_LocalList.run( settings );
-            }else{
-              console.warn('ERROR: can not find events build');
-            }
-         </script>
+        <div
+            id="events-listing-UUID"
+            class="events-listing cwd-events-style"
+            data-depts="0"
+            data-entries="5"
+            data-format="modern_standard"
+            data-group="0"
+            data-keyword=""
+            data-heading=""
+        ></div>
   </section>
 ```
 
