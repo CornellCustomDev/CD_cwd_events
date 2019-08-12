@@ -11,7 +11,7 @@
  */
 
 (function($, Drupal, window) {
-    Drupal.behaviors.megamenu = {
+    Drupal.behaviors.cwdEvents = {
         attach(context, settings) {
             $('div.events-listing', context)
                 .once('cwd_events')
