@@ -18,7 +18,7 @@ use Drupal\Core\Form\FormStateInterface;
 class EventsBlock extends BlockBase implements BlockPluginInterface {
 
   /**
-   * List of supported format options @todo add support for archive.
+   * List of supported format options.
    *
    * @var array
    */
@@ -40,34 +40,25 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $uuid = \Drupal::service('uuid');
     $id = $uuid->generate();
     $teaser = $this->configuration['cwd_events_readmore']
-      ? '<a class="cwd_events_readmore" href=' . $this->configuration['cwd_events_url'] . '>' . $this->configuration['cwd_events_readmore'] . '</a>'
+      ? '<a class="cwd_events_readmore" href='
+          . $this->configuration['cwd_events_url'] . '>'
+          . $this->t('@readmore', ["@readmore" => $this->configuration['cwd_events_readmore']]) .
+        '</a>'
       : '';
+    $class = ($this->configuration['cwd_events_styling'] == 1) ? 'cwd-events-style' : '';
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
-      '#markup' => $teaser . $this->t("<div id='@target' class='events-listing' ></div>
-        <script>
-      var settings = {
-        'target':'@target',
-        'depts':@depts,
-        'entries':@entries,
-        'format':'@format',
-        'group':@group,
-        'keyword':'@keyword',
-        'addCal': true,
-        'heading':''};
-      if (CWD_LocalList){
-      CWD_LocalList.run( settings );
-      }else{
-        console.warn('ERROR: can not find events buid');
-      }</script>",
-        [
-          "@target" => "events-listing-" . $id,
-          "@depts" => $this->configuration['cwd_events_depts'],
-          "@entries" => $this->configuration['cwd_events_entries'],
-          "@format" => $this->configuration['cwd_events_format'],
-          "@group" => $this->configuration['cwd_events_group'],
-          "@keyword" => $this->configuration['cwd_events_keyword'],
-        ]),
+      '#markup' => $teaser . "<div
+                id = 'events-listing-" . $id . "'
+                class = 'events-listing " . $class . "'
+                data-depts = '" . $this->configuration['cwd_events_depts'] . "'
+                data-entries = '" . $this->configuration['cwd_events_entries'] . "'
+                data-format = '" . $this->configuration['cwd_events_format'] . "'
+                data-group = " . $this->configuration['cwd_events_group'] . "
+                data-keyword = '" . $this->configuration['cwd_events_keyword'] . "'
+                data-styling = '" . $this->configuration['cwd_events_styling'] . "'
+                data-heading = ''
+              ></div>",
     ];
   }
 
@@ -115,6 +106,14 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#default_value' => isset($config['cwd_events_format']) ? $config['cwd_events_format'] : 'standard',
     ];
 
+    $form['cwd_events_styling'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Styling'),
+      '#description' => $this->t('Uncheck this box to remove all module styling.'),
+      '#return_value' => 1,
+      '#default_value' => isset($config['cwd_events_styling']) ? $config['cwd_events_styling'] : 1,
+    ];
+
     $form['cwd_events_group'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Group'),
@@ -144,6 +143,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $this->configuration['cwd_events_depts'] = $values['cwd_events_depts'];
     $this->configuration['cwd_events_entries'] = $values['cwd_events_entries'];
     $this->configuration['cwd_events_format'] = $formatOptions[$values['cwd_events_format']];
+    $this->configuration['cwd_events_styling'] = $values['cwd_events_styling'];
     $this->configuration['cwd_events_group'] = $values['cwd_events_group'];
     $this->configuration['cwd_events_keyword'] = $values['cwd_events_keyword'];
   }

@@ -96,24 +96,9 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _localist__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./localist */ "./js/localist.js");
+ // Expose localist to Drupla.
 
-var eventListings = document.getElementsByClassName('events-listing');
-
-for (var i = 0; i < eventListings.length; i++) {
-  var elem = eventListings[i];
-  var settings = {
-    'target': elem.dataset.target,
-    'format': elem.dataset.format,
-    'entries': elem.dataset.entries,
-    'heading': elem.dataset.heading,
-    'addCal': elem.dataset.addCal,
-    'keyword': elem.dataset.keyword,
-    'pref_excerpt_length': elem.dataset.prefExcerptLength,
-    'pref_category_filters': elem.dataset.prefCategoryFilters
-  };
-  var LL = new _localist__WEBPACK_IMPORTED_MODULE_0__["default"](settings);
-  LL.renderEvents();
-}
+window['CWD_LocalList'] = _localist__WEBPACK_IMPORTED_MODULE_0__["default"];
 
 /***/ }),
 
