@@ -6,7 +6,6 @@ cwdeventslib:
       dist/cwd_events.css: {}
   js:
     dist/cwd_events.js: {preprocess: false}
-    js/app.js: {preprocess: false}
   dependencies:
     - core/drupal
     - core/jquery

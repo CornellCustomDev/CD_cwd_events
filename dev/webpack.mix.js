@@ -1,5 +1,6 @@
 // Pull in Laravel Mix
 const mix = require('laravel-mix');
+const eslintFormatter = require('eslint-friendly-formatter');
 
 // Configure what it does
 mix.setPublicPath('./dist')
@@ -13,7 +14,7 @@ mix.setPublicPath('./dist')
                     enforce: 'pre',
                     exclude: /(node_modules)/,
                     options: {
-                        formatter: require('eslint-friendly-formatter')
+                        formatter: eslintFormatter
                     }
                 }
             ]

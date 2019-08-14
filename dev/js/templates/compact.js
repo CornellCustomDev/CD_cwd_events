@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { add_calendar } from './template-helpers';
 
-export const compactInner = builtData => `
+export const compactInner = builtData => /* html */ `
 <div
     class="event-node dept-${builtData.department} node
     type-${builtData.type} group-${builtData.group_id}"
@@ -41,7 +41,7 @@ export const compactInner = builtData => `
 </div><!--end of node -->`;
 
 // this has class compact only difference
-export const compactWrapper = (inner, args) => `
+export const compactWrapper = (inner, args) => /* html */ `
     <section class='standard' id="standarCompact" title="${args.title}">
     ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div class="main-body">

@@ -22,6 +22,20 @@
     "CKEDITOR": true
   },
   "rules": {
+    "import/no-extraneous-dependencies": [
+        "off",
+        {
+            "devDependencies": false,
+            "optionalDependencies": false,
+            "peerDependencies": false
+        }
+    ],
+    "camelcase": [
+        "off",
+        {
+            "properties": "never"
+        }
+    ],
     "prettier/prettier": "error",
     "consistent-return": ["off"],
     "no-underscore-dangle": ["off"],
@@ -40,12 +54,8 @@
       "requireReturn": false
     }],
     "no-unused-vars": ["warn"],
+
     "operator-linebreak": ["error", "after", { "overrides": { "?": "ignore", ":": "ignore" } }],
-    "no-console": ["error", { "allow": ["warn", "error" ]}],
-    "camelcase": [
-        "error",
-        {"properties": "never"
-        }
-    ]
+    "no-console": ["error", { "allow": ["warn", "error" ]}]
   }
 }

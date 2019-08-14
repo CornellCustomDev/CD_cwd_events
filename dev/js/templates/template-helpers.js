@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /*
  @param filterObj has structure: obj.name, obj.id
  @param domTarget: string of html id #id should exist and be unique
@@ -58,10 +57,20 @@ export const eventFilters = (filterObjs, domTarget) => {
     window[`toggleFilters${domStr}`] = toggleFilters;
     window[`showAllEvents${domStr}`] = showAllEvents;
 
-    return `
-        <div class='events-filters-wrap' ><h3 class="hidden">Show:</h3>
+    return /* html */ `
+        <div class="events-filters-wrap">
+            <h3 class="hidden">Show:</h3>
             <ul class="events-filters">
-                <li><button id="filterAll-${domStr}" data-filter="all" class="filter-btn active" onClick="showAllEvents${domStr}()">All Events</button></li>
+                <li>
+                    <button
+                        id="filterAll-${domStr}"
+                        data-filter="all"
+                        class="filter-btn active"
+                        onClick="showAllEvents${domStr}()"
+                    >
+                        All Events
+                    </button>
+                </li>
                 ${
                     filterObjs
                         ? Object.keys(filterObjs)
@@ -101,44 +110,53 @@ export const add_calendar = myEvent => {
         const myED = myObj.last_date;
         const gDateStop =
             myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
-        return `
-                <a class="fa fa-google google"
-                    href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=${gDateStart}%2F${gDateStop}&amp;details=${encodeURIComponent(
+        return /* html */ `
+            <a
+                class="fa fa-google google"
+                href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=${gDateStart}%2F${gDateStop}&amp;details=${encodeURIComponent(
             myObj.description_text.replace(/[\r\n]/g, `<br />`)
         )}&amp;location=${encodeURIComponent(
             myObj.location
         )}&amp;sprop=website%3Aevents.cornell.edu&amp;text=${encodeURIComponent(
             myObj.title
-        )}" title="Save to Google Calendar" target="_blank">
-                <span class="sr-only">Add ${
-                    myObj.title
-                } to Google Calendar</span>
-                </a>
-                `;
+        )}"
+                title="Save to Google Calendar"
+                target="_blank"
+            >
+                <span class="sr-only"
+                    >Add ${myObj.title} to Google Calendar</span
+                >
+            </a>
+        `;
     };
 
-    const buildiCal = myObj => `
-                        <a class="fa fa-calendar apple" href="${
-                            myObj.localist_ics_url
-                        }/#" title="Save to iCal" target="_blank" >
-                        <span class='sr-only'>Add ${myObj.title} to iCal</span>
-                        </a>
-                        `;
+    const buildiCal = myObj => /* html */ `
+        <a
+            class="fa fa-calendar apple"
+            href="${myObj.localist_ics_url}/#"
+            title="Save to iCal"
+            target="_blank"
+        >
+            <span class="sr-only">Add ${myObj.title} to iCal</span>
+        </a>
+    `;
 
-    const buildOutlookCal = myObj => `
-                        <a class="fa fa-clock-o microsoft" href="${
-                            myObj.localist_ics_url
-                        }" title="Save to Outlook" target="_blank" >
-                            <span class='sr-only'>Add ${
-                                myObj.title
-                            } to Outlook</span>
-                        </a>
-                        `;
+    const buildOutlookCal = myObj => /* html */ `
+        <a
+            class="fa fa-clock-o microsoft"
+            href="${myObj.localist_ics_url}"
+            title="Save to Outlook"
+            target="_blank"
+        >
+            <span class="sr-only">Add ${myObj.title} to Outlook</span>
+        </a>
+    `;
 
     /* ------------------ END OF BUILD LINKS --------------------------- */
-    return `<span class="event-subscribe">add to calendar
-            ${buidGoogleStr(myEvent)} ${buildiCal(myEvent)} ${buildOutlookCal(
-        myEvent
-    )}
-            </span>`;
+    return /* html */ `
+        <span class="event-subscribe"
+            >add to calendar ${buidGoogleStr(myEvent)} ${buildiCal(myEvent)}
+            ${buildOutlookCal(myEvent)}
+        </span>
+    `;
 };
