@@ -32,69 +32,59 @@ import { archiveInner, archiveWrapper } from './templates/archive';
     localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
     localList.renderEvents();
 */
-
 export default class LocalList {
     // define the following arguments
     constructor({
+        target = 'events-listing',
         depts = 0,
         entries = 10,
         format = 'standard',
         group = 0,
-        target = 'events-listing', // the id of the HTML target element
-        title = 'Events List', // the section title of the wrapper
-        heading = 'Events', // the h3 displayed heading
-        api = '2.1', // Localist API version (e.g., '2' for the latest 2.x, '2.1' for the specific point release)
-        pref_excerpt_length = 250, // use 0 for no truncation, using truncation will force descriptions to plaintext
-        pref_excerpt_length_compact = 125, // excerpt length can be made shorter for 'compact' mode
-        pref_allow_rich = true, // setting to false will force plaintext descriptions (only affects api 2.1 or later)
-        pref_readmore = 'read more', // label for "read more" links at the end of truncated excerpts
-        pref_eventdetails = 'event details', // label for "event details" toggle buttons
-        pref_category = 'group', // the event "type" label can be replaced with other localist values to act as custom categorization (currently supports: 'type','dept','group')
-        pref_category_filters = true,
-        pref_date_headers = true,
-        singleday = false,
         keyword = false,
+        heading = '',
         addCal = false // add to google/outlook/ical options
     }) {
+        const api = 2.1;
+
         // used in filters
-        this.pref_category = pref_category;
-        this.pref_category_filters = pref_category_filters;
+        this.pref_category = 'group';
+        this.pref_category_filters = true;
 
         // localist variables
         this.target = target;
         this.format = format;
 
         // standard wrapper variables
-        this.wrapperArgs = { target: this.target }; // pass unique target id};
-        this.wrapperArgs.title = title;
-        this.wrapperArgs.heading = heading;
-        this.wrapperArgs.filters = {};
+        this.wrapperArgs = {
+            target,
+            title: 'Events List',
+            heading,
+            filters: {}
+        };
 
         // required by service findall to request localist data
-        this.requestArgs = {};
-        this.requestArgs.depts = depts;
-        this.requestArgs.entries = parseInt(entries, 10);
-        this.requestArgs.format = format;
-        this.requestArgs.group = group;
-        this.requestArgs.singleday = singleday;
-        this.requestArgs.keyword = keyword;
-        this.requestArgs.api = api;
-        this.requestArgs.pref_allow_rich = pref_allow_rich;
+        this.requestArgs = {
+            entries: parseInt(entries, 10),
+            depts,
+            format,
+            group,
+            singleday: false,
+            keyword,
+            api,
+            pref_allow_rich: api >= 2.1
+        };
 
         // build event variables required for inner HTML logic
-        this.BE_args = {};
-        this.BE_args.supports_rich = false;
-        this.BE_args.supports_direction = false;
-        this.BE_args.pref_date_headers = pref_date_headers;
-        this.BE_args.pref_excerpt_length = pref_excerpt_length;
-        this.BE_args.pref_excerpt_length_compact = pref_excerpt_length_compact;
-        this.BE_args.pref_readmore = pref_readmore;
-        this.BE_args.pref_eventdetails = pref_eventdetails; // is this used?
-        this.BE_args.addCal = addCal;
-        if (parseFloat(api) >= 2.1) {
-            this.BE_args.supports_rich = true; // rich text descriptions (HTML) were added in API 2.1
-            this.BE_args.supports_direction = true; // "direction" (asc/desc) was added in API 2.1
-        }
+        this.BE_args = {
+            supports_rich: api >= 2.1,
+            supports_direction: api >= 2.1,
+            pref_date_headers: true,
+            pref_excerpt_length: 250,
+            pref_excerpt_length_compact: 125,
+            pref_readmore: 'read more',
+            pref_eventdetails: 'event details',
+            addCal
+        };
     }
 
     renderEvents() {
@@ -141,7 +131,9 @@ export default class LocalList {
                     this.outerTemplate = archiveWrapper;
                     break;
                 default:
-                // console.warn("Warning: no format was defined using fallback standard");
+                    console.warn(
+                        'Warning: no format was defined using fallback standard'
+                    );
             }
         } else {
             console.warn('using custom templates');
@@ -156,8 +148,11 @@ export default class LocalList {
         warning this.c_loader may be undefined
      */
     addThrobber(target) {
-        const loadingNode =
-            '<div id="loader" class="fadeOut"><span class="fa fa-spin fa-cog"></span></div>';
+        const loadingNode = /* html */ `
+            <div id="loader" class="fadeOut">
+                <span class="fa fa-spin fa-cog"></span>
+            </div>
+        `;
         const tarElem = document.getElementById(target);
         if (tarElem) {
             tarElem.insertAdjacentHTML('afterbegin', loadingNode);

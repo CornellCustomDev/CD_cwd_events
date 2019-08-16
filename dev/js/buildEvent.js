@@ -92,14 +92,11 @@ export default class BuildEvent {
 
         this.event_time_end = '';
 
-        this.ticket_cost = '';
-
         // setters
         this.setTruncDesc();
         this.setDateTime();
         this.setOptionFields();
         this.setEventType();
-        this.setTicketCost();
         this.setTimeEnd();
     } // END OF CONSTRUCTOR
 
@@ -136,7 +133,7 @@ export default class BuildEvent {
         this.abbrDay = eventDay;
         this.abbrMonth = this.month_array_abb[month - 1];
         this.month = this.month_array[month - 1];
-        this.fullDay = this.day_array[eventFullDate.getDay()];
+        // this.fullDay = this.day_array[eventFullDate.getDay()];
         this.day = day;
         this.monthHeader = `${this.month} ${year}`;
     }
@@ -231,13 +228,6 @@ export default class BuildEvent {
                 'T'
             )[1];
             this.event_time_end = convertTime(this.event_time_end); // convert to 12-hour format
-        }
-    }
-
-    setTicketCost() {
-        const { event } = this;
-        if (typeof event.ticket_cost !== 'undefined') {
-            this.ticket_cost = event.ticket_cost;
         }
     }
 }

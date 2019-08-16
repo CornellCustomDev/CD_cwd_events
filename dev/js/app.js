@@ -21,13 +21,12 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
                     .each(function() {
                         const LL = new LocalList({
                             target: this.id,
-                            format: this.dataset.format,
+                            dept: this.dataset.depts,
                             entries: this.dataset.entries,
-                            heading: this.dataset.heading,
-                            addCal: this.dataset.addCal,
+                            format: this.dataset.format,
+                            group: this.dataset.group,
                             keyword: this.dataset.keyword,
-                            pref_category_filters: this.dataset
-                                .prefCategoryFilters
+                            heading: this.dataset.heading
                         });
                         LL.renderEvents();
                     });
@@ -36,19 +35,20 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
     })(jQuery, Drupal);
 } else {
     console.warn(`jQuery is ${typeof jQuery} and Drupal is ${typeof Drupal}`);
-    const eventListings = document.getElementsByClassName('events-listing');
-    for (let i = 0; i < eventListings.length; i++) {
-        const elem = eventListings[i];
+    const eventListings = [
+        ...document.getElementsByClassName('events-listing')
+    ];
+    eventListings.forEach(elem => {
         const LL = new LocalList({
             target: elem.dataset.target,
-            format: elem.dataset.format,
+            dept: elem.dataset.dept,
             entries: elem.dataset.entries,
-            heading: elem.dataset.heading,
-            addCal: elem.dataset.addCal,
+            format: elem.dataset.format,
+            group: elem.dataset.group,
             keyword: elem.dataset.keyword,
-            pref_excerpt_length: elem.dataset.prefExcerptLength,
-            pref_category_filters: elem.dataset.prefCategoryFilters
+            heading: elem.dataset.heading,
+            addCal: elem.dataset.addCal
         });
         LL.renderEvents();
-    }
+    });
 }
