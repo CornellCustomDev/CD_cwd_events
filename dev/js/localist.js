@@ -20,18 +20,6 @@ import {
 } from './templates/cuenergy';
 import { archiveInner, archiveWrapper } from './templates/archive';
 
-/*
-  LoacalList typical usage example.
-    const settings = { 'format':'standard', 'entries':20, 'heading':'My Local List',  'addCal': true};
-    let localList = new LocalList( settings ).renderEvents();
-    or with custom template
-    let localList = new LocalList()
-    //define inner template list of events
-    localList.innerTemplate = (data)=>`<p>${data.event.title}</p>`;
-    //build the outer wrapper at a minimum this must contain innerHtml
-    localList.outerTemplate = (innerHTML, args)=>`<h2>${args.heading}</h2>${innerHTML}`;
-    localList.renderEvents();
-*/
 export default class LocalList {
     // define the following arguments
     constructor({

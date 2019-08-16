@@ -1,14 +1,29 @@
-/* helper function */
-const convertTime = time => {
-    let timeHour = time.split(':')[0];
-    const timeMin = time.split(':')[1];
-    if (parseInt(timeHour, 10) >= 12) {
-        if (parseInt(timeHour, 10) > 12) {
-            timeHour = parseInt(timeHour, 10) - 12;
-        }
-        return `${timeHour}:${timeMin} p.m.`;
+import * as moment from 'moment';
+import {
+    getTimefromDateTime,
+    getDayfromDateTime,
+    getMonthDayfromDateTime
+} from './common/dateTime';
+/* helper functions */
+
+/**
+ *
+ * @param {integer} excerptLength The length to truncate.
+ * @param {string} description The description string.
+ *
+ * @return {string} The truncated description.
+ */
+const truncDescription = (excerptLength, description) => {
+    let truncDesc = description;
+    if (excerptLength > 0 && description.length > excerptLength) {
+        truncDesc = description
+            .trim()
+            .substring(0, excerptLength)
+            .split(' ')
+            .slice(0, -1)
+            .join(' ');
     }
-    return `${parseInt(timeHour, 10)}:${timeMin} a.m.`;
+    return truncDesc;
 };
 
 /**
@@ -28,46 +43,6 @@ export default class BuildEvent {
         this.addCal = args.addCal;
         this.pref_eventdetails = args.pref_eventdetails;
         this.pref_readmore = args.pref_readmore;
-
-        // Date time variables.
-        this.month_array = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-        ];
-        this.month_array_abb = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
-        ];
-        this.day_array = [
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday'
-        ];
-        this.day_array_abb = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         this.event_time = '';
         this.event_date_compact = '';
         this.event_date = '';
@@ -103,26 +78,13 @@ export default class BuildEvent {
     setDateTime() {
         const { event } = this;
         // date and time
-        const eventFullDate = new Date(
-            event.event_instances[0].event_instance.start
-        );
-        const eventDay = this.day_array_abb[eventFullDate.getDay()];
-        let eventDate = event.event_instances[0].event_instance.start.split(
-            'T'
-        )[0];
-        this.dateTime = eventDate;
-        // eslint-disable-next-line prefer-destructuring
-        this.event_time = event.event_instances[0].event_instance.start.split(
-            'T'
-        )[1];
-        this.event_time = convertTime(this.event_time); // convert to 12-hour format
-        const year = eventDate.split('-')[0];
-        const month = eventDate.split('-')[1].replace(/\b0+/g, ''); // remove leading zeroes
-        const day = eventDate.split('-')[2].replace(/\b0+/g, ''); // remove leading zeroes
-        eventDate = `${month}/${day}/${year}`; // convert date format
-        // eventDate_compact = month+'/'+day; // for compact mode (numbers only, e.g., "4/13")
-        this.event_date_compact = `${this.month_array_abb[month - 1]} ${day}`; // for compact mode (month text, e.g., "Apr 13")
-        this.event_date = `${this.month_array[month - 1]} ${day}`;
+        const startDateTime = event.event_instances[0].event_instance.start;
+        this.dateTime = moment(startDateTime).format('YYYY-MM-DD');
+        this.event_time = getTimefromDateTime(startDateTime);
+        const eventDate = moment(startDateTime).format('M/DD/YYYY');
+        this.event_date_compact = moment(startDateTime).format('MMM D');
+        // event date is unused.
+        this.event_date = getMonthDayfromDateTime(startDateTime);
         this.displayDate = this.setDisplayDate(
             eventDate,
             this.event_date_compact
@@ -130,12 +92,12 @@ export default class BuildEvent {
         if (event.event_instances[0].event_instance.all_day) {
             this.event_time = 'all day';
         }
-        this.abbrDay = eventDay;
-        this.abbrMonth = this.month_array_abb[month - 1];
-        this.month = this.month_array[month - 1];
-        // this.fullDay = this.day_array[eventFullDate.getDay()];
-        this.day = day;
-        this.monthHeader = `${this.month} ${year}`;
+        this.abbrDay = moment(startDateTime).format('ddd');
+        this.abbrMonth = moment(startDateTime).format('MMM');
+        this.month = moment(startDateTime).format('MMMM');
+        this.fullDay = moment(startDateTime).format('dddd');
+        this.day = getDayfromDateTime(startDateTime);
+        this.monthHeader = moment(startDateTime).format('MMMM YYYY');
     }
 
     // set date time helper
@@ -159,16 +121,10 @@ export default class BuildEvent {
         }
 
         if (!this.args.supports_rich) {
-            if (excerptLength > 0 && event.description.length > excerptLength) {
-                this.description = event.description
-                    .trim()
-                    .substring(0, excerptLength)
-                    .split(' ')
-                    .slice(0, -1)
-                    .join(' ');
-            } else {
-                this.description = event.description;
-            }
+            this.description = truncDescription(
+                excerptLength,
+                event.description
+            );
         } else if (excerptLength > 0) {
             if (event.description_text.length > excerptLength) {
                 this.description = event.description_text
@@ -224,10 +180,9 @@ export default class BuildEvent {
             event.event_instances[0].event_instance.end != null
         ) {
             // eslint-disable-next-line prefer-destructuring
-            this.event_time_end = event.event_instances[0].event_instance.end.split(
-                'T'
-            )[1];
-            this.event_time_end = convertTime(this.event_time_end); // convert to 12-hour format
+            const endDateTime = event.event_instances[0].event_instance.end;
+            const time = getTimefromDateTime(endDateTime);
+            this.event_time_end = time;
         }
     }
 }

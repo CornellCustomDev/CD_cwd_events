@@ -1,12 +1,17 @@
-/*
- @param filterObj has structure: obj.name, obj.id
- @param domTarget: string of html id #id should exist and be unique
- attaches onClick handlers to window object
-
- @todo  Add wai-aria controls support,
-        this should probably be a class,
-        also tests that element exists,
-*/
+/**
+ * Renders the filter elemet usually used in the wrapper.
+ *   Adds the event handlers to the window.
+ *
+ * @todo Add wai-aria controls support,
+ *   also tests that element exists,
+ *
+ * @modifies {window} Attaches click event handlers to window.
+ *
+ * @param {array} filterObjs A array of objects [{id:'',name:'',pref_category:''}]
+ * @param {string} domTarget A string of html id #id should exist and be unique.
+ *
+ * @return {string} A html string.
+ */
 export const eventFilters = (filterObjs, domTarget) => {
     const targetElem = document.getElementById(domTarget);
     // make sure function names are safe strings
@@ -14,7 +19,9 @@ export const eventFilters = (filterObjs, domTarget) => {
     // handles filter events
     const toggleFilters = (id, target) => {
         // remove active class from all filter buttons
-        const allFilterBtns = targetElem.getElementsByClassName('filter-btn');
+        const allFilterBtns = [
+            ...targetElem.getElementsByClassName('filter-btn')
+        ];
         allFilterBtns.forEach(value => {
             value.classList.remove('active');
         });
@@ -25,20 +32,22 @@ export const eventFilters = (filterObjs, domTarget) => {
 
         // onclick button will only hide non target elements
         // hide all filter elements
-        const allEvents = targetElem.getElementsByClassName('event-node');
+        const allEvents = [...targetElem.getElementsByClassName('event-node')];
         allEvents.forEach(value => {
             value.classList.add('fadeOut');
         });
 
         // show the target elements
-        const targetElems = targetElem.getElementsByClassName(target);
+        const targetElems = [...targetElem.getElementsByClassName(target)];
         targetElems.forEach(value => {
             value.classList.remove('fadeOut');
         });
     };
     const showAllEvents = () => {
         // remove active class from all filter buttons
-        const allFilterBtns = targetElem.getElementsByClassName('filter-btn');
+        const allFilterBtns = [
+            ...targetElem.getElementsByClassName('filter-btn')
+        ];
         allFilterBtns.forEach(value => {
             value.classList.remove('active');
         });
@@ -48,7 +57,7 @@ export const eventFilters = (filterObjs, domTarget) => {
         elem.classList.add('active');
 
         // show all filter elements
-        const allEvents = targetElem.getElementsByClassName('event-node');
+        const allEvents = [...targetElem.getElementsByClassName('event-node')];
         allEvents.forEach(value => {
             value.classList.remove('fadeOut');
         });
