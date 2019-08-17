@@ -51,6 +51,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#markup' => $teaser . "<div
                 id = 'events-listing-" . $id . "'
                 class = 'events-listing " . $class . "'
+                data-target = 'events-listing-" . $id . "'
                 data-depts = '" . $this->configuration['cwd_events_depts'] . "'
                 data-entries = '" . $this->configuration['cwd_events_entries'] . "'
                 data-format = '" . $this->configuration['cwd_events_format'] . "'

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import * as service from './service/local-list';
+import findall from './service/local-list';
 import BuildEvent from './buildEvent';
 import { standardInner, standardWrapper } from './templates/standard';
 import { compactInner, compactWrapper } from './templates/compact';
@@ -24,10 +24,10 @@ export default class LocalList {
     // define the following arguments
     constructor({
         target = 'events-listing',
-        depts = 0,
-        entries = 10,
+        depts = '0',
+        entries = '10',
         format = 'standard',
-        group = 0,
+        group = '0',
         keyword = false,
         heading = '',
         addCal = false // add to google/outlook/ical options
@@ -156,12 +156,13 @@ export default class LocalList {
 
     /* get the events */
     getAndBuildList() {
-        service
-            .findAll(this.requestArgs)
-            .then(eventsObj => {
-                this.buildEventsList(eventsObj);
+        findall(this.requestArgs)
+            .then(response => {
+                this.buildEventsList(response.data);
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     buildEventsList(myObj) {

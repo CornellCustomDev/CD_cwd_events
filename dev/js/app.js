@@ -19,15 +19,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
-                        const LL = new LocalList({
-                            target: this.id,
-                            dept: this.dataset.depts,
-                            entries: this.dataset.entries,
-                            format: this.dataset.format,
-                            group: this.dataset.group,
-                            keyword: this.dataset.keyword,
-                            heading: this.dataset.heading
-                        });
+                        const LL = new LocalList(this.dataset);
                         LL.renderEvents();
                     });
             }
@@ -39,16 +31,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        const LL = new LocalList({
-            target: elem.dataset.target,
-            dept: elem.dataset.dept,
-            entries: elem.dataset.entries,
-            format: elem.dataset.format,
-            group: elem.dataset.group,
-            keyword: elem.dataset.keyword,
-            heading: elem.dataset.heading,
-            addCal: elem.dataset.addCal
-        });
+        const LL = new LocalList(elem.dataset);
         LL.renderEvents();
     });
 }
