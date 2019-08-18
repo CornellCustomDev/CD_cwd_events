@@ -88,17 +88,13 @@ $waLightBlue: #017bb1;
     /* Animated Loading Icon
       -------------------- */
 
-  #loader {
-    /*display: none;*/
-    position: absolute;
-    left: 45%;
-    left: calc(50% - 25px);
-    top: 60px;
+  div.loader {
     width: 50px;
     text-align: center;
     font-size: 24px;
     color: #ccc;
     color: rgba(0, 0, 0, 0.2);
+    margin: auto;
     }
 
 

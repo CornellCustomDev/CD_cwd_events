@@ -127,8 +127,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
     Drupal.behaviors.cwdEvents = {
       attach: function attach(context) {
         $('div.events-listing', context).once('cwd_events').each(function () {
-          var LL = new _localist__WEBPACK_IMPORTED_MODULE_0__["default"](this.dataset);
-          LL.renderEvents();
+          Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(this.dataset);
         });
       }
     };
@@ -139,8 +138,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
   var eventListings = _toConsumableArray(document.getElementsByClassName('events-listing'));
 
   eventListings.forEach(function (elem) {
-    var LL = new _localist__WEBPACK_IMPORTED_MODULE_0__["default"](elem.dataset);
-    LL.renderEvents();
+    Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(elem.dataset);
   });
 }
 
@@ -455,6 +453,487 @@ var getDayfromDateTime = function getDayfromDateTime(dateTime) {
 
 /***/ }),
 
+/***/ "./js/components/_localistComponent.js":
+/*!*********************************************!*\
+  !*** ./js/components/_localistComponent.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalistComponent; });
+/* harmony import */ var _service_localistApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../service/localistApi */ "./js/service/localistApi.js");
+/* harmony import */ var _buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../buildEvent */ "./js/buildEvent.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var LocalistComponent =
+/*#__PURE__*/
+function () {
+  function LocalistComponent(_ref) {
+    var target = _ref.target,
+        depts = _ref.depts,
+        entries = _ref.entries,
+        group = _ref.group,
+        format = _ref.format,
+        heading = _ref.heading,
+        keyword = _ref.keyword,
+        addCal = _ref.addCal,
+        pref_category_filters = _ref.pref_category_filters,
+        pref_category = _ref.pref_category,
+        innerTemplate = _ref.innerTemplate,
+        outerTemplate = _ref.outerTemplate;
+
+    _classCallCheck(this, LocalistComponent);
+
+    // standard wrapper variables
+    this.wrapperArgs = {
+      target: target,
+      title: 'Events List',
+      heading: heading,
+      filters: {}
+    }; // required by service findall to request localist data
+
+    this.requestArgs = {
+      depts: depts,
+      entries: entries,
+      format: format,
+      group: group,
+      keyword: keyword
+    }; // build event variables required for inner HTML logic
+
+    this.BE_args = {
+      pref_excerpt_length: 250,
+      pref_excerpt_length_compact: 125,
+      pref_readmore: 'read more',
+      pref_eventdetails: 'event details',
+      addCal: addCal
+    };
+    this.group = group;
+    this.depts = depts;
+    this.entries = entries; // used in filters
+
+    this.pref_category = pref_category;
+    this.pref_category_filters = pref_category_filters;
+    this.events = [];
+    this.target = target;
+    this.innerTemplate = innerTemplate;
+    this.outerTemplate = outerTemplate;
+    this.parent = document.getElementById(target);
+    this.getLocalistEvents();
+    this.renderThrobber();
+  }
+
+  _createClass(LocalistComponent, [{
+    key: "getLocalistEvents",
+    value: function getLocalistEvents() {
+      var _this = this;
+
+      Object(_service_localistApi__WEBPACK_IMPORTED_MODULE_0__["default"])(this.requestArgs).then(function (response) {
+        _this.setState({
+          events: response.data.events
+        });
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    }
+  }, {
+    key: "setState",
+    value: function setState(args) {
+      var _this2 = this;
+
+      var keys = Object.keys(args);
+      keys.forEach(function (key) {
+        _this2[key] = args[key];
+      });
+      this.render();
+    }
+  }, {
+    key: "buildFilters",
+    value: function buildFilters(event) {
+      if (this.pref_category_filters) {
+        if (this.pref_category === 'type' && this.builtEvent.type !== 0 && event.filters.event_types) {
+          this.wrapperArgs.filters[event.filters.event_types[0].name] = {
+            id: event.filters.event_types[0].id,
+            name: event.filters.event_types[0].name,
+            pref_category: this.pref_category
+          };
+        } else if (this.pref_category === 'dept' && this.builtEvent.department !== 0 && event.filters.departments) {
+          this.wrapperArgs.filters[event.filters.departments[0].name] = {
+            id: event.filters.departments[0].id,
+            name: event.filters.departments[0].name,
+            pref_category: this.pref_category
+          };
+        } else if (this.pref_category === 'group' && this.builtEvent.group_name !== '') {
+          this.wrapperArgs.filters[this.builtEvent.group_name] = {
+            id: this.builtEvent.group_id,
+            name: this.builtEvent.group_name,
+            pref_category: this.pref_category
+          };
+        }
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      // remove loading animation timer
+      clearTimeout(this.c_loader);
+      var inner = '';
+      this.events.forEach(function (event) {
+        _this3.builtEvent = new _buildEvent__WEBPACK_IMPORTED_MODULE_1__["default"](event.event, _this3.BE_args);
+
+        _this3.buildFilters(event.event);
+
+        inner += _this3.innerTemplate(_this3.builtEvent);
+      });
+      var outer = this.outerTemplate(inner, this.wrapperArgs);
+      this.parent.innerHTML = outer;
+    }
+    /*
+        inserts throbber after target elem
+        this is deleted on localList render
+        warning this.c_loader may be undefined
+     */
+
+  }, {
+    key: "renderThrobber",
+    value: function renderThrobber() {
+      var _this4 = this;
+
+      var loadingNode =
+      /* html */
+      "\n            <div class=\"fadeOut loader\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
+      this.parent.insertAdjacentHTML('afterbegin', loadingNode);
+      this.c_loader = setTimeout(function () {
+        var loader = _toConsumableArray(_this4.parent.getElementsByClassName('loader'));
+
+        loader[0].classList.remove('fadeOut');
+      }, 200); // skip loading animation if under 0.5s
+    }
+  }]);
+
+  return LocalistComponent;
+}();
+
+
+
+/***/ }),
+
+/***/ "./js/components/archive.js":
+/*!**********************************!*\
+  !*** ./js/components/archive.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
+/* harmony import */ var _templates_archive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/archive */ "./js/templates/archive.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Archive =
+/*#__PURE__*/
+function (_LocalistComponent) {
+  _inherits(Archive, _LocalistComponent);
+
+  function Archive(props) {
+    _classCallCheck(this, Archive);
+
+    props.innerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveInner"];
+    props.outerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveWrapper"];
+    props.pref_category_filters = false;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+  }
+
+  return Archive;
+}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./js/components/compact.js":
+/*!**********************************!*\
+  !*** ./js/components/compact.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
+/* harmony import */ var _templates_compact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/compact */ "./js/templates/compact.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Archive =
+/*#__PURE__*/
+function (_LocalistComponent) {
+  _inherits(Archive, _LocalistComponent);
+
+  function Archive(props) {
+    _classCallCheck(this, Archive);
+
+    props.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactInner"];
+    props.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactWrapper"];
+    props.pref_category_filters = false;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+  }
+
+  return Archive;
+}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./js/components/inlineCompact.js":
+/*!****************************************!*\
+  !*** ./js/components/inlineCompact.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
+/* harmony import */ var _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/inlineCompact */ "./js/templates/inlineCompact.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Archive =
+/*#__PURE__*/
+function (_LocalistComponent) {
+  _inherits(Archive, _LocalistComponent);
+
+  function Archive(props) {
+    _classCallCheck(this, Archive);
+
+    props.innerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactInner"];
+    props.outerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactWrapper"];
+    props.pref_category_filters = false;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+  }
+
+  return Archive;
+}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./js/components/modernCompact.js":
+/*!****************************************!*\
+  !*** ./js/components/modernCompact.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
+/* harmony import */ var _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/modernCompact */ "./js/templates/modernCompact.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Archive =
+/*#__PURE__*/
+function (_LocalistComponent) {
+  _inherits(Archive, _LocalistComponent);
+
+  function Archive(props) {
+    _classCallCheck(this, Archive);
+
+    props.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactInner"];
+    props.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactWrapper"];
+    props.pref_category_filters = false;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+  }
+
+  return Archive;
+}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./js/components/modernStandard.js":
+/*!*****************************************!*\
+  !*** ./js/components/modernStandard.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
+/* harmony import */ var _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/modernStandard */ "./js/templates/modernStandard.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Archive =
+/*#__PURE__*/
+function (_LocalistComponent) {
+  _inherits(Archive, _LocalistComponent);
+
+  function Archive(props) {
+    _classCallCheck(this, Archive);
+
+    props.innerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__["moderStandardInner"];
+    props.outerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__["modernStandardWrapper"];
+    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+  }
+
+  return Archive;
+}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./js/components/standard.js":
+/*!***********************************!*\
+  !*** ./js/components/standard.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
+/* harmony import */ var _templates_standard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/standard */ "./js/templates/standard.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Archive =
+/*#__PURE__*/
+function (_LocalistComponent) {
+  _inherits(Archive, _LocalistComponent);
+
+  function Archive(props) {
+    _classCallCheck(this, Archive);
+
+    props.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_1__["standardInner"];
+    props.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_1__["standardWrapper"];
+    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+  }
+
+  return Archive;
+}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
 /***/ "./js/localist.js":
 /*!************************!*\
   !*** ./js/localist.js ***!
@@ -464,259 +943,77 @@ var getDayfromDateTime = function getDayfromDateTime(dateTime) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalList; });
-/* harmony import */ var _service_local_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./service/local-list */ "./js/service/local-list.js");
-/* harmony import */ var _buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./buildEvent */ "./js/buildEvent.js");
-/* harmony import */ var _templates_standard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./templates/standard */ "./js/templates/standard.js");
-/* harmony import */ var _templates_compact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./templates/compact */ "./js/templates/compact.js");
-/* harmony import */ var _templates_calendar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./templates/calendar */ "./js/templates/calendar.js");
-/* harmony import */ var _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./templates/modernCompact */ "./js/templates/modernCompact.js");
-/* harmony import */ var _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./templates/modernStandard */ "./js/templates/modernStandard.js");
-/* harmony import */ var _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./templates/cuenergy */ "./js/templates/cuenergy.js");
-/* harmony import */ var _templates_archive__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./templates/archive */ "./js/templates/archive.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-/* eslint-disable camelcase */
+/* harmony import */ var _components_standard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/standard */ "./js/components/standard.js");
+/* harmony import */ var _components_compact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/compact */ "./js/components/compact.js");
+/* harmony import */ var _components_modernStandard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/modernStandard */ "./js/components/modernStandard.js");
+/* harmony import */ var _components_modernCompact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/modernCompact */ "./js/components/modernCompact.js");
+/* harmony import */ var _components_archive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/archive */ "./js/components/archive.js");
+/* harmony import */ var _components_inlineCompact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/inlineCompact */ "./js/components/inlineCompact.js");
 
 
 
 
 
 
+/**
+ * Helper function to select component based on format.
+ *   @todo add support for unused options. [filter, addCal]
+ * @param {obj} param0 The base Component params.
+ */
 
+var localList = function localList(_ref) {
+  var _ref$target = _ref.target,
+      target = _ref$target === void 0 ? 'events-listing' : _ref$target,
+      _ref$depts = _ref.depts,
+      depts = _ref$depts === void 0 ? '0' : _ref$depts,
+      _ref$entries = _ref.entries,
+      entries = _ref$entries === void 0 ? '10' : _ref$entries,
+      _ref$format = _ref.format,
+      format = _ref$format === void 0 ? 'standard' : _ref$format,
+      _ref$group = _ref.group,
+      group = _ref$group === void 0 ? '0' : _ref$group,
+      _ref$keyword = _ref.keyword,
+      keyword = _ref$keyword === void 0 ? false : _ref$keyword,
+      _ref$heading = _ref.heading,
+      heading = _ref$heading === void 0 ? '' : _ref$heading,
+      _ref$addCal = _ref.addCal,
+      addCal = _ref$addCal === void 0 ? false : _ref$addCal;
+  // Map out formats for look up.
+  var formatOptions = {
+    standard: _components_standard__WEBPACK_IMPORTED_MODULE_0__["default"],
+    compact: _components_compact__WEBPACK_IMPORTED_MODULE_1__["default"],
+    modern_compact: _components_modernCompact__WEBPACK_IMPORTED_MODULE_3__["default"],
+    modern_standard: _components_modernStandard__WEBPACK_IMPORTED_MODULE_2__["default"],
+    inline_compact: _components_inlineCompact__WEBPACK_IMPORTED_MODULE_5__["default"],
+    archive: _components_archive__WEBPACK_IMPORTED_MODULE_4__["default"]
+  };
 
-
-
-var LocalList =
-/*#__PURE__*/
-function () {
-  // define the following arguments
-  function LocalList(_ref) {
-    var _ref$target = _ref.target,
-        target = _ref$target === void 0 ? 'events-listing' : _ref$target,
-        _ref$depts = _ref.depts,
-        depts = _ref$depts === void 0 ? '0' : _ref$depts,
-        _ref$entries = _ref.entries,
-        entries = _ref$entries === void 0 ? '10' : _ref$entries,
-        _ref$format = _ref.format,
-        format = _ref$format === void 0 ? 'standard' : _ref$format,
-        _ref$group = _ref.group,
-        group = _ref$group === void 0 ? '0' : _ref$group,
-        _ref$keyword = _ref.keyword,
-        keyword = _ref$keyword === void 0 ? false : _ref$keyword,
-        _ref$heading = _ref.heading,
-        heading = _ref$heading === void 0 ? '' : _ref$heading,
-        _ref$addCal = _ref.addCal,
-        addCal = _ref$addCal === void 0 ? false : _ref$addCal;
-
-    _classCallCheck(this, LocalList);
-
-    var api = 2.1; // used in filters
-
-    this.pref_category = 'group';
-    this.pref_category_filters = true; // localist variables
-
-    this.target = target;
-    this.format = format; // standard wrapper variables
-
-    this.wrapperArgs = {
+  if (format in formatOptions) {
+    var Component = formatOptions[format];
+    var component = new Component({
       target: target,
-      title: 'Events List',
-      heading: heading,
-      filters: {}
-    }; // required by service findall to request localist data
-
-    this.requestArgs = {
-      entries: parseInt(entries, 10),
       depts: depts,
+      entries: parseInt(entries, 10),
       format: format,
-      group: group,
-      singleday: false,
+      group: parseInt(group, 10),
       keyword: keyword,
-      api: api,
-      pref_allow_rich: api >= 2.1
-    }; // build event variables required for inner HTML logic
+      heading: heading,
+      addCal: addCal,
+      pref_category: 'group',
+      pref_category_filters: 'true'
+    });
+  } // const test = new Archive({ target, depts, entries, group });
 
-    this.BE_args = {
-      supports_rich: api >= 2.1,
-      supports_direction: api >= 2.1,
-      pref_date_headers: true,
-      pref_excerpt_length: 250,
-      pref_excerpt_length_compact: 125,
-      pref_readmore: 'read more',
-      pref_eventdetails: 'event details',
-      addCal: addCal
-    };
-  }
+};
 
-  _createClass(LocalList, [{
-    key: "renderEvents",
-    value: function renderEvents() {
-      // add the loading throbber
-      this.addThrobber(this.target); // test  to see if custom templates are defined
-
-      if (!('innerTemplate' in this) && !('outerTemplate' in this)) {
-        // if not defined set format of template
-        this.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardInner"];
-        this.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardWrapper"];
-
-        switch (this.format) {
-          case 'standard':
-            this.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardInner"];
-            this.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_2__["standardWrapper"];
-            break;
-
-          case 'compact':
-            this.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_3__["compactInner"];
-            this.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_3__["compactWrapper"];
-            break;
-
-          case 'inline_compact':
-            this.innerTemplate = _templates_calendar__WEBPACK_IMPORTED_MODULE_4__["calendarInner"];
-            this.outerTemplate = _templates_calendar__WEBPACK_IMPORTED_MODULE_4__["calendarWrapper"];
-            break;
-
-          case 'modern_compact':
-            // overide exerpt length this should be added to drupal form options
-            this.BE_args.pref_excerpt_length = 125;
-            this.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__["modernCompactInner"];
-            this.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_5__["modernCompactWrapper"];
-            break;
-
-          case 'modern_standard':
-            this.innerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__["moderStandardInner"];
-            this.outerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_6__["modernStandardWrapper"];
-            break;
-
-          case 'simple_standard':
-            this.innerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyEventsInner"];
-            this.outerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyEventsWrapper"];
-            break;
-
-          case 'simple_compact':
-            this.innerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyCompactInner"];
-            this.outerTemplate = _templates_cuenergy__WEBPACK_IMPORTED_MODULE_7__["cuenergyCompactWrapper"];
-            break;
-
-          case 'archive':
-            this.innerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_8__["archiveInner"];
-            this.outerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_8__["archiveWrapper"];
-            break;
-
-          default:
-            console.warn('Warning: no format was defined using fallback standard');
-        }
-      } else {
-        console.warn('using custom templates');
-      } // fetch localist events and build the event nodes
-
-
-      this.getAndBuildList();
-    }
-    /*
-        inserts throbber after target elem
-        this is deleted on localList render
-        warning this.c_loader may be undefined
-     */
-
-  }, {
-    key: "addThrobber",
-    value: function addThrobber(target) {
-      var loadingNode =
-      /* html */
-      "\n            <div id=\"loader\" class=\"fadeOut\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
-      var tarElem = document.getElementById(target);
-
-      if (tarElem) {
-        tarElem.insertAdjacentHTML('afterbegin', loadingNode);
-        this.c_loader = setTimeout(function () {
-          document.getElementById('loader').classList.remove('fadeOut');
-        }, 200); // skip loading animation if under 0.5s
-      } else {
-        console.warn('WARNING: can not find target element for loading animation');
-      }
-    }
-    /* get the events */
-
-  }, {
-    key: "getAndBuildList",
-    value: function getAndBuildList() {
-      var _this = this;
-
-      Object(_service_local_list__WEBPACK_IMPORTED_MODULE_0__["default"])(this.requestArgs).then(function (response) {
-        _this.buildEventsList(response.data);
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    }
-  }, {
-    key: "buildEventsList",
-    value: function buildEventsList(myObj) {
-      var _this2 = this;
-
-      var inner = ''; // loop through each event () => required to give access to 'this'
-
-      myObj.events.forEach(function (event) {
-        // built event provides common functions to format the data
-        var builtEvent = new _buildEvent__WEBPACK_IMPORTED_MODULE_1__["default"](event.event, _this2.BE_args); // console.log( builtEvent );
-        // build the filters array does not support multiple filter entries [0]only
-
-        if (_this2.pref_category_filters) {
-          if (_this2.pref_category === 'type' && builtEvent.type !== 0) {
-            _this2.wrapperArgs.filters[event.filters.event_types[0].name] = {
-              id: event.filters.event_types[0].id,
-              name: event.filters.event_types[0].name,
-              pref_category: _this2.pref_category
-            };
-          } else if (_this2.pref_category === 'dept' && builtEvent.department !== 0) {
-            _this2.wrapperArgs.filters[event.filters.departments[0].name] = {
-              id: event.filters.departments[0].id,
-              name: event.filters.departments[0].name,
-              pref_category: _this2.pref_category
-            };
-          } else if (_this2.pref_category === 'group' && builtEvent.group_name !== '') {
-            _this2.wrapperArgs.filters[builtEvent.group_name] = {
-              id: builtEvent.group_id,
-              name: builtEvent.group_name,
-              pref_category: _this2.pref_category
-            };
-          }
-        } // console.log(builtEvent);
-
-
-        inner += _this2.innerTemplate(builtEvent); // returns html string
-      });
-      var html = this.outerTemplate(inner, this.wrapperArgs); // returns html string
-      // remove loading animation timer
-
-      clearTimeout(this.c_loader); // the loader is replaced by html
-      // document.getElementById('loader').classList.remove('fadeIn');
-
-      var tarElem = document.getElementById(this.target);
-
-      if (tarElem) {
-        tarElem.innerHTML = html;
-      } else {
-        console.warn('WARNING: target element does not exist');
-      }
-    }
-  }]);
-
-  return LocalList;
-}();
-
-
+/* harmony default export */ __webpack_exports__["default"] = (localList);
 
 /***/ }),
 
-/***/ "./js/service/local-list.js":
-/*!**********************************!*\
-  !*** ./js/service/local-list.js ***!
-  \**********************************/
+/***/ "./js/service/localistApi.js":
+/*!***********************************!*\
+  !*** ./js/service/localistApi.js ***!
+  \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -748,20 +1045,14 @@ var findAll = function findAll(_ref) {
       group = _ref$group === void 0 ? 0 : _ref$group,
       _ref$keyword = _ref.keyword,
       keyword = _ref$keyword === void 0 ? '' : _ref$keyword;
-  var pref_days = 365; // range of days to retrieve
-  // @todo What is default on this, check and see if it can be removed
-
-  var pref_distinct = true; // controls the "distinct" filter for the events params ('true' only returns one instance of a repeating event)
-
-  var start_results = format !== 'archive' ? moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD') : moment__WEBPACK_IMPORTED_MODULE_1__().subtract(1, 'Y').format('YYYY-MM-DD');
   var params = {
     api_key: 'KLhy2GtuSAGirYGY',
     // Move api key to drupal block? works without it.
-    days: pref_days,
-    distinct: pref_distinct,
+    days: 365,
+    distinct: true,
     pp: entries,
-    start: start_results
-  };
+    start: format !== 'archive' ? moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD') : moment__WEBPACK_IMPORTED_MODULE_1__().subtract(1, 'Y').format('YYYY-MM-DD')
+  }; // Supports multiple departments with CSV string.
 
   if (depts && parseInt(depts, 10) !== 0) {
     params.type = [];
@@ -782,7 +1073,7 @@ var findAll = function findAll(_ref) {
     params.direction = 'desc';
   }
 
-  var url = "//events.cornell.edu/api/2.1/events";
+  var url = '//events.cornell.edu/api/2.1/events';
   return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url, {
     params: params
   });
@@ -823,32 +1114,6 @@ var archiveWrapper = function archiveWrapper(inner) {
 
 /***/ }),
 
-/***/ "./js/templates/calendar.js":
-/*!**********************************!*\
-  !*** ./js/templates/calendar.js ***!
-  \**********************************/
-/*! exports provided: calendarInner, calendarWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calendarInner", function() { return calendarInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calendarWrapper", function() { return calendarWrapper; });
-var calendarInner = function calendarInner(builtEvent) {
-  return (
-    /* html */
-    "\n<div class=\"views-row\">\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-sm-2 event-month-and-day\">\n                <div>\n                    <span class=\"event-month\">".concat(builtEvent.abbrMonth, "</span>\n                    <span class=\"event-day\">").concat(builtEvent.day, "</span>\n                </div>\n            </div>\n            <div class=\"col-sm-8 event-title-and-location\">\n                <div class=\"event-title\">\n                    <a href=\"").concat(builtEvent.event.localist_url, "\" hreflang=\"en\">\n                        '").concat(builtEvent.event.title, "'\n                    </a>\n                </div>\n                <div class=\"event-times\">\n                    <span class=\"fa fa-clock-o\"></span>\n                    ").concat(builtEvent.event_time, "\n                    ").concat(builtEvent.event_time_end ? " - ".concat(builtEvent.event_time_end) : '', "\n                </div>\n                <div class=\"event-location\">\n                ").concat(builtEvent.event.location_name ? "<span class=\"fa fa-map-marker\"></span>\n                            ".concat(builtEvent.event.location_name) : '', "\n                </div>\n            </div>\n        </div>\n    </div>\n</div>")
-  );
-};
-var calendarWrapper = function calendarWrapper(innerHtml, args) {
-  return (
-    /* html */
-    "\n    <section id='eventsInlineCompact' title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2 class=\"block-title\">".concat(args.heading, "</h2>") : '', "\n        <div class=\"events-listing events-listing-inline inline no-thumbnails\">\n            ").concat(innerHtml, "\n        </div>\n    </section>")
-  );
-};
-
-/***/ }),
-
 /***/ "./js/templates/compact.js":
 /*!*********************************!*\
   !*** ./js/templates/compact.js ***!
@@ -879,45 +1144,27 @@ var compactWrapper = function compactWrapper(inner, args) {
 
 /***/ }),
 
-/***/ "./js/templates/cuenergy.js":
-/*!**********************************!*\
-  !*** ./js/templates/cuenergy.js ***!
-  \**********************************/
-/*! exports provided: cuenergyEventsInner, cuenergyEventsWrapper, cuenergyCompactInner, cuenergyCompactWrapper */
+/***/ "./js/templates/inlineCompact.js":
+/*!***************************************!*\
+  !*** ./js/templates/inlineCompact.js ***!
+  \***************************************/
+/*! exports provided: inlineCompactInner, inlineCompactWrapper */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cuenergyEventsInner", function() { return cuenergyEventsInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cuenergyEventsWrapper", function() { return cuenergyEventsWrapper; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cuenergyCompactInner", function() { return cuenergyCompactInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cuenergyCompactWrapper", function() { return cuenergyCompactWrapper; });
-/*
- returns html  string
- @param builtData a buildEvents.js obj
-*/
-var cuenergyEventsInner = function cuenergyEventsInner(builtData) {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inlineCompactInner", function() { return inlineCompactInner; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inlineCompactWrapper", function() { return inlineCompactWrapper; });
+var inlineCompactInner = function inlineCompactInner(builtEvent) {
   return (
     /* html */
-    "\n    <div class=\"views-row\">\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-sm-12 event-title-and-location\">\n                    <div>\n                        <a href=\"".concat(builtData.event.localist_url, "\"\n                            >").concat(builtData.event.title, "</a\n                        >\n                    </div>\n                    <div>\n                        <span class=\"event-date\">").concat(builtData.event_date, "</span>\n                        -\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? " | ".concat(builtData.event.location_name) : '', "\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n")
+    "\n<div class=\"views-row\">\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-sm-2 event-month-and-day\">\n                <div>\n                    <span class=\"event-month\">".concat(builtEvent.abbrMonth, "</span>\n                    <span class=\"event-day\">").concat(builtEvent.day, "</span>\n                </div>\n            </div>\n            <div class=\"col-sm-8 event-title-and-location\">\n                <div class=\"event-title\">\n                    <a href=\"").concat(builtEvent.event.localist_url, "\" hreflang=\"en\">\n                        '").concat(builtEvent.event.title, "'\n                    </a>\n                </div>\n                <div class=\"event-times\">\n                    <span class=\"fa fa-clock-o\"></span>\n                    ").concat(builtEvent.event_time, "\n                    ").concat(builtEvent.event_time_end ? " - ".concat(builtEvent.event_time_end) : '', "\n                </div>\n                <div class=\"event-location\">\n                ").concat(builtEvent.event.location_name ? "<span class=\"fa fa-map-marker\"></span>\n                            ".concat(builtEvent.event.location_name) : '', "\n                </div>\n            </div>\n        </div>\n    </div>\n</div>")
   );
 };
-var cuenergyEventsWrapper = function cuenergyEventsWrapper(inner) {
+var inlineCompactWrapper = function inlineCompactWrapper(innerHtml, args) {
   return (
     /* html */
-    "\n    <div class=\"view view-events view-id-events cuenergy-events\">\n        <div class=\"view-content\">\n            ".concat(inner, "\n        </div>\n    </div>\n")
-  );
-};
-var cuenergyCompactInner = function cuenergyCompactInner(builtData) {
-  return (
-    /* html */
-    "\n    <div class=\"views-row\">\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-sm-2 event-month-and-day\">\n                    <div>\n                        <span class=\"event-month\">".concat(builtData.abbrMonth, "</span\n                        ><span class=\"event-day\">").concat(builtData.day, "</span>\n                    </div>\n                </div>\n                <div class=\"col-sm-10 event-title-and-location\">\n                    <div>\n                        <a href=\"").concat(builtData.event.localist_url, "\"\n                            >").concat(builtData.event.title, "</a\n                        >\n                    </div>\n                    <div>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? " | ".concat(builtData.event.location_name) : '', "\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n")
-  );
-};
-var cuenergyCompactWrapper = function cuenergyCompactWrapper(inner) {
-  return (
-    /* html */
-    "\n    <div id=\"block-cuenergy-views-block-events-block-1\" class=\"form-group\">\n        <div class=\"view view-events view-id-events\">\n            <div class=\"view-content\">\n                ".concat(inner, "\n            </div>\n        </div>\n    </div>\n")
+    "\n    <section id='eventsInlineCompact' title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2 class=\"block-title\">".concat(args.heading, "</h2>") : '', "\n        <div class=\"events-listing events-listing-inline inline no-thumbnails\">\n            ").concat(innerHtml, "\n        </div>\n    </section>")
   );
 };
 
@@ -1118,6 +1365,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @return {string} A html string.
  */
 var eventFilters = function eventFilters(filterObjs, domTarget) {
+  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
+    return '';
+  }
+
   var targetElem = document.getElementById(domTarget); // make sure function names are safe strings
 
   var domStr = domTarget.replace(/[^\w]/gi, ''); // handles filter events

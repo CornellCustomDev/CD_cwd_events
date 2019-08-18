@@ -1,4 +1,4 @@
-export const calendarInner = builtEvent => /* html */ `
+export const inlineCompactInner = builtEvent => /* html */ `
 <div class="views-row">
     <div class="container-fluid">
         <div class="row">
@@ -36,7 +36,7 @@ export const calendarInner = builtEvent => /* html */ `
     </div>
 </div>`;
 
-export const calendarWrapper = (innerHtml, args) => /* html */ `
+export const inlineCompactWrapper = (innerHtml, args) => /* html */ `
     <section id='eventsInlineCompact' title="${args.title}">
         ${args.heading ? `<h2 class="block-title">${args.heading}</h2>` : ''}
         <div class="events-listing events-listing-inline inline no-thumbnails">

@@ -13,6 +13,9 @@
  * @return {string} A html string.
  */
 export const eventFilters = (filterObjs, domTarget) => {
+    if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
+        return '';
+    }
     const targetElem = document.getElementById(domTarget);
     // make sure function names are safe strings
     const domStr = domTarget.replace(/[^\w]/gi, '');

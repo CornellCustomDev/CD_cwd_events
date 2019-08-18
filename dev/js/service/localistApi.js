@@ -17,24 +17,19 @@ const findAll = ({
     group = 0,
     keyword = ''
 }) => {
-    const pref_days = 365; // range of days to retrieve
-    // @todo What is default on this, check and see if it can be removed
-    const pref_distinct = true; // controls the "distinct" filter for the events params ('true' only returns one instance of a repeating event)
-    const start_results =
-        format !== 'archive'
-            ? moment().format('YYYY-MM-DD')
-            : moment()
-                  .subtract(1, 'Y')
-                  .format('YYYY-MM-DD');
-
     const params = {
         api_key: 'KLhy2GtuSAGirYGY', // Move api key to drupal block? works without it.
-        days: pref_days,
-        distinct: pref_distinct,
+        days: 365,
+        distinct: true,
         pp: entries,
-        start: start_results
+        start:
+            format !== 'archive'
+                ? moment().format('YYYY-MM-DD')
+                : moment()
+                      .subtract(1, 'Y')
+                      .format('YYYY-MM-DD')
     };
-
+    // Supports multiple departments with CSV string.
     if (depts && parseInt(depts, 10) !== 0) {
         params.type = [];
         depts.split(',').forEach(item => {
@@ -50,8 +45,7 @@ const findAll = ({
     if (format === 'archive') {
         params.direction = 'desc';
     }
-
-    const url = `//events.cornell.edu/api/2.1/events`;
+    const url = '//events.cornell.edu/api/2.1/events';
     return axios.get(url, { params });
 };
 

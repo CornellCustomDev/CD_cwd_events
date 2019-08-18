@@ -1,4 +1,4 @@
-import LocalList from './localist';
+import localList from './localist';
 
 require('babel-polyfill');
 
@@ -19,8 +19,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
-                        const LL = new LocalList(this.dataset);
-                        LL.renderEvents();
+                        localList(this.dataset);
                     });
             }
         };
@@ -31,7 +30,6 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        const LL = new LocalList(elem.dataset);
-        LL.renderEvents();
+        localList(elem.dataset);
     });
 }

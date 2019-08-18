@@ -654,17 +654,13 @@
   display: block;
 }
 
-.cwd-events-style #loader {
-  /*display: none;*/
-  position: absolute;
-  left: 45%;
-  left: calc(50% - 25px);
-  top: 60px;
+.cwd-events-style div.loader {
   width: 50px;
   text-align: center;
   font-size: 24px;
   color: #ccc;
   color: rgba(0, 0, 0, 0.2);
+  margin: auto;
 }
 
 .cwd-events-style .google {
