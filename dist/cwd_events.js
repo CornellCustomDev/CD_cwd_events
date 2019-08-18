@@ -989,7 +989,8 @@ var localList = function localList(_ref) {
   };
 
   if (format in formatOptions) {
-    var Component = formatOptions[format];
+    var Component = formatOptions[format]; // eslint-disable-next-line no-unused-vars
+
     var component = new Component({
       target: target,
       depts: depts,

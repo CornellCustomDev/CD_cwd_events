@@ -31,6 +31,7 @@ const localList = ({
 
     if (format in formatOptions) {
         const Component = formatOptions[format];
+        // eslint-disable-next-line no-unused-vars
         const component = new Component({
             target,
             depts,
