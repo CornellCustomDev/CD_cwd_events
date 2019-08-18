@@ -42,7 +42,7 @@ export const moderStandardInner = builtData => /* html */ `
                     </p>
                 </div>
                 <div class="field field-name-summary summary">
-                    <p>${builtData.description}... read more</p>
+                    <p>${builtData.description} read more</p>
                 </div>
             </a>
             ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}

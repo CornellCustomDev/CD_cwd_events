@@ -23,7 +23,7 @@ export const modernCompactInner = builtData => /* html */ `
 }</p>
             </div>
             <div class="field field-name-summary summary">
-                <p>${builtData.description}...</p>
+                <p>${builtData.description}</p>
             </div>
         </a>
     </div>

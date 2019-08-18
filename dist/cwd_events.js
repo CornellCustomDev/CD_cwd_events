@@ -163,7 +163,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BuildEvent; });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _common_dateTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./common/dateTime */ "./js/common/dateTime.js");
+/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! truncate */ "./node_modules/truncate/truncate.js");
+/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(truncate__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _common_dateTime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./common/dateTime */ "./js/common/dateTime.js");
 var _this = undefined;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -182,25 +184,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
 /* helper functions */
 
-/**
- *
- * @param {integer} excerptLength The length to truncate.
- * @param {string} description The description string.
- *
- * @return {string} The truncated description.
- */
-
-var truncDescription = function truncDescription(excerptLength, description) {
-  var truncDesc = description;
-
-  if (excerptLength > 0 && description.length > excerptLength) {
-    truncDesc = description.trim().substring(0, excerptLength).split(' ').slice(0, -1).join(' ');
-  }
-
-  return truncDesc;
-};
 /**
  * The logic for determining description length.
  *   Does not support html.
@@ -213,11 +199,10 @@ var truncDescription = function truncDescription(excerptLength, description) {
  * @return {string} The truncated description string
  */
 
-
 var getTruncDesc = function getTruncDesc(event, format, pref_excerpt_length, pref_excerpt_length_compact) {
   var excerptLength = format === 'compact' ? pref_excerpt_length_compact : pref_excerpt_length; // Use plain text description is html
 
-  var description = truncDescription(excerptLength, event.description_text);
+  var description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
   return description;
 };
 /**
@@ -268,7 +253,7 @@ var getEventEndTime = function getEventEndTime(event) {
   var endTime = event.event_instances[0].event_instance.end;
 
   if (typeof endTime !== 'undefined' && endTime !== null) {
-    var time = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_1__["getTimefromDateTime"])(endTime);
+    var time = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getTimefromDateTime"])(endTime);
     return time;
   }
 };
@@ -285,7 +270,7 @@ var getEventTime = function getEventTime(event) {
   if (event.event_instances[0].event_instance.all_day) {
     eventTime = 'all day';
   } else {
-    eventTime = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_1__["getTimefromDateTime"])(event.event_instances[0].event_instance.start);
+    eventTime = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getTimefromDateTime"])(event.event_instances[0].event_instance.start);
   }
 
   return eventTime;
@@ -309,7 +294,8 @@ var getEventType = function getEventType(event, prefCategory, department, groupN
   return eventTypes;
 };
 /**
- *A Helper function to convert localist event data into usable formats.
+ * A Helper function to convert localist event data into usable formats.
+ * @todo get rid of this and move build to templates
  *
  * @param {obj} event The localist event json data
  * @param {obj} args Formating instructions.
@@ -388,13 +374,13 @@ function () {
       this.dateTime = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('YYYY-MM-DD');
       this.event_date_compact = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM D'); // event date is unused.
 
-      this.event_date = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_1__["getMonthDayfromDateTime"])(startDateTime);
+      this.event_date = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getMonthDayfromDateTime"])(startDateTime);
       this.displayDate = getDisplayDate(startDateTime, this.format);
       this.abbrDay = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('ddd');
       this.abbrMonth = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM');
       this.month = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM');
       this.fullDay = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('dddd');
-      this.day = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_1__["getDayfromDateTime"])(startDateTime);
+      this.day = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getDayfromDateTime"])(startDateTime);
       this.monthHeader = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM YYYY');
     }
   }]);
@@ -1174,7 +1160,7 @@ __webpack_require__.r(__webpack_exports__);
 var modernCompactInner = function modernCompactInner(builtData) {
   return (
     /* html */
-    "\n<div class=\"card\">\n    <div class=\"events\">\n        <a href=\"".concat(builtData.event.localist_url, "\" class=\"group-link-wrapper field-group-link\">\n            <time title=\"").concat(builtData.event_date, "\" datetime=\"").concat(builtData.dateTime, "\">\n                <span class='month'>").concat(builtData.abbrMonth, "</span>\n                <span class='day'>").concat(builtData.day, "</span>\n            </time>\n            <div class=\"field title\">\n                <h3>").concat(builtData.event.title, "</h3>\n            </div>\n            <div class=\"field meta\">\n            <p>").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "</p>\n            </div>\n            <div class=\"field field-name-summary summary\">\n                <p>").concat(builtData.description, "...</p>\n            </div>\n        </a>\n    </div>\n</div>\n")
+    "\n<div class=\"card\">\n    <div class=\"events\">\n        <a href=\"".concat(builtData.event.localist_url, "\" class=\"group-link-wrapper field-group-link\">\n            <time title=\"").concat(builtData.event_date, "\" datetime=\"").concat(builtData.dateTime, "\">\n                <span class='month'>").concat(builtData.abbrMonth, "</span>\n                <span class='day'>").concat(builtData.day, "</span>\n            </time>\n            <div class=\"field title\">\n                <h3>").concat(builtData.event.title, "</h3>\n            </div>\n            <div class=\"field meta\">\n            <p>").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "</p>\n            </div>\n            <div class=\"field field-name-summary summary\">\n                <p>").concat(builtData.description, "</p>\n            </div>\n        </a>\n    </div>\n</div>\n")
   );
 }; // this has class compact and no filters option
 
@@ -1218,7 +1204,7 @@ var tagStr = function tagStr(event_types) {
 var moderStandardInner = function moderStandardInner(builtData) {
   return (
     /* html */
-    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, "... read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addCal ? "".concat(Object(_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
+    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addCal ? "".concat(Object(_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
   );
 };
 var modernStandardWrapper = function modernStandardWrapper(inner, args) {
@@ -32060,6 +32046,90 @@ process.umask = function() { return 0; };
 );
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/truncate/truncate.js":
+/*!*******************************************!*\
+  !*** ./node_modules/truncate/truncate.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*global module:true*/
+/*jslint nomen:true*/
+/**
+ * @module Utility
+ */
+(function (context, undefined) {
+    'use strict';
+
+    var DEFAULT_TRUNCATE_SYMBOL = '…',
+        // Limit emails to no more than about 600 chars, well over the max of ~300.
+        // cf. RFC: https://www.rfc-editor.org/errata_search.php?eid=1690
+        URL_REGEX = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]{1,300}@(.{1,300}\.)[a-zA-Z]{2,3})/g;
+
+    function __appendEllipsis(string, options, content) {
+        if (content.length === string.length || !options.ellipsis) {
+            return content;
+        }
+        content += options.ellipsis;
+        return content;
+    }
+    /**
+     * Truncate HTML string and keep tag safe.
+     *
+     * @method truncate
+     * @param {String} string string needs to be truncated
+     * @param {Number} maxLength length of truncated string
+     * @param {Object} options (optional)
+     * @param {Boolean|String} [options.ellipsis] omission symbol for truncated string, '...' by default
+     * @return {String} truncated string
+     */
+    function truncate(string, maxLength, options) {
+        var content = '', // truncated text storage
+            matches = true,
+            remainingLength = maxLength,
+            result,
+            index;
+
+        options = options || {};
+        options.ellipsis = (typeof options.ellipsis === "undefined") ? DEFAULT_TRUNCATE_SYMBOL : options.ellipsis;
+
+        if (!string || string.length === 0) {
+            return '';
+        }
+
+        matches = true;
+        while (matches) {
+            URL_REGEX.lastIndex = content.length;
+            matches = URL_REGEX.exec(string);
+
+            if (!matches || (matches.index - content.length) >= remainingLength) {
+                content += string.substring(content.length, maxLength);
+                return __appendEllipsis(string, options, content, maxLength);
+            }
+
+            result = matches[0];
+            index = matches.index;
+            content += string.substring(content.length, index + result.length);
+            remainingLength -= index + result.length;
+
+            if (remainingLength <= 0) {
+                break;
+            }
+        }
+
+        return __appendEllipsis(string, options, content, maxLength);
+    }
+
+    if ( true && module.exports) {
+        module.exports = truncate;
+    } else {
+        context.truncate = truncate;
+    }
+}(String));
+
 
 /***/ }),
 

@@ -1,30 +1,12 @@
 import * as moment from 'moment';
+import truncate from 'truncate';
 import {
     getTimefromDateTime,
     getDayfromDateTime,
     getMonthDayfromDateTime
 } from './common/dateTime';
-/* helper functions */
 
-/**
- *
- * @param {integer} excerptLength The length to truncate.
- * @param {string} description The description string.
- *
- * @return {string} The truncated description.
- */
-const truncDescription = (excerptLength, description) => {
-    let truncDesc = description;
-    if (excerptLength > 0 && description.length > excerptLength) {
-        truncDesc = description
-            .trim()
-            .substring(0, excerptLength)
-            .split(' ')
-            .slice(0, -1)
-            .join(' ');
-    }
-    return truncDesc;
-};
+/* helper functions */
 
 /**
  * The logic for determining description length.
@@ -48,7 +30,7 @@ const getTruncDesc = (
             ? pref_excerpt_length_compact
             : pref_excerpt_length;
     // Use plain text description is html
-    const description = truncDescription(excerptLength, event.description_text);
+    const description = truncate(event.description_text, excerptLength);
     return description;
 };
 
@@ -132,7 +114,8 @@ const getEventType = (event, prefCategory, department, groupName) => {
 };
 
 /**
- *A Helper function to convert localist event data into usable formats.
+ * A Helper function to convert localist event data into usable formats.
+ * @todo get rid of this and move build to templates
  *
  * @param {obj} event The localist event json data
  * @param {obj} args Formating instructions.
