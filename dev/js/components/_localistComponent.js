@@ -1,6 +1,8 @@
 import findAll from '../service/localistApi';
 import BuildEvent from '../buildEvent';
-
+/**
+ * The base component.
+ */
 export default class LocalistComponent {
     constructor({
         target,
@@ -23,11 +25,10 @@ export default class LocalistComponent {
             heading,
             filters: {}
         };
-
         // required by service findall to request localist data
         this.requestArgs = {
             depts,
-            entries,
+            entries: parseInt(entries, 10),
             format,
             group,
             keyword
@@ -41,9 +42,9 @@ export default class LocalistComponent {
             pref_eventdetails: 'event details',
             addCal
         };
-        this.group = group;
+        this.group = parseInt(group, 10);
         this.depts = depts;
-        this.entries = entries;
+        this.entries = parseInt(entries, 10);
 
         // used in filters
         this.pref_category = pref_category;

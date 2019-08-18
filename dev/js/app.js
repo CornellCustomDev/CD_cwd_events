@@ -19,7 +19,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
-                        localList(this.dataset);
+                        localList({ ...this.dataset });
                     });
             }
         };
@@ -30,6 +30,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        localList(elem.dataset);
+        // Convert DOMStringMap to object.
+        localList({ ...elem.dataset });
     });
 }

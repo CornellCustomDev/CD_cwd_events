@@ -7,18 +7,9 @@ import inline_compact from './components/inlineCompact';
 /**
  * Helper function to select component based on format.
  *   @todo add support for unused options. [filter, addCal]
- * @param {obj} param0 The base Component params.
+ * @param {obj} params The base Component params.
  */
-const localList = ({
-    target = 'events-listing',
-    depts = '0',
-    entries = '10',
-    format = 'standard',
-    group = '0',
-    keyword = false,
-    heading = '',
-    addCal = false
-}) => {
+const localList = params => {
     // Map out formats for look up.
     const formatOptions = {
         standard,
@@ -29,24 +20,14 @@ const localList = ({
         archive
     };
 
-    if (format in formatOptions) {
-        const Component = formatOptions[format];
+    if (params.format in formatOptions) {
+        const Component = formatOptions[params.format];
+        // @todo impliment filter options and pagination
+        params.pref_category = 'group';
+        params.pref_category_filters = 'true';
         // eslint-disable-next-line no-unused-vars
-        const component = new Component({
-            target,
-            depts,
-            entries: parseInt(entries, 10),
-            format,
-            group: parseInt(group, 10),
-            keyword,
-            heading,
-            addCal,
-            pref_category: 'group',
-            pref_category_filters: 'true'
-        });
+        const component = new Component(params);
     }
-
-    // const test = new Archive({ target, depts, entries, group });
 };
 
 export default localList;

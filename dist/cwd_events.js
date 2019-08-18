@@ -106,6 +106,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
@@ -127,7 +133,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
     Drupal.behaviors.cwdEvents = {
       attach: function attach(context) {
         $('div.events-listing', context).once('cwd_events').each(function () {
-          Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(this.dataset);
+          Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(_objectSpread({}, this.dataset));
         });
       }
     };
@@ -138,7 +144,8 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
   var eventListings = _toConsumableArray(document.getElementsByClassName('events-listing'));
 
   eventListings.forEach(function (elem) {
-    Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(elem.dataset);
+    // Convert DOMStringMap to object.
+    Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(_objectSpread({}, elem.dataset));
   });
 }
 
@@ -481,6 +488,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+/**
+ * The base component.
+ */
 
 var LocalistComponent =
 /*#__PURE__*/
@@ -511,7 +521,7 @@ function () {
 
     this.requestArgs = {
       depts: depts,
-      entries: entries,
+      entries: parseInt(entries, 10),
       format: format,
       group: group,
       keyword: keyword
@@ -524,9 +534,9 @@ function () {
       pref_eventdetails: 'event details',
       addCal: addCal
     };
-    this.group = group;
+    this.group = parseInt(group, 10);
     this.depts = depts;
-    this.entries = entries; // used in filters
+    this.entries = parseInt(entries, 10); // used in filters
 
     this.pref_category = pref_category;
     this.pref_category_filters = pref_category_filters;
@@ -958,26 +968,10 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Helper function to select component based on format.
  *   @todo add support for unused options. [filter, addCal]
- * @param {obj} param0 The base Component params.
+ * @param {obj} params The base Component params.
  */
 
-var localList = function localList(_ref) {
-  var _ref$target = _ref.target,
-      target = _ref$target === void 0 ? 'events-listing' : _ref$target,
-      _ref$depts = _ref.depts,
-      depts = _ref$depts === void 0 ? '0' : _ref$depts,
-      _ref$entries = _ref.entries,
-      entries = _ref$entries === void 0 ? '10' : _ref$entries,
-      _ref$format = _ref.format,
-      format = _ref$format === void 0 ? 'standard' : _ref$format,
-      _ref$group = _ref.group,
-      group = _ref$group === void 0 ? '0' : _ref$group,
-      _ref$keyword = _ref.keyword,
-      keyword = _ref$keyword === void 0 ? false : _ref$keyword,
-      _ref$heading = _ref.heading,
-      heading = _ref$heading === void 0 ? '' : _ref$heading,
-      _ref$addCal = _ref.addCal,
-      addCal = _ref$addCal === void 0 ? false : _ref$addCal;
+var localList = function localList(params) {
   // Map out formats for look up.
   var formatOptions = {
     standard: _components_standard__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -988,23 +982,14 @@ var localList = function localList(_ref) {
     archive: _components_archive__WEBPACK_IMPORTED_MODULE_4__["default"]
   };
 
-  if (format in formatOptions) {
-    var Component = formatOptions[format]; // eslint-disable-next-line no-unused-vars
+  if (params.format in formatOptions) {
+    var Component = formatOptions[params.format]; // @todo impliment filter options and pagination
 
-    var component = new Component({
-      target: target,
-      depts: depts,
-      entries: parseInt(entries, 10),
-      format: format,
-      group: parseInt(group, 10),
-      keyword: keyword,
-      heading: heading,
-      addCal: addCal,
-      pref_category: 'group',
-      pref_category_filters: 'true'
-    });
-  } // const test = new Archive({ target, depts, entries, group });
+    params.pref_category = 'group';
+    params.pref_category_filters = 'true'; // eslint-disable-next-line no-unused-vars
 
+    var component = new Component(params);
+  }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (localList);
