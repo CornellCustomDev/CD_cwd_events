@@ -1,4 +1,4 @@
-import { eventFilters, add_calendar } from './template-helpers';
+import { eventFilters, add_calendar } from '../common/template-helpers';
 
 const tagStr = event_types => {
     let spanStr = '';

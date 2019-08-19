@@ -4,7 +4,7 @@ import {
     modernStandardWrapper
 } from '../templates/modernStandard';
 
-export default class Archive extends LocalistComponent {
+export default class ModernStandard extends LocalistComponent {
     constructor(props) {
         props.innerTemplate = moderStandardInner;
         props.outerTemplate = modernStandardWrapper;

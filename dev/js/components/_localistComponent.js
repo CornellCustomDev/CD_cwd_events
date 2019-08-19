@@ -1,5 +1,5 @@
 import findAll from '../service/localistApi';
-import BuildEvent from '../buildEvent';
+import BuildEvent from '../common/buildEvent';
 /**
  * The base component.
  */
@@ -16,7 +16,8 @@ export default class LocalistComponent {
         pref_category_filters,
         pref_category,
         innerTemplate,
-        outerTemplate
+        outerTemplate,
+        pref_excerpt_length = 250
     }) {
         // standard wrapper variables
         this.wrapperArgs = {
@@ -36,9 +37,7 @@ export default class LocalistComponent {
 
         // build event variables required for inner HTML logic
         this.BE_args = {
-            pref_excerpt_length: 250,
-            pref_excerpt_length_compact: 125,
-            pref_readmore: 'read more',
+            pref_excerpt_length,
             pref_eventdetails: 'event details',
             addCal
         };

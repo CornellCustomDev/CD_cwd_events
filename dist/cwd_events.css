@@ -184,10 +184,6 @@
   margin-top: 0;
 }
 
-.cwd-events-style section.standard .events-listing.compact #events-filters {
-  display: none;
-}
-
 .cwd-events-style section.standard .events-listing.compact .node {
   border-bottom: 1px solid #e0e0e0;
   margin: 0.5em 0 0.6em;
@@ -255,11 +251,6 @@
 
 .cwd-events-style section.standard .events-listing.compact .location {
   width: 70%;
-}
-
-.cwd-events-style section.standard .events-listing.compact .date .start,
-.cwd-events-style section.standard .events-listing.compact .description {
-  display: none;
 }
 
 .cwd-events-style #standarCompact ul.events-filters {

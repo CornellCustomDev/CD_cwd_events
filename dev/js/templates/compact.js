@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { add_calendar } from './template-helpers';
+import { add_calendar } from '../common/template-helpers';
 
 export const compactInner = builtData => /* html */ `
 <div
@@ -30,11 +30,10 @@ export const compactInner = builtData => /* html */ `
         ${builtData.description}
         <a
             class="read-more more"
-            href="${builtData.event.localist_url}/#"
+            href="${builtData.event.localist_url}"
             target="_blank"
-        >
-            ${builtData.pref_readmore}
-            <span class='visually-hidden'> about ${builtData.event.title}</span>
+        > read more
+        <span class='visually-hidden'> about ${builtData.event.title}</span>
         </a>
     </p>
     ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}

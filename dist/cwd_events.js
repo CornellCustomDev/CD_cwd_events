@@ -151,10 +151,10 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
 
 /***/ }),
 
-/***/ "./js/buildEvent.js":
-/*!**************************!*\
-  !*** ./js/buildEvent.js ***!
-  \**************************/
+/***/ "./js/common/buildEvent.js":
+/*!*********************************!*\
+  !*** ./js/common/buildEvent.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -163,139 +163,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BuildEvent; });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! truncate */ "./node_modules/truncate/truncate.js");
-/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(truncate__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _common_dateTime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./common/dateTime */ "./js/common/dateTime.js");
-var _this = undefined;
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
+/* harmony import */ var _dateTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dateTime */ "./js/common/dateTime.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-/* helper functions */
 
 /**
- * The logic for determining description length.
- *   Does not support html.
- *
- * @param {obj} event the event object.
- * @param {string} format Compact or standard.
- * @param {integer} pref_excerpt_length The length of the long excerpt.
- * @param {integer} pref_excerpt_length_compact The length of the compact excerpt.
- *
- * @return {string} The truncated description string
- */
-
-var getTruncDesc = function getTruncDesc(event, format, pref_excerpt_length, pref_excerpt_length_compact) {
-  var excerptLength = format === 'compact' ? pref_excerpt_length_compact : pref_excerpt_length; // Use plain text description is html
-
-  var description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
-  return description;
-};
-/**
- * The logic for determining the type of date string.
- *
- * @param {string} dateTime The date event datestring.
- * @param {string} format Either compact or standard.
- *
- * @return {string} The date string.
- */
-
-
-var getDisplayDate = function getDisplayDate(dateTime, format) {
-  var eventDate = format === 'compact' ? moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('MMM D') : moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('M/DD/YYYY');
-  return eventDate;
-};
-/**
- *
- * @param {obj} event The event object.
- *
- * @return {array} An array of fields.
- */
-
-
-var getDepartmentFields = function getDepartmentFields(event) {
-  var department = '';
-  var type = '';
-  var group_name = '';
-  var group_id = '';
-
-  if (typeof event.filters.departments !== 'undefined') {
-    department = event.filters.departments[0].id;
-  }
-
-  if (typeof event.filters.event_types !== 'undefined') {
-    type = event.filters.event_types[0].id; // TODO: add support for multiple types per event per event ( event_types[1+] )
-  }
-
-  if (typeof event.group_name !== 'undefined') {
-    group_name = event.group_name;
-    group_id = event.group_id;
-  }
-
-  return [department, type, group_name, group_id];
-};
-
-var getEventEndTime = function getEventEndTime(event) {
-  var endTime = event.event_instances[0].event_instance.end;
-
-  if (typeof endTime !== 'undefined' && endTime !== null) {
-    var time = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getTimefromDateTime"])(endTime);
-    return time;
-  }
-};
-/**
- * Checks if event is all day and returns appropriate start time.
- * @param {obj} event The event obj.
- * @return {string} the eventTime string.
- */
-
-
-var getEventTime = function getEventTime(event) {
-  var eventTime = '';
-
-  if (event.event_instances[0].event_instance.all_day) {
-    eventTime = 'all day';
-  } else {
-    eventTime = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getTimefromDateTime"])(event.event_instances[0].event_instance.start);
-  }
-
-  return eventTime;
-};
-
-var getEventType = function getEventType(event, prefCategory, department, groupName) {
-  var eventTypes = '';
-
-  if (typeof event.filters.event_types !== 'undefined') {
-    eventTypes = event.filters.event_types[0].name;
-  }
-
-  if (prefCategory === 'dept' && department !== 0) {
-    eventTypes = event.filters.departments[0].name;
-  }
-
-  if (prefCategory === 'group' && groupName !== '') {
-    eventTypes = _this.group_name;
-  }
-
-  return eventTypes;
-};
-/**
- * A Helper function to convert localist event data into usable formats.
- * @todo get rid of this and move build to templates
+ * A Helper function to convert localist event data into display formats.
+ * @todo Move all of this functionality to templates.
  *
  * @param {obj} event The localist event json data
  * @param {obj} args Formating instructions.
@@ -303,90 +178,33 @@ var getEventType = function getEventType(event, prefCategory, department, groupN
  * @return {obj} see docs/buildEvent.config
  */
 
+var BuildEvent = function BuildEvent(event, args) {
+  _classCallCheck(this, BuildEvent);
 
-var BuildEvent =
-/*#__PURE__*/
-function () {
-  function BuildEvent(event, args) {
-    _classCallCheck(this, BuildEvent);
+  var startDateTime = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventStartDate"])(event);
+  this.event = event;
+  this.args = args;
+  this.description = event.description;
+  this.addCal = args.addCal;
+  this.event_time = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventTime"])(event);
+  this.event_date_compact = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM D');
+  this.event_date = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventDate"])(event);
+  this.displayDate = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getDisplayDate"])(event, this.format);
+  this.dateTime = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('YYYY-MM-DD');
+  this.abbrMonth = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM');
+  this.month = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM');
+  this.day = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getDay"])(event);
+  this.monthHeader = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM YYYY');
+  this.event_time_end = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventEndTime"])(event);
+  this.description = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getTruncDesc"])(event, args.pref_excerpt_length); // options
 
-    this.event = event;
-    this.args = args;
-    this.description = event.description; // used
-
-    this.addCal = args.addCal; // used
-
-    this.pref_readmore = args.pref_readmore; // used
-
-    this.event_time = ''; // used
-
-    this.event_date_compact = ''; // used
-
-    this.event_date = ''; // used
-
-    this.displayDate = ''; // used
-
-    this.dateTime = ''; // used yyyy-mm-dd
-
-    this.month = ''; // used
-
-    this.day = ''; // used
-
-    this.monthHeader = ''; // used month + year
-    // options
-
-    this.department = 0; // used
-
-    this.type = 0; // used
-
-    this.group_name = '';
-    this.group_id = 0; // used
-
-    this.event_types = ''; // used
-
-    this.event_time_end = ''; // used
-    // setters
-
-    this.description = getTruncDesc(this.event, this.format, this.args.pref_excerpt_length, this.args.pref_excerpt_length_compact);
-
-    var _getDepartmentFields = getDepartmentFields(this.event);
-
-    var _getDepartmentFields2 = _slicedToArray(_getDepartmentFields, 4);
-
-    this.department = _getDepartmentFields2[0];
-    this.type = _getDepartmentFields2[1];
-    this.group_name = _getDepartmentFields2[2];
-    this.group_id = _getDepartmentFields2[3];
-    this.event_time_end = getEventEndTime(event);
-    this.setDateTime(); // This must be called after department
-
-    this.event_types = getEventType(event, this.args.pref_category, this.department, this.group_name);
-  } // END OF CONSTRUCTOR
-
-
-  _createClass(BuildEvent, [{
-    key: "setDateTime",
-    value: function setDateTime() {
-      var event = this.event; // date and time
-
-      var startDateTime = event.event_instances[0].event_instance.start;
-      this.event_time = getEventTime(event);
-      this.dateTime = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('YYYY-MM-DD');
-      this.event_date_compact = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM D'); // event date is unused.
-
-      this.event_date = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getMonthDayfromDateTime"])(startDateTime);
-      this.displayDate = getDisplayDate(startDateTime, this.format);
-      this.abbrDay = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('ddd');
-      this.abbrMonth = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM');
-      this.month = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM');
-      this.fullDay = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('dddd');
-      this.day = Object(_common_dateTime__WEBPACK_IMPORTED_MODULE_2__["getDayfromDateTime"])(startDateTime);
-      this.monthHeader = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM YYYY');
-    }
-  }]);
-
-  return BuildEvent;
-}();
+  this.department = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getDepartment"])(event);
+  this.type = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getType"])(event);
+  this.group_name = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getGroupName"])(event);
+  this.group_id = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getGroupId"])(event);
+  this.event_types = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventType"])(event, args.pref_category);
+} // END OF CONSTRUCTOR
+;
 
 
 
@@ -396,7 +214,7 @@ function () {
 /*!*******************************!*\
   !*** ./js/common/dateTime.js ***!
   \*******************************/
-/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime */
+/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getType, getDepartment, getEventType */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -404,8 +222,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTimefromDateTime", function() { return getTimefromDateTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMonthDayfromDateTime", function() { return getMonthDayfromDateTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDayfromDateTime", function() { return getDayfromDateTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventStartDate", function() { return getEventStartDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDisplayDate", function() { return getDisplayDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventDate", function() { return getEventDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTruncDesc", function() { return getTruncDesc; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDay", function() { return getDay; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventEndTime", function() { return getEventEndTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventTime", function() { return getEventTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupName", function() { return getGroupName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupId", function() { return getGroupId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getType", function() { return getType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDepartment", function() { return getDepartment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventType", function() { return getEventType; });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! truncate */ "./node_modules/truncate/truncate.js");
+/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(truncate__WEBPACK_IMPORTED_MODULE_1__);
+var _this = undefined;
+
+
 
 /**
  * Gets time from dateTime.
@@ -443,6 +278,314 @@ var getDayfromDateTime = function getDayfromDateTime(dateTime) {
   var day = moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('D');
   return day;
 };
+/**
+ * Get event start date.
+ * @param {obj} event A localist event obj
+ * @return {string} Date string.
+ */
+
+var getEventStartDate = function getEventStartDate(event) {
+  var startDateTime = event.event_instances[0].event_instance.start;
+  return startDateTime;
+};
+/**
+ * The logic for determining the type of date string.
+ *
+ * @param {obj} event The localist event.
+ * @param {string} format Either compact or standard.
+ *
+ * @return {string} The date string.
+ */
+
+var getDisplayDate = function getDisplayDate(event, format) {
+  var dateTime = getEventStartDate(event);
+  var eventDate = format === 'compact' ? moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('MMM D') : moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('M/DD/YYYY');
+  return eventDate;
+};
+/**
+ *
+ * @param {obj} event The localist event.
+ * @return {string} The event start date.
+ */
+
+var getEventDate = function getEventDate(event) {
+  var startDateTime = getEventStartDate(event);
+  var eventSrtartDate = getMonthDayfromDateTime(startDateTime);
+  return eventSrtartDate;
+};
+/**
+ * Truncates the description text.
+ *   Does not support html.
+ *
+ * @param {obj} event the event object.
+ * @param {integer} excerptLength The length of the excerpt.
+ *
+ * @return {string} The truncated description string
+ */
+
+var getTruncDesc = function getTruncDesc(event, excerptLength) {
+  var description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
+  return description;
+};
+/**
+ *
+ * @param {obj} event The localist event.
+ * @return {string} The day of the event.
+ */
+
+var getDay = function getDay(event) {
+  var startDateTime = getEventStartDate(event);
+  var date = getDayfromDateTime(startDateTime);
+  return date;
+};
+var getEventEndTime = function getEventEndTime(event) {
+  var endTime = event.event_instances[0].event_instance.end;
+
+  if (typeof endTime !== 'undefined' && endTime !== null) {
+    var time = getTimefromDateTime(endTime);
+    return time;
+  }
+};
+/**
+ * Checks if event is all day and returns appropriate start time.
+ * @param {obj} event The event obj.
+ * @return {string} the eventTime string.
+ */
+
+var getEventTime = function getEventTime(event) {
+  var eventTime = '';
+
+  if (event.event_instances[0].event_instance.all_day) {
+    eventTime = 'all day';
+  } else {
+    var startDate = getEventStartDate(event);
+    eventTime = getTimefromDateTime(startDate);
+  }
+
+  return eventTime;
+};
+/**
+ *
+ * @param {obj} event The localist event
+ * @return {string} The group name.
+ */
+
+var getGroupName = function getGroupName(event) {
+  var group_name = '';
+
+  if (typeof event.group_name !== 'undefined') {
+    group_name = event.group_name;
+  }
+
+  return group_name;
+};
+/**
+ *
+ * @param {obj} event The localist event
+ * @return {integer} The group Id.
+ */
+
+var getGroupId = function getGroupId(event) {
+  var groupId = 0;
+
+  if (typeof event.group_name !== 'undefined') {
+    groupId = event.group_id;
+  }
+
+  return groupId;
+};
+/**
+ * The event type id.
+ * @todo add support for multiple types per event per event ( event_types[1+] )
+ * @param {obj} event The event object.
+ *
+ * @return {integer} An array of fields.
+ */
+
+var getType = function getType(event) {
+  var type = '';
+
+  if (typeof event.filters.event_types !== 'undefined') {
+    type = event.filters.event_types[0].id; //
+  }
+
+  return type;
+};
+/**
+ * The events deartment id
+ * @param {obj} event The event object.
+ *
+ * @return {integer} The department id.
+ */
+
+var getDepartment = function getDepartment(event) {
+  var department = '';
+
+  if (typeof event.filters.departments !== 'undefined') {
+    department = event.filters.departments[0].id;
+  }
+
+  return department;
+};
+/**
+ * Gets the appropriate event type.
+ * @param {obj} event The localist Event.
+ * @param {string} prefCategory The preffered category filter.
+ * @return {string} The filter text.
+ */
+
+var getEventType = function getEventType(event, prefCategory) {
+  var department = getDepartment(event);
+  var groupName = getGroupName(event);
+  var eventTypes = '';
+
+  if (typeof event.filters.event_types !== 'undefined') {
+    eventTypes = event.filters.event_types[0].name;
+  }
+
+  if (prefCategory === 'dept' && department !== 0) {
+    eventTypes = event.filters.departments[0].name;
+  }
+
+  if (prefCategory === 'group' && groupName !== '') {
+    eventTypes = _this.group_name;
+  }
+
+  return eventTypes;
+};
+
+/***/ }),
+
+/***/ "./js/common/template-helpers.js":
+/*!***************************************!*\
+  !*** ./js/common/template-helpers.js ***!
+  \***************************************/
+/*! exports provided: eventFilters, add_calendar */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventFilters", function() { return eventFilters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add_calendar", function() { return add_calendar; });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+/**
+ * Renders the filter elemet usually used in the wrapper.
+ *   Adds the event handlers to the window.
+ *
+ * @todo Add wai-aria controls support,
+ *   also tests that element exists,
+ *
+ * @modifies {window} Attaches click event handlers to window.
+ *
+ * @param {array} filterObjs A array of objects [{id:'',name:'',pref_category:''}]
+ * @param {string} domTarget A string of html id #id should exist and be unique.
+ *
+ * @return {string} A html string.
+ */
+var eventFilters = function eventFilters(filterObjs, domTarget) {
+  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
+    return '';
+  }
+
+  var targetElem = document.getElementById(domTarget); // make sure function names are safe strings
+
+  var domStr = domTarget.replace(/[^\w]/gi, ''); // handles filter events
+
+  var toggleFilters = function toggleFilters(id, target) {
+    // remove active class from all filter buttons
+    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
+
+    allFilterBtns.forEach(function (value) {
+      value.classList.remove('active');
+    });
+    var elem = document.getElementById(id); // set the current item active
+
+    elem.classList.add('active'); // onclick button will only hide non target elements
+    // hide all filter elements
+
+    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
+
+    allEvents.forEach(function (value) {
+      value.classList.add('fadeOut');
+    }); // show the target elements
+
+    var targetElems = _toConsumableArray(targetElem.getElementsByClassName(target));
+
+    targetElems.forEach(function (value) {
+      value.classList.remove('fadeOut');
+    });
+  };
+
+  var showAllEvents = function showAllEvents() {
+    // remove active class from all filter buttons
+    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
+
+    allFilterBtns.forEach(function (value) {
+      value.classList.remove('active');
+    });
+    var elem = document.getElementById("filterAll-".concat(domStr)); // set the current item active
+
+    elem.classList.add('active'); // show all filter elements
+
+    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
+
+    allEvents.forEach(function (value) {
+      value.classList.remove('fadeOut');
+    });
+  }; // attach event handlers to window
+
+
+  window["toggleFilters".concat(domStr)] = toggleFilters;
+  window["showAllEvents".concat(domStr)] = showAllEvents;
+  return (
+    /* html */
+    "\n        <div class=\"events-filters-wrap\">\n            <h3 class=\"hidden\">Show:</h3>\n            <ul class=\"events-filters\">\n                <li>\n                    <button\n                        id=\"filterAll-".concat(domStr, "\"\n                        data-filter=\"all\"\n                        class=\"filter-btn active\"\n                        onClick=\"showAllEvents").concat(domStr, "()\"\n                    >\n                        All Events\n                    </button>\n                </li>\n                ").concat(filterObjs ? Object.keys(filterObjs).map(function (key) {
+      return "<li><button id='filter".concat(filterObjs[key].id, "-").concat(domStr, "' data-filter=\"").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "\" class=\"filter-btn\" onclick=\"toggleFilters").concat(domStr, "('filter").concat(filterObjs[key].id, "-").concat(domStr, "', '").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "')\">").concat(filterObjs[key].name, "</button></li>");
+    }).join('') : '', "\n            </ul>\n        </div>\n    ")
+  );
+};
+var add_calendar = function add_calendar(myEvent) {
+  /* ----------------- build calander links -------------------------- */
+  var buidGoogleStr = function buidGoogleStr(myObj) {
+    var mySD = myObj.event_instances[0].event_instance.start.split('T')[0];
+    var gDateStart = mySD.split('-')[0] + mySD.split('-')[1] + mySD.split('-')[2]; // this may not work as intended for repeating events
+
+    var myED = myObj.last_date;
+    var gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
+    return (
+      /* html */
+      "\n            <a\n                class=\"fa fa-google google\"\n                href=\"https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=".concat(gDateStart, "%2F").concat(gDateStop, "&amp;details=").concat(encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />")), "&amp;location=").concat(encodeURIComponent(myObj.location), "&amp;sprop=website%3Aevents.cornell.edu&amp;text=").concat(encodeURIComponent(myObj.title), "\"\n                title=\"Save to Google Calendar\"\n                target=\"_blank\"\n            >\n                <span class=\"sr-only\"\n                    >Add ").concat(myObj.title, " to Google Calendar</span\n                >\n            </a>\n        ")
+    );
+  };
+
+  var buildiCal = function buildiCal(myObj) {
+    return (
+      /* html */
+      "\n        <a\n            class=\"fa fa-calendar apple\"\n            href=\"".concat(myObj.localist_ics_url, "/#\"\n            title=\"Save to iCal\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to iCal</span>\n        </a>\n    ")
+    );
+  };
+
+  var buildOutlookCal = function buildOutlookCal(myObj) {
+    return (
+      /* html */
+      "\n        <a\n            class=\"fa fa-clock-o microsoft\"\n            href=\"".concat(myObj.localist_ics_url, "\"\n            title=\"Save to Outlook\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to Outlook</span>\n        </a>\n    ")
+    );
+  };
+  /* ------------------ END OF BUILD LINKS --------------------------- */
+
+
+  return (
+    /* html */
+    "\n        <span class=\"event-subscribe\"\n            >add to calendar ".concat(buidGoogleStr(myEvent), " ").concat(buildiCal(myEvent), "\n            ").concat(buildOutlookCal(myEvent), "\n        </span>\n    ")
+  );
+};
 
 /***/ }),
 
@@ -457,7 +600,7 @@ var getDayfromDateTime = function getDayfromDateTime(dateTime) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalistComponent; });
 /* harmony import */ var _service_localistApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../service/localistApi */ "./js/service/localistApi.js");
-/* harmony import */ var _buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../buildEvent */ "./js/buildEvent.js");
+/* harmony import */ var _common_buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/buildEvent */ "./js/common/buildEvent.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -493,7 +636,9 @@ function () {
         pref_category_filters = _ref.pref_category_filters,
         pref_category = _ref.pref_category,
         innerTemplate = _ref.innerTemplate,
-        outerTemplate = _ref.outerTemplate;
+        outerTemplate = _ref.outerTemplate,
+        _ref$pref_excerpt_len = _ref.pref_excerpt_length,
+        pref_excerpt_length = _ref$pref_excerpt_len === void 0 ? 250 : _ref$pref_excerpt_len;
 
     _classCallCheck(this, LocalistComponent);
 
@@ -514,9 +659,7 @@ function () {
     }; // build event variables required for inner HTML logic
 
     this.BE_args = {
-      pref_excerpt_length: 250,
-      pref_excerpt_length_compact: 125,
-      pref_readmore: 'read more',
+      pref_excerpt_length: pref_excerpt_length,
       pref_eventdetails: 'event details',
       addCal: addCal
     };
@@ -593,7 +736,7 @@ function () {
       clearTimeout(this.c_loader);
       var inner = '';
       this.events.forEach(function (event) {
-        _this3.builtEvent = new _buildEvent__WEBPACK_IMPORTED_MODULE_1__["default"](event.event, _this3.BE_args);
+        _this3.builtEvent = new _common_buildEvent__WEBPACK_IMPORTED_MODULE_1__["default"](event.event, _this3.BE_args);
 
         _this3.buildFilters(event.event);
 
@@ -691,7 +834,7 @@ function (_LocalistComponent) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Compact; });
 /* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
 /* harmony import */ var _templates_compact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/compact */ "./js/templates/compact.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -711,21 +854,22 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Archive =
+var Compact =
 /*#__PURE__*/
 function (_LocalistComponent) {
-  _inherits(Archive, _LocalistComponent);
+  _inherits(Compact, _LocalistComponent);
 
-  function Archive(props) {
-    _classCallCheck(this, Archive);
+  function Compact(props) {
+    _classCallCheck(this, Compact);
 
     props.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactInner"];
     props.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactWrapper"];
     props.pref_category_filters = false;
-    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+    props.pref_excerpt_length = 150;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Compact).call(this, props));
   }
 
-  return Archive;
+  return Compact;
 }(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -741,7 +885,7 @@ function (_LocalistComponent) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InlineCompact; });
 /* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
 /* harmony import */ var _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/inlineCompact */ "./js/templates/inlineCompact.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -761,21 +905,22 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Archive =
+var InlineCompact =
 /*#__PURE__*/
 function (_LocalistComponent) {
-  _inherits(Archive, _LocalistComponent);
+  _inherits(InlineCompact, _LocalistComponent);
 
-  function Archive(props) {
-    _classCallCheck(this, Archive);
+  function InlineCompact(props) {
+    _classCallCheck(this, InlineCompact);
 
     props.innerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactInner"];
     props.outerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactWrapper"];
     props.pref_category_filters = false;
-    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+    props.pref_excerpt_length = 150;
+    return _possibleConstructorReturn(this, _getPrototypeOf(InlineCompact).call(this, props));
   }
 
-  return Archive;
+  return InlineCompact;
 }(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -791,7 +936,7 @@ function (_LocalistComponent) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModernCompact; });
 /* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
 /* harmony import */ var _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/modernCompact */ "./js/templates/modernCompact.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -811,21 +956,22 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Archive =
+var ModernCompact =
 /*#__PURE__*/
 function (_LocalistComponent) {
-  _inherits(Archive, _LocalistComponent);
+  _inherits(ModernCompact, _LocalistComponent);
 
-  function Archive(props) {
-    _classCallCheck(this, Archive);
+  function ModernCompact(props) {
+    _classCallCheck(this, ModernCompact);
 
     props.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactInner"];
     props.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactWrapper"];
     props.pref_category_filters = false;
-    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+    props.pref_excerpt_length = 150;
+    return _possibleConstructorReturn(this, _getPrototypeOf(ModernCompact).call(this, props));
   }
 
-  return Archive;
+  return ModernCompact;
 }(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -841,7 +987,7 @@ function (_LocalistComponent) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModernStandard; });
 /* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
 /* harmony import */ var _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/modernStandard */ "./js/templates/modernStandard.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -861,20 +1007,20 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Archive =
+var ModernStandard =
 /*#__PURE__*/
 function (_LocalistComponent) {
-  _inherits(Archive, _LocalistComponent);
+  _inherits(ModernStandard, _LocalistComponent);
 
-  function Archive(props) {
-    _classCallCheck(this, Archive);
+  function ModernStandard(props) {
+    _classCallCheck(this, ModernStandard);
 
     props.innerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__["moderStandardInner"];
     props.outerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__["modernStandardWrapper"];
-    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+    return _possibleConstructorReturn(this, _getPrototypeOf(ModernStandard).call(this, props));
   }
 
-  return Archive;
+  return ModernStandard;
 }(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -890,7 +1036,7 @@ function (_LocalistComponent) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Standard; });
 /* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
 /* harmony import */ var _templates_standard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/standard */ "./js/templates/standard.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -910,20 +1056,20 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Archive =
+var Standard =
 /*#__PURE__*/
 function (_LocalistComponent) {
-  _inherits(Archive, _LocalistComponent);
+  _inherits(Standard, _LocalistComponent);
 
-  function Archive(props) {
-    _classCallCheck(this, Archive);
+  function Standard(props) {
+    _classCallCheck(this, Standard);
 
     props.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_1__["standardInner"];
     props.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_1__["standardWrapper"];
-    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Standard).call(this, props));
   }
 
-  return Archive;
+  return Standard;
 }(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -1097,13 +1243,13 @@ var archiveWrapper = function archiveWrapper(inner) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compactInner", function() { return compactInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compactWrapper", function() { return compactWrapper; });
-/* harmony import */ var _template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template-helpers */ "./js/templates/template-helpers.js");
+/* harmony import */ var _common_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/template-helpers */ "./js/common/template-helpers.js");
 /* eslint-disable camelcase */
 
 var compactInner = function compactInner(builtData) {
   return (
     /* html */
-    "\n<div\n    class=\"event-node dept-".concat(builtData.department, " node\n    type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n>\n    <h3>\n        <a\n            target=\"_blank\"\n            href=\"").concat(builtData.event.localist_url, "\"\n        >\n            ").concat(builtData.event.title, "\n        </a>\n    </h3>\n    ").concat(builtData.event_date_compact ? "<h4 class=\"meta date\"><span class=\"fulldate\">".concat(builtData.event_date_compact, "</span></h4>") : '', "\n    ").concat(builtData.event.location_name ? "<h4 class=\"meta location\">".concat(builtData.event.location_name, "</h4>") : '', "\n    <p class=\"description\">\n        ").concat(builtData.description, "\n        <a\n            class=\"read-more more\"\n            href=\"").concat(builtData.event.localist_url, "/#\"\n            target=\"_blank\"\n        >\n            ").concat(builtData.pref_readmore, "\n            <span class='visually-hidden'> about ").concat(builtData.event.title, "</span>\n        </a>\n    </p>\n    ").concat(builtData.addCal ? "".concat(Object(_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n</div><!--end of node -->")
+    "\n<div\n    class=\"event-node dept-".concat(builtData.department, " node\n    type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n>\n    <h3>\n        <a\n            target=\"_blank\"\n            href=\"").concat(builtData.event.localist_url, "\"\n        >\n            ").concat(builtData.event.title, "\n        </a>\n    </h3>\n    ").concat(builtData.event_date_compact ? "<h4 class=\"meta date\"><span class=\"fulldate\">".concat(builtData.event_date_compact, "</span></h4>") : '', "\n    ").concat(builtData.event.location_name ? "<h4 class=\"meta location\">".concat(builtData.event.location_name, "</h4>") : '', "\n    <p class=\"description\">\n        ").concat(builtData.description, "\n        <a\n            class=\"read-more more\"\n            href=\"").concat(builtData.event.localist_url, "\"\n            target=\"_blank\"\n        > read more\n        <span class='visually-hidden'> about ").concat(builtData.event.title, "</span>\n        </a>\n    </p>\n    ").concat(builtData.addCal ? "".concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n</div><!--end of node -->")
   );
 }; // this has class compact only difference
 
@@ -1184,7 +1330,7 @@ var modernCompactWrapper = function modernCompactWrapper(inner, args) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "moderStandardInner", function() { return moderStandardInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernStandardWrapper", function() { return modernStandardWrapper; });
-/* harmony import */ var _template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template-helpers */ "./js/templates/template-helpers.js");
+/* harmony import */ var _common_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/template-helpers */ "./js/common/template-helpers.js");
 
 
 var tagStr = function tagStr(event_types) {
@@ -1204,13 +1350,13 @@ var tagStr = function tagStr(event_types) {
 var moderStandardInner = function moderStandardInner(builtData) {
   return (
     /* html */
-    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addCal ? "".concat(Object(_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
+    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addCal ? "".concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
   );
 };
 var modernStandardWrapper = function modernStandardWrapper(inner, args) {
   return (
     /* html */
-    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
+    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
   );
 };
 
@@ -1227,7 +1373,7 @@ var modernStandardWrapper = function modernStandardWrapper(inner, args) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardInner", function() { return standardInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardWrapper", function() { return standardWrapper; });
-/* harmony import */ var _template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template-helpers */ "./js/templates/template-helpers.js");
+/* harmony import */ var _common_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/template-helpers */ "./js/common/template-helpers.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1287,150 +1433,17 @@ var checkDate = new CheckDate(); // test for empty headings
 var standardInner = function standardInner(builtData) {
   return (
     /* html */
-    "\n    ".concat(checkDate.month(builtData), " ").concat(checkDate.day(builtData), "\n    <div\n        class=\"event-node node dept-").concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <h3>\n            <a target=\"_blank\" href=\"").concat(builtData.event.localist_url, "\"\n                >").concat(builtData.event.title, "</a\n            >\n        </h3>\n        ").concat(builtData.event_time ?
+    "\n    ".concat(checkDate.month(builtData), " ").concat(checkDate.day(builtData), "\n    <div\n        class=\"event-node node dept-").concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.event.group_id || '', "\"\n    >\n        <h3>\n            <a target=\"_blank\" href=\"").concat(builtData.event.localist_url, "\"\n                >").concat(builtData.event.title, "</a\n            >\n        </h3>\n        ").concat(builtData.event_time ?
     /* html */
     "\n                  <h4 class=\"meta date\">\n                      <span class=\"start\">".concat(builtData.event_time, "</span>\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event.location_name ?
     /* html */
-    "\n                  <h4 class=\"meta location\">\n                      ".concat(builtData.event.location_name, "\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event_types ? "<h4 class=\"meta type\"><span class=\"fa\"></span>".concat(builtData.event_types, "</h4>") : '', "\n        <p class=\"description\">\n            ").concat(builtData.description, "\n            <a\n                class=\"read-more more\"\n                href=\"").concat(builtData.event.localist_url, "/#\"\n                target=\"_blank\"\n                >").concat(builtData.pref_readmore, "<span class=\"visually-hidden\">\n                    about ").concat(builtData.event.title, "</span\n                ></a\n            >\n        </p>\n        ").concat(builtData.addCal ? "".concat(Object(_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n    </div>\n    <!--end of node -->\n")
+    "\n                  <h4 class=\"meta location\">\n                      ".concat(builtData.event.location_name, "\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event_types ? "<h4 class=\"meta type\"><span class=\"fa\"></span>".concat(builtData.event_types, "</h4>") : '', "\n        <p class=\"description\">\n            ").concat(builtData.description, "\n            <a\n                class=\"read-more more\"\n                href=\"").concat(builtData.event.localist_url, "/#\"\n                target=\"_blank\"\n                > read more <span class=\"visually-hidden\">\n                    about ").concat(builtData.event.title, "</span\n                ></a\n            >\n        </p>\n        ").concat(builtData.addCal ? "".concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n    </div>\n    <!--end of node -->\n")
   );
 };
 var standardWrapper = function standardWrapper(inner, args) {
   return (
     /* html */
-    "\n    <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div class=\"main-body\">\n            <div class=\"events-listing no-thumbnails\">\n                ").concat(Object(_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
-  );
-};
-
-/***/ }),
-
-/***/ "./js/templates/template-helpers.js":
-/*!******************************************!*\
-  !*** ./js/templates/template-helpers.js ***!
-  \******************************************/
-/*! exports provided: eventFilters, add_calendar */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventFilters", function() { return eventFilters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add_calendar", function() { return add_calendar; });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-/**
- * Renders the filter elemet usually used in the wrapper.
- *   Adds the event handlers to the window.
- *
- * @todo Add wai-aria controls support,
- *   also tests that element exists,
- *
- * @modifies {window} Attaches click event handlers to window.
- *
- * @param {array} filterObjs A array of objects [{id:'',name:'',pref_category:''}]
- * @param {string} domTarget A string of html id #id should exist and be unique.
- *
- * @return {string} A html string.
- */
-var eventFilters = function eventFilters(filterObjs, domTarget) {
-  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
-    return '';
-  }
-
-  var targetElem = document.getElementById(domTarget); // make sure function names are safe strings
-
-  var domStr = domTarget.replace(/[^\w]/gi, ''); // handles filter events
-
-  var toggleFilters = function toggleFilters(id, target) {
-    // remove active class from all filter buttons
-    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-    allFilterBtns.forEach(function (value) {
-      value.classList.remove('active');
-    });
-    var elem = document.getElementById(id); // set the current item active
-
-    elem.classList.add('active'); // onclick button will only hide non target elements
-    // hide all filter elements
-
-    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-    allEvents.forEach(function (value) {
-      value.classList.add('fadeOut');
-    }); // show the target elements
-
-    var targetElems = _toConsumableArray(targetElem.getElementsByClassName(target));
-
-    targetElems.forEach(function (value) {
-      value.classList.remove('fadeOut');
-    });
-  };
-
-  var showAllEvents = function showAllEvents() {
-    // remove active class from all filter buttons
-    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-    allFilterBtns.forEach(function (value) {
-      value.classList.remove('active');
-    });
-    var elem = document.getElementById("filterAll-".concat(domStr)); // set the current item active
-
-    elem.classList.add('active'); // show all filter elements
-
-    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-    allEvents.forEach(function (value) {
-      value.classList.remove('fadeOut');
-    });
-  }; // attach event handlers to window
-
-
-  window["toggleFilters".concat(domStr)] = toggleFilters;
-  window["showAllEvents".concat(domStr)] = showAllEvents;
-  return (
-    /* html */
-    "\n        <div class=\"events-filters-wrap\">\n            <h3 class=\"hidden\">Show:</h3>\n            <ul class=\"events-filters\">\n                <li>\n                    <button\n                        id=\"filterAll-".concat(domStr, "\"\n                        data-filter=\"all\"\n                        class=\"filter-btn active\"\n                        onClick=\"showAllEvents").concat(domStr, "()\"\n                    >\n                        All Events\n                    </button>\n                </li>\n                ").concat(filterObjs ? Object.keys(filterObjs).map(function (key) {
-      return "<li><button id='filter".concat(filterObjs[key].id, "-").concat(domStr, "' data-filter=\"").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "\" class=\"filter-btn\" onclick=\"toggleFilters").concat(domStr, "('filter").concat(filterObjs[key].id, "-").concat(domStr, "', '").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "')\">").concat(filterObjs[key].name, "</button></li>");
-    }).join('') : '', "\n            </ul>\n        </div>\n    ")
-  );
-};
-var add_calendar = function add_calendar(myEvent) {
-  /* ----------------- build calander links -------------------------- */
-  var buidGoogleStr = function buidGoogleStr(myObj) {
-    var mySD = myObj.event_instances[0].event_instance.start.split('T')[0];
-    var gDateStart = mySD.split('-')[0] + mySD.split('-')[1] + mySD.split('-')[2]; // this may not work as intended for repeating events
-
-    var myED = myObj.last_date;
-    var gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
-    return (
-      /* html */
-      "\n            <a\n                class=\"fa fa-google google\"\n                href=\"https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=".concat(gDateStart, "%2F").concat(gDateStop, "&amp;details=").concat(encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />")), "&amp;location=").concat(encodeURIComponent(myObj.location), "&amp;sprop=website%3Aevents.cornell.edu&amp;text=").concat(encodeURIComponent(myObj.title), "\"\n                title=\"Save to Google Calendar\"\n                target=\"_blank\"\n            >\n                <span class=\"sr-only\"\n                    >Add ").concat(myObj.title, " to Google Calendar</span\n                >\n            </a>\n        ")
-    );
-  };
-
-  var buildiCal = function buildiCal(myObj) {
-    return (
-      /* html */
-      "\n        <a\n            class=\"fa fa-calendar apple\"\n            href=\"".concat(myObj.localist_ics_url, "/#\"\n            title=\"Save to iCal\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to iCal</span>\n        </a>\n    ")
-    );
-  };
-
-  var buildOutlookCal = function buildOutlookCal(myObj) {
-    return (
-      /* html */
-      "\n        <a\n            class=\"fa fa-clock-o microsoft\"\n            href=\"".concat(myObj.localist_ics_url, "\"\n            title=\"Save to Outlook\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to Outlook</span>\n        </a>\n    ")
-    );
-  };
-  /* ------------------ END OF BUILD LINKS --------------------------- */
-
-
-  return (
-    /* html */
-    "\n        <span class=\"event-subscribe\"\n            >add to calendar ".concat(buidGoogleStr(myEvent), " ").concat(buildiCal(myEvent), "\n            ").concat(buildOutlookCal(myEvent), "\n        </span>\n    ")
+    "\n    <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div class=\"main-body\">\n            <div class=\"events-listing no-thumbnails\">\n                ").concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
   );
 };
 

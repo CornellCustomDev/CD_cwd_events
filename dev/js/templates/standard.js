@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 
-import { eventFilters, add_calendar } from './template-helpers';
+import { eventFilters, add_calendar } from '../common/template-helpers';
 
 /*
     tests to see if month / day should be displayed
@@ -44,7 +44,7 @@ export const standardInner = builtData => /* html */ `
     <div
         class="event-node node dept-${builtData.department} type-${
     builtData.type
-} group-${builtData.group_id}"
+} group-${builtData.event.group_id || ''}"
     >
         <h3>
             <a target="_blank" href="${builtData.event.localist_url}"
@@ -82,7 +82,7 @@ export const standardInner = builtData => /* html */ `
                 class="read-more more"
                 href="${builtData.event.localist_url}/#"
                 target="_blank"
-                >${builtData.pref_readmore}<span class="visually-hidden">
+                > read more <span class="visually-hidden">
                     about ${builtData.event.title}</span
                 ></a
             >
