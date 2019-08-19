@@ -3,7 +3,12 @@ import {
     modernCompactInner,
     modernCompactWrapper
 } from '../templates/modernCompact';
-
+/**
+ * The ModernCompact component.
+ *
+ * @constructor
+ * @extends LocalistComponent
+ */
 export default class ModernCompact extends LocalistComponent {
     constructor(props) {
         props.innerTemplate = modernCompactInner;

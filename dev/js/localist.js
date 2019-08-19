@@ -5,12 +5,13 @@ import modern_compact from './components/modernCompact';
 import archive from './components/archive';
 import inline_compact from './components/inlineCompact';
 /**
- * Helper function to select component based on format.
+ * Get the party started!
+ *   Selects the coresponding component based on format name.
  *   @todo add support for unused options. [filter, addCal]
  * @param {obj} params The base Component params.
  */
 const localList = params => {
-    // Map out formats for look up.
+    // Map out formats for look up. These must match Drupal block.
     const formatOptions = {
         standard,
         compact,
@@ -23,8 +24,9 @@ const localList = params => {
     if (params.format in formatOptions) {
         const Component = formatOptions[params.format];
         // @todo impliment filter options and pagination
+        // The following are static filter params. type and
         params.pref_category = 'group';
-        params.pref_category_filters = 'true';
+        params.pref_category_filters = true;
         // eslint-disable-next-line no-unused-vars
         const component = new Component(params);
     }

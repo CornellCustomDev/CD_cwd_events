@@ -1,8 +1,8 @@
-/*
- returns html string
- @param builtData a buildEvents.js obj
- built off cu energy template
-*/
+/**
+ *
+ * @param {obj} builtData A buildEvents.js obj.
+ * @return {string} Html string
+ */
 export const archiveInner = builtData => /* html */ `
     <div class="views-row">
         <div class="container-fluid">
@@ -30,6 +30,11 @@ export const archiveInner = builtData => /* html */ `
     </div>
 `;
 
+/**
+ *
+ * @param {string} inner The html inner string.
+ * @return {string} Html string
+ */
 export const archiveWrapper = inner => /* html */ `
     <div class="view view-events view-id-events cuenergy-events">
         <div class="view-content">

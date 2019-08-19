@@ -1,5 +1,9 @@
-/* eslint-disable camelcase */
-import { add_calendar } from '../common/template-helpers';
+/**
+ *
+ * @param {obj} builtData A buildEvents.js obj.
+ * @return {string} Html string
+ */
+import { add_calendar } from '../helpers/template-helpers';
 
 export const compactInner = builtData => /* html */ `
 <div
@@ -39,9 +43,14 @@ export const compactInner = builtData => /* html */ `
     ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}
 </div><!--end of node -->`;
 
-// this has class compact only difference
+/**
+ *
+ * @param {string} inner The html inner string.
+ * @param {obj} args Mostly unused try and remove these.
+ * @return {string} Html string
+ */
 export const compactWrapper = (inner, args) => /* html */ `
-    <section class='standard' id="standarCompact" title="${args.title}">
+    <section class='standard' id="standarCompact" title="Events List">
     ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div class="main-body">
             <div class="events-listing no-thumbnails compact">

@@ -12,7 +12,7 @@ import {
     getGroupName,
     getGroupId,
     getDepartment
-} from './dateTime';
+} from './displayEvent';
 
 /**
  * A Helper function to convert localist event data into display formats.

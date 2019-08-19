@@ -151,444 +151,6 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
 
 /***/ }),
 
-/***/ "./js/common/buildEvent.js":
-/*!*********************************!*\
-  !*** ./js/common/buildEvent.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BuildEvent; });
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _dateTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dateTime */ "./js/common/dateTime.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-
-/**
- * A Helper function to convert localist event data into display formats.
- * @todo Move all of this functionality to templates.
- *
- * @param {obj} event The localist event json data
- * @param {obj} args Formating instructions.
- *
- * @return {obj} see docs/buildEvent.config
- */
-
-var BuildEvent = function BuildEvent(event, args) {
-  _classCallCheck(this, BuildEvent);
-
-  var startDateTime = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventStartDate"])(event);
-  this.event = event;
-  this.args = args;
-  this.description = event.description;
-  this.addCal = args.addCal;
-  this.event_time = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventTime"])(event);
-  this.event_date_compact = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM D');
-  this.event_date = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventDate"])(event);
-  this.displayDate = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getDisplayDate"])(event, this.format);
-  this.dateTime = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('YYYY-MM-DD');
-  this.abbrMonth = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM');
-  this.month = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM');
-  this.day = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getDay"])(event);
-  this.monthHeader = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM YYYY');
-  this.event_time_end = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventEndTime"])(event);
-  this.description = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getTruncDesc"])(event, args.pref_excerpt_length); // options
-
-  this.department = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getDepartment"])(event);
-  this.type = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getType"])(event);
-  this.group_name = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getGroupName"])(event);
-  this.group_id = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getGroupId"])(event);
-  this.event_types = Object(_dateTime__WEBPACK_IMPORTED_MODULE_1__["getEventType"])(event, args.pref_category);
-} // END OF CONSTRUCTOR
-;
-
-
-
-/***/ }),
-
-/***/ "./js/common/dateTime.js":
-/*!*******************************!*\
-  !*** ./js/common/dateTime.js ***!
-  \*******************************/
-/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getType, getDepartment, getEventType */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTimefromDateTime", function() { return getTimefromDateTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMonthDayfromDateTime", function() { return getMonthDayfromDateTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDayfromDateTime", function() { return getDayfromDateTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventStartDate", function() { return getEventStartDate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDisplayDate", function() { return getDisplayDate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventDate", function() { return getEventDate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTruncDesc", function() { return getTruncDesc; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDay", function() { return getDay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventEndTime", function() { return getEventEndTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventTime", function() { return getEventTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupName", function() { return getGroupName; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupId", function() { return getGroupId; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getType", function() { return getType; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDepartment", function() { return getDepartment; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventType", function() { return getEventType; });
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! truncate */ "./node_modules/truncate/truncate.js");
-/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(truncate__WEBPACK_IMPORTED_MODULE_1__);
-var _this = undefined;
-
-
-
-/**
- * Gets time from dateTime.
- *
- * @param {dateTime} dateTime A valid datetime.
- *
- * @return {string} The 12 hour string: "1:00 p.m".
- */
-
-var getTimefromDateTime = function getTimefromDateTime(dateTime) {
-  var time = moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('h:mm a');
-  return time;
-};
-/**
- * Gets full month day  from dateTime.
- *
- * @param {dateTime} dateTime A valid datetime.
- *
- * @return {string} The abbreviated month and day "Jan 1".
- */
-
-var getMonthDayfromDateTime = function getMonthDayfromDateTime(dateTime) {
-  var monthDay = moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('MMMM D');
-  return monthDay;
-};
-/**
- * Gets day  from dateTime.
- *
- * @param {dateTime} dateTime A valid datetime.
- *
- * @return {string} The abbreviated day "1".
- */
-
-var getDayfromDateTime = function getDayfromDateTime(dateTime) {
-  var day = moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('D');
-  return day;
-};
-/**
- * Get event start date.
- * @param {obj} event A localist event obj
- * @return {string} Date string.
- */
-
-var getEventStartDate = function getEventStartDate(event) {
-  var startDateTime = event.event_instances[0].event_instance.start;
-  return startDateTime;
-};
-/**
- * The logic for determining the type of date string.
- *
- * @param {obj} event The localist event.
- * @param {string} format Either compact or standard.
- *
- * @return {string} The date string.
- */
-
-var getDisplayDate = function getDisplayDate(event, format) {
-  var dateTime = getEventStartDate(event);
-  var eventDate = format === 'compact' ? moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('MMM D') : moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('M/DD/YYYY');
-  return eventDate;
-};
-/**
- *
- * @param {obj} event The localist event.
- * @return {string} The event start date.
- */
-
-var getEventDate = function getEventDate(event) {
-  var startDateTime = getEventStartDate(event);
-  var eventSrtartDate = getMonthDayfromDateTime(startDateTime);
-  return eventSrtartDate;
-};
-/**
- * Truncates the description text.
- *   Does not support html.
- *
- * @param {obj} event the event object.
- * @param {integer} excerptLength The length of the excerpt.
- *
- * @return {string} The truncated description string
- */
-
-var getTruncDesc = function getTruncDesc(event, excerptLength) {
-  var description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
-  return description;
-};
-/**
- *
- * @param {obj} event The localist event.
- * @return {string} The day of the event.
- */
-
-var getDay = function getDay(event) {
-  var startDateTime = getEventStartDate(event);
-  var date = getDayfromDateTime(startDateTime);
-  return date;
-};
-var getEventEndTime = function getEventEndTime(event) {
-  var endTime = event.event_instances[0].event_instance.end;
-
-  if (typeof endTime !== 'undefined' && endTime !== null) {
-    var time = getTimefromDateTime(endTime);
-    return time;
-  }
-};
-/**
- * Checks if event is all day and returns appropriate start time.
- * @param {obj} event The event obj.
- * @return {string} the eventTime string.
- */
-
-var getEventTime = function getEventTime(event) {
-  var eventTime = '';
-
-  if (event.event_instances[0].event_instance.all_day) {
-    eventTime = 'all day';
-  } else {
-    var startDate = getEventStartDate(event);
-    eventTime = getTimefromDateTime(startDate);
-  }
-
-  return eventTime;
-};
-/**
- *
- * @param {obj} event The localist event
- * @return {string} The group name.
- */
-
-var getGroupName = function getGroupName(event) {
-  var group_name = '';
-
-  if (typeof event.group_name !== 'undefined') {
-    group_name = event.group_name;
-  }
-
-  return group_name;
-};
-/**
- *
- * @param {obj} event The localist event
- * @return {integer} The group Id.
- */
-
-var getGroupId = function getGroupId(event) {
-  var groupId = 0;
-
-  if (typeof event.group_name !== 'undefined') {
-    groupId = event.group_id;
-  }
-
-  return groupId;
-};
-/**
- * The event type id.
- * @todo add support for multiple types per event per event ( event_types[1+] )
- * @param {obj} event The event object.
- *
- * @return {integer} An array of fields.
- */
-
-var getType = function getType(event) {
-  var type = '';
-
-  if (typeof event.filters.event_types !== 'undefined') {
-    type = event.filters.event_types[0].id; //
-  }
-
-  return type;
-};
-/**
- * The events deartment id
- * @param {obj} event The event object.
- *
- * @return {integer} The department id.
- */
-
-var getDepartment = function getDepartment(event) {
-  var department = '';
-
-  if (typeof event.filters.departments !== 'undefined') {
-    department = event.filters.departments[0].id;
-  }
-
-  return department;
-};
-/**
- * Gets the appropriate event type.
- * @param {obj} event The localist Event.
- * @param {string} prefCategory The preffered category filter.
- * @return {string} The filter text.
- */
-
-var getEventType = function getEventType(event, prefCategory) {
-  var department = getDepartment(event);
-  var groupName = getGroupName(event);
-  var eventTypes = '';
-
-  if (typeof event.filters.event_types !== 'undefined') {
-    eventTypes = event.filters.event_types[0].name;
-  }
-
-  if (prefCategory === 'dept' && department !== 0) {
-    eventTypes = event.filters.departments[0].name;
-  }
-
-  if (prefCategory === 'group' && groupName !== '') {
-    eventTypes = _this.group_name;
-  }
-
-  return eventTypes;
-};
-
-/***/ }),
-
-/***/ "./js/common/template-helpers.js":
-/*!***************************************!*\
-  !*** ./js/common/template-helpers.js ***!
-  \***************************************/
-/*! exports provided: eventFilters, add_calendar */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventFilters", function() { return eventFilters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add_calendar", function() { return add_calendar; });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-/**
- * Renders the filter elemet usually used in the wrapper.
- *   Adds the event handlers to the window.
- *
- * @todo Add wai-aria controls support,
- *   also tests that element exists,
- *
- * @modifies {window} Attaches click event handlers to window.
- *
- * @param {array} filterObjs A array of objects [{id:'',name:'',pref_category:''}]
- * @param {string} domTarget A string of html id #id should exist and be unique.
- *
- * @return {string} A html string.
- */
-var eventFilters = function eventFilters(filterObjs, domTarget) {
-  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
-    return '';
-  }
-
-  var targetElem = document.getElementById(domTarget); // make sure function names are safe strings
-
-  var domStr = domTarget.replace(/[^\w]/gi, ''); // handles filter events
-
-  var toggleFilters = function toggleFilters(id, target) {
-    // remove active class from all filter buttons
-    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-    allFilterBtns.forEach(function (value) {
-      value.classList.remove('active');
-    });
-    var elem = document.getElementById(id); // set the current item active
-
-    elem.classList.add('active'); // onclick button will only hide non target elements
-    // hide all filter elements
-
-    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-    allEvents.forEach(function (value) {
-      value.classList.add('fadeOut');
-    }); // show the target elements
-
-    var targetElems = _toConsumableArray(targetElem.getElementsByClassName(target));
-
-    targetElems.forEach(function (value) {
-      value.classList.remove('fadeOut');
-    });
-  };
-
-  var showAllEvents = function showAllEvents() {
-    // remove active class from all filter buttons
-    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-    allFilterBtns.forEach(function (value) {
-      value.classList.remove('active');
-    });
-    var elem = document.getElementById("filterAll-".concat(domStr)); // set the current item active
-
-    elem.classList.add('active'); // show all filter elements
-
-    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-    allEvents.forEach(function (value) {
-      value.classList.remove('fadeOut');
-    });
-  }; // attach event handlers to window
-
-
-  window["toggleFilters".concat(domStr)] = toggleFilters;
-  window["showAllEvents".concat(domStr)] = showAllEvents;
-  return (
-    /* html */
-    "\n        <div class=\"events-filters-wrap\">\n            <h3 class=\"hidden\">Show:</h3>\n            <ul class=\"events-filters\">\n                <li>\n                    <button\n                        id=\"filterAll-".concat(domStr, "\"\n                        data-filter=\"all\"\n                        class=\"filter-btn active\"\n                        onClick=\"showAllEvents").concat(domStr, "()\"\n                    >\n                        All Events\n                    </button>\n                </li>\n                ").concat(filterObjs ? Object.keys(filterObjs).map(function (key) {
-      return "<li><button id='filter".concat(filterObjs[key].id, "-").concat(domStr, "' data-filter=\"").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "\" class=\"filter-btn\" onclick=\"toggleFilters").concat(domStr, "('filter").concat(filterObjs[key].id, "-").concat(domStr, "', '").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "')\">").concat(filterObjs[key].name, "</button></li>");
-    }).join('') : '', "\n            </ul>\n        </div>\n    ")
-  );
-};
-var add_calendar = function add_calendar(myEvent) {
-  /* ----------------- build calander links -------------------------- */
-  var buidGoogleStr = function buidGoogleStr(myObj) {
-    var mySD = myObj.event_instances[0].event_instance.start.split('T')[0];
-    var gDateStart = mySD.split('-')[0] + mySD.split('-')[1] + mySD.split('-')[2]; // this may not work as intended for repeating events
-
-    var myED = myObj.last_date;
-    var gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
-    return (
-      /* html */
-      "\n            <a\n                class=\"fa fa-google google\"\n                href=\"https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=".concat(gDateStart, "%2F").concat(gDateStop, "&amp;details=").concat(encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />")), "&amp;location=").concat(encodeURIComponent(myObj.location), "&amp;sprop=website%3Aevents.cornell.edu&amp;text=").concat(encodeURIComponent(myObj.title), "\"\n                title=\"Save to Google Calendar\"\n                target=\"_blank\"\n            >\n                <span class=\"sr-only\"\n                    >Add ").concat(myObj.title, " to Google Calendar</span\n                >\n            </a>\n        ")
-    );
-  };
-
-  var buildiCal = function buildiCal(myObj) {
-    return (
-      /* html */
-      "\n        <a\n            class=\"fa fa-calendar apple\"\n            href=\"".concat(myObj.localist_ics_url, "/#\"\n            title=\"Save to iCal\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to iCal</span>\n        </a>\n    ")
-    );
-  };
-
-  var buildOutlookCal = function buildOutlookCal(myObj) {
-    return (
-      /* html */
-      "\n        <a\n            class=\"fa fa-clock-o microsoft\"\n            href=\"".concat(myObj.localist_ics_url, "\"\n            title=\"Save to Outlook\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to Outlook</span>\n        </a>\n    ")
-    );
-  };
-  /* ------------------ END OF BUILD LINKS --------------------------- */
-
-
-  return (
-    /* html */
-    "\n        <span class=\"event-subscribe\"\n            >add to calendar ".concat(buidGoogleStr(myEvent), " ").concat(buildiCal(myEvent), "\n            ").concat(buildOutlookCal(myEvent), "\n        </span>\n    ")
-  );
-};
-
-/***/ }),
-
 /***/ "./js/components/_localistComponent.js":
 /*!*********************************************!*\
   !*** ./js/components/_localistComponent.js ***!
@@ -599,8 +161,9 @@ var add_calendar = function add_calendar(myEvent) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalistComponent; });
-/* harmony import */ var _service_localistApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../service/localistApi */ "./js/service/localistApi.js");
-/* harmony import */ var _common_buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/buildEvent */ "./js/common/buildEvent.js");
+/* harmony import */ var localist_api_connector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! localist-api-connector */ "./node_modules/localist-api-connector/index.js");
+/* harmony import */ var localist_api_connector__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(localist_api_connector__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/buildEvent */ "./js/helpers/buildEvent.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -618,7 +181,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 /**
- * The base component.
+ * The base component
+ * @param {obj} parm0 The base parameters.
  */
 
 var LocalistComponent =
@@ -655,7 +219,9 @@ function () {
       entries: parseInt(entries, 10),
       format: format,
       group: group,
-      keyword: keyword
+      keyword: keyword,
+      api_key: 'KLhy2GtuSAGirYGY' // Move api key to drupal block?
+
     }; // build event variables required for inner HTML logic
 
     this.BE_args = {
@@ -683,7 +249,7 @@ function () {
     value: function getLocalistEvents() {
       var _this = this;
 
-      Object(_service_localistApi__WEBPACK_IMPORTED_MODULE_0__["default"])(this.requestArgs).then(function (response) {
+      localist_api_connector__WEBPACK_IMPORTED_MODULE_0___default()(this.requestArgs).then(function (response) {
         _this.setState({
           events: response.data.events
         });
@@ -736,7 +302,7 @@ function () {
       clearTimeout(this.c_loader);
       var inner = '';
       this.events.forEach(function (event) {
-        _this3.builtEvent = new _common_buildEvent__WEBPACK_IMPORTED_MODULE_1__["default"](event.event, _this3.BE_args);
+        _this3.builtEvent = new _helpers_buildEvent__WEBPACK_IMPORTED_MODULE_1__["default"](event.event, _this3.BE_args);
 
         _this3.buildFilters(event.event);
 
@@ -803,6 +369,12 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+/**
+ * Immutable empty node list.
+ *
+ * @constructor
+ * @extends project.MyClass.BasicNodeList
+ */
 
 var Archive =
 /*#__PURE__*/
@@ -1076,6 +648,444 @@ function (_LocalistComponent) {
 
 /***/ }),
 
+/***/ "./js/helpers/buildEvent.js":
+/*!**********************************!*\
+  !*** ./js/helpers/buildEvent.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BuildEvent; });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _displayEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./displayEvent */ "./js/helpers/displayEvent.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+/**
+ * A Helper function to convert localist event data into display formats.
+ * @todo Move all of this functionality to templates.
+ *
+ * @param {obj} event The localist event json data
+ * @param {obj} args Formating instructions.
+ *
+ * @return {obj} see docs/buildEvent.config
+ */
+
+var BuildEvent = function BuildEvent(event, args) {
+  _classCallCheck(this, BuildEvent);
+
+  var startDateTime = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventStartDate"])(event);
+  this.event = event;
+  this.args = args;
+  this.description = event.description;
+  this.addCal = args.addCal;
+  this.event_time = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventTime"])(event);
+  this.event_date_compact = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM D');
+  this.event_date = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventDate"])(event);
+  this.displayDate = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getDisplayDate"])(event, this.format);
+  this.dateTime = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('YYYY-MM-DD');
+  this.abbrMonth = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMM');
+  this.month = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM');
+  this.day = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getDay"])(event);
+  this.monthHeader = moment__WEBPACK_IMPORTED_MODULE_0__(startDateTime).format('MMMM YYYY');
+  this.event_time_end = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventEndTime"])(event);
+  this.description = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getTruncDesc"])(event, args.pref_excerpt_length); // options
+
+  this.department = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getDepartment"])(event);
+  this.type = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getType"])(event);
+  this.group_name = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getGroupName"])(event);
+  this.group_id = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getGroupId"])(event);
+  this.event_types = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventType"])(event, args.pref_category);
+} // END OF CONSTRUCTOR
+;
+
+
+
+/***/ }),
+
+/***/ "./js/helpers/displayEvent.js":
+/*!************************************!*\
+  !*** ./js/helpers/displayEvent.js ***!
+  \************************************/
+/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getType, getDepartment, getEventType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTimefromDateTime", function() { return getTimefromDateTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMonthDayfromDateTime", function() { return getMonthDayfromDateTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDayfromDateTime", function() { return getDayfromDateTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventStartDate", function() { return getEventStartDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDisplayDate", function() { return getDisplayDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventDate", function() { return getEventDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTruncDesc", function() { return getTruncDesc; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDay", function() { return getDay; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventEndTime", function() { return getEventEndTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventTime", function() { return getEventTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupName", function() { return getGroupName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupId", function() { return getGroupId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getType", function() { return getType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDepartment", function() { return getDepartment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventType", function() { return getEventType; });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! truncate */ "./node_modules/truncate/truncate.js");
+/* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(truncate__WEBPACK_IMPORTED_MODULE_1__);
+var _this = undefined;
+
+
+
+/**
+ * Gets time from dateTime.
+ *
+ * @param {dateTime} dateTime A valid datetime.
+ *
+ * @return {string} The 12 hour string: "1:00 p.m".
+ */
+
+var getTimefromDateTime = function getTimefromDateTime(dateTime) {
+  var time = moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('h:mm a');
+  return time;
+};
+/**
+ * Gets full month day  from dateTime.
+ *
+ * @param {dateTime} dateTime A valid datetime.
+ *
+ * @return {string} The abbreviated month and day "Jan 1".
+ */
+
+var getMonthDayfromDateTime = function getMonthDayfromDateTime(dateTime) {
+  var monthDay = moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('MMMM D');
+  return monthDay;
+};
+/**
+ * Gets day  from dateTime.
+ *
+ * @param {dateTime} dateTime A valid datetime.
+ *
+ * @return {string} The abbreviated day "1".
+ */
+
+var getDayfromDateTime = function getDayfromDateTime(dateTime) {
+  var day = moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('D');
+  return day;
+};
+/**
+ * Get event start date.
+ * @param {obj} event A localist event obj
+ * @return {string} Date string.
+ */
+
+var getEventStartDate = function getEventStartDate(event) {
+  var startDateTime = event.event_instances[0].event_instance.start;
+  return startDateTime;
+};
+/**
+ * The logic for determining the type of date string.
+ *
+ * @param {obj} event The localist event.
+ * @param {string} format Either compact or standard.
+ *
+ * @return {string} The date string.
+ */
+
+var getDisplayDate = function getDisplayDate(event, format) {
+  var dateTime = getEventStartDate(event);
+  var eventDate = format === 'compact' ? moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('MMM D') : moment__WEBPACK_IMPORTED_MODULE_0__(dateTime).format('M/DD/YYYY');
+  return eventDate;
+};
+/**
+ *
+ * @param {obj} event The localist event.
+ * @return {string} The event start date.
+ */
+
+var getEventDate = function getEventDate(event) {
+  var startDateTime = getEventStartDate(event);
+  var eventSrtartDate = getMonthDayfromDateTime(startDateTime);
+  return eventSrtartDate;
+};
+/**
+ * Truncates the description text.
+ *   Does not support html.
+ *
+ * @param {obj} event the event object.
+ * @param {integer} excerptLength The length of the excerpt.
+ *
+ * @return {string} The truncated description string
+ */
+
+var getTruncDesc = function getTruncDesc(event, excerptLength) {
+  var description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
+  return description;
+};
+/**
+ *
+ * @param {obj} event The localist event.
+ * @return {string} The day of the event.
+ */
+
+var getDay = function getDay(event) {
+  var startDateTime = getEventStartDate(event);
+  var date = getDayfromDateTime(startDateTime);
+  return date;
+};
+var getEventEndTime = function getEventEndTime(event) {
+  var endTime = event.event_instances[0].event_instance.end;
+
+  if (typeof endTime !== 'undefined' && endTime !== null) {
+    var time = getTimefromDateTime(endTime);
+    return time;
+  }
+};
+/**
+ * Checks if event is all day and returns appropriate start time.
+ * @param {obj} event The event obj.
+ * @return {string} the eventTime string.
+ */
+
+var getEventTime = function getEventTime(event) {
+  var eventTime = '';
+
+  if (event.event_instances[0].event_instance.all_day) {
+    eventTime = 'all day';
+  } else {
+    var startDate = getEventStartDate(event);
+    eventTime = getTimefromDateTime(startDate);
+  }
+
+  return eventTime;
+};
+/**
+ *
+ * @param {obj} event The localist event
+ * @return {string} The group name.
+ */
+
+var getGroupName = function getGroupName(event) {
+  var group_name = '';
+
+  if (typeof event.group_name !== 'undefined') {
+    group_name = event.group_name;
+  }
+
+  return group_name;
+};
+/**
+ *
+ * @param {obj} event The localist event
+ * @return {integer} The group Id.
+ */
+
+var getGroupId = function getGroupId(event) {
+  var groupId = 0;
+
+  if (typeof event.group_name !== 'undefined') {
+    groupId = event.group_id;
+  }
+
+  return groupId;
+};
+/**
+ * The event type id.
+ * @todo add support for multiple types per event per event ( event_types[1+] )
+ * @param {obj} event The event object.
+ *
+ * @return {integer} An array of fields.
+ */
+
+var getType = function getType(event) {
+  var type = '';
+
+  if (typeof event.filters.event_types !== 'undefined') {
+    type = event.filters.event_types[0].id; //
+  }
+
+  return type;
+};
+/**
+ * The events deartment id
+ * @param {obj} event The event object.
+ *
+ * @return {integer} The department id.
+ */
+
+var getDepartment = function getDepartment(event) {
+  var department = '';
+
+  if (typeof event.filters.departments !== 'undefined') {
+    department = event.filters.departments[0].id;
+  }
+
+  return department;
+};
+/**
+ * Gets the appropriate event type.
+ * @param {obj} event The localist Event.
+ * @param {string} prefCategory The preffered category filter.
+ * @return {string} The filter text.
+ */
+
+var getEventType = function getEventType(event, prefCategory) {
+  var department = getDepartment(event);
+  var groupName = getGroupName(event);
+  var eventTypes = '';
+
+  if (typeof event.filters.event_types !== 'undefined') {
+    eventTypes = event.filters.event_types[0].name;
+  }
+
+  if (prefCategory === 'dept' && department !== 0) {
+    eventTypes = event.filters.departments[0].name;
+  }
+
+  if (prefCategory === 'group' && groupName !== '') {
+    eventTypes = _this.group_name;
+  }
+
+  return eventTypes;
+};
+
+/***/ }),
+
+/***/ "./js/helpers/template-helpers.js":
+/*!****************************************!*\
+  !*** ./js/helpers/template-helpers.js ***!
+  \****************************************/
+/*! exports provided: eventFilters, add_calendar */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventFilters", function() { return eventFilters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add_calendar", function() { return add_calendar; });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+/**
+ * Renders the filter elemet usually used in the wrapper.
+ *   Adds the event handlers to the window.
+ *
+ * @todo Add wai-aria controls support,
+ *   also tests that element exists,
+ *
+ * @modifies {window} Attaches click event handlers to window.
+ *
+ * @param {array} filterObjs A array of objects [{id:'',name:'',pref_category:''}]
+ * @param {string} domTarget A string of html id #id should exist and be unique.
+ *
+ * @return {string} A html string.
+ */
+var eventFilters = function eventFilters(filterObjs, domTarget) {
+  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
+    return '';
+  }
+
+  var targetElem = document.getElementById(domTarget); // make sure function names are safe strings
+
+  var domStr = domTarget.replace(/[^\w]/gi, ''); // handles filter events
+
+  var toggleFilters = function toggleFilters(id, target) {
+    // remove active class from all filter buttons
+    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
+
+    allFilterBtns.forEach(function (value) {
+      value.classList.remove('active');
+    });
+    var elem = document.getElementById(id); // set the current item active
+
+    elem.classList.add('active'); // onclick button will only hide non target elements
+    // hide all filter elements
+
+    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
+
+    allEvents.forEach(function (value) {
+      value.classList.add('fadeOut');
+    }); // show the target elements
+
+    var targetElems = _toConsumableArray(targetElem.getElementsByClassName(target));
+
+    targetElems.forEach(function (value) {
+      value.classList.remove('fadeOut');
+    });
+  };
+
+  var showAllEvents = function showAllEvents() {
+    // remove active class from all filter buttons
+    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
+
+    allFilterBtns.forEach(function (value) {
+      value.classList.remove('active');
+    });
+    var elem = document.getElementById("filterAll-".concat(domStr)); // set the current item active
+
+    elem.classList.add('active'); // show all filter elements
+
+    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
+
+    allEvents.forEach(function (value) {
+      value.classList.remove('fadeOut');
+    });
+  }; // attach event handlers to window
+
+
+  window["toggleFilters".concat(domStr)] = toggleFilters;
+  window["showAllEvents".concat(domStr)] = showAllEvents;
+  return (
+    /* html */
+    "\n        <div class=\"events-filters-wrap\">\n            <h3 class=\"hidden\">Show:</h3>\n            <ul class=\"events-filters\">\n                <li>\n                    <button\n                        id=\"filterAll-".concat(domStr, "\"\n                        data-filter=\"all\"\n                        class=\"filter-btn active\"\n                        onClick=\"showAllEvents").concat(domStr, "()\"\n                    >\n                        All Events\n                    </button>\n                </li>\n                ").concat(filterObjs ? Object.keys(filterObjs).map(function (key) {
+      return "<li><button id='filter".concat(filterObjs[key].id, "-").concat(domStr, "' data-filter=\"").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "\" class=\"filter-btn\" onclick=\"toggleFilters").concat(domStr, "('filter").concat(filterObjs[key].id, "-").concat(domStr, "', '").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "')\">").concat(filterObjs[key].name, "</button></li>");
+    }).join('') : '', "\n            </ul>\n        </div>\n    ")
+  );
+};
+var add_calendar = function add_calendar(myEvent) {
+  /* ----------------- build calander links -------------------------- */
+  var buidGoogleStr = function buidGoogleStr(myObj) {
+    var mySD = myObj.event_instances[0].event_instance.start.split('T')[0];
+    var gDateStart = mySD.split('-')[0] + mySD.split('-')[1] + mySD.split('-')[2]; // this may not work as intended for repeating events
+
+    var myED = myObj.last_date;
+    var gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
+    return (
+      /* html */
+      "\n            <a\n                class=\"fa fa-google google\"\n                href=\"https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=".concat(gDateStart, "%2F").concat(gDateStop, "&amp;details=").concat(encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />")), "&amp;location=").concat(encodeURIComponent(myObj.location), "&amp;sprop=website%3Aevents.cornell.edu&amp;text=").concat(encodeURIComponent(myObj.title), "\"\n                title=\"Save to Google Calendar\"\n                target=\"_blank\"\n            >\n                <span class=\"sr-only\"\n                    >Add ").concat(myObj.title, " to Google Calendar</span\n                >\n            </a>\n        ")
+    );
+  };
+
+  var buildiCal = function buildiCal(myObj) {
+    return (
+      /* html */
+      "\n        <a\n            class=\"fa fa-calendar apple\"\n            href=\"".concat(myObj.localist_ics_url, "/#\"\n            title=\"Save to iCal\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to iCal</span>\n        </a>\n    ")
+    );
+  };
+
+  var buildOutlookCal = function buildOutlookCal(myObj) {
+    return (
+      /* html */
+      "\n        <a\n            class=\"fa fa-clock-o microsoft\"\n            href=\"".concat(myObj.localist_ics_url, "\"\n            title=\"Save to Outlook\"\n            target=\"_blank\"\n        >\n            <span class=\"sr-only\">Add ").concat(myObj.title, " to Outlook</span>\n        </a>\n    ")
+    );
+  };
+  /* ------------------ END OF BUILD LINKS --------------------------- */
+
+
+  return (
+    /* html */
+    "\n        <span class=\"event-subscribe\"\n            >add to calendar ".concat(buidGoogleStr(myEvent), " ").concat(buildiCal(myEvent), "\n            ").concat(buildOutlookCal(myEvent), "\n        </span>\n    ")
+  );
+};
+
+/***/ }),
+
 /***/ "./js/localist.js":
 /*!************************!*\
   !*** ./js/localist.js ***!
@@ -1128,79 +1138,6 @@ var localList = function localList(params) {
 
 /***/ }),
 
-/***/ "./js/service/localistApi.js":
-/*!***********************************!*\
-  !*** ./js/service/localistApi.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-// import request from './request';
-
-
-/**
- * Configures request params and Fetched events from loacalist api.
- *
- * @param {obj} param0 The optional api config params.
- *
- * @return {axios} A axios promise;
- */
-
-var findAll = function findAll(_ref) {
-  var _ref$depts = _ref.depts,
-      depts = _ref$depts === void 0 ? '0' : _ref$depts,
-      _ref$entries = _ref.entries,
-      entries = _ref$entries === void 0 ? 3 : _ref$entries,
-      _ref$format = _ref.format,
-      format = _ref$format === void 0 ? 'standard' : _ref$format,
-      _ref$group = _ref.group,
-      group = _ref$group === void 0 ? 0 : _ref$group,
-      _ref$keyword = _ref.keyword,
-      keyword = _ref$keyword === void 0 ? '' : _ref$keyword;
-  var params = {
-    api_key: 'KLhy2GtuSAGirYGY',
-    // Move api key to drupal block? works without it.
-    days: 365,
-    distinct: true,
-    pp: entries,
-    start: format !== 'archive' ? moment__WEBPACK_IMPORTED_MODULE_1__().format('YYYY-MM-DD') : moment__WEBPACK_IMPORTED_MODULE_1__().subtract(1, 'Y').format('YYYY-MM-DD')
-  }; // Supports multiple departments with CSV string.
-
-  if (depts && parseInt(depts, 10) !== 0) {
-    params.type = [];
-    depts.split(',').forEach(function (item) {
-      params.type.push(item.trim());
-    });
-  }
-
-  if (group && parseInt(group, 10) !== 0) {
-    params.group_id = group;
-  }
-
-  if (keyword && keyword !== '') {
-    params.keyword = keyword;
-  }
-
-  if (format === 'archive') {
-    params.direction = 'desc';
-  }
-
-  var url = '//events.cornell.edu/api/2.1/events';
-  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url, {
-    params: params
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (findAll);
-
-/***/ }),
-
 /***/ "./js/templates/archive.js":
 /*!*********************************!*\
   !*** ./js/templates/archive.js ***!
@@ -1243,13 +1180,13 @@ var archiveWrapper = function archiveWrapper(inner) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compactInner", function() { return compactInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compactWrapper", function() { return compactWrapper; });
-/* harmony import */ var _common_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/template-helpers */ "./js/common/template-helpers.js");
+/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
 /* eslint-disable camelcase */
 
 var compactInner = function compactInner(builtData) {
   return (
     /* html */
-    "\n<div\n    class=\"event-node dept-".concat(builtData.department, " node\n    type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n>\n    <h3>\n        <a\n            target=\"_blank\"\n            href=\"").concat(builtData.event.localist_url, "\"\n        >\n            ").concat(builtData.event.title, "\n        </a>\n    </h3>\n    ").concat(builtData.event_date_compact ? "<h4 class=\"meta date\"><span class=\"fulldate\">".concat(builtData.event_date_compact, "</span></h4>") : '', "\n    ").concat(builtData.event.location_name ? "<h4 class=\"meta location\">".concat(builtData.event.location_name, "</h4>") : '', "\n    <p class=\"description\">\n        ").concat(builtData.description, "\n        <a\n            class=\"read-more more\"\n            href=\"").concat(builtData.event.localist_url, "\"\n            target=\"_blank\"\n        > read more\n        <span class='visually-hidden'> about ").concat(builtData.event.title, "</span>\n        </a>\n    </p>\n    ").concat(builtData.addCal ? "".concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n</div><!--end of node -->")
+    "\n<div\n    class=\"event-node dept-".concat(builtData.department, " node\n    type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n>\n    <h3>\n        <a\n            target=\"_blank\"\n            href=\"").concat(builtData.event.localist_url, "\"\n        >\n            ").concat(builtData.event.title, "\n        </a>\n    </h3>\n    ").concat(builtData.event_date_compact ? "<h4 class=\"meta date\"><span class=\"fulldate\">".concat(builtData.event_date_compact, "</span></h4>") : '', "\n    ").concat(builtData.event.location_name ? "<h4 class=\"meta location\">".concat(builtData.event.location_name, "</h4>") : '', "\n    <p class=\"description\">\n        ").concat(builtData.description, "\n        <a\n            class=\"read-more more\"\n            href=\"").concat(builtData.event.localist_url, "\"\n            target=\"_blank\"\n        > read more\n        <span class='visually-hidden'> about ").concat(builtData.event.title, "</span>\n        </a>\n    </p>\n    ").concat(builtData.addCal ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n</div><!--end of node -->")
   );
 }; // this has class compact only difference
 
@@ -1330,7 +1267,7 @@ var modernCompactWrapper = function modernCompactWrapper(inner, args) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "moderStandardInner", function() { return moderStandardInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernStandardWrapper", function() { return modernStandardWrapper; });
-/* harmony import */ var _common_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/template-helpers */ "./js/common/template-helpers.js");
+/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
 
 
 var tagStr = function tagStr(event_types) {
@@ -1350,13 +1287,13 @@ var tagStr = function tagStr(event_types) {
 var moderStandardInner = function moderStandardInner(builtData) {
   return (
     /* html */
-    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addCal ? "".concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
+    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addCal ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
   );
 };
 var modernStandardWrapper = function modernStandardWrapper(inner, args) {
   return (
     /* html */
-    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
+    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
   );
 };
 
@@ -1373,7 +1310,7 @@ var modernStandardWrapper = function modernStandardWrapper(inner, args) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardInner", function() { return standardInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardWrapper", function() { return standardWrapper; });
-/* harmony import */ var _common_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/template-helpers */ "./js/common/template-helpers.js");
+/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1437,13 +1374,13 @@ var standardInner = function standardInner(builtData) {
     /* html */
     "\n                  <h4 class=\"meta date\">\n                      <span class=\"start\">".concat(builtData.event_time, "</span>\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event.location_name ?
     /* html */
-    "\n                  <h4 class=\"meta location\">\n                      ".concat(builtData.event.location_name, "\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event_types ? "<h4 class=\"meta type\"><span class=\"fa\"></span>".concat(builtData.event_types, "</h4>") : '', "\n        <p class=\"description\">\n            ").concat(builtData.description, "\n            <a\n                class=\"read-more more\"\n                href=\"").concat(builtData.event.localist_url, "/#\"\n                target=\"_blank\"\n                > read more <span class=\"visually-hidden\">\n                    about ").concat(builtData.event.title, "</span\n                ></a\n            >\n        </p>\n        ").concat(builtData.addCal ? "".concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n    </div>\n    <!--end of node -->\n")
+    "\n                  <h4 class=\"meta location\">\n                      ".concat(builtData.event.location_name, "\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event_types ? "<h4 class=\"meta type\"><span class=\"fa\"></span>".concat(builtData.event_types, "</h4>") : '', "\n        <p class=\"description\">\n            ").concat(builtData.description, "\n            <a\n                class=\"read-more more\"\n                href=\"").concat(builtData.event.localist_url, "/#\"\n                target=\"_blank\"\n                > read more <span class=\"visually-hidden\">\n                    about ").concat(builtData.event.title, "</span\n                ></a\n            >\n        </p>\n        ").concat(builtData.addCal ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n    </div>\n    <!--end of node -->\n")
   );
 };
 var standardWrapper = function standardWrapper(inner, args) {
   return (
     /* html */
-    "\n    <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div class=\"main-body\">\n            <div class=\"events-listing no-thumbnails\">\n                ").concat(Object(_common_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
+    "\n    <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div class=\"main-body\">\n            <div class=\"events-listing no-thumbnails\">\n                ").concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
   );
 };
 
@@ -13510,6 +13447,66 @@ __webpack_require__(/*! ./modules/web.timers */ "./node_modules/core-js/modules/
 __webpack_require__(/*! ./modules/web.immediate */ "./node_modules/core-js/modules/web.immediate.js");
 __webpack_require__(/*! ./modules/web.dom.iterable */ "./node_modules/core-js/modules/web.dom.iterable.js");
 module.exports = __webpack_require__(/*! ./modules/_core */ "./node_modules/core-js/modules/_core.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/localist-api-connector/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/localist-api-connector/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+const moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+
+/**
+ * Configures request params and Get events from loacalist api.
+ *
+ * @param {obj} param0 The optional api config params.
+ *
+ * @return {axios} A axios promise;
+ */
+module.exports = ({
+    depts = '0',
+    entries = 3,
+    format = 'standard',
+    group = 0,
+    keyword = '',
+    api_key = ''
+}) => {
+    const params = {
+        api_key,
+        days: 365,
+        distinct: true,
+        pp: entries,
+        start:
+            format !== 'archive'
+                ? moment().format('YYYY-MM-DD')
+                : moment()
+                      .subtract(1, 'Y')
+                      .format('YYYY-MM-DD')
+    };
+    // Supports multiple departments with CSV string.
+    if (depts && parseInt(depts, 10) !== 0) {
+        params.type = [];
+        depts.split(',').forEach(item => {
+            params.type.push(item.trim());
+        });
+    }
+    if (group && parseInt(group, 10) !== 0) {
+        params.group_id = group;
+    }
+    if (keyword && keyword !== '') {
+        params.keyword = keyword;
+    }
+    if (format === 'archive') {
+        params.direction = 'desc';
+    }
+    const url = '//events.cornell.edu/api/2.1/events';
+    return axios.get(url, { params });
+};
 
 
 /***/ }),

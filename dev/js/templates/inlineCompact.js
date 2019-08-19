@@ -1,3 +1,4 @@
+
 export const inlineCompactInner = builtEvent => /* html */ `
 <div class="views-row">
     <div class="container-fluid">
@@ -36,8 +37,14 @@ export const inlineCompactInner = builtEvent => /* html */ `
     </div>
 </div>`;
 
+/**
+ *
+ * @param {string} innerHtml The html inner string.
+ * @param {obj} args Mostly unused try and remove these.
+ * @return {string} Html string
+ */
 export const inlineCompactWrapper = (innerHtml, args) => /* html */ `
-    <section id='eventsInlineCompact' title="${args.title}">
+    <section id='eventsInlineCompact' title="Events List">
         ${args.heading ? `<h2 class="block-title">${args.heading}</h2>` : ''}
         <div class="events-listing events-listing-inline inline no-thumbnails">
             ${innerHtml}

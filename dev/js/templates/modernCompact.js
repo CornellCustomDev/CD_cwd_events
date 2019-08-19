@@ -1,7 +1,8 @@
-/*
- returns html string
- @param builtData a buildEvents.js obj
-*/
+/**
+ *
+ * @param {obj} builtData A buildEvents.js obj.
+ * @return {string} Html string
+ */
 export const modernCompactInner = builtData => /* html */ `
 <div class="card">
     <div class="events">
@@ -30,7 +31,12 @@ export const modernCompactInner = builtData => /* html */ `
 </div>
 `;
 
-// this has class compact and no filters option
+/**
+ *
+ * @param {string} inner The html inner string.
+ * @param {obj} args Mostly unused try and remove these.
+ * @return {string} Html string
+ */
 export const modernCompactWrapper = (inner, args) => /* html */ `
     <div id='eventsModernCompact' class="secondary modern">
          ${args.heading ? `<h2>${args.heading}</h2>` : ''}

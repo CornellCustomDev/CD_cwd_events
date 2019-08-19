@@ -2,7 +2,6 @@ import localList from './localist';
 
 require('babel-polyfill');
 
-/* eslint-disable func-names */
 /** *********************** START LOCALIST ********************************* /
  * Localist Events
  * javascript es6 requires {core/Drupal, core/jQuery, core/jQuery.once cwd_events.js}
@@ -13,12 +12,12 @@ require('babel-polyfill');
  * @param {Drupal} Drupal
  */
 if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
-    (function($, Drupal) {
+    (($, Drupal) => {
         Drupal.behaviors.cwdEvents = {
             attach(context) {
                 $('div.events-listing', context)
                     .once('cwd_events')
-                    .each(function() {
+                    .each(() => {
                         localList({ ...this.dataset });
                     });
             }
@@ -30,7 +29,6 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        // Convert DOMStringMap to object.
         localList({ ...elem.dataset });
     });
 }

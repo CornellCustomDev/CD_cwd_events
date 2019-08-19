@@ -1,7 +1,9 @@
-import findAll from '../service/localistApi';
-import BuildEvent from '../common/buildEvent';
+import findAll from 'localist-api-connector';
+import BuildEvent from '../helpers/buildEvent';
+
 /**
- * The base component.
+ * The base component
+ * @param {obj} parm0 The base parameters.
  */
 export default class LocalistComponent {
     constructor({
@@ -32,7 +34,8 @@ export default class LocalistComponent {
             entries: parseInt(entries, 10),
             format,
             group,
-            keyword
+            keyword,
+            api_key: 'KLhy2GtuSAGirYGY' // Move api key to drupal block?
         };
 
         // build event variables required for inner HTML logic

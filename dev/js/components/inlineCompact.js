@@ -3,7 +3,12 @@ import {
     inlineCompactInner,
     inlineCompactWrapper
 } from '../templates/inlineCompact';
-
+/**
+ * The InLineCompact component.
+ *
+ * @constructor
+ * @extends LocalistComponent
+ */
 export default class InlineCompact extends LocalistComponent {
     constructor(props) {
         props.innerTemplate = inlineCompactInner;

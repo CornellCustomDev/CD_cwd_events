@@ -1,5 +1,9 @@
-import { eventFilters, add_calendar } from '../common/template-helpers';
-
+import { eventFilters, add_calendar } from '../helpers/template-helpers';
+/**
+ *
+ * @param {obj} event_types An array of events.
+ * @return {string} Html string
+ */
 const tagStr = event_types => {
     let spanStr = '';
     if (event_types) {
@@ -12,6 +16,11 @@ const tagStr = event_types => {
     return spanStr;
 };
 
+/**
+ *
+ * @param {obj} builtData A buildEvents.js obj.
+ * @return {string} Html string
+ */
 export const moderStandardInner = builtData => /* html */ `
     <div
         class="card event-node dept-${builtData.department} type-${
@@ -52,6 +61,12 @@ export const moderStandardInner = builtData => /* html */ `
     <!--card-->
 `;
 
+/**
+ *
+ * @param {string} inner The html inner string.
+ * @param {obj} args Mostly unused try and remove these.
+ * @return {string} Html string
+ */
 export const modernStandardWrapper = (inner, args) => /* html */ `
     <section id="eventsModernStandard" class="modern" title="${args.title}">
         ${args.heading ? `<h2>${args.heading}</h2>` : ''}

@@ -1,7 +1,8 @@
-/*
- returns html  string
- @param builtData a buildEvents.js obj
-*/
+/**
+ *
+ * @param {obj} builtData A buildEvents.js obj.
+ * @return {string} Html string
+ */
 export const cuenergyEventsInner = builtData => /* html */ `
     <div class="views-row">
         <div class="container-fluid">
@@ -25,6 +26,11 @@ export const cuenergyEventsInner = builtData => /* html */ `
     </div>
 `;
 
+/**
+ *
+ * @param {string} inner The html inner string.
+ * @return {string} Html string
+ */
 export const cuenergyEventsWrapper = inner => /* html */ `
     <div class="view view-events view-id-events cuenergy-events">
         <div class="view-content">
@@ -33,6 +39,11 @@ export const cuenergyEventsWrapper = inner => /* html */ `
     </div>
 `;
 
+/**
+ *
+ * @param {obj} builtData A buildEvents.js obj.
+ * @return {string} Html string
+ */
 export const cuenergyCompactInner = builtData => /* html */ `
     <div class="views-row">
         <div class="container-fluid">
@@ -60,6 +71,11 @@ export const cuenergyCompactInner = builtData => /* html */ `
     </div>
 `;
 
+/**
+ *
+ * @param {string} inner The html inner string.
+ * @return {string} Html string
+ */
 export const cuenergyCompactWrapper = inner => /* html */ `
     <div id="block-cuenergy-views-block-events-block-1" class="form-group">
         <div class="view view-events view-id-events">

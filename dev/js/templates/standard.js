@@ -1,11 +1,8 @@
-/* eslint-disable func-names */
+import { eventFilters, add_calendar } from '../helpers/template-helpers';
 
-import { eventFilters, add_calendar } from '../common/template-helpers';
-
-/*
-    tests to see if month / day should be displayed
-    for calendar page format
-*/
+/**
+ * Tests to see if month / day should be displayed.
+ */
 class CheckDate {
     constructor() {
         this.lastMonth = '';
@@ -38,7 +35,11 @@ class CheckDate {
 
 const checkDate = new CheckDate();
 
-// test for empty headings
+/**
+ *
+ * @param {obj} builtData A buildEvents.js obj.
+ * @return {string} Html string
+ */
 export const standardInner = builtData => /* html */ `
     ${checkDate.month(builtData)} ${checkDate.day(builtData)}
     <div
@@ -92,6 +93,12 @@ export const standardInner = builtData => /* html */ `
     <!--end of node -->
 `;
 
+/**
+ *
+ * @param {string} inner The html inner string.
+ * @param {obj} args Mostly unused try and remove these.
+ * @return {string} Html string
+ */
 export const standardWrapper = (inner, args) => /* html */ `
     <section class="standard" id="eventStandard" title="${args.title}">
         ${args.heading ? `<h2>${args.heading}</h2>` : ''}
