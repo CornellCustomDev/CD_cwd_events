@@ -145,7 +145,7 @@ export const add_calendar = myEvent => {
     const buildiCal = myObj => /* html */ `
         <a
             class="fa fa-calendar apple"
-            href="${myObj.localist_ics_url}/#"
+            href="${myObj.localist_ics_url}"
             title="Save to iCal"
             target="_blank"
         >

@@ -22,6 +22,10 @@ composer require cubear/cwd_events
 
 or download directly from [Github Repo](https://github.com/CU-CommunityApps/CD_cwd_events).
 
+```bash
+cd modules/custom && git clone https://github.com/CU-CommunityApps/CD_cwd_events
+```
+
 ## Running the tests
 
 @TODO

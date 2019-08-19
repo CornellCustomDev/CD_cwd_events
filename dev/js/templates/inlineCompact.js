@@ -1,4 +1,8 @@
-
+/**
+ *
+ * @param {obj} builtEvent A buildEvents.js obj.
+ * @return {string} Html string
+ */
 export const inlineCompactInner = builtEvent => /* html */ `
 <div class="views-row">
     <div class="container-fluid">

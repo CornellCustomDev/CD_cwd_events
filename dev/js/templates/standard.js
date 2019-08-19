@@ -81,7 +81,7 @@ export const standardInner = builtData => /* html */ `
             ${builtData.description}
             <a
                 class="read-more more"
-                href="${builtData.event.localist_url}/#"
+                href="${builtData.event.localist_url}"
                 target="_blank"
                 > read more <span class="visually-hidden">
                     about ${builtData.event.title}</span
