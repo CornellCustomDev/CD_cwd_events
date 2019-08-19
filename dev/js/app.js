@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import localList from './localist';
 
 require('babel-polyfill');
@@ -12,12 +13,12 @@ require('babel-polyfill');
  * @param {Drupal} Drupal
  */
 if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
-    (($, Drupal) => {
+    (function($, Drupal) {
         Drupal.behaviors.cwdEvents = {
             attach(context) {
                 $('div.events-listing', context)
                     .once('cwd_events')
-                    .each(() => {
+                    .each(function() {
                         localList({ ...this.dataset });
                     });
             }
