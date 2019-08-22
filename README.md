@@ -2,6 +2,8 @@
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/cubear/cwd_events.svg?style=flat-square)](https://packagist.org/packages/cubear/cwd_events)
 
+## [Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/index.html)
+
 A light weight Drupal module to pull localist and render in a cwd_events block. With Eight options for built in views.
 
 ## Getting Started
