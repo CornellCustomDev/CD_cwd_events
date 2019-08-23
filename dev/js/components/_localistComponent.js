@@ -1,5 +1,6 @@
 import findAll from 'localist-api-connector';
-import BuildEvent from '../helpers/buildEvent';
+import buildEvent from '../helpers/buildEvent';
+import { CheckDate } from '../helpers/template-helpers';
 
 /**
  * The base component
@@ -19,50 +20,68 @@ export default class LocalistComponent {
         pref_category,
         innerTemplate,
         outerTemplate,
-        pref_excerpt_length = 250
+        pref_excerpt_length = 250,
+        url = '//events.cornell.edu/api/2.1/events'
     }) {
-        // standard wrapper variables
+        // The wrapper template params.
         this.wrapperArgs = {
             target,
             title: 'Events List',
             heading,
             filters: {}
         };
-        // required by service findall to request localist data
+        // The localist api request params
         this.requestArgs = {
             depts,
             entries: parseInt(entries, 10),
             format,
             group,
             keyword,
-            api_key: 'KLhy2GtuSAGirYGY' // Move api key to drupal block?
+            api_key: 'KLhy2GtuSAGirYGY', // Move api key to drupal block?
+            url
         };
 
-        // build event variables required for inner HTML logic
+        // The build event params.
         this.BE_args = {
             pref_excerpt_length,
             pref_eventdetails: 'event details',
             addCal
         };
+
+        // Is this used?
         this.group = parseInt(group, 10);
         this.depts = depts;
         this.entries = parseInt(entries, 10);
 
-        // used in filters
+        // The categories to filter on.
+        // Currently only uses group
+        /** @todo add support for other filter options. */
         this.pref_category = pref_category;
         this.pref_category_filters = pref_category_filters;
 
         this.events = [];
         this.target = target;
+        this.format = format; // used by inner template to check if standard
         this.innerTemplate = innerTemplate;
         this.outerTemplate = outerTemplate;
-        this.parent = document.getElementById(target);
-        this.getLocalistEvents();
-        this.renderThrobber();
+        /** @todo dont render here */
+
+        if (typeof document !== 'undefined') {
+            this.parent = document.getElementById(target);
+            this.renderThrobber();
+        } else {
+            this.parent = null;
+        }
+        this.getLocalistEvents(this.requestArgs);
     }
 
-    getLocalistEvents() {
-        findAll(this.requestArgs)
+    /**
+     * Connects to localist and fetches event data.
+     * After data is recieved sets the new Component state.
+     * @param {obj} args The request params.
+     */
+    getLocalistEvents(args) {
+        findAll(args)
             .then(response => {
                 this.setState({ events: response.data.events });
             })
@@ -71,6 +90,10 @@ export default class LocalistComponent {
             });
     }
 
+    /**
+     * Sets the new values and rerenders template.
+     * @param {obj} args The target and the data { target: data }
+     */
     setState(args) {
         const keys = Object.keys(args);
         keys.forEach(key => {
@@ -79,6 +102,11 @@ export default class LocalistComponent {
         this.render();
     }
 
+    /**
+     * Sets the filters for the template.
+     * @todo This can use some refactoring.
+     * @param {obj} event The localist event Json data.
+     */
     buildFilters(event) {
         if (this.pref_category_filters) {
             if (
@@ -114,23 +142,37 @@ export default class LocalistComponent {
         }
     }
 
+    /**
+     * Renders the html template string.
+     */
     render() {
         // remove loading animation timer
-        clearTimeout(this.c_loader);
+        if (this.c_loader) {
+            clearTimeout(this.c_loader);
+        }
+        // replace this with map join
         let inner = '';
+        /** @todo fix issue with checkDate */
+        const checkDate = this.format === 'standard' ? new CheckDate() : null;
         this.events.forEach(event => {
-            this.builtEvent = new BuildEvent(event.event, this.BE_args);
+            this.builtEvent = buildEvent(event.event, this.BE_args);
+            if (this.format === 'standard') {
+                this.builtEvent.checkDate = checkDate;
+            }
             this.buildFilters(event.event);
             inner += this.innerTemplate(this.builtEvent);
         });
         const outer = this.outerTemplate(inner, this.wrapperArgs);
-        this.parent.innerHTML = outer;
+        /** @todo set this somewhere else */
+        if (this.parent) {
+            this.parent.innerHTML = outer;
+        }
     }
 
-    /*
-        inserts throbber after target elem
-        this is deleted on localList render
-        warning this.c_loader may be undefined
+    /**
+     * Inserts throbber while data is loading.
+     * Throbber is timer is turned off and deleted on localList render.
+     * @warning this.c_loader is defined here.
      */
     renderThrobber() {
         const loadingNode = /* html */ `
@@ -140,8 +182,8 @@ export default class LocalistComponent {
         `;
         this.parent.insertAdjacentHTML('afterbegin', loadingNode);
         this.c_loader = setTimeout(() => {
-            const loader = [...this.parent.getElementsByClassName('loader')];
-            loader[0].classList.remove('fadeOut');
+            const [loader] = [...this.parent.getElementsByClassName('loader')];
+            loader.classList.remove('fadeOut');
         }, 200); // skip loading animation if under 0.5s
     }
 }

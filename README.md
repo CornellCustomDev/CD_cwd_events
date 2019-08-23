@@ -4,7 +4,7 @@
 
 A light weight Drupal module to pull localist and render in a cwd_events block. With Eight options for built in views.
 
-## [Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/index.html)
+## [Interactive Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/demo.html)  [Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/index.html)
 
 ## Getting Started
 
@@ -30,15 +30,51 @@ cd modules/custom && git clone https://github.com/CU-CommunityApps/CD_cwd_events
 
 ## Running the tests
 
-@TODO
+starte a local server in the /dev folder using http-server
+
+```bash
+npm install -global http-server
+```
+
+then run
+
+```bash
+npm test
+```
+
+@todo impliment browser testing
 
 ### Break down into end to end tests
 
-@TODO
+NPM will test for the following cases.
+
+```bash
+cd events application unit tests
+    Server status
+      √ should return 200
+    localist-api-connector
+      √ should return an array of four events. {events: [{event: Objects}...]}.
+    #buildEvent()
+      √ should return an object with properties.
+    #locaList()
+      √ it should fetch localist event data.
+      √ it should have a innerTemplate function.
+      √ it should also have a outerTemplate function.
+      #innerTemplate()
+        √ it should return a valid inner html string
+      #outerTemplate()
+        √ it should return a valid outer html string
+        √ it should also contain the inner html sub-string
+```
 
 ### And coding style tests
 
-@TODO
+This module follows drupal code standards for phpcs and linting.
+
+- see the `.eslintrc.json` file for linting details.
+- see  [squizlabs/PHP_CodeSniffer](https://www.drupal.org/docs/8/modules/code-review-module/installing-coder-sniffer) for more details.
+
+production builds `npm prod` require all linting tests to pass before the build can finish with success.
 
 ## Deployment
 

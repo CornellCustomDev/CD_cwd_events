@@ -1,47 +1,14 @@
 import { eventFilters, add_calendar } from '../helpers/template-helpers';
 
 /**
- * Tests to see if month / day should be displayed.
- */
-class CheckDate {
-    constructor() {
-        this.lastMonth = '';
-        this.lastDay = '';
-    }
-
-    month(builtData) {
-        if (this.lastMonth !== builtData.month) {
-            this.lastMonth = builtData.month;
-            return /* html */ `
-                <h3 class="month-header">${builtData.monthHeader}</h3>
-            `;
-        }
-        return '';
-    }
-
-    day(builtData) {
-        if (this.lastDay !== builtData.displayDate) {
-            this.lastDay = builtData.displayDate;
-            return /* html */ `
-                <h4 class="day-header">
-                    <span class="fa fa-calendar-o"></span
-                    >${builtData.displayDate}
-                </h4>
-            `;
-        }
-        return '';
-    }
-}
-
-const checkDate = new CheckDate();
-
-/**
  *
  * @param {obj} builtData A buildEvents.js obj.
  * @return {string} Html string
  */
 export const standardInner = builtData => /* html */ `
-    ${checkDate.month(builtData)} ${checkDate.day(builtData)}
+    ${builtData.checkDate.month(builtData)} ${builtData.checkDate.day(
+    builtData
+)}
     <div
         class="event-node node dept-${builtData.department} type-${
     builtData.type
@@ -100,18 +67,18 @@ export const standardInner = builtData => /* html */ `
  * @return {string} Html string
  */
 export const standardWrapper = (inner, args) => /* html */ `
-    <section class="standard" id="eventStandard" title="${args.title}">
-        ${args.heading ? `<h2>${args.heading}</h2>` : ''}
-        <div class="main-body">
-            <div class="events-listing no-thumbnails">
-                ${eventFilters(args.filters, args.target)}
-                <div class="events-list">
-                    ${inner}
+        <section class="standard" id="eventStandard" title="${args.title}">
+            ${args.heading ? `<h2>${args.heading}</h2>` : ''}
+            <div class="main-body">
+                <div class="events-listing no-thumbnails">
+                    ${eventFilters(args.filters, args.target)}
+                    <div class="events-list">
+                        ${inner}
+                    </div>
                 </div>
+                <!--events listing -->
             </div>
-            <!--events listing -->
-        </div>
-        <!-- main-body -->
-    </section>
-    <!--end of section -->
-`;
+            <!-- main-body -->
+        </section>
+        <!--end of section -->
+    `;

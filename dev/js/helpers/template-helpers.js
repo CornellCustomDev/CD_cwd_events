@@ -172,3 +172,36 @@ export const add_calendar = myEvent => {
         </span>
     `;
 };
+
+/**
+ * Tests to see if month / day should be displayed.
+ */
+export class CheckDate {
+    constructor() {
+        this.lastMonth = '';
+        this.lastDay = '';
+    }
+
+    month(builtData) {
+        if (this.lastMonth !== builtData.month) {
+            this.lastMonth = builtData.month;
+            return /* html */ `
+                <h3 class="month-header">${builtData.monthHeader}</h3>
+            `;
+        }
+        return '';
+    }
+
+    day(builtData) {
+        if (this.lastDay !== builtData.displayDate) {
+            this.lastDay = builtData.displayDate;
+            return /* html */ `
+                <h4 class="day-header">
+                    <span class="fa fa-calendar-o"></span
+                    >${builtData.displayDate}
+                </h4>
+            `;
+        }
+        return '';
+    }
+}

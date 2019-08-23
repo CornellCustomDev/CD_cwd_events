@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import {
     getEventStartDate,
     getDisplayDate,
@@ -16,6 +16,7 @@ import {
 
 /**
  * A Helper function to convert localist event data into display formats.
+ * @todo make this a function!
  * @todo Move all of this functionality to templates.
  *
  * @param {obj} event The localist event json data
@@ -23,31 +24,29 @@ import {
  *
  * @return {obj} see docs/buildEvent.config
  */
-export default class BuildEvent {
-    constructor(event, args) {
-        const startDateTime = getEventStartDate(event);
-        this.event = event;
-        this.args = args;
-        this.description = event.description;
-        this.addCal = args.addCal;
-        this.event_time = getEventTime(event);
-        this.event_date_compact = moment(startDateTime).format('MMM D');
-        this.event_date = getEventDate(event);
-        this.displayDate = getDisplayDate(event, this.format);
-        this.dateTime = moment(startDateTime).format('YYYY-MM-DD');
-        this.abbrMonth = moment(startDateTime).format('MMM');
-        this.month = moment(startDateTime).format('MMMM');
-        this.day = getDay(event);
-        this.monthHeader = moment(startDateTime).format('MMMM YYYY');
-        this.event_time_end = getEventEndTime(event);
-        this.description = getTruncDesc(event, args.pref_excerpt_length);
-
-        // options
-        this.department = getDepartment(event);
-        this.type = getType(event);
-        this.group_name = getGroupName(event);
-        this.group_id = getGroupId(event);
-
-        this.event_types = getEventType(event, args.pref_category);
-    } // END OF CONSTRUCTOR
-}
+export default (event, args) => {
+    const be = {};
+    const startDateTime = getEventStartDate(event);
+    be.event = event;
+    be.args = args;
+    be.description = event.description;
+    be.addCal = args.addCal;
+    be.event_time = getEventTime(event);
+    be.event_date_compact = moment(startDateTime).format('MMM D');
+    be.event_date = getEventDate(event);
+    be.displayDate = getDisplayDate(event, be.format);
+    be.dateTime = moment(startDateTime).format('YYYY-MM-DD');
+    be.abbrMonth = moment(startDateTime).format('MMM');
+    be.month = moment(startDateTime).format('MMMM');
+    be.day = getDay(event);
+    be.monthHeader = moment(startDateTime).format('MMMM YYYY');
+    be.event_time_end = getEventEndTime(event);
+    be.description = getTruncDesc(event, args.pref_excerpt_length);
+    // options
+    be.department = getDepartment(event);
+    be.type = getType(event);
+    be.group_name = getGroupName(event);
+    be.group_id = getGroupId(event);
+    be.event_types = getEventType(event, args.pref_category);
+    return be;
+};

@@ -6,3 +6,4 @@ node_modules/**/*
 modules/locale/tests/locale_test.es6.js
 !tests/Drupal/Nightwatch/**/*.js
 js/app.js
+*test*

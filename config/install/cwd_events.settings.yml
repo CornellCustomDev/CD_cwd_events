@@ -1,6 +1,12 @@
 cwd_events:
+  readmore: "Read More"
+  url: "/events"
   depts: 0
   entries: 3
-  format: standard
+  format: "standard"
+  styling: 1
   group: 0
-  keyword: "Sustainability"
+  keyword: ""
+
+
+
