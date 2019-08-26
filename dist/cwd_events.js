@@ -1317,7 +1317,9 @@ var checkPropTypes = function checkPropTypes(params) {
     format: check.string,
     group: check.string,
     keyword: check.string,
-    heading: check.string
+    heading: check.string,
+    pref_category: check.string,
+    pref_category_filters: check.string
   });
   return check.all(valid);
 };
@@ -1325,6 +1327,7 @@ var checkPropTypes = function checkPropTypes(params) {
  * Get the party started!
  *   Selects the coresponding component based on format name.
  *   @todo add support for unused options. [filter, addCal]
+ *   @todo impliment filter options and pagination.
  * @param {obj} params The base Component params.
  * @return {Component} a localist component of the type param.format.
  */
@@ -1339,14 +1342,13 @@ var checkPropTypes = function checkPropTypes(params) {
     modern_standard: _components_modernStandard__WEBPACK_IMPORTED_MODULE_2__["default"],
     inline_compact: _components_inlineCompact__WEBPACK_IMPORTED_MODULE_5__["default"],
     archive: _components_archive__WEBPACK_IMPORTED_MODULE_4__["default"]
-  };
+  }; // The following are static filter params.
+
+  params.pref_category = 'group';
+  params.pref_category_filters = 'true';
 
   if (checkPropTypes(params) && params.format in formatOptions) {
-    var Component = formatOptions[params.format]; // @todo impliment filter options and pagination
-    // The following are static filter params. type and
-
-    params.pref_category = 'group';
-    params.pref_category_filters = 'true';
+    var Component = formatOptions[params.format];
     var component = new Component(params);
     return component;
   }

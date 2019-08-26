@@ -37,7 +37,8 @@ const checkPropTypes = params => {
  */
 export default (event, args) => {
     if (!checkPropTypes(args)) {
-        return {};
+        console.error(' Build Event props must be a string ');
+        return { error: 'prop types must be string' };
     }
     const be = {};
     const startDateTime = getEventStartDate(event);

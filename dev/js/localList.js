@@ -20,7 +20,9 @@ const checkPropTypes = params => {
         format: check.string,
         group: check.string,
         keyword: check.string,
-        heading: check.string
+        heading: check.string,
+        pref_category: check.string,
+        pref_category_filters: check.string
     });
     return check.all(valid);
 };
@@ -29,6 +31,7 @@ const checkPropTypes = params => {
  * Get the party started!
  *   Selects the coresponding component based on format name.
  *   @todo add support for unused options. [filter, addCal]
+ *   @todo impliment filter options and pagination.
  * @param {obj} params The base Component params.
  * @return {Component} a localist component of the type param.format.
  */
@@ -42,13 +45,11 @@ export default params => {
         inline_compact,
         archive
     };
-
+    // The following are static filter params.
+    params.pref_category = 'group';
+    params.pref_category_filters = 'true';
     if (checkPropTypes(params) && params.format in formatOptions) {
         const Component = formatOptions[params.format];
-        // @todo impliment filter options and pagination
-        // The following are static filter params. type and
-        params.pref_category = 'group';
-        params.pref_category_filters = 'true';
         const component = new Component(params);
         return component;
     }

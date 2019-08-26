@@ -107,7 +107,7 @@ This is an example of the block output:
 
 ## Built With
 
-* [laravel mix](https://github.com/JeffreyWay/laravel-mix) - The babel and sass transpiller
+- [laravel mix](https://github.com/JeffreyWay/laravel-mix) - The babel and sass transpiller
 
 ## Versioning
 
@@ -115,8 +115,8 @@ For the versions available, see the [tags on this repository](https://github.com
 
 ## Authors
 
-* **Richard Marisa** - *Druapl Work* - [richmarisa](https://github.com/richmarisa)
-* **Phil Williammee** - *Javascript Work* - [philwilliammee](https://github.com/philwilliammee)
+- **Richard Marisa** - *Druapl Work* - [richmarisa](https://github.com/richmarisa)
+- **Phil Williammee** - *Javascript Work* - [philwilliammee](https://github.com/philwilliammee)
 
 See also the list of [contributors](https://github.com/CU-CommunityApps/CD_cwd_events/graphs/contributors) who participated in this project.
 
@@ -126,4 +126,4 @@ This project is licensed under the GNU General Public License v2.0 - see the [LI
 
 ## Acknowledgments
 
-* Hat tip to Anthony M. Adinolfi for his work on localist event in Cornell Base theme.
+- Hat tip to Anthony M. Adinolfi for his work on localist event in Cornell Base theme.
