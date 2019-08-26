@@ -1,6 +1,6 @@
 import buildEvent from '../helpers/buildEvent';
 import { CheckDate } from '../helpers/template-helpers';
-import findAll from '../service/localistApiConnector';
+import findAll from '../services/localistApiConnector';
 
 const check = require('check-types');
 

@@ -165,7 +165,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalistComponent; });
 /* harmony import */ var _helpers_buildEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/buildEvent */ "./js/helpers/buildEvent.js");
 /* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
-/* harmony import */ var _service_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/localistApiConnector */ "./js/service/localistApiConnector.js");
+/* harmony import */ var _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/localistApiConnector */ "./js/services/localistApiConnector.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -272,7 +272,7 @@ function () {
       pref_eventdetails: 'event details',
       addCal: addCal
     };
-    this.findAll = _service_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__["default"]; // Is this used?
+    this.findAll = _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__["default"]; // Is this used?
 
     this.group = group;
     this.depts = depts;
@@ -1358,10 +1358,10 @@ var checkPropTypes = function checkPropTypes(params) {
 
 /***/ }),
 
-/***/ "./js/service/localistApiConnector.js":
-/*!********************************************!*\
-  !*** ./js/service/localistApiConnector.js ***!
-  \********************************************/
+/***/ "./js/services/localistApiConnector.js":
+/*!*********************************************!*\
+  !*** ./js/services/localistApiConnector.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
