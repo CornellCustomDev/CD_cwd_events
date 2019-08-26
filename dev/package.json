@@ -22,6 +22,7 @@
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "check-types": "^10.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.15.1",
     "eslint-config-airbnb": "^18.0.0",

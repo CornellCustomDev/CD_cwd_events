@@ -14,6 +14,17 @@ import {
     getDepartment
 } from './displayEvent';
 
+const check = require('check-types');
+
+/**
+ * Test params property types.
+ * @param {obj} params The block element data.
+ * @return {boolean} Valid proptype.
+ */
+const checkPropTypes = params => {
+    return check.all(check.map(params, check.string));
+};
+
 /**
  * A Helper function to convert localist event data into display formats.
  * @todo make this a function!
@@ -25,6 +36,9 @@ import {
  * @return {obj} see docs/buildEvent.config
  */
 export default (event, args) => {
+    if (!checkPropTypes(args)) {
+        return {};
+    }
     const be = {};
     const startDateTime = getEventStartDate(event);
     be.event = event;

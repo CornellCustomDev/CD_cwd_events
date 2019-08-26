@@ -30,7 +30,7 @@ cd modules/custom && git clone https://github.com/CU-CommunityApps/CD_cwd_events
 
 ## Running the tests
 
-starte a local server in the /dev folder using http-server
+start a local server in the /dev folder using http-server
 
 ```bash
 npm install -global http-server

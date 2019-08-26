@@ -95,7 +95,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _localist__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./localist */ "./js/localist.js");
+/* harmony import */ var _localList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./localList */ "./js/localList.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -132,7 +132,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
     Drupal.behaviors.cwdEvents = {
       attach: function attach(context) {
         $('div.events-listing', context).once('cwd_events').each(function () {
-          Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(_objectSpread({}, this.dataset));
+          Object(_localList__WEBPACK_IMPORTED_MODULE_0__["default"])(_objectSpread({}, this.dataset));
         });
       }
     };
@@ -143,8 +143,12 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
   var eventListings = _toConsumableArray(document.getElementsByClassName('events-listing'));
 
   eventListings.forEach(function (elem) {
-    Object(_localist__WEBPACK_IMPORTED_MODULE_0__["default"])(_objectSpread({}, elem.dataset));
-  });
+    Object(_localList__WEBPACK_IMPORTED_MODULE_0__["default"])(_objectSpread({}, elem.dataset));
+  }); // For testing expose localist.
+
+  if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object') {
+    window.localList = _localList__WEBPACK_IMPORTED_MODULE_0__["default"];
+  }
 }
 
 /***/ }),
@@ -159,10 +163,9 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalistComponent; });
-/* harmony import */ var localist_api_connector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! localist-api-connector */ "./node_modules/localist-api-connector/index.js");
-/* harmony import */ var localist_api_connector__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(localist_api_connector__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers_buildEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/buildEvent */ "./js/helpers/buildEvent.js");
-/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
+/* harmony import */ var _helpers_buildEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/buildEvent */ "./js/helpers/buildEvent.js");
+/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
+/* harmony import */ var _service_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/localistApiConnector */ "./js/service/localistApiConnector.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -180,10 +183,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
+var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
+/**
+ * Test params property types.
+ * @param {obj} params The block element data.
+ * @param {obj} type The check.type
+ * @return {boolean} Valid proptype.
+ */
+
+
+var checkPropTypes = function checkPropTypes(params, type) {
+  var valid = check.map(params, type);
+  return check.all(valid);
+};
 /**
  * The base component
  * @param {obj} parm0 The base parameters.
  */
+
 
 var LocalistComponent =
 /*#__PURE__*/
@@ -196,19 +214,41 @@ function () {
         format = _ref.format,
         heading = _ref.heading,
         keyword = _ref.keyword,
-        addCal = _ref.addCal,
         pref_category_filters = _ref.pref_category_filters,
         pref_category = _ref.pref_category,
         innerTemplate = _ref.innerTemplate,
         outerTemplate = _ref.outerTemplate,
+        _ref$addCal = _ref.addCal,
+        addCal = _ref$addCal === void 0 ? 'false' : _ref$addCal,
         _ref$pref_excerpt_len = _ref.pref_excerpt_length,
-        pref_excerpt_length = _ref$pref_excerpt_len === void 0 ? 250 : _ref$pref_excerpt_len,
+        pref_excerpt_length = _ref$pref_excerpt_len === void 0 ? '250' : _ref$pref_excerpt_len,
         _ref$url = _ref.url,
         url = _ref$url === void 0 ? '//events.cornell.edu/api/2.1/events' : _ref$url;
 
     _classCallCheck(this, LocalistComponent);
 
-    // The wrapper template params.
+    if (!checkPropTypes({
+      target: target,
+      depts: depts,
+      entries: entries,
+      group: group,
+      format: format,
+      heading: heading,
+      keyword: keyword,
+      addCal: addCal,
+      pref_category_filters: pref_category_filters,
+      pref_category: pref_category,
+      pref_excerpt_length: pref_excerpt_length,
+      url: url
+    }, check.string) && !checkPropTypes({
+      innerTemplate: innerTemplate,
+      outerTemplate: outerTemplate
+    }, check["function"])) {
+      console.warn('Invalid props types in localist base component.');
+      return {};
+    } // The wrapper template params.
+
+
     this.wrapperArgs = {
       target: target,
       title: 'Events List',
@@ -218,7 +258,7 @@ function () {
 
     this.requestArgs = {
       depts: depts,
-      entries: parseInt(entries, 10),
+      entries: entries,
       format: format,
       group: group,
       keyword: keyword,
@@ -231,11 +271,12 @@ function () {
       pref_excerpt_length: pref_excerpt_length,
       pref_eventdetails: 'event details',
       addCal: addCal
-    }; // Is this used?
+    };
+    this.findAll = _service_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__["default"]; // Is this used?
 
-    this.group = parseInt(group, 10);
+    this.group = group;
     this.depts = depts;
-    this.entries = parseInt(entries, 10); // The categories to filter on.
+    this.entries = entries; // The categories to filter on.
     // Currently only uses group
 
     /** @todo add support for other filter options. */
@@ -271,7 +312,7 @@ function () {
     value: function getLocalistEvents(args) {
       var _this = this;
 
-      localist_api_connector__WEBPACK_IMPORTED_MODULE_0___default()(args).then(function (response) {
+      this.findAll(args).then(function (response) {
         _this.setState({
           events: response.data.events
         });
@@ -326,27 +367,17 @@ function () {
         }
       }
     }
-    /**
-     * Renders the html template string.
-     */
-
   }, {
-    key: "render",
-    value: function render() {
+    key: "buildInnerHtml",
+    value: function buildInnerHtml() {
       var _this3 = this;
-
-      // remove loading animation timer
-      if (this.c_loader) {
-        clearTimeout(this.c_loader);
-      } // replace this with map join
-
 
       var inner = '';
       /** @todo fix issue with checkDate */
 
-      var checkDate = this.format === 'standard' ? new _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_2__["CheckDate"]() : null;
+      var checkDate = this.format === 'standard' ? new _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_1__["CheckDate"]() : null;
       this.events.forEach(function (event) {
-        _this3.builtEvent = Object(_helpers_buildEvent__WEBPACK_IMPORTED_MODULE_1__["default"])(event.event, _this3.BE_args);
+        _this3.builtEvent = Object(_helpers_buildEvent__WEBPACK_IMPORTED_MODULE_0__["default"])(event.event, _this3.BE_args);
 
         if (_this3.format === 'standard') {
           _this3.builtEvent.checkDate = checkDate;
@@ -356,6 +387,22 @@ function () {
 
         inner += _this3.innerTemplate(_this3.builtEvent);
       });
+      return inner;
+    }
+    /**
+     * Renders the html template string.
+     */
+
+  }, {
+    key: "render",
+    value: function render() {
+      // remove loading animation timer
+      if (this.c_loader) {
+        clearTimeout(this.c_loader);
+      } // replace this with map join
+
+
+      var inner = this.buildInnerHtml();
       var outer = this.outerTemplate(inner, this.wrapperArgs);
       /** @todo set this somewhere else */
 
@@ -439,7 +486,7 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveInner"];
     props.outerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveWrapper"];
-    props.pref_category_filters = false;
+    props.pref_category_filters = 'false';
     return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
   }
 
@@ -495,8 +542,8 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactInner"];
     props.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactWrapper"];
-    props.pref_category_filters = false;
-    props.pref_excerpt_length = 150;
+    props.pref_category_filters = 'false';
+    props.pref_excerpt_length = '150';
     return _possibleConstructorReturn(this, _getPrototypeOf(Compact).call(this, props));
   }
 
@@ -552,8 +599,8 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactInner"];
     props.outerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactWrapper"];
-    props.pref_category_filters = false;
-    props.pref_excerpt_length = 150;
+    props.pref_category_filters = 'false';
+    props.pref_excerpt_length = '150';
     return _possibleConstructorReturn(this, _getPrototypeOf(InlineCompact).call(this, props));
   }
 
@@ -609,8 +656,8 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactInner"];
     props.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactWrapper"];
-    props.pref_category_filters = false;
-    props.pref_excerpt_length = 150;
+    props.pref_category_filters = 'false';
+    props.pref_excerpt_length = '150';
     return _possibleConstructorReturn(this, _getPrototypeOf(ModernCompact).call(this, props));
   }
 
@@ -745,6 +792,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _displayEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./displayEvent */ "./js/helpers/displayEvent.js");
 
 
+
+var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
+/**
+ * Test params property types.
+ * @param {obj} params The block element data.
+ * @return {boolean} Valid proptype.
+ */
+
+
+var checkPropTypes = function checkPropTypes(params) {
+  return check.all(check.map(params, check.string));
+};
 /**
  * A Helper function to convert localist event data into display formats.
  * @todo make this a function!
@@ -756,7 +815,12 @@ __webpack_require__.r(__webpack_exports__);
  * @return {obj} see docs/buildEvent.config
  */
 
+
 /* harmony default export */ __webpack_exports__["default"] = (function (event, args) {
+  if (!checkPropTypes(args)) {
+    return {};
+  }
+
   var be = {};
   var startDateTime = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventStartDate"])(event);
   be.event = event;
@@ -1215,10 +1279,10 @@ function () {
 
 /***/ }),
 
-/***/ "./js/localist.js":
-/*!************************!*\
-  !*** ./js/localist.js ***!
-  \************************/
+/***/ "./js/localList.js":
+/*!*************************!*\
+  !*** ./js/localList.js ***!
+  \*************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1236,16 +1300,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
+/**
+ * Test params property types.
+ * @param {obj} params The block element data.
+ * @return {boolean} Valid proptype.
+ */
+
+
+var checkPropTypes = function checkPropTypes(params) {
+  var valid = check.map(params, {
+    target: check.string,
+    depts: check.string,
+    entries: check.string,
+    format: check.string,
+    group: check.string,
+    keyword: check.string,
+    heading: check.string
+  });
+  return check.all(valid);
+};
 /**
  * Get the party started!
  *   Selects the coresponding component based on format name.
  *   @todo add support for unused options. [filter, addCal]
  * @param {obj} params The base Component params.
- *
  * @return {Component} a localist component of the type param.format.
  */
 
-var localList = function localList(params) {
+
+/* harmony default export */ __webpack_exports__["default"] = (function (params) {
   // Map out formats for look up. These must match Drupal block.
   var formatOptions = {
     standard: _components_standard__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -1256,22 +1341,115 @@ var localList = function localList(params) {
     archive: _components_archive__WEBPACK_IMPORTED_MODULE_4__["default"]
   };
 
-  if (params.format in formatOptions) {
+  if (checkPropTypes(params) && params.format in formatOptions) {
     var Component = formatOptions[params.format]; // @todo impliment filter options and pagination
     // The following are static filter params. type and
 
     params.pref_category = 'group';
-    params.pref_category_filters = true;
+    params.pref_category_filters = 'true';
     var component = new Component(params);
     return component;
   }
+
+  return {
+    error: 'invalid props - all props should be strings'
+  };
+});
+
+/***/ }),
+
+/***/ "./js/service/localistApiConnector.js":
+/*!********************************************!*\
+  !*** ./js/service/localistApiConnector.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+
+var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
+/**
+ * Test params property types.
+ * @param {obj} params The block element data.
+ * @return {boolean} Valid proptype.
+ */
+
+
+var checkPropTypes = function checkPropTypes(params) {
+  var valid = check.map(params, check.string);
+  return check.all(valid);
 };
+/**
+ * Configures request params and Get events from loacalist api.
+ * @param {obj} param0 The optional api config params.
+ * @return {axios} A axios promise;
+ */
 
-if (typeof window !== 'undefined') {
-  window.locaList = localList;
-}
 
-/* harmony default export */ __webpack_exports__["default"] = (localList);
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var _ref$depts = _ref.depts,
+      depts = _ref$depts === void 0 ? '0' : _ref$depts,
+      _ref$entries = _ref.entries,
+      entries = _ref$entries === void 0 ? '3' : _ref$entries,
+      _ref$format = _ref.format,
+      format = _ref$format === void 0 ? 'standard' : _ref$format,
+      _ref$group = _ref.group,
+      group = _ref$group === void 0 ? '0' : _ref$group,
+      _ref$keyword = _ref.keyword,
+      keyword = _ref$keyword === void 0 ? '' : _ref$keyword,
+      _ref$api_key = _ref.api_key,
+      api_key = _ref$api_key === void 0 ? '' : _ref$api_key,
+      _ref$url = _ref.url,
+      url = _ref$url === void 0 ? '//events.cornell.edu/api/2.1/events' : _ref$url;
+
+  if (!checkPropTypes({
+    depts: depts,
+    entries: entries,
+    format: format,
+    group: group,
+    keyword: keyword,
+    api_key: api_key,
+    url: url
+  }, check.string)) {
+    console.warn('invalid prop types in localist connect.');
+    return {};
+  }
+
+  var params = {
+    api_key: api_key,
+    days: 365,
+    distinct: true,
+    pp: entries,
+    start: format !== 'archive' ? moment().format('YYYY-MM-DD') : moment().subtract(1, 'Y').format('YYYY-MM-DD')
+  }; // Supports multiple departments with CSV string.
+
+  if (depts && depts !== '0') {
+    params.type = [];
+    depts.split(',').forEach(function (item) {
+      params.type.push(item.trim());
+    });
+  }
+
+  if (group && group !== '0') {
+    params.group_id = group;
+  }
+
+  if (keyword && keyword !== '') {
+    params.keyword = keyword;
+  }
+
+  if (format === 'archive') {
+    params.direction = 'desc';
+  }
+
+  return axios.get(url, {
+    params: params
+  });
+});
 
 /***/ }),
 
@@ -3336,6 +3514,928 @@ define(String.prototype, "padRight", "".padEnd);
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/check-types/src/check-types.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/check-types/src/check-types.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/*globals define, module, Symbol */
+/*jshint -W056 */
+
+(function (globals) {
+  'use strict';
+
+  var messages, predicates, functions, assert, not, maybe, collections,
+     slice, neginf, posinf, isArray, keys, haveSymbols;
+
+  messages = {};
+  predicates = {};
+
+  [
+    { n: 'equal', f: equal, s: 'equal {e}' },
+    { n: 'undefined', f: isUndefined, s: 'be undefined' },
+    { n: 'null', f: isNull, s: 'be null' },
+    { n: 'assigned', f: assigned, s: 'be assigned' },
+    { n: 'primitive', f: primitive, s: 'be primitive type' },
+    { n: 'contains', f: contains, s: 'contain {e}' },
+    { n: 'in', f: isIn, s: 'be in {e}' },
+    { n: 'zero', f: zero, s: 'be 0' },
+    { n: 'infinity', f: infinity, s: 'be infinity' },
+    { n: 'number', f: number, s: 'be Number' },
+    { n: 'integer', f: integer, s: 'be integer' },
+    { n: 'even', f: even, s: 'be even number' },
+    { n: 'odd', f: odd, s: 'be odd number' },
+    { n: 'greater', f: greater, s: 'be greater than {e}' },
+    { n: 'less', f: less, s: 'be less than {e}' },
+    { n: 'between', f: between, s: 'be between {e} and {e2}' },
+    { n: 'greaterOrEqual', f: greaterOrEqual, s: 'be greater than or equal to {e}' },
+    { n: 'lessOrEqual', f: lessOrEqual, s: 'be less than or equal to {e}' },
+    { n: 'inRange', f: inRange, s: 'be in the range {e} to {e2}' },
+    { n: 'positive', f: positive, s: 'be positive number' },
+    { n: 'negative', f: negative, s: 'be negative number' },
+    { n: 'string', f: string, s: 'be String' },
+    { n: 'emptyString', f: emptyString, s: 'be empty string' },
+    { n: 'nonEmptyString', f: nonEmptyString, s: 'be non-empty string' },
+    { n: 'match', f: match, s: 'match {e}' },
+    { n: 'boolean', f: boolean, s: 'be Boolean' },
+    { n: 'object', f: object, s: 'be Object' },
+    { n: 'emptyObject', f: emptyObject, s: 'be empty object' },
+    { n: 'nonEmptyObject', f: nonEmptyObject, s: 'be non-empty object' },
+    { n: 'instanceStrict', f: instanceStrict, s: 'be instanceof {t}' },
+    { n: 'instance', f: instance, s: 'be {t}' },
+    { n: 'like', f: like, s: 'be like {e}' },
+    { n: 'array', f: array, s: 'be Array' },
+    { n: 'emptyArray', f: emptyArray, s: 'be empty array' },
+    { n: 'nonEmptyArray', f: nonEmptyArray, s: 'be non-empty array' },
+    { n: 'arrayLike', f: arrayLike, s: 'be array-like' },
+    { n: 'iterable', f: iterable, s: 'be iterable' },
+    { n: 'date', f: date, s: 'be valid Date' },
+    { n: 'function', f: isFunction, s: 'be Function' },
+    { n: 'hasLength', f: hasLength, s: 'have length {e}' },
+  ].map(function (data) {
+    var n = data.n;
+    messages[n] = 'assert failed: expected {a} to ' + data.s;
+    predicates[n] = data.f;
+  });
+
+  functions = {
+    map: map,
+    all: all,
+    any: any
+  };
+
+  collections = [ 'array', 'arrayLike', 'iterable', 'object' ];
+  slice = Array.prototype.slice;
+  neginf = Number.NEGATIVE_INFINITY;
+  posinf = Number.POSITIVE_INFINITY;
+  isArray = Array.isArray;
+  keys = Object.keys;
+  haveSymbols = typeof Symbol === 'function';
+
+  functions = mixin(functions, predicates);
+  assert = createModifiedPredicates(assertModifier, assertImpl);
+  not = createModifiedPredicates(notModifier, notImpl);
+  maybe = createModifiedPredicates(maybeModifier, maybeImpl);
+  assert.not = createModifiedModifier(assertModifier, not, 'not ');
+  assert.maybe = createModifiedModifier(assertModifier, maybe, 'maybe ');
+
+  collections.forEach(createOfPredicates);
+  createOfModifiers(assert, assertModifier);
+  createOfModifiers(not, notModifier);
+  collections.forEach(createMaybeOfModifiers);
+
+  exportFunctions(mixin(functions, {
+    assert: assert,
+    not: not,
+    maybe: maybe
+  }));
+
+  /**
+   * Public function `equal`.
+   *
+   * Returns true if `lhs` and `rhs` are strictly equal, without coercion.
+   * Returns false otherwise.
+   */
+  function equal (lhs, rhs) {
+    return lhs === rhs;
+  }
+
+  /**
+   * Public function `undefined`.
+   *
+   * Returns true if `data` is undefined, false otherwise.
+   */
+  function isUndefined (data) {
+    return data === undefined;
+  }
+
+  /**
+   * Public function `null`.
+   *
+   * Returns true if `data` is null, false otherwise.
+   */
+  function isNull (data) {
+    return data === null;
+  }
+
+  /**
+   * Public function `assigned`.
+   *
+   * Returns true if `data` is not null or undefined, false otherwise.
+   */
+  function assigned (data) {
+    return data !== undefined && data !== null;
+  }
+
+  /**
+   * Public function `primitive`.
+   *
+   * Returns true if `data` is a primitive type, false otherwise.
+   */
+  function primitive (data) {
+    var type;
+
+    switch (data) {
+      case null:
+      case undefined:
+      case false:
+      case true:
+        return true;
+    }
+
+    type = typeof data;
+    return type === 'string' || type === 'number' || (haveSymbols && type === 'symbol');
+  }
+
+  /**
+   * Public function `zero`.
+   *
+   * Returns true if `data` is zero, false otherwise.
+   */
+  function zero (data) {
+    return data === 0;
+  }
+
+  /**
+   * Public function `infinity`.
+   *
+   * Returns true if `data` is positive or negative infinity, false otherwise.
+   */
+  function infinity (data) {
+    return data === neginf || data === posinf;
+  }
+
+  /**
+   * Public function `number`.
+   *
+   * Returns true if `data` is a number, false otherwise.
+   */
+  function number (data) {
+    return typeof data === 'number' && data > neginf && data < posinf;
+  }
+
+  /**
+   * Public function `integer`.
+   *
+   * Returns true if `data` is an integer, false otherwise.
+   */
+  function integer (data) {
+    return typeof data === 'number' && data % 1 === 0;
+  }
+
+  /**
+   * Public function `even`.
+   *
+   * Returns true if `data` is an even number, false otherwise.
+   */
+  function even (data) {
+    return typeof data === 'number' && data % 2 === 0;
+  }
+
+  /**
+   * Public function `odd`.
+   *
+   * Returns true if `data` is an odd number, false otherwise.
+   */
+  function odd (data) {
+    return integer(data) && data % 2 !== 0;
+  }
+
+  /**
+   * Public function `greater`.
+   *
+   * Returns true if `lhs` is a number greater than `rhs`, false otherwise.
+   */
+  function greater (lhs, rhs) {
+    return number(lhs) && lhs > rhs;
+  }
+
+  /**
+   * Public function `less`.
+   *
+   * Returns true if `lhs` is a number less than `rhs`, false otherwise.
+   */
+  function less (lhs, rhs) {
+    return number(lhs) && lhs < rhs;
+  }
+
+  /**
+   * Public function `between`.
+   *
+   * Returns true if `data` is a number between `x` and `y`, false otherwise.
+   */
+  function between (data, x, y) {
+    if (x < y) {
+      return greater(data, x) && data < y;
+    }
+
+    return less(data, x) && data > y;
+  }
+
+  /**
+   * Public function `greaterOrEqual`.
+   *
+   * Returns true if `lhs` is a number greater than or equal to `rhs`, false
+   * otherwise.
+   */
+  function greaterOrEqual (lhs, rhs) {
+    return number(lhs) && lhs >= rhs;
+  }
+
+  /**
+   * Public function `lessOrEqual`.
+   *
+   * Returns true if `lhs` is a number less than or equal to `rhs`, false
+   * otherwise.
+   */
+  function lessOrEqual (lhs, rhs) {
+    return number(lhs) && lhs <= rhs;
+  }
+
+  /**
+   * Public function `inRange`.
+   *
+   * Returns true if `data` is a number in the range `x..y`, false otherwise.
+   */
+  function inRange (data, x, y) {
+    if (x < y) {
+      return greaterOrEqual(data, x) && data <= y;
+    }
+
+    return lessOrEqual(data, x) && data >= y;
+  }
+
+  /**
+   * Public function `positive`.
+   *
+   * Returns true if `data` is a positive number, false otherwise.
+   */
+  function positive (data) {
+    return greater(data, 0);
+  }
+
+  /**
+   * Public function `negative`.
+   *
+   * Returns true if `data` is a negative number, false otherwise.
+   */
+  function negative (data) {
+    return less(data, 0);
+  }
+
+  /**
+   * Public function `string`.
+   *
+   * Returns true if `data` is a string, false otherwise.
+   */
+  function string (data) {
+    return typeof data === 'string';
+  }
+
+  /**
+   * Public function `emptyString`.
+   *
+   * Returns true if `data` is the empty string, false otherwise.
+   */
+  function emptyString (data, options) {
+    if (options && options.trim && string(data)) {
+      return data.trim() === '';
+    }
+
+    return data === '';
+  }
+
+  /**
+   * Public function `nonEmptyString`.
+   *
+   * Returns true if `data` is a non-empty string, false otherwise.
+   */
+  function nonEmptyString (data, options) {
+    if (options && options.trim) {
+      return string(data) && data.trim() !== '';
+    }
+
+    return string(data) && data !== '';
+  }
+
+  /**
+   * Public function `match`.
+   *
+   * Returns true if `data` is a string that matches `regex`, false otherwise.
+   */
+  function match (data, regex) {
+    return string(data) && !! data.match(regex);
+  }
+
+  /**
+   * Public function `boolean`.
+   *
+   * Returns true if `data` is a boolean value, false otherwise.
+   */
+  function boolean (data) {
+    return data === false || data === true;
+  }
+
+  /**
+   * Public function `object`.
+   *
+   * Returns true if `data` is a plain-old JS object, false otherwise.
+   */
+  function object (data) {
+    return Object.prototype.toString.call(data) === '[object Object]';
+  }
+
+  /**
+   * Public function `emptyObject`.
+   *
+   * Returns true if `data` is an empty object, false otherwise.
+   */
+  function emptyObject (data) {
+    return object(data) && !some(data, function () {
+      return true;
+    });
+  }
+
+  function some (data, predicate) {
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (predicate(key, data[key])) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Public function `nonEmptyObject`.
+   *
+   * Returns true if `data` is a non-empty object, false otherwise.
+   */
+  function nonEmptyObject (data) {
+    return object(data) && some(data, function () {
+      return true;
+    });
+  }
+
+  /**
+   * Public function `instanceStrict`.
+   *
+   * Returns true if `data` is an instance of `prototype`, false otherwise.
+   */
+  function instanceStrict (data, prototype) {
+    try {
+      return data instanceof prototype;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * Public function `instance`.
+   *
+   * Returns true if `data` is an instance of `prototype`, false otherwise.
+   * Falls back to testing constructor.name and Object.prototype.toString
+   * if the initial instanceof test fails.
+   */
+  function instance (data, prototype) {
+    try {
+      return instanceStrict(data, prototype) ||
+        data.constructor.name === prototype.name ||
+        Object.prototype.toString.call(data) === '[object ' + prototype.name + ']';
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * Public function `like`.
+   *
+   * Tests whether `data` 'quacks like a duck'. Returns true if `data` has all
+   * of the properties of `archetype` (the 'duck'), false otherwise.
+   */
+  function like (data, archetype) {
+    var name;
+
+    for (name in archetype) {
+      if (archetype.hasOwnProperty(name)) {
+        if (data.hasOwnProperty(name) === false || typeof data[name] !== typeof archetype[name]) {
+          return false;
+        }
+
+        if (object(data[name]) && like(data[name], archetype[name]) === false) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Public function `array`.
+   *
+   * Returns true if `data` is an array, false otherwise.
+   */
+  function array (data) {
+    return isArray(data);
+  }
+
+  /**
+   * Public function `emptyArray`.
+   *
+   * Returns true if `data` is an empty array, false otherwise.
+   */
+  function emptyArray (data) {
+    return isArray(data) && data.length === 0;
+  }
+
+  /**
+   * Public function `nonEmptyArray`.
+   *
+   * Returns true if `data` is a non-empty array, false otherwise.
+   */
+  function nonEmptyArray (data) {
+    return isArray(data) && data.length > 0;
+  }
+
+  /**
+   * Public function `arrayLike`.
+   *
+   * Returns true if `data` is an array-like object, false otherwise.
+   */
+  function arrayLike (data) {
+    return assigned(data) && data.length >= 0;
+  }
+
+  /**
+   * Public function `iterable`.
+   *
+   * Returns true if `data` is an iterable, false otherwise.
+   */
+  function iterable (data) {
+    if (! haveSymbols) {
+      // Fall back to `arrayLike` predicate in pre-ES6 environments.
+      return arrayLike(data);
+    }
+
+    return assigned(data) && isFunction(data[Symbol.iterator]);
+  }
+
+  /**
+   * Public function `contains`.
+   *
+   * Returns true if `data` contains `value`, false otherwise.
+   * Works with objects, arrays and array-likes (including strings).
+   */
+  function contains (data, value) {
+    var iterator, iteration;
+
+    if (! assigned(data)) {
+      return false;
+    }
+
+    if (string(data)) {
+      return data.indexOf(value) !== -1;
+    }
+
+    if (haveSymbols && data[Symbol.iterator] && isFunction(data.values)) {
+      iterator = data.values();
+
+      do {
+        iteration = iterator.next();
+
+        if (iteration.value === value) {
+          return true;
+        }
+      } while (! iteration.done);
+
+      return false;
+    }
+
+    return some(data, function (key, dataValue) {
+      return dataValue === value;
+    });
+  }
+
+  /**
+   * Public function `in`.
+   *
+   * Returns true if `data` is in `value`, false otherwise.
+   * Like `contains`, but with arguments flipped.
+   */
+  function isIn (data, value) {
+    return contains(value, data);
+  }
+
+  /**
+   * Public function `hasLength`.
+   *
+   * Returns true if `data` has a length property that equals `length`, false
+   * otherwise.
+   */
+  function hasLength (data, length) {
+    return assigned(data) && data.length === length;
+  }
+
+  /**
+   * Public function `date`.
+   *
+   * Returns true if `data` is a valid date, false otherwise.
+   */
+  function date (data) {
+    return instanceStrict(data, Date) && integer(data.getTime());
+  }
+
+  /**
+   * Public function `function`.
+   *
+   * Returns true if `data` is a function, false otherwise.
+   */
+  function isFunction (data) {
+    return typeof data === 'function';
+  }
+
+  /**
+   * Public function `map`.
+   *
+   * Maps each value from `data` to the corresponding predicate and returns
+   * the results. If the same function is to be applied across all of the data,
+   * a single predicate function may be passed in.
+   */
+  function map (data, predicates) {
+    var result;
+
+    if (isArray(data)) {
+      result = [];
+    } else {
+      result = {};
+    }
+
+    if (isFunction(predicates)) {
+      forEach(data, function (key, value) {
+        result[key] = predicates(value);
+      });
+    } else {
+      if (! isArray(predicates)) {
+        assert.object(predicates);
+      }
+
+      var dataKeys = keys(data || {});
+
+      forEach(predicates, function (key, predicate) {
+        dataKeys.some(function (dataKey, index) {
+          if (dataKey === key) {
+            dataKeys.splice(index, 1);
+            return true;
+          }
+          return false;
+        });
+
+        if (isFunction(predicate)) {
+          if (not.assigned(data)) {
+            result[key] = !!predicate.m;
+          } else {
+            result[key] = predicate(data[key]);
+          }
+        } else {
+          result[key] = map(data[key], predicate);
+        }
+      });
+    }
+
+    return result;
+  }
+
+  function forEach (object, action) {
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        action(key, object[key]);
+      }
+    }
+  }
+
+  /**
+   * Public function `all`
+   *
+   * Check that all boolean values are true
+   * in an array or object returned from `map`.
+   */
+  function all (data) {
+    if (isArray(data)) {
+      return testArray(data, false);
+    }
+
+    assert.object(data);
+
+    return testObject(data, false);
+  }
+
+  function testArray (data, result) {
+    var i;
+
+    for (i = 0; i < data.length; i += 1) {
+      if (data[i] === result) {
+        return result;
+      }
+    }
+
+    return !result;
+  }
+
+  function testObject (data, result) {
+    var key, value;
+
+    for (key in data) {
+      if (data.hasOwnProperty(key)) {
+        value = data[key];
+
+        if (object(value) && testObject(value, result) === result) {
+          return result;
+        }
+
+        if (value === result) {
+          return result;
+        }
+      }
+    }
+
+    return !result;
+  }
+
+  /**
+   * Public function `any`
+   *
+   * Check that at least one boolean value is true
+   * in an array or object returned from `map`.
+   */
+  function any (data) {
+    if (isArray(data)) {
+      return testArray(data, true);
+    }
+
+    assert.object(data);
+
+    return testObject(data, true);
+  }
+
+  function mixin (target, source) {
+    forEach(source, function (key, value) {
+      target[key] = value;
+    });
+
+    return target;
+  }
+
+  /**
+   * Public modifier `assert`.
+   *
+   * Throws if `predicate` returns false.
+   */
+  function assertModifier (predicate, defaultMessage) {
+    return function () {
+      var args = arguments;
+      var argCount = predicate.l || predicate.length;
+      var message = args[argCount];
+      var ErrorType = args[argCount + 1];
+
+      assertImpl(
+        predicate.apply(null, args),
+        nonEmptyString(message) ? message : defaultMessage
+          .replace('{a}', messageFormatter(args[0]))
+          .replace('{e}', messageFormatter(args[1]))
+          .replace('{e2}', messageFormatter(args[2]))
+          .replace('{t}', function () {
+            var arg = args[1];
+
+            if (arg && arg.name) {
+              return arg.name;
+            }
+
+            return arg;
+          }),
+        isFunction(ErrorType) ? ErrorType : TypeError
+      );
+
+      return args[0];
+    };
+  }
+
+  function messageFormatter (arg) {
+    return function () {
+      if (string(arg)) {
+        return '"' + arg.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+      }
+
+      if (arg && arg.constructor && ! instanceStrict(arg, RegExp) && typeof arg !== 'number') {
+        return arg.constructor.name;
+      }
+
+      return arg;
+    };
+  }
+
+  function assertImpl (value, message, ErrorType) {
+    if (value) {
+      return value;
+    }
+    throw new (ErrorType || Error)(message || 'assert failed');
+  }
+
+  /**
+   * Public modifier `not`.
+   *
+   * Negates `predicate`.
+   */
+  function notModifier (predicate) {
+    var modifiedPredicate = function () {
+      return notImpl(predicate.apply(null, arguments));
+    };
+    modifiedPredicate.l = predicate.length;
+    return modifiedPredicate;
+  }
+
+  function notImpl (value) {
+    return !value;
+  }
+
+  /**
+   * Public modifier `maybe`.
+   *
+   * Returns true if predicate argument is  null or undefined,
+   * otherwise propagates the return value from `predicate`.
+   */
+  function maybeModifier (predicate) {
+    var modifiedPredicate = function () {
+      if (not.assigned(arguments[0])) {
+        return true;
+      }
+
+      return predicate.apply(null, arguments);
+    };
+    modifiedPredicate.l = predicate.length;
+
+    // Hackishly indicate that this is a maybe.xxx predicate.
+    // Without this flag, the alternative would be to iterate
+    // through the maybe predicates or use indexOf to check,
+    // which would be time-consuming.
+    modifiedPredicate.m = true;
+
+    return modifiedPredicate;
+  }
+
+  function maybeImpl (value) {
+    if (assigned(value) === false) {
+      return true;
+    }
+
+    return value;
+  }
+
+  /**
+   * Public modifier `of`.
+   *
+   * Applies the chained predicate to members of the collection.
+   */
+  function ofModifier (target, type, predicate) {
+    var modifiedPredicate = function () {
+      var collection, args;
+
+      collection = arguments[0];
+
+      if (target === 'maybe' && not.assigned(collection)) {
+        return true;
+      }
+
+      if (!type(collection)) {
+        return false;
+      }
+
+      collection = coerceCollection(type, collection);
+      args = slice.call(arguments, 1);
+
+      try {
+        collection.forEach(function (item) {
+          if (
+            (target !== 'maybe' || assigned(item)) &&
+            !predicate.apply(null, [ item ].concat(args))
+          ) {
+            // TODO: Replace with for...of when ES6 is required.
+            throw 0;
+          }
+        });
+      } catch (ignore) {
+        return false;
+      }
+
+      return true;
+    };
+    modifiedPredicate.l = predicate.length;
+    return modifiedPredicate;
+  }
+
+  function coerceCollection (type, collection) {
+    switch (type) {
+      case arrayLike:
+        return slice.call(collection);
+      case object:
+        return keys(collection).map(function (key) {
+          return collection[key];
+        });
+      default:
+        return collection;
+    }
+  }
+
+  function createModifiedPredicates (modifier, object) {
+    return createModifiedFunctions([ modifier, predicates, object, '' ]);
+  }
+
+  function createModifiedFunctions (args) {
+    var modifier, messageModifier, object, functions;
+
+    modifier = args.shift();
+    messageModifier = args.pop();
+    object = args.pop();
+    functions = args.pop();
+
+    forEach(functions, function (key, fn) {
+      var message = messages[key];
+      if (message && messageModifier) {
+        message = message.replace('to', messageModifier + 'to');
+      }
+
+      Object.defineProperty(object, key, {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: modifier.apply(null, args.concat(fn, message))
+      });
+    });
+
+    return object;
+  }
+
+  function createModifiedModifier (modifier, modified, messageModifier) {
+    return createModifiedFunctions([ modifier, modified, {}, messageModifier ]);
+  }
+
+  function createOfPredicates (key) {
+    predicates[key].of = createModifiedFunctions(
+      [ ofModifier.bind(null, null), predicates[key], predicates, {}, '' ]
+    );
+  }
+
+  function createOfModifiers (base, modifier) {
+    collections.forEach(function (key) {
+      base[key].of = createModifiedModifier(modifier, predicates[key].of);
+    });
+  }
+
+  function createMaybeOfModifiers (key) {
+    maybe[key].of = createModifiedFunctions(
+      [ ofModifier.bind(null, 'maybe'), predicates[key], predicates, {}, '' ]
+    );
+    assert.maybe[key].of = createModifiedModifier(assertModifier, maybe[key].of);
+    assert.not[key].of = createModifiedModifier(assertModifier, not[key].of);
+  }
+
+  function exportFunctions (functions) {
+    if (true) {
+      !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+        return functions;
+      }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {}
+  }
+}(this));
+
 
 /***/ }),
 
@@ -13595,66 +14695,6 @@ __webpack_require__(/*! ./modules/web.timers */ "./node_modules/core-js/modules/
 __webpack_require__(/*! ./modules/web.immediate */ "./node_modules/core-js/modules/web.immediate.js");
 __webpack_require__(/*! ./modules/web.dom.iterable */ "./node_modules/core-js/modules/web.dom.iterable.js");
 module.exports = __webpack_require__(/*! ./modules/_core */ "./node_modules/core-js/modules/_core.js");
-
-
-/***/ }),
-
-/***/ "./node_modules/localist-api-connector/index.js":
-/*!******************************************************!*\
-  !*** ./node_modules/localist-api-connector/index.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-const axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-const moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-/**
- * Configures request params and Get events from loacalist api.
- *
- * @param {obj} param0 The optional api config params.
- *
- * @return {axios} A axios promise;
- */
-module.exports = ({
-    depts = '0',
-    entries = 3,
-    format = 'standard',
-    group = 0,
-    keyword = '',
-    api_key = '',
-    url = '//events.cornell.edu/api/2.1/events'
-}) => {
-    const params = {
-        api_key,
-        days: 365,
-        distinct: true,
-        pp: entries,
-        start:
-            format !== 'archive'
-                ? moment().format('YYYY-MM-DD')
-                : moment()
-                      .subtract(1, 'Y')
-                      .format('YYYY-MM-DD')
-    };
-    // Supports multiple departments with CSV string.
-    if (depts && parseInt(depts, 10) !== 0) {
-        params.type = [];
-        depts.split(',').forEach(item => {
-            params.type.push(item.trim());
-        });
-    }
-    if (group && parseInt(group, 10) !== 0) {
-        params.group_id = group;
-    }
-    if (keyword && keyword !== '') {
-        params.keyword = keyword;
-    }
-    if (format === 'archive') {
-        params.direction = 'desc';
-    }
-    return axios.get(url, { params });
-};
 
 
 /***/ }),

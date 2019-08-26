@@ -120,7 +120,7 @@
     .form-composite > legend{display:inline;margin:0;padding:0;font-size:inherit;font-weight:bold;}
     .form-checkboxes .form-item,.form-radios .form-item{margin-top:0.4em;margin-bottom:0.4em;}
     .form-type-checkbox .description{margin-left:2.4em;}
-    .form-required:after{display:inline-block;width:6px;height:6px;margin:0 0.3em;content:"";vertical-align:super;background-image:url(/css/drupal/icons/ee0000/required.svg);background-repeat:no-repeat;background-size:6px 6px;}
+    .form-required:after{display:inline-block;width:6px;height:6px;margin:0 0.3em;content:"";vertical-align:super;background-image:url(icons/ee0000/required.svg);background-repeat:no-repeat;background-size:6px 6px;}
     }
     /*! CSS Used from: https://d8-psw.lndo.site/core/themes/classy/css/components/link.css?pwhrgn ; media=all */
     @media all{
@@ -181,7 +181,7 @@
     .form-text:focus,.form-number:focus,.form-textarea:focus{border-color:#40b6ff;outline:0;background-color:#fff;box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 8px #40b6ff;}
     select{max-width:100%;}
     @media screen and (-webkit-min-device-pixel-ratio: 0){
-    select{padding:1px 1.571em 1px 0.5em;cursor:pointer;-webkit-transition:all 0.1s;transition:all 0.1s;border:1px solid #a6a6a6;border-radius:0.143em;background:url(/css/drupal/icons/333333/caret-down.svg) no-repeat 99% 63%,       -webkit-linear-gradient(top, #f6f6f3, #e7e7df);text-shadow:0 1px hsla(0, 0%, 100%, 0.6);font-size:0.875rem;-webkit-appearance:none;-webkit-font-smoothing:antialiased;}
+    select{padding:1px 1.571em 1px 0.5em;cursor:pointer;-webkit-transition:all 0.1s;transition:all 0.1s;border:1px solid #a6a6a6;border-radius:0.143em;background:url(icons/333333/caret-down.svg) no-repeat 99% 63%,       -webkit-linear-gradient(top, #f6f6f3, #e7e7df);text-shadow:0 1px hsla(0, 0%, 100%, 0.6);font-size:0.875rem;-webkit-appearance:none;-webkit-font-smoothing:antialiased;}
     select:focus,select:hover{color:#1a1a1a;background-image:url(/css/drupal/icons/333333/caret-down.svg),       -webkit-linear-gradient(top, #fcfcfa, #e9e9dd);}
     select:hover{box-shadow:0 1px 2px hsla(0, 0%, 0%, 0.125);}
     }

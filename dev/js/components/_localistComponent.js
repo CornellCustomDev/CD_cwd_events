@@ -1,6 +1,20 @@
-import findAll from 'localist-api-connector';
 import buildEvent from '../helpers/buildEvent';
 import { CheckDate } from '../helpers/template-helpers';
+import findAll from '../service/localistApiConnector';
+
+const check = require('check-types');
+
+/**
+ * Test params property types.
+ * @param {obj} params The block element data.
+ * @param {obj} type The check.type
+ * @return {boolean} Valid proptype.
+ */
+const checkPropTypes = (params, type) => {
+    const valid = check.map(params, type);
+
+    return check.all(valid);
+};
 
 /**
  * The base component
@@ -15,14 +29,37 @@ export default class LocalistComponent {
         format,
         heading,
         keyword,
-        addCal,
         pref_category_filters,
         pref_category,
         innerTemplate,
         outerTemplate,
-        pref_excerpt_length = 250,
+        addCal = 'false',
+        pref_excerpt_length = '250',
         url = '//events.cornell.edu/api/2.1/events'
     }) {
+        if (
+            !checkPropTypes(
+                {
+                    target,
+                    depts,
+                    entries,
+                    group,
+                    format,
+                    heading,
+                    keyword,
+                    addCal,
+                    pref_category_filters,
+                    pref_category,
+                    pref_excerpt_length,
+                    url
+                },
+                check.string
+            ) &&
+            !checkPropTypes({ innerTemplate, outerTemplate }, check.function)
+        ) {
+            console.warn('Invalid props types in localist base component.');
+            return {};
+        }
         // The wrapper template params.
         this.wrapperArgs = {
             target,
@@ -33,7 +70,7 @@ export default class LocalistComponent {
         // The localist api request params
         this.requestArgs = {
             depts,
-            entries: parseInt(entries, 10),
+            entries,
             format,
             group,
             keyword,
@@ -47,11 +84,12 @@ export default class LocalistComponent {
             pref_eventdetails: 'event details',
             addCal
         };
+        this.findAll = findAll;
 
         // Is this used?
-        this.group = parseInt(group, 10);
+        this.group = group;
         this.depts = depts;
-        this.entries = parseInt(entries, 10);
+        this.entries = entries;
 
         // The categories to filter on.
         // Currently only uses group
@@ -81,7 +119,7 @@ export default class LocalistComponent {
      * @param {obj} args The request params.
      */
     getLocalistEvents(args) {
-        findAll(args)
+        this.findAll(args)
             .then(response => {
                 this.setState({ events: response.data.events });
             })
@@ -142,15 +180,7 @@ export default class LocalistComponent {
         }
     }
 
-    /**
-     * Renders the html template string.
-     */
-    render() {
-        // remove loading animation timer
-        if (this.c_loader) {
-            clearTimeout(this.c_loader);
-        }
-        // replace this with map join
+    buildInnerHtml() {
         let inner = '';
         /** @todo fix issue with checkDate */
         const checkDate = this.format === 'standard' ? new CheckDate() : null;
@@ -162,6 +192,19 @@ export default class LocalistComponent {
             this.buildFilters(event.event);
             inner += this.innerTemplate(this.builtEvent);
         });
+        return inner;
+    }
+
+    /**
+     * Renders the html template string.
+     */
+    render() {
+        // remove loading animation timer
+        if (this.c_loader) {
+            clearTimeout(this.c_loader);
+        }
+        // replace this with map join
+        const inner = this.buildInnerHtml();
         const outer = this.outerTemplate(inner, this.wrapperArgs);
         /** @todo set this somewhere else */
         if (this.parent) {

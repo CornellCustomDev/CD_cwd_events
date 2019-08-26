@@ -1,5 +1,5 @@
 import buildEvent from '../js/helpers/buildEvent';
-import localList from '../js/localist';
+import localList from '../js/localList';
 
 const localistConnector = require('localist-api-connector');
 const assert = require('assert');
@@ -27,7 +27,7 @@ describe('cd events application unit tests', () => {
 
         var check = (done) => {
             const requestArgs = {
-                entries: 4,
+                entries: '4',
                 url: 'http://localhost:8080/test/testData.json'
             };
             const connection = localistConnector(requestArgs);
@@ -56,8 +56,8 @@ describe('cd events application unit tests', () => {
         describe('#buildEvent()', () => {
             it('should return an object with properties.', () => {
                 const beargs = {
-                    addcal: false,
-                    pref_excerpt_length: 150,
+                    addcal: 'false',
+                    pref_excerpt_length: '150',
                     pref_category: 'group',
                 }
                 be = buildEvent(data.events[0].event, beargs);
@@ -83,7 +83,12 @@ describe('cd events application unit tests', () => {
                 ll =localList({
                     format:'compact',
                     target:'standard',
-                    url:'http://localhost:8080/test/testData.json'
+                    depts: "",
+                    entries: "4",
+                    group: "",
+                    keyword: "",
+                    heading: "",
+                    url: 'http://localhost:8080/test/testData.json'
                 });
             });
             it('it should have a innerTemplate function.', () => {

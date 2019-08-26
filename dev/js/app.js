@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-import localList from './localist';
+import localList from './localList';
 
 require('babel-polyfill');
 
@@ -32,4 +32,8 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
     eventListings.forEach(elem => {
         localList({ ...elem.dataset });
     });
+    // For testing expose localist.
+    if (typeof window === 'object') {
+        window.localList = localList;
+    }
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>cwd events | browser test</title>
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="import" href="demo/main.html" />
+        <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.2.0/mocha.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+    </head>
+    <body>
+            <nav id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark"></nav>
+        <div class="container">
+            <h1>CWD_Events Browser Tests</h1>
+            <p class='text-muted'>Note it is possible for events to return no results. And test will fail @todo load static test.</p>
+            <div id="mocha"></div>
+            <div>
+                <div
+                    id="standard"
+                    class="drupal-events-listing cwd-events-style"
+                    data-target="standard"
+                    data-depts="0"
+                    data-entries="4"
+                    data-format="standard"
+                    data-group="0"
+                    data-keyword="Sustainability"
+                    data-heading="Test"
+                ></div>
+            </div>
+        </div>
+        <script src="demo/main.js"></script>
+        <script src="./dist/cwd_events.js"></script>
+
+
+        <script class="mocha-init">
+            mocha.setup('bdd');
+        </script>
+
+        <script src="./demo/test.js"></script>
+        <!-- <script type="module" src="./test/test.js"></script> -->
+
+        <script class="mocha-exec">
+            mocha.run();
+        </script>
+    </body>
+</html>
