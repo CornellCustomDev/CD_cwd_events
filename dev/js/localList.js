@@ -51,7 +51,6 @@ export default params => {
     // The following are static filter params.
     params.filterby_filters = 'true';
     params.addcal = params.addcal || 'false';
-    console.log(params.addcal);
     params.pref_excerpt_length = '250';
     if (checkPropTypes(params) && params.format in formatOptions) {
         const Component = formatOptions[params.format];
