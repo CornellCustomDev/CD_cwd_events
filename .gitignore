@@ -1,5 +1,4 @@
 node_modules
-dev/dist
 .vscode
 dev/coverage/*
 dev/.nyc_output/*
