@@ -144,7 +144,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
 
   eventListings.forEach(function (elem) {
     Object(_localList__WEBPACK_IMPORTED_MODULE_0__["default"])(_objectSpread({}, elem.dataset));
-  }); // For testing expose localist.
+  }); // For testing expose localList.
 
   if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object') {
     window.localList = _localList__WEBPACK_IMPORTED_MODULE_0__["default"];
@@ -214,16 +214,14 @@ function () {
         format = _ref.format,
         heading = _ref.heading,
         keyword = _ref.keyword,
-        pref_category_filters = _ref.pref_category_filters,
-        pref_category = _ref.pref_category,
+        filterby_filters = _ref.filterby_filters,
+        filterby = _ref.filterby,
         innerTemplate = _ref.innerTemplate,
         outerTemplate = _ref.outerTemplate,
-        _ref$addCal = _ref.addCal,
-        addCal = _ref$addCal === void 0 ? 'false' : _ref$addCal,
-        _ref$pref_excerpt_len = _ref.pref_excerpt_length,
-        pref_excerpt_length = _ref$pref_excerpt_len === void 0 ? '250' : _ref$pref_excerpt_len,
-        _ref$url = _ref.url,
-        url = _ref$url === void 0 ? '//events.cornell.edu/api/2.1/events' : _ref$url;
+        addcal = _ref.addcal,
+        pref_excerpt_length = _ref.pref_excerpt_length,
+        calendarurl = _ref.calendarurl,
+        apikey = _ref.apikey;
 
     _classCallCheck(this, LocalistComponent);
 
@@ -235,11 +233,11 @@ function () {
       format: format,
       heading: heading,
       keyword: keyword,
-      addCal: addCal,
-      pref_category_filters: pref_category_filters,
-      pref_category: pref_category,
+      addcal: addcal,
+      filterby_filters: filterby_filters,
+      filterby: filterby,
       pref_excerpt_length: pref_excerpt_length,
-      url: url
+      calendarurl: calendarurl
     }, check.string) && !checkPropTypes({
       innerTemplate: innerTemplate,
       outerTemplate: outerTemplate
@@ -262,15 +260,15 @@ function () {
       format: format,
       group: group,
       keyword: keyword,
-      api_key: 'KLhy2GtuSAGirYGY',
+      apikey: apikey,
       // Move api key to drupal block?
-      url: url
+      calendarurl: calendarurl
     }; // The build event params.
 
     this.BE_args = {
       pref_excerpt_length: pref_excerpt_length,
       pref_eventdetails: 'event details',
-      addCal: addCal
+      addcal: addcal
     };
     this.findAll = _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__["default"]; // Is this used?
 
@@ -281,8 +279,8 @@ function () {
 
     /** @todo add support for other filter options. */
 
-    this.pref_category = pref_category;
-    this.pref_category_filters = pref_category_filters;
+    this.filterby = filterby;
+    this.filterby_filters = filterby_filters;
     this.events = [];
     this.target = target;
     this.format = format; // used by inner template to check if standard
@@ -345,24 +343,24 @@ function () {
   }, {
     key: "buildFilters",
     value: function buildFilters(event) {
-      if (this.pref_category_filters) {
-        if (this.pref_category === 'type' && this.builtEvent.type !== 0 && event.filters.event_types) {
+      if (this.filterby_filters) {
+        if (this.filterby === 'type' && this.builtEvent.type !== 0 && event.filters.event_types) {
           this.wrapperArgs.filters[event.filters.event_types[0].name] = {
             id: event.filters.event_types[0].id,
             name: event.filters.event_types[0].name,
-            pref_category: this.pref_category
+            filterby: this.filterby
           };
-        } else if (this.pref_category === 'dept' && this.builtEvent.department !== 0 && event.filters.departments) {
+        } else if (this.filterby === 'dept' && this.builtEvent.department !== 0 && event.filters.departments) {
           this.wrapperArgs.filters[event.filters.departments[0].name] = {
             id: event.filters.departments[0].id,
             name: event.filters.departments[0].name,
-            pref_category: this.pref_category
+            filterby: this.filterby
           };
-        } else if (this.pref_category === 'group' && this.builtEvent.group_name !== '') {
+        } else if (this.filterby === 'group' && this.builtEvent.group_name !== '') {
           this.wrapperArgs.filters[this.builtEvent.group_name] = {
             id: this.builtEvent.group_id,
             name: this.builtEvent.group_name,
-            pref_category: this.pref_category
+            filterby: this.filterby
           };
         }
       }
@@ -486,7 +484,7 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveInner"];
     props.outerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveWrapper"];
-    props.pref_category_filters = 'false';
+    props.filterby_filters = 'false';
     return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
   }
 
@@ -542,7 +540,7 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactInner"];
     props.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactWrapper"];
-    props.pref_category_filters = 'false';
+    props.filterby_filters = 'false';
     props.pref_excerpt_length = '150';
     return _possibleConstructorReturn(this, _getPrototypeOf(Compact).call(this, props));
   }
@@ -599,7 +597,7 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactInner"];
     props.outerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactWrapper"];
-    props.pref_category_filters = 'false';
+    props.filterby_filters = 'false';
     props.pref_excerpt_length = '150';
     return _possibleConstructorReturn(this, _getPrototypeOf(InlineCompact).call(this, props));
   }
@@ -656,7 +654,7 @@ function (_LocalistComponent) {
 
     props.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactInner"];
     props.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactWrapper"];
-    props.pref_category_filters = 'false';
+    props.filterby_filters = 'false';
     props.pref_excerpt_length = '150';
     return _possibleConstructorReturn(this, _getPrototypeOf(ModernCompact).call(this, props));
   }
@@ -796,6 +794,7 @@ __webpack_require__.r(__webpack_exports__);
 var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
 /**
  * Test params property types.
+ * @todo define params.
  * @param {obj} params The block element data.
  * @return {boolean} Valid proptype.
  */
@@ -818,7 +817,10 @@ var checkPropTypes = function checkPropTypes(params) {
 
 /* harmony default export */ __webpack_exports__["default"] = (function (event, args) {
   if (!checkPropTypes(args)) {
-    return {};
+    console.error(' Build Event props must be a string ');
+    return {
+      error: 'prop types must be string'
+    };
   }
 
   var be = {};
@@ -826,7 +828,7 @@ var checkPropTypes = function checkPropTypes(params) {
   be.event = event;
   be.args = args;
   be.description = event.description;
-  be.addCal = args.addCal;
+  be.addcal = args.addcal;
   be.event_time = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventTime"])(event);
   be.event_date_compact = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('MMM D');
   be.event_date = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventDate"])(event);
@@ -843,7 +845,7 @@ var checkPropTypes = function checkPropTypes(params) {
   be.type = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getType"])(event);
   be.group_name = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getGroupName"])(event);
   be.group_id = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getGroupId"])(event);
-  be.event_types = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventType"])(event, args.pref_category);
+  be.event_types = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventType"])(event, args.filterby);
   return be;
 });
 
@@ -1095,24 +1097,15 @@ var getEventType = function getEventType(event, prefCategory) {
 
 /***/ }),
 
-/***/ "./js/helpers/template-helpers.js":
-/*!****************************************!*\
-  !*** ./js/helpers/template-helpers.js ***!
-  \****************************************/
-/*! exports provided: eventFilters, add_calendar, CheckDate */
+/***/ "./js/helpers/eventFilters.js":
+/*!************************************!*\
+  !*** ./js/helpers/eventFilters.js ***!
+  \************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventFilters", function() { return eventFilters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add_calendar", function() { return add_calendar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckDate", function() { return CheckDate; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -1130,13 +1123,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  *
  * @modifies {window} Attaches click event handlers to window.
  *
- * @param {array} filterObjs A array of objects [{id:'',name:'',pref_category:''}]
+ * @param {array} filterObjs A array of objects [{id:'',name:'',filterby:''}]
  * @param {string} domTarget A string of html id #id should exist and be unique.
  *
  * @return {string} A html string.
  */
 var eventFilters = function eventFilters(filterObjs, domTarget) {
-  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
+  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined' || typeof document === 'undefined') {
+    console.error('invalid props in eventFilters()');
     return '';
   }
 
@@ -1151,7 +1145,7 @@ var eventFilters = function eventFilters(filterObjs, domTarget) {
     allFilterBtns.forEach(function (value) {
       value.classList.remove('active');
     });
-    var elem = document.getElementById(id); // set the current item active
+    var elem = targetElem.querySelector("#".concat(id)); // set the current item active
 
     elem.classList.add('active'); // onclick button will only hide non target elements
     // hide all filter elements
@@ -1167,7 +1161,8 @@ var eventFilters = function eventFilters(filterObjs, domTarget) {
     targetElems.forEach(function (value) {
       value.classList.remove('fadeOut');
     });
-  };
+  }; // Removes all fadeout classes
+
 
   var showAllEvents = function showAllEvents() {
     // remove active class from all filter buttons
@@ -1176,7 +1171,7 @@ var eventFilters = function eventFilters(filterObjs, domTarget) {
     allFilterBtns.forEach(function (value) {
       value.classList.remove('active');
     });
-    var elem = document.getElementById("filterAll-".concat(domStr)); // set the current item active
+    var elem = targetElem.querySelector("#filterAll-".concat(domStr)); // set the current item active
 
     elem.classList.add('active'); // show all filter elements
 
@@ -1185,18 +1180,45 @@ var eventFilters = function eventFilters(filterObjs, domTarget) {
     allEvents.forEach(function (value) {
       value.classList.remove('fadeOut');
     });
-  }; // attach event handlers to window
+  }; // attach event listeners to parent
 
 
-  window["toggleFilters".concat(domStr)] = toggleFilters;
-  window["showAllEvents".concat(domStr)] = showAllEvents;
+  targetElem.addEventListener('click', function (e) {
+    if (/filterAll.*/.test(e.target.id)) {
+      showAllEvents();
+    } else if (/filter.*/.test(e.target.id)) {
+      toggleFilters(e.target.id, e.target.dataset.filter);
+    }
+  });
   return (
     /* html */
-    "\n        <div class=\"events-filters-wrap\">\n            <h3 class=\"hidden\">Show:</h3>\n            <ul class=\"events-filters\">\n                <li>\n                    <button\n                        id=\"filterAll-".concat(domStr, "\"\n                        data-filter=\"all\"\n                        class=\"filter-btn active\"\n                        onClick=\"showAllEvents").concat(domStr, "()\"\n                    >\n                        All Events\n                    </button>\n                </li>\n                ").concat(filterObjs ? Object.keys(filterObjs).map(function (key) {
-      return "<li><button id='filter".concat(filterObjs[key].id, "-").concat(domStr, "' data-filter=\"").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "\" class=\"filter-btn\" onclick=\"toggleFilters").concat(domStr, "('filter").concat(filterObjs[key].id, "-").concat(domStr, "', '").concat(filterObjs[key].pref_category, "-").concat(filterObjs[key].id, "')\">").concat(filterObjs[key].name, "</button></li>");
+    "\n        <div class=\"events-filters-wrap\">\n            <h3 class=\"hidden\">Show:</h3>\n            <ul class=\"events-filters\">\n                <li>\n                    <button\n                        id=\"filterAll-".concat(domStr, "\"\n                        data-filter=\"all\"\n                        class=\"filter-btn active\"\n                    >\n                        All Events\n                    </button>\n                </li>\n                ").concat(filterObjs ? Object.keys(filterObjs).map(function (key) {
+      return "<li><button id='filter".concat(filterObjs[key].id, "-").concat(domStr, "' data-filter=\"").concat(filterObjs[key].filterby, "-").concat(filterObjs[key].id, "\" class=\"filter-btn\" >").concat(filterObjs[key].name, "</button></li>");
     }).join('') : '', "\n            </ul>\n        </div>\n    ")
   );
 };
+
+/* harmony default export */ __webpack_exports__["default"] = (eventFilters);
+
+/***/ }),
+
+/***/ "./js/helpers/template-helpers.js":
+/*!****************************************!*\
+  !*** ./js/helpers/template-helpers.js ***!
+  \****************************************/
+/*! exports provided: add_calendar, CheckDate, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add_calendar", function() { return add_calendar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckDate", function() { return CheckDate; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 var add_calendar = function add_calendar(myEvent) {
   /* ----------------- build calander links -------------------------- */
   var buidGoogleStr = function buidGoogleStr(myObj) {
@@ -1276,6 +1298,10 @@ function () {
 
   return CheckDate;
 }();
+/* harmony default export */ __webpack_exports__["default"] = ({
+  CheckDate: CheckDate,
+  add_calendar: add_calendar
+});
 
 /***/ }),
 
@@ -1318,15 +1344,18 @@ var checkPropTypes = function checkPropTypes(params) {
     group: check.string,
     keyword: check.string,
     heading: check.string,
-    pref_category: check.string,
-    pref_category_filters: check.string
+    filterby: check.string,
+    filterby_filters: check.string,
+    calendarurl: check.string,
+    apikey: check.string,
+    addcal: check.string
   });
   return check.all(valid);
 };
 /**
  * Get the party started!
  *   Selects the coresponding component based on format name.
- *   @todo add support for unused options. [filter, addCal]
+ *   @todo add support for unused options. [filter, addcal]
  *   @todo impliment filter options and pagination.
  * @param {obj} params The base Component params.
  * @return {Component} a localist component of the type param.format.
@@ -1344,8 +1373,10 @@ var checkPropTypes = function checkPropTypes(params) {
     archive: _components_archive__WEBPACK_IMPORTED_MODULE_4__["default"]
   }; // The following are static filter params.
 
-  params.pref_category = 'group';
-  params.pref_category_filters = 'true';
+  params.filterby_filters = 'true';
+  params.addcal = params.addcal || 'false';
+  console.log(params.addcal);
+  params.pref_excerpt_length = '250';
 
   if (checkPropTypes(params) && params.format in formatOptions) {
     var Component = formatOptions[params.format];
@@ -1353,6 +1384,7 @@ var checkPropTypes = function checkPropTypes(params) {
     return component;
   }
 
+  console.error('invalid props - all props should be strings');
   return {
     error: 'invalid props - all props should be strings'
   };
@@ -1403,10 +1435,10 @@ var checkPropTypes = function checkPropTypes(params) {
       group = _ref$group === void 0 ? '0' : _ref$group,
       _ref$keyword = _ref.keyword,
       keyword = _ref$keyword === void 0 ? '' : _ref$keyword,
-      _ref$api_key = _ref.api_key,
-      api_key = _ref$api_key === void 0 ? '' : _ref$api_key,
-      _ref$url = _ref.url,
-      url = _ref$url === void 0 ? '//events.cornell.edu/api/2.1/events' : _ref$url;
+      _ref$apikey = _ref.apikey,
+      apikey = _ref$apikey === void 0 ? '' : _ref$apikey,
+      _ref$calendarurl = _ref.calendarurl,
+      calendarurl = _ref$calendarurl === void 0 ? '//events.cornell.edu/api/2.1/events' : _ref$calendarurl;
 
   if (!checkPropTypes({
     depts: depts,
@@ -1414,15 +1446,15 @@ var checkPropTypes = function checkPropTypes(params) {
     format: format,
     group: group,
     keyword: keyword,
-    api_key: api_key,
-    url: url
+    apikey: apikey,
+    calendarurl: calendarurl
   }, check.string)) {
     console.warn('invalid prop types in localist connect.');
     return {};
   }
 
   var params = {
-    api_key: api_key,
+    apikey: apikey,
     days: 365,
     distinct: true,
     pp: entries,
@@ -1448,7 +1480,7 @@ var checkPropTypes = function checkPropTypes(params) {
     params.direction = 'desc';
   }
 
-  return axios.get(url, {
+  return axios.get(calendarurl, {
     params: params
   });
 });
@@ -1467,7 +1499,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "archiveInner", function() { return archiveInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "archiveWrapper", function() { return archiveWrapper; });
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtData A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -1478,7 +1510,7 @@ var archiveInner = function archiveInner(builtData) {
   );
 };
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} inner The html inner string.
  * @return {string} Html string
  */
@@ -1505,7 +1537,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compactWrapper", function() { return compactWrapper; });
 /* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtData A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -1513,11 +1545,11 @@ __webpack_require__.r(__webpack_exports__);
 var compactInner = function compactInner(builtData) {
   return (
     /* html */
-    "\n<div\n    class=\"event-node dept-".concat(builtData.department, " node\n    type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n>\n    <h3>\n        <a\n            target=\"_blank\"\n            href=\"").concat(builtData.event.localist_url, "\"\n        >\n            ").concat(builtData.event.title, "\n        </a>\n    </h3>\n    ").concat(builtData.event_date_compact ? "<h4 class=\"meta date\"><span class=\"fulldate\">".concat(builtData.event_date_compact, "</span></h4>") : '', "\n    ").concat(builtData.event.location_name ? "<h4 class=\"meta location\">".concat(builtData.event.location_name, "</h4>") : '', "\n    <p class=\"description\">\n        ").concat(builtData.description, "\n        <a\n            class=\"read-more more\"\n            href=\"").concat(builtData.event.localist_url, "\"\n            target=\"_blank\"\n        > read more\n        <span class='visually-hidden'> about ").concat(builtData.event.title, "</span>\n        </a>\n    </p>\n    ").concat(builtData.addCal ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n</div><!--end of node -->")
+    "\n<div\n    class=\"event-node dept-".concat(builtData.department, " node\n    type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n>\n    <h3>\n        <a\n            target=\"_blank\"\n            href=\"").concat(builtData.event.localist_url, "\"\n        >\n            ").concat(builtData.event.title, "\n        </a>\n    </h3>\n    ").concat(builtData.event_date_compact ? "<h4 class=\"meta date\"><span class=\"fulldate\">".concat(builtData.event_date_compact, "</span></h4>") : '', "\n    ").concat(builtData.event.location_name ? "<h4 class=\"meta location\">".concat(builtData.event.location_name, "</h4>") : '', "\n    <p class=\"description\">\n        ").concat(builtData.description, "\n        <a\n            class=\"read-more more\"\n            href=\"").concat(builtData.event.localist_url, "\"\n            target=\"_blank\"\n        > read more\n        <span class='visually-hidden'> about ").concat(builtData.event.title, "</span>\n        </a>\n    </p>\n    ").concat(builtData.addcal === 'true' ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n</div><!--end of node -->")
   );
 };
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} inner The html inner string.
  * @param {obj} args Mostly unused try and remove these.
  * @return {string} Html string
@@ -1544,7 +1576,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inlineCompactInner", function() { return inlineCompactInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inlineCompactWrapper", function() { return inlineCompactWrapper; });
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtEvent A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -1555,7 +1587,7 @@ var inlineCompactInner = function inlineCompactInner(builtEvent) {
   );
 };
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} innerHtml The html inner string.
  * @param {obj} args Mostly unused try and remove these.
  * @return {string} Html string
@@ -1582,7 +1614,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernCompactInner", function() { return modernCompactInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernCompactWrapper", function() { return modernCompactWrapper; });
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtData A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -1593,7 +1625,7 @@ var modernCompactInner = function modernCompactInner(builtData) {
   );
 };
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} inner The html inner string.
  * @param {obj} args Mostly unused try and remove these.
  * @return {string} Html string
@@ -1620,6 +1652,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "moderStandardInner", function() { return moderStandardInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernStandardWrapper", function() { return modernStandardWrapper; });
 /* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
+/* harmony import */ var _helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/eventFilters */ "./js/helpers/eventFilters.js");
+
 
 /**
  *
@@ -1643,6 +1677,7 @@ var tagStr = function tagStr(event_types) {
 /**
  *
  * @param {obj} builtData A buildEvents.js obj.
+ *   @todo add prop type validation.
  * @return {string} Html string
  */
 
@@ -1650,7 +1685,7 @@ var tagStr = function tagStr(event_types) {
 var moderStandardInner = function moderStandardInner(builtData) {
   return (
     /* html */
-    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addCal ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
+    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addcal === 'true' ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
   );
 };
 /**
@@ -1663,7 +1698,7 @@ var moderStandardInner = function moderStandardInner(builtData) {
 var modernStandardWrapper = function modernStandardWrapper(inner, args) {
   return (
     /* html */
-    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
+    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["default"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
   );
 };
 
@@ -1681,10 +1716,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardInner", function() { return standardInner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardWrapper", function() { return standardWrapper; });
 /* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
+/* harmony import */ var _helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/eventFilters */ "./js/helpers/eventFilters.js");
+
 
 /**
  *
  * @param {obj} builtData A buildEvents.js obj.
+ *   @todo add prop type validation.
  * @return {string} Html string
  */
 
@@ -1695,7 +1733,7 @@ var standardInner = function standardInner(builtData) {
     /* html */
     "\n                  <h4 class=\"meta date\">\n                      <span class=\"start\">".concat(builtData.event_time, "</span>\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event.location_name ?
     /* html */
-    "\n                  <h4 class=\"meta location\">\n                      ".concat(builtData.event.location_name, "\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event_types ? "<h4 class=\"meta type\"><span class=\"fa\"></span>".concat(builtData.event_types, "</h4>") : '', "\n        <p class=\"description\">\n            ").concat(builtData.description, "\n            <a\n                class=\"read-more more\"\n                href=\"").concat(builtData.event.localist_url, "\"\n                target=\"_blank\"\n                > read more <span class=\"visually-hidden\">\n                    about ").concat(builtData.event.title, "</span\n                ></a\n            >\n        </p>\n        ").concat(builtData.addCal ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n    </div>\n    <!--end of node -->\n")
+    "\n                  <h4 class=\"meta location\">\n                      ".concat(builtData.event.location_name, "\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event_types ? "<h4 class=\"meta type\"><span class=\"fa\"></span>".concat(builtData.event_types, "</h4>") : '', "\n        <p class=\"description\">\n            ").concat(builtData.description, "\n            <a\n                class=\"read-more more\"\n                href=\"").concat(builtData.event.localist_url, "\"\n                target=\"_blank\"\n                > read more <span class=\"visually-hidden\">\n                    about ").concat(builtData.event.title, "</span\n                ></a\n            >\n        </p>\n        ").concat(builtData.addcal === 'true' ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n    </div>\n    <!--end of node -->\n")
   );
 };
 /**
@@ -1708,7 +1746,7 @@ var standardInner = function standardInner(builtData) {
 var standardWrapper = function standardWrapper(inner, args) {
   return (
     /* html */
-    "\n        <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n            ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n            <div class=\"main-body\">\n                <div class=\"events-listing no-thumbnails\">\n                    ").concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["eventFilters"])(args.filters, args.target), "\n                    <div class=\"events-list\">\n                        ").concat(inner, "\n                    </div>\n                </div>\n                <!--events listing -->\n            </div>\n            <!-- main-body -->\n        </section>\n        <!--end of section -->\n    ")
+    "\n        <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n            ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n            <div class=\"main-body\">\n                <div class=\"events-listing no-thumbnails\">\n                    ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["default"])(args.filters, args.target), "\n                    <div class=\"events-list\">\n                        ").concat(inner, "\n                    </div>\n                </div>\n                <!--events listing -->\n            </div>\n            <!-- main-body -->\n        </section>\n        <!--end of section -->\n    ")
   );
 };
 
@@ -33415,8 +33453,8 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! d:\my_sites\CD_CWD_events\CD_cwd_events\dev\js\app.js */"./js/app.js");
-module.exports = __webpack_require__(/*! d:\my_sites\CD_CWD_events\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
+__webpack_require__(/*! c:\Users\psw58\Desktop\mySites\d8_psw_sandbox\modules\custom\CD_cwd_events\dev\js\app.js */"./js/app.js");
+module.exports = __webpack_require__(/*! c:\Users\psw58\Desktop\mySites\d8_psw_sandbox\modules\custom\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
 
 
 /***/ })

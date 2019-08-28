@@ -1375,6 +1375,7 @@ var checkPropTypes = function checkPropTypes(params) {
 
   params.filterby_filters = 'true';
   params.addcal = params.addcal || 'false';
+  console.log(params.addcal);
   params.pref_excerpt_length = '250';
 
   if (checkPropTypes(params) && params.format in formatOptions) {
@@ -33452,8 +33453,8 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! c:\Users\psw58\Desktop\mySites\cwd_events\CD_cwd_events\dev\js\app.js */"./js/app.js");
-module.exports = __webpack_require__(/*! c:\Users\psw58\Desktop\mySites\cwd_events\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
+__webpack_require__(/*! c:\Users\psw58\Desktop\mySites\d8_psw_sandbox\modules\custom\CD_cwd_events\dev\js\app.js */"./js/app.js");
+module.exports = __webpack_require__(/*! c:\Users\psw58\Desktop\mySites\d8_psw_sandbox\modules\custom\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
 
 
 /***/ })

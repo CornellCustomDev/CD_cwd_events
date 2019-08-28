@@ -217,7 +217,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $this->configuration['cwd_events_url'] = $values['cwd_events_display_config']['cwd_events_url'];
     $this->configuration['cwd_events_format'] = $formatOptions[$values['cwd_events_display_config']['cwd_events_format']];
     $this->configuration['cwd_events_filterby'] = $values['cwd_events_display_config']['cwd_events_filterby'];
-    $this->configuration['cwd_events_addCal'] = $values['cwd_events_display_config']['cwd_events_addCal'];
+    $this->configuration['cwd_events_addcal'] = $values['cwd_events_display_config']['cwd_events_addcal'];
     $this->configuration['cwd_events_pagination'] = $values['cwd_events_display_config']['cwd_events_pagination'];
     $this->configuration['cwd_events_styling'] = $values['cwd_events_display_config']['cwd_events_styling'];
 

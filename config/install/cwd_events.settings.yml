@@ -8,7 +8,7 @@ cwd_events:
   readmore: "Read More"
   url: "/events"
   format: "standard"
-  addCal: "false"
+  addcal: "false"
   pagination: "false"
   filterby: "group"
   styling: 1
