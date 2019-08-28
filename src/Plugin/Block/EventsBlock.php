@@ -64,13 +64,13 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
                 data-depts = '" . $this->configuration['cwd_events_depts'] . "'
                 data-entries = '" . $this->configuration['cwd_events_entries'] . "'
                 data-format = '" . $this->configuration['cwd_events_format'] . "'
-                data-group = " . $this->configuration['cwd_events_group'] . "
+                data-group = '" . $this->configuration['cwd_events_group'] . "'
                 data-keyword = '" . $this->configuration['cwd_events_keyword'] . "'
                 data-addcal = '" . $this->configuration['cwd_events_addcal'] . "'
-                data_calendarurl = '" . $this->configuration['cwd_events_calendarurl'] . "'
-                data_apikey = '" . $this->configuration['cwd_events_apikey'] . "'
-                data_pagination = '" . $this->configuration['cwd_events_pagination'] . "'
-                data_filterby = '" . $this->configuration['cwd_events_filterby'] . "'
+                data-calendarurl = '" . $this->configuration['cwd_events_calendarurl'] . "'
+                data-apikey = '" . $this->configuration['cwd_events_apikey'] . "'
+                data-pagination = '" . $this->configuration['cwd_events_pagination'] . "'
+                data-filterby = '" . $this->configuration['cwd_events_filterby'] . "'
                 data-heading = ''
               ></div>",
     ];
@@ -110,7 +110,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $form['cwd_events_localist_config']['cwd_events_depts'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Departments'),
-      '#description' => $this->t('The department to include by ID. A comma seperated list of groups can be used '),
+      '#description' => $this->t('The department to include by ID. A comma seperated list of groups can be used.'),
       '#default_value' => isset($config['cwd_events_depts']) ? $config['cwd_events_depts'] : 0,
     ];
 
@@ -206,19 +206,21 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
     $formatOptions = $this->formatOptions;
-    $this->configuration['cwd_events_readmore'] = $values['cwd_events_readmore'];
-    $this->configuration['cwd_events_url'] = $values['cwd_events_url'];
-    $this->configuration['cwd_events_depts'] = $values['cwd_events_depts'];
-    $this->configuration['cwd_events_entries'] = $values['cwd_events_entries'];
-    $this->configuration['cwd_events_format'] = $formatOptions[$values['cwd_events_format']];
-    $this->configuration['cwd_events_styling'] = $values['cwd_events_styling'];
-    $this->configuration['cwd_events_group'] = $values['cwd_events_group'];
-    $this->configuration['cwd_events_keyword'] = $values['cwd_events_keyword'];
-    $this->configuration['cwd_events_calendarurl'] = $values['cwd_events_calendarurl'];
-    $this->configuration['cwd_events_apikey'] = $values['cwd_events_apikey'];
-    $this->configuration['cwd_events_addCal'] = $values['cwd_events_addCal'];
-    $this->configuration['cwd_events_pagination'] = $values['cwd_events_pagination'];
-    $this->configuration['cwd_events_filterby'] = $values['cwd_events_filterby'];
+    $this->configuration['cwd_events_calendarurl'] = $values['cwd_events_localist_config']['cwd_events_calendarurl'];
+    $this->configuration['cwd_events_apikey'] = $values['cwd_events_localist_config']['cwd_events_apikey'];
+    $this->configuration['cwd_events_depts'] = $values['cwd_events_localist_config']['cwd_events_depts'];
+    $this->configuration['cwd_events_entries'] = $values['cwd_events_localist_config']['cwd_events_entries'];
+    $this->configuration['cwd_events_group'] = $values['cwd_events_localist_config']['cwd_events_group'];
+    $this->configuration['cwd_events_keyword'] = $values['cwd_events_localist_config']['cwd_events_keyword'];
+
+    $this->configuration['cwd_events_readmore'] = $values['cwd_events_display_config']['cwd_events_readmore'];
+    $this->configuration['cwd_events_url'] = $values['cwd_events_display_config']['cwd_events_url'];
+    $this->configuration['cwd_events_format'] = $formatOptions[$values['cwd_events_display_config']['cwd_events_format']];
+    $this->configuration['cwd_events_filterby'] = $values['cwd_events_display_config']['cwd_events_filterby'];
+    $this->configuration['cwd_events_addCal'] = $values['cwd_events_display_config']['cwd_events_addCal'];
+    $this->configuration['cwd_events_pagination'] = $values['cwd_events_display_config']['cwd_events_pagination'];
+    $this->configuration['cwd_events_styling'] = $values['cwd_events_display_config']['cwd_events_styling'];
+
   }
 
 }
