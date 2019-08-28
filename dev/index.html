@@ -1,142 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>CWD_Localist examples</title>
-        <link rel="stylesheet" href="css/main.css" />
-        <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
-        <link rel="import" href="demo/main.html" />
-        <script
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"
-        ></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.2.0/mocha.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
-    </head>
-    <body>
-        <nav id='nav' class="navbar navbar-expand-lg navbar-dark bg-dark"></nav>
-        <div id="index" class="container">
-            <p></p>
-            <h1>CWD_LocalList Example</h1>
-            <p>
-                Supports multiple calenders on same page with different settings
-                options
+
+<head>
+    <meta charset="utf-8" />
+    <title>CWD_Localist examples</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/drupal/style.css" />
+    <link rel="import" href="demo/main.html" />
+    <link rel="import" href="demo/drupalBlock.html" />
+    <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.2.0/mocha.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+
+</head>
+
+<body>
+    <nav id='nav' class="navbar navbar-expand-lg navbar-dark bg-dark"></nav>
+    <div class="container">
+        <div class='row'>
+            <h1>CWD_Events Interactive Demo</h1>
+        <div>
+        <div class='row'>
+            <p class='text-muted'>
+                Make changes to the drupal demo block, then click the update button. The Events block will show the new changes.
             </p>
-            <p></p>
-            <div class="row">
-                <div class="col-md-8 well">
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div tabindex="-1" role="dialog"
+                    class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-dialog-buttons"
+                    aria-describedby="drupal-modal" aria-labelledby="ui-id-2">
                     <div
-                        id="standard"
-                        class="events-listing cwd-events-style"
-                        data-target="standard"
-                        data-depts="0"
-                        data-entries="8"
-                        data-format="standard"
-                        data-group="0"
-                        data-singleday="false"
-                        data-keyword="Sustainability"
-                        data-addCal="true"
-                        data-heading="standard"
-                    ></div>
-                </div>
-                <div class="col-md-4 well">
-                    <div
-                        id="compact"
-                        class="events-listing cwd-events-style"
-                        data-target="compact"
-                        data-depts="0"
-                        data-entries="5"
-                        data-format="compact"
-                        data-group="0"
-                        data-singleday="false"
-                        data-keyword="Sustainability"
-                        data-addCal="true"
-                        data-heading="compact"
-                        data-prefExcerptLength="150"
-                        data-prefCategoryFilters="false"
-                    ></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8 well">
-                    <div
-                        id="modern_standard"
-                        class="events-listing cwd-events-style"
-                        data-target="modern_standard"
-                        data-depts="0"
-                        data-entries="5"
-                        data-format="modern_standard"
-                        data-group="0"
-                        data-singleday="false"
-                        data-keyword=""
-                        data-addCal="true"
-                        data-heading="modern_standard"
-                    ></div>
-                </div>
-                <div class="col-md-4 well">
-                    <div
-                        id="modern_compact"
-                        class="events-listing cwd-events-style"
-                        data-target="modern_compact"
-                        data-depts="0"
-                        data-entries="4"
-                        data-format="modern_compact"
-                        data-group="0"
-                        data-singleday="false"
-                        data-keyword=""
-                        data-addCal="true"
-                        data-heading="modern_compact"
-                        data-prefExcerptLength="150"
-                    ></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8 well">
-                    <div
-                        id="archive"
-                        class="events-listing cwd-events-style"
-                        data-target="archive"
-                        data-depts="39623"
-                        data-entries="5"
-                        data-format="archive"
-                        data-group="0"
-                        data-singleday="false"
-                        data-keyword=""
-                        data-addCal="false"
-                        data-heading="archive with nostyle"
-                    ></div>
-                </div>
-                <div class="col-md-4 well">
-                    <div
-                        id="inline_compact"
-                        class="events-listing cwd-events-style"
-                        data-target="inline_compact"
-                        data-depts="39623,139827,139828,4865"
-                        data-entries="5"
-                        data-format="inline_compact"
-                        data-group="0"
-                        data-singleday="false"
-                        data-keyword=""
-                        data-addCal="true"
-                        data-heading="inline_compact"
-                        data-prefExcerptLength="150"
-                    ></div>
+                        class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix">
+                        <span id="ui-id-2" class="ui-dialog-title">Configure
+                            demo block</span>
+                    </div>
+                    <div id="drupal-modal"
+                        class="ui-front ui-dialog-content ui-widget-content"
+                        style="border: solid #eee;">
+                    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                        <div class="ui-dialog-buttonset form-actions">
+                            <button type="button"
+                                id='submit'
+                                class="button button--primary js-form-submit form-submit ui-button ui-corner-all ui-widget">
+                                Update Block
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <script src="./dist/cwd_events.js"></script>
-        <!-- Loads nav -->
-        <script src="demo/main.js"></script>
-    </body>
+        <div class="col-sm-12 col-md-12 col-lg-6">
+            <div class='border'>
+                <div id="events_block" class="events-listing cwd-events-style">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--script src="js/app.js"></script-->
+    <script src="./dist/cwd_events.js"></script>
+    <!-- Loads nav -->
+    <script src="demo/main.js"></script>
+    <script>
+    var myLocalList;
+    /**
+     * Get the data from the form and initiate new localist element
+     * @todo impliment the rest of the drupal block elements
+     *   Styling, read more, ...
+     * */
+    function renderForm(){
+        var formData = $('form').first().serializeArray();
+
+        const dataArray = [
+            'calendarurl',
+            'apikey',
+            'depts',
+            'group',
+            'entries',
+            'keyword',
+            'readmore',
+            'url',
+            'format',
+            'addcal',
+            'pagination',
+            'filterby',
+            'styling'
+        ];
+        var data = {}
+        formData.map(function(obj){
+            //console.log(obj.name);
+            dataArray.map(function(arr){
+                if(obj.name.indexOf(arr.toLowerCase()) >= 0){
+                    // console.log(obj.name + " " + arr)
+                    data[arr] = obj.value
+                }
+            })
+        })
+
+        data.heading = formData[1].name == "settings[label_display]" ? formData[0].value : ''
+        data.target = 'events_block';
+        myLocalList = window.localList(data);
+    }
+
+    $('#submit').on('click', function(e){
+        e.preventDefault;
+        // clear any old content
+        $('#events_block').html('');
+        renderForm();
+    })
+
+    $(document).ready(function(){
+        renderForm();
+    })
+    </script>
+</body>
+
 </html>

@@ -25,7 +25,7 @@ export default ({
     group = '0',
     keyword = '',
     api_key = '',
-    url = '//events.cornell.edu/api/2.1/events'
+    calendarurl = '//events.cornell.edu/api/2.1/events'
 }) => {
     if (
         !checkPropTypes(
@@ -36,7 +36,7 @@ export default ({
                 group,
                 keyword,
                 api_key,
-                url
+                calendarurl
             },
             check.string
         )
@@ -72,5 +72,5 @@ export default ({
     if (format === 'archive') {
         params.direction = 'desc';
     }
-    return axios.get(url, { params });
+    return axios.get(calendarurl, { params });
 };

@@ -18,6 +18,7 @@ const check = require('check-types');
 
 /**
  * Test params property types.
+ * @todo define params.
  * @param {obj} params The block element data.
  * @return {boolean} Valid proptype.
  */
@@ -45,7 +46,7 @@ export default (event, args) => {
     be.event = event;
     be.args = args;
     be.description = event.description;
-    be.addCal = args.addCal;
+    be.addcal = args.addcal;
     be.event_time = getEventTime(event);
     be.event_date_compact = moment(startDateTime).format('MMM D');
     be.event_date = getEventDate(event);

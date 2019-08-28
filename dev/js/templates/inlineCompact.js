@@ -1,5 +1,5 @@
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtEvent A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -42,7 +42,7 @@ export const inlineCompactInner = builtEvent => /* html */ `
 </div>`;
 
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} innerHtml The html inner string.
  * @param {obj} args Mostly unused try and remove these.
  * @return {string} Html string

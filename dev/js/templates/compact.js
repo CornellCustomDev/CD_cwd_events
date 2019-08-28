@@ -1,5 +1,5 @@
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtData A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -40,11 +40,11 @@ export const compactInner = builtData => /* html */ `
         <span class='visually-hidden'> about ${builtData.event.title}</span>
         </a>
     </p>
-    ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}
+    ${builtData.addcal === 'true' ? `${add_calendar(builtData.event)}` : ''}
 </div><!--end of node -->`;
 
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} inner The html inner string.
  * @param {obj} args Mostly unused try and remove these.
  * @return {string} Html string

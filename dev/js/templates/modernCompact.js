@@ -1,5 +1,5 @@
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtData A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -32,7 +32,7 @@ export const modernCompactInner = builtData => /* html */ `
 `;
 
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} inner The html inner string.
  * @param {obj} args Mostly unused try and remove these.
  * @return {string} Html string

@@ -1,8 +1,10 @@
-import { eventFilters, add_calendar } from '../helpers/template-helpers';
+import { add_calendar } from '../helpers/template-helpers';
+import eventFilters from '../helpers/eventFilters';
 
 /**
  *
  * @param {obj} builtData A buildEvents.js obj.
+ *   @todo add prop type validation.
  * @return {string} Html string
  */
 export const standardInner = builtData => /* html */ `
@@ -55,7 +57,7 @@ export const standardInner = builtData => /* html */ `
                 ></a
             >
         </p>
-        ${builtData.addCal ? `${add_calendar(builtData.event)}` : ''}
+        ${builtData.addcal === 'true' ? `${add_calendar(builtData.event)}` : ''}
     </div>
     <!--end of node -->
 `;

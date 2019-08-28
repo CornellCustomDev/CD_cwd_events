@@ -33,9 +33,9 @@ export default class LocalistComponent {
         pref_category,
         innerTemplate,
         outerTemplate,
-        addCal = 'false',
+        addcal = 'false',
         pref_excerpt_length = '250',
-        url = '//events.cornell.edu/api/2.1/events'
+        calendarurl = '//events.cornell.edu/api/2.1/events'
     }) {
         if (
             !checkPropTypes(
@@ -47,11 +47,11 @@ export default class LocalistComponent {
                     format,
                     heading,
                     keyword,
-                    addCal,
+                    addcal,
                     pref_category_filters,
                     pref_category,
                     pref_excerpt_length,
-                    url
+                    calendarurl
                 },
                 check.string
             ) &&
@@ -75,14 +75,14 @@ export default class LocalistComponent {
             group,
             keyword,
             api_key: 'KLhy2GtuSAGirYGY', // Move api key to drupal block?
-            url
+            calendarurl
         };
 
         // The build event params.
         this.BE_args = {
             pref_excerpt_length,
             pref_eventdetails: 'event details',
-            addCal
+            addcal
         };
         this.findAll = findAll;
 

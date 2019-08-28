@@ -23,6 +23,7 @@ const checkPropTypes = params => {
         heading: check.string,
         pref_category: check.string,
         pref_category_filters: check.string
+        // addcal: check.string
     });
     return check.all(valid);
 };
@@ -30,7 +31,7 @@ const checkPropTypes = params => {
 /**
  * Get the party started!
  *   Selects the coresponding component based on format name.
- *   @todo add support for unused options. [filter, addCal]
+ *   @todo add support for unused options. [filter, addcal]
  *   @todo impliment filter options and pagination.
  * @param {obj} params The base Component params.
  * @return {Component} a localist component of the type param.format.
@@ -53,5 +54,6 @@ export default params => {
         const component = new Component(params);
         return component;
     }
+    console.error('invalid props - all props should be strings');
     return { error: 'invalid props - all props should be strings' };
 };

@@ -1,5 +1,5 @@
 /**
- *
+ *   @todo add prop type validation.
  * @param {obj} builtData A buildEvents.js obj.
  * @return {string} Html string
  */
@@ -31,7 +31,7 @@ export const archiveInner = builtData => /* html */ `
 `;
 
 /**
- *
+ *   @todo add prop type validation.
  * @param {string} inner The html inner string.
  * @return {string} Html string
  */
