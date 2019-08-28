@@ -24,7 +24,7 @@ export default ({
     format = 'standard',
     group = '0',
     keyword = '',
-    api_key = '',
+    apikey = '',
     calendarurl = '//events.cornell.edu/api/2.1/events'
 }) => {
     if (
@@ -35,7 +35,7 @@ export default ({
                 format,
                 group,
                 keyword,
-                api_key,
+                apikey,
                 calendarurl
             },
             check.string
@@ -45,7 +45,7 @@ export default ({
         return {};
     }
     const params = {
-        api_key,
+        apikey,
         days: 365,
         distinct: true,
         pp: entries,

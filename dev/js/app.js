@@ -32,7 +32,7 @@ if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
     eventListings.forEach(elem => {
         localList({ ...elem.dataset });
     });
-    // For testing expose localist.
+    // For testing expose localList.
     if (typeof window === 'object') {
         window.localList = localList;
     }

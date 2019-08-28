@@ -63,6 +63,6 @@ export default (event, args) => {
     be.type = getType(event);
     be.group_name = getGroupName(event);
     be.group_id = getGroupId(event);
-    be.event_types = getEventType(event, args.pref_category);
+    be.event_types = getEventType(event, args.filterby);
     return be;
 };

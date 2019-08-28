@@ -25,14 +25,17 @@ var ll =localList({
     keyword: "",
     heading: "",
     addcal: "true",
-    calendarurl: 'http://localhost:8080/test/testData.json'
+    calendarurl: 'http://localhost:8080/test/testData.json',
+    apikey: '',
+    filterby: 'group',
+
 });
 //maybe use https://github.com/ctimmerm/axios-mock-adapter
 describe('cd events application unit tests', () => {
         const beargs = {
             addcal: 'true',
             pref_excerpt_length: '150',
-            pref_category: 'group',
+            filterby: 'group',
         }
 
         describe('Server status', function(){

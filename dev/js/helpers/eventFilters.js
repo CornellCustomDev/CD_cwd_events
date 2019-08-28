@@ -7,7 +7,7 @@
  *
  * @modifies {window} Attaches click event handlers to window.
  *
- * @param {array} filterObjs A array of objects [{id:'',name:'',pref_category:''}]
+ * @param {array} filterObjs A array of objects [{id:'',name:'',filterby:''}]
  * @param {string} domTarget A string of html id #id should exist and be unique.
  *
  * @return {string} A html string.
@@ -103,7 +103,7 @@ const eventFilters = (filterObjs, domTarget) => {
                                       `<li><button id='filter${
                                           filterObjs[key].id
                                       }-${domStr}' data-filter="${
-                                          filterObjs[key].pref_category
+                                          filterObjs[key].filterby
                                       }-${
                                           filterObjs[key].id
                                       }" class="filter-btn" >${

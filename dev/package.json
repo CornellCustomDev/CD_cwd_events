@@ -20,14 +20,14 @@
   "devDependencies": {
     "@babel/register": "^7.5.5",
     "axios": "^0.19.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.3",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "check-types": "^10.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.15.1",
-    "eslint-config-airbnb": "^18.0.0",
+    "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^4.1.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.1.2",
@@ -43,11 +43,10 @@
     "prop-types": "^15.7.2",
     "request": "^2.88.0",
     "resolve-url-loader": "^3.1.0",
-    "sass": "^1.17.2",
-    "sass-loader": "^7.1.0",
+    "sass": "^1.22.10",
+    "sass-loader": "^7.3.1",
     "truncate": "^2.1.0",
     "vue-template-compiler": "^2.6.10"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

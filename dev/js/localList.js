@@ -21,9 +21,11 @@ const checkPropTypes = params => {
         group: check.string,
         keyword: check.string,
         heading: check.string,
-        pref_category: check.string,
-        pref_category_filters: check.string
-        // addcal: check.string
+        filterby: check.string,
+        filterby_filters: check.string,
+        calendarurl: check.string,
+        apikey: check.string,
+        addcal: check.string
     });
     return check.all(valid);
 };
@@ -47,8 +49,9 @@ export default params => {
         archive
     };
     // The following are static filter params.
-    params.pref_category = 'group';
-    params.pref_category_filters = 'true';
+    params.filterby_filters = 'true';
+    params.addcal = params.addcal || 'false';
+    params.pref_excerpt_length = '250';
     if (checkPropTypes(params) && params.format in formatOptions) {
         const Component = formatOptions[params.format];
         const component = new Component(params);

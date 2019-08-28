@@ -16,11 +16,23 @@ describe('cd events browser tests app', function(){
             assert.equal(typeof elem, 'object');
         });
 
-        it('should have 7 data attributes', function() {
+        it('should have 11 data attributes', function() {
             dl = Object.assign({}, elem.dataset);
             var keys = Object.keys(dl)
-            assert.equal(keys.length, 7);
-            assert.deepEqual(keys, ["target", "depts", "entries", "format", "group", "keyword", "heading"])
+            assert.equal(keys.length, 11);
+            assert.deepEqual(keys, [
+                "target",
+                "depts",
+                "entries",
+                "format",
+                "group",
+                "keyword",
+                "heading",
+                "calendarurl",
+                "apikey",
+                "filterby",
+                "addcal"
+            ])
         });
 
         describe('CWD events app', function(){
@@ -38,7 +50,8 @@ describe('cd events browser tests app', function(){
                     // use the test data.
                     dl.url = "test/testData.json"
                     ll = localList(dl);
-                    ll.requestArgs.url ="test/testData.json";
+                    console.log(ll);
+                    ll.requestArgs.calendarurl ="test/testData.json";
                     // console.log(ll.requestArgs);
                     ll.findAll(ll.requestArgs).then(function(res) {
                         // console.log(res);

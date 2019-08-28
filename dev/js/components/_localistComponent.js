@@ -29,13 +29,14 @@ export default class LocalistComponent {
         format,
         heading,
         keyword,
-        pref_category_filters,
-        pref_category,
+        filterby_filters,
+        filterby,
         innerTemplate,
         outerTemplate,
-        addcal = 'false',
-        pref_excerpt_length = '250',
-        calendarurl = '//events.cornell.edu/api/2.1/events'
+        addcal,
+        pref_excerpt_length,
+        calendarurl,
+        apikey
     }) {
         if (
             !checkPropTypes(
@@ -48,8 +49,8 @@ export default class LocalistComponent {
                     heading,
                     keyword,
                     addcal,
-                    pref_category_filters,
-                    pref_category,
+                    filterby_filters,
+                    filterby,
                     pref_excerpt_length,
                     calendarurl
                 },
@@ -74,7 +75,7 @@ export default class LocalistComponent {
             format,
             group,
             keyword,
-            api_key: 'KLhy2GtuSAGirYGY', // Move api key to drupal block?
+            apikey, // Move api key to drupal block?
             calendarurl
         };
 
@@ -94,8 +95,8 @@ export default class LocalistComponent {
         // The categories to filter on.
         // Currently only uses group
         /** @todo add support for other filter options. */
-        this.pref_category = pref_category;
-        this.pref_category_filters = pref_category_filters;
+        this.filterby = filterby;
+        this.filterby_filters = filterby_filters;
 
         this.events = [];
         this.target = target;
@@ -146,35 +147,35 @@ export default class LocalistComponent {
      * @param {obj} event The localist event Json data.
      */
     buildFilters(event) {
-        if (this.pref_category_filters) {
+        if (this.filterby_filters) {
             if (
-                this.pref_category === 'type' &&
+                this.filterby === 'type' &&
                 this.builtEvent.type !== 0 &&
                 event.filters.event_types
             ) {
                 this.wrapperArgs.filters[event.filters.event_types[0].name] = {
                     id: event.filters.event_types[0].id,
                     name: event.filters.event_types[0].name,
-                    pref_category: this.pref_category
+                    filterby: this.filterby
                 };
             } else if (
-                this.pref_category === 'dept' &&
+                this.filterby === 'dept' &&
                 this.builtEvent.department !== 0 &&
                 event.filters.departments
             ) {
                 this.wrapperArgs.filters[event.filters.departments[0].name] = {
                     id: event.filters.departments[0].id,
                     name: event.filters.departments[0].name,
-                    pref_category: this.pref_category
+                    filterby: this.filterby
                 };
             } else if (
-                this.pref_category === 'group' &&
+                this.filterby === 'group' &&
                 this.builtEvent.group_name !== ''
             ) {
                 this.wrapperArgs.filters[this.builtEvent.group_name] = {
                     id: this.builtEvent.group_id,
                     name: this.builtEvent.group_name,
-                    pref_category: this.pref_category
+                    filterby: this.filterby
                 };
             }
         }
