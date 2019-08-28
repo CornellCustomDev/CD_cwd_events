@@ -1,9 +1,14 @@
 cwd_events:
+  calendarurl: "//events.cornell.edu/api/2.1/events"
+  apikey: "KLhy2GtuSAGirYGY"
+  depts: 0
+  group: 0
+  entries: 3
+  keyword: ""
   readmore: "Read More"
   url: "/events"
-  depts: 0
-  entries: 3
   format: "standard"
+  addCal: "false"
+  pagination: "false"
+  filterby: "group"
   styling: 1
-  group: 0
-  keyword: ""
