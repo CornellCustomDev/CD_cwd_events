@@ -2,7 +2,7 @@ import buildEvent from '../js/helpers/buildEvent';
 import localList from '../js/localList';
 import localistConnector from '../js/services/localistApiConnector';
 import {CheckDate, add_calendar } from '../js/helpers/template-helpers';
-import eventFilters from '../js/helpers/eventFilters';
+import {eventFilters} from '../js/helpers/eventFilters';
 const assert = require('assert');
 var expect = require('chai').expect;
 var should = require('chai').should();

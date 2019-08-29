@@ -1,15 +1,14 @@
+import { getCalStartDate, getCalEndDate } from './displayEvent';
+/**
+ * @todo use moments for dates
+ * @param {obj} myEvent The localist event object
+ * @return {string} The html string
+ */
 export const add_calendar = myEvent => {
     /* ----------------- build calander links -------------------------- */
     const buidGoogleStr = myObj => {
-        const mySD = myObj.event_instances[0].event_instance.start.split(
-            'T'
-        )[0];
-        const gDateStart =
-            mySD.split('-')[0] + mySD.split('-')[1] + mySD.split('-')[2];
-        // this may not work as intended for repeating events
-        const myED = myObj.last_date;
-        const gDateStop =
-            myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
+        const gDateStart = getCalStartDate(myEvent);
+        const gDateStop = getCalEndDate(myObj);
         return /* html */ `
             <a
                 class="fa fa-google google"

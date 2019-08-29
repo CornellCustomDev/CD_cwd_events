@@ -167,6 +167,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
 /* harmony import */ var _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/localistApiConnector */ "./js/services/localistApiConnector.js");
 /* harmony import */ var _templates_paginationTemplate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../templates/paginationTemplate */ "./js/templates/paginationTemplate.js");
+/* harmony import */ var _helpers_eventHandler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/eventHandler */ "./js/helpers/eventHandler.js");
+/* harmony import */ var _helpers_eventFilters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../helpers/eventFilters */ "./js/helpers/eventFilters.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -186,7 +188,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
+
+
+var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js"); // Bind a persistent event handler function.
+
 
 var handleclick;
 /**
@@ -284,9 +289,6 @@ function () {
     this.group = group;
     this.depts = depts;
     this.entries = entries; // The categories to filter on.
-    // Currently only uses group
-
-    /** @todo add support for other filter options. */
 
     this.filterby = filterby;
     this.filterby_filters = filterby_filters;
@@ -295,14 +297,13 @@ function () {
     this.format = format; // used by inner template to check if standard
 
     this.innerTemplate = innerTemplate;
-    this.outerTemplate = outerTemplate;
-    /** @todo dont render here */
-    // Event data.
+    this.outerTemplate = outerTemplate; // Event data.
 
     this.date = {};
-    this.page = {}; // Pagination
+    this.page = {}; // Sets if pagination should be used or not.
 
-    this.pagination = pagination;
+    this.pagination = pagination; // Should this be in a seperate render function?
+    // Renders element on construction.
 
     if (typeof document !== 'undefined') {
       this.parent = document.getElementById(target); // remove any DOM event listeners before you add them.
@@ -356,38 +357,17 @@ function () {
       this.render();
     }
     /**
-     * Sets the filters for the template.
-     * @todo This can use some refactoring.
-     * @param {obj} event The localist event Json data.
+     * Sets the rapperArgs filters for the template.
+     * @param {obj} event The localist event obj.
      */
 
   }, {
     key: "buildFilters",
     value: function buildFilters(event) {
-      if (this.filterby_filters) {
-        if (this.filterby === 'type' && this.builtEvent.type !== 0 && event.filters.event_types) {
-          this.wrapperArgs.filters[event.filters.event_types[0].name] = {
-            id: event.filters.event_types[0].id,
-            name: event.filters.event_types[0].name,
-            filterby: this.filterby
-          };
-        } else if (this.filterby === 'dept' && this.builtEvent.department !== 0 && event.filters.departments) {
-          this.wrapperArgs.filters[event.filters.departments[0].name] = {
-            id: event.filters.departments[0].id,
-            name: event.filters.departments[0].name,
-            filterby: this.filterby
-          };
-        } else if (this.filterby === 'group' && this.builtEvent.group_name !== '') {
-          this.wrapperArgs.filters[this.builtEvent.group_name] = {
-            id: this.builtEvent.group_id,
-            name: this.builtEvent.group_name,
-            filterby: this.filterby
-          };
-        }
-      }
+      Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_5__["buildEventWrapperFilters"])(event, this);
     }
     /**
-     * Bulds paggination if used.
+     * Bulds pagination if used.
      * @return {string} A HTML string.
      */
 
@@ -399,8 +379,8 @@ function () {
       } // attach events
 
 
-      this.paginator = Object(_templates_paginationTemplate__WEBPACK_IMPORTED_MODULE_3__["default"])(this.page);
-      return this.paginator.render();
+      var paginator = Object(_templates_paginationTemplate__WEBPACK_IMPORTED_MODULE_3__["default"])(this.page);
+      return paginator.render();
     }
     /**
      * Bulds the inner HTML template.
@@ -412,8 +392,7 @@ function () {
     value: function buildInnerHtml() {
       var _this3 = this;
 
-      var inner = '';
-      /** @todo fix issue with checkDate */
+      var inner = ''; // standard is the only format that uses a date grouping wrapper.
 
       var checkDate = this.format === 'standard' ? new _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_1__["CheckDate"]() : null;
       this.events.forEach(function (event) {
@@ -430,93 +409,14 @@ function () {
       return inner;
     }
     /**
-     * Handles window events mostly filters and pagination.
+     * Handles window events { filters and pagination }.
      */
 
   }, {
     key: "eventListeners",
     value: function eventListeners() {
-      var _this4 = this;
-
-      var domStr = this.target.replace(/[^\w]/gi, '');
-      var targetElem = this.parent; // handles filter events
-
-      var toggleFilters = function toggleFilters(id, target) {
-        // remove active class from all filter buttons
-        var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-        allFilterBtns.forEach(function (value) {
-          value.classList.remove('active');
-        });
-        var elem = targetElem.querySelector("#".concat(id)); // set the current item active
-
-        elem.classList.add('active'); // onclick button will only hide non target elements
-        // hide all filter elements
-
-        var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-        allEvents.forEach(function (value) {
-          value.classList.add('fadeOut');
-        }); // show the target elements
-
-        var targetElems = _toConsumableArray(targetElem.getElementsByClassName(target));
-
-        targetElems.forEach(function (value) {
-          value.classList.remove('fadeOut');
-        });
-      }; // Removes all fadeout classes
-
-
-      var showAllEvents = function showAllEvents() {
-        // remove active class from all filter buttons
-        var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-        allFilterBtns.forEach(function (value) {
-          value.classList.remove('active');
-        });
-        var elem = targetElem.querySelector("#filterAll-".concat(domStr)); // set the current item active
-
-        elem.classList.add('active'); // show all filter elements
-
-        var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-        allEvents.forEach(function (value) {
-          value.classList.remove('fadeOut');
-        });
-      };
-      /**
-       * @todo refactor this into a seperate handler
-       * @param {event} e The event to be handled.
-       */
-
-
-      handleclick = function handleclick(e) {
-        if (/filterAll.*/.test(e.target.id)) {
-          // handle All events filter button at top
-          showAllEvents();
-        } else if (/filter.*/.test(e.target.id)) {
-          // handle other events filters.
-          toggleFilters(e.target.id, e.target.dataset.filter);
-        } else if (e.target.classList.contains('page-link')) {
-          // handle pagination click with ajax
-          e.preventDefault();
-
-          if (!e.target.parentNode || !e.target.parentNode.classList.contains('active')) {
-            _this4.renderThrobber();
-
-            var url = new URL(e.target.href);
-            var it = url.searchParams.get('page');
-            _this4.requestArgs.page = "".concat(it);
-            var newurl = "".concat(window.location.origin, "?page=").concat(it);
-            window.history.pushState({}, null, newurl);
-
-            _this4.getLocalistEvents();
-          }
-        }
-      }; // attach event listeners to parent
-
-
-      targetElem.addEventListener('click', handleclick, true);
+      handleclick = Object(_helpers_eventHandler__WEBPACK_IMPORTED_MODULE_4__["default"])(this);
+      this.parent.addEventListener('click', handleclick, true);
     }
     /**
      * Renders the html template string.
@@ -526,10 +426,11 @@ function () {
     key: "render",
     value: function render() {
       // remove loading animation timer
-      // if (this.c_loader) {
-      //     clearTimeout(this.c_loader);
-      // }
-      // replace this with map join
+      if (this.c_loader) {
+        clearTimeout(this.c_loader);
+      } // replace this with map join
+
+
       var inner = this.buildInnerHtml();
       var outer = this.outerTemplate(inner, this.wrapperArgs);
       outer += this.buildPagination();
@@ -548,14 +449,14 @@ function () {
   }, {
     key: "renderThrobber",
     value: function renderThrobber() {
-      var _this5 = this;
+      var _this4 = this;
 
       var loadingNode =
       /* html */
       "\n            <div class=\"loader\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
       this.parent.innerHTML = loadingNode;
       this.c_loader = setTimeout(function () {
-        var _ref2 = _toConsumableArray(_this5.parent.getElementsByClassName('loader')),
+        var _ref2 = _toConsumableArray(_this4.parent.getElementsByClassName('loader')),
             loader = _ref2[0];
 
         if (loader) {
@@ -988,7 +889,7 @@ var checkPropTypes = function checkPropTypes(params) {
 /*!************************************!*\
   !*** ./js/helpers/displayEvent.js ***!
   \************************************/
-/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getType, getDepartment, getEventType */
+/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getEventEndDate, stripDate, getCalStartDate, getCalEndDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getType, getDepartment, getEventType */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -997,6 +898,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMonthDayfromDateTime", function() { return getMonthDayfromDateTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDayfromDateTime", function() { return getDayfromDateTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventStartDate", function() { return getEventStartDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventEndDate", function() { return getEventEndDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stripDate", function() { return stripDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCalStartDate", function() { return getCalStartDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCalEndDate", function() { return getCalEndDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDisplayDate", function() { return getDisplayDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventDate", function() { return getEventDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTruncDesc", function() { return getTruncDesc; });
@@ -1061,6 +966,48 @@ var getDayfromDateTime = function getDayfromDateTime(dateTime) {
 var getEventStartDate = function getEventStartDate(event) {
   var startDateTime = event.event_instances[0].event_instance.start;
   return startDateTime;
+};
+/**
+ * Get event last end date.
+ * @param {obj} event A localist event obj
+ * @return {string} Date string.
+ */
+
+var getEventEndDate = function getEventEndDate(event) {
+  var endDateTime = event.last_date;
+  return endDateTime;
+};
+/**
+ * A plain date string.
+ * @param {mixed} date A date string or date object.
+ * @return {string} Date string.
+ */
+
+var stripDate = function stripDate(date) {
+  var cd = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYYMMDD');
+  return cd;
+};
+/**
+ *  Used by calendars
+ * @param {obj} event A localist event obj.
+ * @return {string} Date string.
+ */
+
+var getCalStartDate = function getCalStartDate(event) {
+  var sd = getEventStartDate(event);
+  var cd = stripDate(sd);
+  return cd;
+};
+/**
+ *  Used by calendars
+ * @param {obj} event A localist event obj.
+ * @return {string} Date string.
+ */
+
+var getCalEndDate = function getCalEndDate(event) {
+  var ed = getEventEndDate(event);
+  var sd = stripDate(ed);
+  return sd;
 };
 /**
  * The logic for determining the type of date string.
@@ -1234,11 +1181,13 @@ var getEventType = function getEventType(event, prefCategory) {
 /*!************************************!*\
   !*** ./js/helpers/eventFilters.js ***!
   \************************************/
-/*! exports provided: default */
+/*! exports provided: eventFilters, buildEventWrapperFilters */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventFilters", function() { return eventFilters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildEventWrapperFilters", function() { return buildEventWrapperFilters; });
 /**
  * Renders the filter elemet usually used in the wrapper.
  *   Adds the event handlers to the window.
@@ -1268,8 +1217,134 @@ var eventFilters = function eventFilters(filterObjs, domTarget) {
     }).join('') : '', "\n            </ul>\n        </div>\n    ")
   );
 };
+/**
+ * @todo Try not to use that return the filter.
+ * @param {obj} event The localist event object.
+ * @param {obj} that The component.
+ */
 
-/* harmony default export */ __webpack_exports__["default"] = (eventFilters);
+
+var buildEventWrapperFilters = function buildEventWrapperFilters(event, that) {
+  if (that.filterby === 'type' && that.builtEvent.type !== 0 && event.filters.event_types) {
+    that.wrapperArgs.filters[event.filters.event_types[0].name] = {
+      id: event.filters.event_types[0].id,
+      name: event.filters.event_types[0].name,
+      filterby: that.filterby
+    };
+  } else if (that.filterby === 'dept' && that.builtEvent.department !== 0 && event.filters.departments) {
+    that.wrapperArgs.filters[event.filters.departments[0].name] = {
+      id: event.filters.departments[0].id,
+      name: event.filters.departments[0].name,
+      filterby: that.filterby
+    };
+  } else if (that.filterby === 'group' && that.builtEvent.group_name !== '') {
+    that.wrapperArgs.filters[that.builtEvent.group_name] = {
+      id: that.builtEvent.group_id,
+      name: that.builtEvent.group_name,
+      filterby: that.filterby
+    };
+  }
+};
+
+
+
+/***/ }),
+
+/***/ "./js/helpers/eventHandler.js":
+/*!************************************!*\
+  !*** ./js/helpers/eventHandler.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+/* harmony default export */ __webpack_exports__["default"] = (function (that) {
+  var domStr = that.target.replace(/[^\w]/gi, '');
+  var targetElem = that.parent; // handles filter events
+
+  var toggleFilters = function toggleFilters(id, target) {
+    // remove active class from all filter buttons
+    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
+
+    allFilterBtns.forEach(function (value) {
+      value.classList.remove('active');
+    });
+    var elem = targetElem.querySelector("#".concat(id)); // set the current item active
+
+    elem.classList.add('active'); // onclick button will only hide non target elements
+    // hide all filter elements
+
+    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
+
+    allEvents.forEach(function (value) {
+      value.classList.add('fadeOut');
+    }); // show the target elements
+
+    var targetElems = _toConsumableArray(targetElem.getElementsByClassName(target));
+
+    targetElems.forEach(function (value) {
+      value.classList.remove('fadeOut');
+    });
+  }; // Removes all fadeout classes
+
+
+  var showAllEvents = function showAllEvents() {
+    // remove active class from all filter buttons
+    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
+
+    allFilterBtns.forEach(function (value) {
+      value.classList.remove('active');
+    });
+    var elem = targetElem.querySelector("#filterAll-".concat(domStr)); // set the current item active
+
+    elem.classList.add('active'); // show all filter elements
+
+    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
+
+    allEvents.forEach(function (value) {
+      value.classList.remove('fadeOut');
+    });
+  };
+  /**
+   * @todo refactor this into a seperate handler
+   * @param {event} e The event to be handled.
+   */
+
+
+  var handleclick = function handleclick(e) {
+    if (/filterAll.*/.test(e.target.id)) {
+      // handle All events filter button at top
+      showAllEvents();
+    } else if (/filter.*/.test(e.target.id)) {
+      // handle other events filters.
+      toggleFilters(e.target.id, e.target.dataset.filter);
+    } else if (e.target.classList.contains('page-link')) {
+      // handle pagination click with ajax
+      e.preventDefault();
+
+      if (!e.target.parentNode || !e.target.parentNode.classList.contains('active')) {
+        that.renderThrobber();
+        var url = new URL(e.target.href);
+        var it = url.searchParams.get('page');
+        that.requestArgs.page = "".concat(it);
+        var newurl = "".concat(window.location.origin, "?page=").concat(it);
+        window.history.pushState({}, null, newurl);
+        that.getLocalistEvents();
+      }
+    }
+  };
+
+  return handleclick;
+});
 
 /***/ }),
 
@@ -1284,20 +1359,25 @@ var eventFilters = function eventFilters(filterObjs, domTarget) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "add_calendar", function() { return add_calendar; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckDate", function() { return CheckDate; });
+/* harmony import */ var _displayEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displayEvent */ "./js/helpers/displayEvent.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
+/**
+ * @todo use moments for dates
+ * @param {obj} myEvent The localist event object
+ * @return {string} The html string
+ */
+
 var add_calendar = function add_calendar(myEvent) {
   /* ----------------- build calander links -------------------------- */
   var buidGoogleStr = function buidGoogleStr(myObj) {
-    var mySD = myObj.event_instances[0].event_instance.start.split('T')[0];
-    var gDateStart = mySD.split('-')[0] + mySD.split('-')[1] + mySD.split('-')[2]; // this may not work as intended for repeating events
-
-    var myED = myObj.last_date;
-    var gDateStop = myED.split('-')[0] + myED.split('-')[1] + myED.split('-')[2];
+    var gDateStart = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_0__["getCalStartDate"])(myEvent);
+    var gDateStop = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_0__["getCalEndDate"])(myObj);
     return (
       /* html */
       "\n            <a\n                class=\"fa fa-google google\"\n                href=\"https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=".concat(gDateStart, "%2F").concat(gDateStop, "&amp;details=").concat(encodeURIComponent(myObj.description_text.replace(/[\r\n]/g, "<br />")), "&amp;location=").concat(encodeURIComponent(myObj.location), "&amp;sprop=website%3Aevents.cornell.edu&amp;text=").concat(encodeURIComponent(myObj.title), "\"\n                title=\"Save to Google Calendar\"\n                target=\"_blank\"\n            >\n                <span class=\"sr-only\"\n                    >Add ").concat(myObj.title, " to Google Calendar</span\n                >\n            </a>\n        ")
@@ -1772,7 +1852,7 @@ var moderStandardInner = function moderStandardInner(builtData) {
 var modernStandardWrapper = function modernStandardWrapper(inner, args) {
   return (
     /* html */
-    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["default"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
+    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"".concat(args.title, "\">\n        ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
   );
 };
 
@@ -1890,7 +1970,7 @@ var standardInner = function standardInner(builtData) {
 var standardWrapper = function standardWrapper(inner, args) {
   return (
     /* html */
-    "\n        <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n            ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n            <div class=\"main-body\">\n                <div class=\"events-listing no-thumbnails\">\n                    ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["default"])(args.filters, args.target), "\n                    <div class=\"events-list\">\n                        ").concat(inner, "\n                    </div>\n                </div>\n                <!--events listing -->\n            </div>\n            <!-- main-body -->\n        </section>\n        <!--end of section -->\n    ")
+    "\n        <section class=\"standard\" id=\"eventStandard\" title=\"".concat(args.title, "\">\n            ").concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n            <div class=\"main-body\">\n                <div class=\"events-listing no-thumbnails\">\n                    ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["eventFilters"])(args.filters, args.target), "\n                    <div class=\"events-list\">\n                        ").concat(inner, "\n                    </div>\n                </div>\n                <!--events listing -->\n            </div>\n            <!-- main-body -->\n        </section>\n        <!--end of section -->\n    ")
   );
 };
 

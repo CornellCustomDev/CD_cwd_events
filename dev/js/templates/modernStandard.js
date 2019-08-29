@@ -1,5 +1,5 @@
 import { add_calendar } from '../helpers/template-helpers';
-import eventFilters from '../helpers/eventFilters';
+import { eventFilters } from '../helpers/eventFilters';
 /**
  *
  * @param {obj} event_types An array of events.

@@ -48,6 +48,48 @@ export const getEventStartDate = event => {
 };
 
 /**
+ * Get event last end date.
+ * @param {obj} event A localist event obj
+ * @return {string} Date string.
+ */
+export const getEventEndDate = event => {
+    const endDateTime = event.last_date;
+    return endDateTime;
+};
+
+/**
+ * A plain date string.
+ * @param {mixed} date A date string or date object.
+ * @return {string} Date string.
+ */
+export const stripDate = date => {
+    const cd = moment(date).format('YYYYMMDD');
+    return cd;
+};
+
+/**
+ *  Used by calendars
+ * @param {obj} event A localist event obj.
+ * @return {string} Date string.
+ */
+export const getCalStartDate = event => {
+    const sd = getEventStartDate(event);
+    const cd = stripDate(sd);
+    return cd;
+};
+
+/**
+ *  Used by calendars
+ * @param {obj} event A localist event obj.
+ * @return {string} Date string.
+ */
+export const getCalEndDate = event => {
+    const ed = getEventEndDate(event);
+    const sd = stripDate(ed);
+    return sd;
+};
+
+/**
  * The logic for determining the type of date string.
  *
  * @param {obj} event The localist event.

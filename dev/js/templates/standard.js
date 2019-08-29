@@ -1,5 +1,5 @@
 import { add_calendar } from '../helpers/template-helpers';
-import eventFilters from '../helpers/eventFilters';
+import { eventFilters } from '../helpers/eventFilters';
 
 /**
  *
