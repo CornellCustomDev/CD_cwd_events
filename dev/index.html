@@ -131,7 +131,7 @@
                                     <div id="edit-settings-cwd-events-localist-config-cwd-events-depts--4NUTVf-Lrxs--description"
                                         class="description">
                                         The department to include by ID. A comma seperated list of
-                                        groups can be used.
+                                        groups can be used (39623,139827,139828,4865).
                                     </div>
                                 </div>
                                 <div
@@ -330,13 +330,13 @@
     <!-- Loads nav -->
     <script src="demo/main.js"></script>
     <script>
-    var myLocalList;
+    var myLocalList = window.localList;
     /**
      * Get the data from the form and initiate new localist element
      * @todo impliment the rest of the drupal block elements
      *   Styling, read more, ...
      * */
-    function renderForm(){
+    function renderForm(loaded){
         var formData = $('form').first().serializeArray();
 
         const dataArray = [
@@ -366,21 +366,24 @@
         })
         // Drupal uses block titles not data heading.
         data.heading = formData[1].name == "settings[label_display]" ? formData[0].value : ''
+        data.loaded = loaded;
         // This class is added or removed in php.
         if (data.styling != '1'){
             $('#events_block').removeClass('cwd-events-style');
         }else{
-            $('#events_block').addClass('cwd-events-style');
+            $('div#events_block').addClass('cwd-events-style');
         }
         // Drupal php assigns data-target.
         data.target = 'events_block';
-        myLocalList = window.localList(data);
+        myLocalList(data);
     }
 
     $('#submit').on('click', function(e){
         e.preventDefault;
         // clear any old content
+
         $('#events_block').html('');
+        delete myLocalList.paginator;
         renderForm();
     })
 

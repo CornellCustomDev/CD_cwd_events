@@ -5,6 +5,7 @@ import paginatorTemplate from '../templates/paginationTemplate';
 
 const check = require('check-types');
 
+let handleclick;
 /**
  * Test params property types.
  * @param {obj} params The block element data.
@@ -89,7 +90,7 @@ export default class LocalistComponent {
             pref_eventdetails: 'event details',
             addcal
         };
-
+        this.loaded = false;
         this.findAll = findAll;
 
         // Is this used?
@@ -119,6 +120,8 @@ export default class LocalistComponent {
 
         if (typeof document !== 'undefined') {
             this.parent = document.getElementById(target);
+            // remove any DOM event listeners before you add them.
+            this.parent.removeEventListener('click', handleclick, true);
             this.eventListeners();
             this.renderThrobber();
         } else {
@@ -133,7 +136,8 @@ export default class LocalistComponent {
      * @param {obj} args The request params.
      */
     getLocalistEvents(args) {
-        this.findAll(args)
+        const beargs = args || this.requestArgs;
+        this.findAll(beargs)
             .then(response => {
                 this.setState({
                     events: response.data.events,
@@ -207,9 +211,8 @@ export default class LocalistComponent {
             return '';
         }
         // attach events
-        const paginator = paginatorTemplate(this.page);
-        this.paginator = paginator;
-        return paginator.render();
+        this.paginator = paginatorTemplate(this.page);
+        return this.paginator.render();
     }
 
     /**
@@ -238,7 +241,7 @@ export default class LocalistComponent {
         const domStr = this.target.replace(/[^\w]/gi, '');
         const targetElem = this.parent;
         // handles filter events
-        this.toggleFilters = (id, target) => {
+        const toggleFilters = (id, target) => {
             // remove active class from all filter buttons
             const allFilterBtns = [
                 ...targetElem.getElementsByClassName('filter-btn')
@@ -267,7 +270,7 @@ export default class LocalistComponent {
         };
 
         // Removes all fadeout classes
-        this.showAllEvents = () => {
+        const showAllEvents = () => {
             // remove active class from all filter buttons
             const allFilterBtns = [
                 ...targetElem.getElementsByClassName('filter-btn')
@@ -288,15 +291,17 @@ export default class LocalistComponent {
                 value.classList.remove('fadeOut');
             });
         };
-
-        // attach event listeners to parent
-        targetElem.addEventListener('click', e => {
+        /**
+         * @todo refactor this into a seperate handler
+         * @param {event} e The event to be handled.
+         */
+        handleclick = e => {
             if (/filterAll.*/.test(e.target.id)) {
                 // handle All events filter button at top
-                this.showAllEvents();
+                showAllEvents();
             } else if (/filter.*/.test(e.target.id)) {
                 // handle other events filters.
-                this.toggleFilters(e.target.id, e.target.dataset.filter);
+                toggleFilters(e.target.id, e.target.dataset.filter);
             } else if (e.target.classList.contains('page-link')) {
                 // handle pagination click with ajax
                 e.preventDefault();
@@ -310,10 +315,13 @@ export default class LocalistComponent {
                     this.requestArgs.page = `${it}`;
                     const newurl = `${window.location.origin}?page=${it}`;
                     window.history.pushState({}, null, newurl);
-                    this.getLocalistEvents(this.requestArgs);
+                    this.getLocalistEvents();
                 }
             }
-        });
+        };
+
+        // attach event listeners to parent
+        targetElem.addEventListener('click', handleclick, true);
     }
 
     /**
@@ -321,9 +329,9 @@ export default class LocalistComponent {
      */
     render() {
         // remove loading animation timer
-        if (this.c_loader) {
-            clearTimeout(this.c_loader);
-        }
+        // if (this.c_loader) {
+        //     clearTimeout(this.c_loader);
+        // }
         // replace this with map join
         const inner = this.buildInnerHtml();
         let outer = this.outerTemplate(inner, this.wrapperArgs);
@@ -341,14 +349,16 @@ export default class LocalistComponent {
      */
     renderThrobber() {
         const loadingNode = /* html */ `
-            <div class="fadeOut loader">
+            <div class="loader">
                 <span class="fa fa-spin fa-cog"></span>
             </div>
         `;
         this.parent.innerHTML = loadingNode;
         this.c_loader = setTimeout(() => {
             const [loader] = [...this.parent.getElementsByClassName('loader')];
-            loader.classList.remove('fadeOut');
-        }, 200); // skip loading animation if under 0.5s
+            if (loader) {
+                loader.classList.remove('fadeOut');
+            }
+        }, 500); // skip loading animation if under 0.5s
     }
 }

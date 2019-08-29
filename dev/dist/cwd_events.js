@@ -187,13 +187,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
+
+var handleclick;
 /**
  * Test params property types.
  * @param {obj} params The block element data.
  * @param {obj} type The check.type
  * @return {boolean} Valid proptype.
  */
-
 
 var checkPropTypes = function checkPropTypes(params, type) {
   var valid = check.map(params, type);
@@ -277,6 +278,7 @@ function () {
       pref_eventdetails: 'event details',
       addcal: addcal
     };
+    this.loaded = false;
     this.findAll = _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__["default"]; // Is this used?
 
     this.group = group;
@@ -303,7 +305,9 @@ function () {
     this.pagination = pagination;
 
     if (typeof document !== 'undefined') {
-      this.parent = document.getElementById(target);
+      this.parent = document.getElementById(target); // remove any DOM event listeners before you add them.
+
+      this.parent.removeEventListener('click', handleclick, true);
       this.eventListeners();
       this.renderThrobber();
     } else {
@@ -324,7 +328,8 @@ function () {
     value: function getLocalistEvents(args) {
       var _this = this;
 
-      this.findAll(args).then(function (response) {
+      var beargs = args || this.requestArgs;
+      this.findAll(beargs).then(function (response) {
         _this.setState({
           events: response.data.events,
           date: response.data.date,
@@ -394,9 +399,8 @@ function () {
       } // attach events
 
 
-      var paginator = Object(_templates_paginationTemplate__WEBPACK_IMPORTED_MODULE_3__["default"])(this.page);
-      this.paginator = paginator;
-      return paginator.render();
+      this.paginator = Object(_templates_paginationTemplate__WEBPACK_IMPORTED_MODULE_3__["default"])(this.page);
+      return this.paginator.render();
     }
     /**
      * Bulds the inner HTML template.
@@ -437,7 +441,7 @@ function () {
       var domStr = this.target.replace(/[^\w]/gi, '');
       var targetElem = this.parent; // handles filter events
 
-      this.toggleFilters = function (id, target) {
+      var toggleFilters = function toggleFilters(id, target) {
         // remove active class from all filter buttons
         var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
 
@@ -463,7 +467,7 @@ function () {
       }; // Removes all fadeout classes
 
 
-      this.showAllEvents = function () {
+      var showAllEvents = function showAllEvents() {
         // remove active class from all filter buttons
         var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
 
@@ -479,16 +483,20 @@ function () {
         allEvents.forEach(function (value) {
           value.classList.remove('fadeOut');
         });
-      }; // attach event listeners to parent
+      };
+      /**
+       * @todo refactor this into a seperate handler
+       * @param {event} e The event to be handled.
+       */
 
 
-      targetElem.addEventListener('click', function (e) {
+      handleclick = function handleclick(e) {
         if (/filterAll.*/.test(e.target.id)) {
           // handle All events filter button at top
-          _this4.showAllEvents();
+          showAllEvents();
         } else if (/filter.*/.test(e.target.id)) {
           // handle other events filters.
-          _this4.toggleFilters(e.target.id, e.target.dataset.filter);
+          toggleFilters(e.target.id, e.target.dataset.filter);
         } else if (e.target.classList.contains('page-link')) {
           // handle pagination click with ajax
           e.preventDefault();
@@ -502,10 +510,13 @@ function () {
             var newurl = "".concat(window.location.origin, "?page=").concat(it);
             window.history.pushState({}, null, newurl);
 
-            _this4.getLocalistEvents(_this4.requestArgs);
+            _this4.getLocalistEvents();
           }
         }
-      });
+      }; // attach event listeners to parent
+
+
+      targetElem.addEventListener('click', handleclick, true);
     }
     /**
      * Renders the html template string.
@@ -515,11 +526,10 @@ function () {
     key: "render",
     value: function render() {
       // remove loading animation timer
-      if (this.c_loader) {
-        clearTimeout(this.c_loader);
-      } // replace this with map join
-
-
+      // if (this.c_loader) {
+      //     clearTimeout(this.c_loader);
+      // }
+      // replace this with map join
       var inner = this.buildInnerHtml();
       var outer = this.outerTemplate(inner, this.wrapperArgs);
       outer += this.buildPagination();
@@ -542,14 +552,16 @@ function () {
 
       var loadingNode =
       /* html */
-      "\n            <div class=\"fadeOut loader\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
+      "\n            <div class=\"loader\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
       this.parent.innerHTML = loadingNode;
       this.c_loader = setTimeout(function () {
         var _ref2 = _toConsumableArray(_this5.parent.getElementsByClassName('loader')),
             loader = _ref2[0];
 
-        loader.classList.remove('fadeOut');
-      }, 200); // skip loading animation if under 0.5s
+        if (loader) {
+          loader.classList.remove('fadeOut');
+        }
+      }, 500); // skip loading animation if under 0.5s
     }
   }]);
 
