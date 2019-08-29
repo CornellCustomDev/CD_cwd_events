@@ -52,6 +52,12 @@ export default params => {
     params.filterby_filters = 'true';
     params.addcal = params.addcal || 'false';
     params.pref_excerpt_length = '250';
+    if (params.pagination === 'true') {
+        const url = new URL(window.location.href);
+        params.page = url.searchParams.get('page');
+    } else {
+        params.page = '1';
+    }
     if (checkPropTypes(params) && params.format in formatOptions) {
         const Component = formatOptions[params.format];
         const component = new Component(params);

@@ -19,13 +19,15 @@ const checkPropTypes = params => {
  * @return {axios} A axios promise;
  */
 export default ({
-    depts = '0',
-    entries = '3',
-    format = 'standard',
-    group = '0',
-    keyword = '',
-    apikey = '',
-    calendarurl = '//events.cornell.edu/api/2.1/events'
+    depts,
+    entries,
+    format,
+    group,
+    keyword,
+    apikey,
+    calendarurl,
+    page,
+    days = 365
 }) => {
     if (
         !checkPropTypes(
@@ -46,9 +48,10 @@ export default ({
     }
     const params = {
         apikey,
-        days: 365,
+        days,
         distinct: true,
         pp: entries,
+        page,
         start:
             format !== 'archive'
                 ? moment().format('YYYY-MM-DD')

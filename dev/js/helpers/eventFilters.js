@@ -21,67 +21,8 @@ const eventFilters = (filterObjs, domTarget) => {
         console.error('invalid props in eventFilters()');
         return '';
     }
-    const targetElem = document.getElementById(domTarget);
     // make sure function names are safe strings
     const domStr = domTarget.replace(/[^\w]/gi, '');
-
-    // handles filter events
-    const toggleFilters = (id, target) => {
-        // remove active class from all filter buttons
-        const allFilterBtns = [
-            ...targetElem.getElementsByClassName('filter-btn')
-        ];
-        allFilterBtns.forEach(value => {
-            value.classList.remove('active');
-        });
-        const elem = targetElem.querySelector(`#${id}`);
-        // set the current item active
-        elem.classList.add('active');
-
-        // onclick button will only hide non target elements
-        // hide all filter elements
-        const allEvents = [...targetElem.getElementsByClassName('event-node')];
-        allEvents.forEach(value => {
-            value.classList.add('fadeOut');
-        });
-
-        // show the target elements
-        const targetElems = [...targetElem.getElementsByClassName(target)];
-        targetElems.forEach(value => {
-            value.classList.remove('fadeOut');
-        });
-    };
-
-    // Removes all fadeout classes
-    const showAllEvents = () => {
-        // remove active class from all filter buttons
-        const allFilterBtns = [
-            ...targetElem.getElementsByClassName('filter-btn')
-        ];
-        allFilterBtns.forEach(value => {
-            value.classList.remove('active');
-        });
-
-        const elem = targetElem.querySelector(`#filterAll-${domStr}`);
-        // set the current item active
-        elem.classList.add('active');
-
-        // show all filter elements
-        const allEvents = [...targetElem.getElementsByClassName('event-node')];
-        allEvents.forEach(value => {
-            value.classList.remove('fadeOut');
-        });
-    };
-
-    // attach event listeners to parent
-    targetElem.addEventListener('click', e => {
-        if (/filterAll.*/.test(e.target.id)) {
-            showAllEvents();
-        } else if (/filter.*/.test(e.target.id)) {
-            toggleFilters(e.target.id, e.target.dataset.filter);
-        }
-    });
-
     return /* html */ `
         <div class="events-filters-wrap">
             <h3 class="hidden">Show:</h3>

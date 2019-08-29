@@ -28,6 +28,7 @@ var ll =localList({
     calendarurl: 'http://localhost:8080/test/testData.json',
     apikey: '',
     filterby: 'group',
+    pagination: 'false',
 
 });
 //maybe use https://github.com/ctimmerm/axios-mock-adapter
@@ -50,7 +51,12 @@ describe('cd events application unit tests', () => {
         var check = function(done){
             const requestArgs = {
                 entries: '4',
-                calendarurl: 'http://localhost:8080/test/testData.json'
+                calendarurl: 'http://localhost:8080/test/testData.json',
+                depts: '0',
+                format: 'standard',
+                group: '0',
+                keyword: '',
+                apikey: '',
             };
             const connection = localistConnector(requestArgs);
             connection

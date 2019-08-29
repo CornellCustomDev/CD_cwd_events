@@ -1,6 +1,7 @@
 import buildEvent from '../helpers/buildEvent';
 import { CheckDate } from '../helpers/template-helpers';
 import findAll from '../services/localistApiConnector';
+import paginatorTemplate from '../templates/paginationTemplate';
 
 const check = require('check-types');
 
@@ -12,7 +13,6 @@ const check = require('check-types');
  */
 const checkPropTypes = (params, type) => {
     const valid = check.map(params, type);
-
     return check.all(valid);
 };
 
@@ -36,7 +36,9 @@ export default class LocalistComponent {
         addcal,
         pref_excerpt_length,
         calendarurl,
-        apikey
+        apikey,
+        page = '1',
+        pagination
     }) {
         if (
             !checkPropTypes(
@@ -52,7 +54,8 @@ export default class LocalistComponent {
                     filterby_filters,
                     filterby,
                     pref_excerpt_length,
-                    calendarurl
+                    calendarurl,
+                    pagination
                 },
                 check.string
             ) &&
@@ -76,7 +79,8 @@ export default class LocalistComponent {
             group,
             keyword,
             apikey, // Move api key to drupal block?
-            calendarurl
+            calendarurl,
+            page
         };
 
         // The build event params.
@@ -85,6 +89,7 @@ export default class LocalistComponent {
             pref_eventdetails: 'event details',
             addcal
         };
+
         this.findAll = findAll;
 
         // Is this used?
@@ -105,8 +110,16 @@ export default class LocalistComponent {
         this.outerTemplate = outerTemplate;
         /** @todo dont render here */
 
+        // Event data.
+        this.date = {};
+        this.page = {};
+
+        // Pagination
+        this.pagination = pagination;
+
         if (typeof document !== 'undefined') {
             this.parent = document.getElementById(target);
+            this.eventListeners();
             this.renderThrobber();
         } else {
             this.parent = null;
@@ -122,7 +135,11 @@ export default class LocalistComponent {
     getLocalistEvents(args) {
         this.findAll(args)
             .then(response => {
-                this.setState({ events: response.data.events });
+                this.setState({
+                    events: response.data.events,
+                    date: response.data.date,
+                    page: response.data.page
+                });
             })
             .catch(error => {
                 console.error(error);
@@ -181,6 +198,24 @@ export default class LocalistComponent {
         }
     }
 
+    /**
+     * Bulds paggination if used.
+     * @return {string} A HTML string.
+     */
+    buildPagination() {
+        if (this.pagination !== 'true') {
+            return '';
+        }
+        // attach events
+        const paginator = paginatorTemplate(this.page);
+        this.paginator = paginator;
+        return paginator.render();
+    }
+
+    /**
+     * Bulds the inner HTML template.
+     * @return {string} A HTML string.
+     */
     buildInnerHtml() {
         let inner = '';
         /** @todo fix issue with checkDate */
@@ -197,6 +232,91 @@ export default class LocalistComponent {
     }
 
     /**
+     * Handles window events mostly filters and pagination.
+     */
+    eventListeners() {
+        const domStr = this.target.replace(/[^\w]/gi, '');
+        const targetElem = this.parent;
+        // handles filter events
+        this.toggleFilters = (id, target) => {
+            // remove active class from all filter buttons
+            const allFilterBtns = [
+                ...targetElem.getElementsByClassName('filter-btn')
+            ];
+            allFilterBtns.forEach(value => {
+                value.classList.remove('active');
+            });
+            const elem = targetElem.querySelector(`#${id}`);
+            // set the current item active
+            elem.classList.add('active');
+
+            // onclick button will only hide non target elements
+            // hide all filter elements
+            const allEvents = [
+                ...targetElem.getElementsByClassName('event-node')
+            ];
+            allEvents.forEach(value => {
+                value.classList.add('fadeOut');
+            });
+
+            // show the target elements
+            const targetElems = [...targetElem.getElementsByClassName(target)];
+            targetElems.forEach(value => {
+                value.classList.remove('fadeOut');
+            });
+        };
+
+        // Removes all fadeout classes
+        this.showAllEvents = () => {
+            // remove active class from all filter buttons
+            const allFilterBtns = [
+                ...targetElem.getElementsByClassName('filter-btn')
+            ];
+            allFilterBtns.forEach(value => {
+                value.classList.remove('active');
+            });
+
+            const elem = targetElem.querySelector(`#filterAll-${domStr}`);
+            // set the current item active
+            elem.classList.add('active');
+
+            // show all filter elements
+            const allEvents = [
+                ...targetElem.getElementsByClassName('event-node')
+            ];
+            allEvents.forEach(value => {
+                value.classList.remove('fadeOut');
+            });
+        };
+
+        // attach event listeners to parent
+        targetElem.addEventListener('click', e => {
+            if (/filterAll.*/.test(e.target.id)) {
+                // handle All events filter button at top
+                this.showAllEvents();
+            } else if (/filter.*/.test(e.target.id)) {
+                // handle other events filters.
+                this.toggleFilters(e.target.id, e.target.dataset.filter);
+            } else if (e.target.classList.contains('page-link')) {
+                // handle pagination click with ajax
+                e.preventDefault();
+                if (
+                    !e.target.parentNode ||
+                    !e.target.parentNode.classList.contains('active')
+                ) {
+                    this.renderThrobber();
+                    const url = new URL(e.target.href);
+                    const it = url.searchParams.get('page');
+                    this.requestArgs.page = `${it}`;
+                    const newurl = `${window.location.origin}?page=${it}`;
+                    window.history.pushState({}, null, newurl);
+                    this.getLocalistEvents(this.requestArgs);
+                }
+            }
+        });
+    }
+
+    /**
      * Renders the html template string.
      */
     render() {
@@ -206,7 +326,8 @@ export default class LocalistComponent {
         }
         // replace this with map join
         const inner = this.buildInnerHtml();
-        const outer = this.outerTemplate(inner, this.wrapperArgs);
+        let outer = this.outerTemplate(inner, this.wrapperArgs);
+        outer += this.buildPagination();
         /** @todo set this somewhere else */
         if (this.parent) {
             this.parent.innerHTML = outer;
@@ -224,7 +345,7 @@ export default class LocalistComponent {
                 <span class="fa fa-spin fa-cog"></span>
             </div>
         `;
-        this.parent.insertAdjacentHTML('afterbegin', loadingNode);
+        this.parent.innerHTML = loadingNode;
         this.c_loader = setTimeout(() => {
             const [loader] = [...this.parent.getElementsByClassName('loader')];
             loader.classList.remove('fadeOut');

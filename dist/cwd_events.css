@@ -25,6 +25,10 @@
   /* required change to visually hidden*/
 }
 
+.cwd-events-style .pagination {
+  padding-left: 5px;
+}
+
 .cwd-events-style section.standard .events-listing {
   position: relative;
   float: left;

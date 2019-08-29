@@ -8,12 +8,12 @@ if (content && nav) {
     }
 }
 
-const dBlock = document.getElementById('drupal-modal');
-if (content.length > 1) {
-    if (content && dBlock) {
-        const el = content[1].import.querySelector('#block-form');
-        if (el) {
-            dBlock.appendChild(el.cloneNode(true));
-        }
-    }
-}
+// const dBlock = document.getElementById('drupal-modal');
+// if (content.length > 1) {
+//     if (content && dBlock) {
+//         const el = content[1].import.querySelector('#block-form');
+//         if (el) {
+//             dBlock.appendChild(el.cloneNode(true));
+//         }
+//     }
+// }

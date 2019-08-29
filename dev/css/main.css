@@ -33,3 +33,7 @@ p.text-muted {
     border:3px solid #eee;
     height: 100%
 }
+h1{
+    line-height: 2;
+}
+
