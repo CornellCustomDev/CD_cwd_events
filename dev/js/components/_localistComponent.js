@@ -215,11 +215,9 @@ export default class LocalistComponent {
         if (this.c_loader) {
             clearTimeout(this.c_loader);
         }
-        // replace this with map join
         const inner = this.buildInnerHtml();
         let outer = this.outerTemplate(inner, this.wrapperArgs);
         outer += this.buildPagination();
-        /** @todo set this somewhere else */
         if (this.parent) {
             this.parent.innerHTML = outer;
         }
@@ -232,7 +230,7 @@ export default class LocalistComponent {
      */
     renderThrobber() {
         const loadingNode = /* html */ `
-            <div class="loader">
+            <div class="fadeOut loader">
                 <span class="fa fa-spin fa-cog"></span>
             </div>
         `;

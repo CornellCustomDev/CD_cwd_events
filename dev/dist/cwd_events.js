@@ -428,13 +428,11 @@ function () {
       // remove loading animation timer
       if (this.c_loader) {
         clearTimeout(this.c_loader);
-      } // replace this with map join
-
+      }
 
       var inner = this.buildInnerHtml();
       var outer = this.outerTemplate(inner, this.wrapperArgs);
       outer += this.buildPagination();
-      /** @todo set this somewhere else */
 
       if (this.parent) {
         this.parent.innerHTML = outer;
@@ -453,7 +451,7 @@ function () {
 
       var loadingNode =
       /* html */
-      "\n            <div class=\"loader\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
+      "\n            <div class=\"fadeOut loader\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
       this.parent.innerHTML = loadingNode;
       this.c_loader = setTimeout(function () {
         var _ref2 = _toConsumableArray(_this4.parent.getElementsByClassName('loader')),

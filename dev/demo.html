@@ -5,7 +5,7 @@
         <title>CWD_Localist examples</title>
         <link rel="stylesheet" href="css/main.css" />
         <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
-        <link rel="import" href="demo/main.html" />
+        <!-- <link rel="import" href="demo/main.html" /> -->
         <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -25,7 +25,41 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
     </head>
     <body>
-        <nav id='nav' class="navbar navbar-expand-lg navbar-dark bg-dark"></nav>
+        <nav id='nav' class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+            <div id="nav" class='nav'>
+                <a class="navbar-brand" href="https://cu-communityapps.github.io/CD_cwd_events/">CD_cwd_events</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                            <li class="nav-item">
+                                    <a class="nav-link" href="./index.html"
+                                        >Drupal Config Demo <span class="sr-only">(current)</span></a
+                                    >
+                                </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./demo.html"
+                                >Views Demo <span class="sr-only">(current)</span></a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./test.html">Browser tests</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
         <div id="index" class="container">
             <h1>CWD_LocalList Example</h1>
             <p class='text-muted'>
@@ -153,6 +187,6 @@
         </div>
         <script src="./dist/cwd_events.js"></script>
         <!-- Loads nav -->
-        <script src="demo/main.js"></script>
+        <!-- <script src="demo/main.js"></script> -->
     </body>
 </html>
