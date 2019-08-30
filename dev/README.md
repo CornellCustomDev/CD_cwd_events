@@ -35,3 +35,12 @@ If security vulnerabilities are found and updates are available
 
 remove http-server dev dpendency due to github warning you must run  
 `npm install http-server -g`
+
+Check if a package can be updated
+
+```bash
+npm install -g npm-check-updates
+ncu -u
+npm update
+npm install
+```
