@@ -12,27 +12,35 @@ require('babel-polyfill');
  * @param {jQuery} $
  * @param {Drupal} Drupal
  */
-if (typeof jQuery !== 'undefined' && typeof Drupal !== 'undefined') {
+if (
+    typeof jQuery === 'function' &&
+    typeof Drupal !== 'undefined' &&
+    typeof window === 'object'
+) {
     (function($, Drupal) {
         Drupal.behaviors.cwdEvents = {
             attach(context) {
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
-                        localList({ ...this.dataset });
+                        const data = { ...this.dataset };
+                        data.win = window;
+                        localList({ data });
                     });
             }
         };
-    })(jQuery, Drupal);
+    })(jQuery, Drupal, window);
 } else {
     console.warn(`jQuery is ${typeof jQuery} and Drupal is ${typeof Drupal}`);
     const eventListings = [
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        localList({ ...elem.dataset });
+        const data = { ...elem.dataset };
+        data.win = window;
+        localList(data);
     });
-    // For testing expose localList.
+    // If not drupal expose localList.
     if (typeof window === 'object') {
         window.localList = localList;
     }

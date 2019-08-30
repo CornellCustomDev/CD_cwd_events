@@ -1,23 +1,14 @@
 /**
  * Renders the filter elemet usually used in the wrapper.
- *   Adds the event handlers to the window.
  *
- * @todo Add wai-aria controls support,
- *   also tests that element exists,
- *
- * @modifies {window} Attaches click event handlers to window.
+ * @todo Add wai-aria controls support
  *
  * @param {array} filterObjs A array of objects [{id:'',name:'',filterby:''}]
  * @param {string} domTarget A string of html id #id should exist and be unique.
- *
  * @return {string} A html string.
  */
 const eventFilters = (filterObjs, domTarget) => {
-    if (
-        typeof filterObjs === 'undefined' ||
-        typeof domTarget === 'undefined' ||
-        typeof document === 'undefined'
-    ) {
+    if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
         console.error('invalid props in eventFilters()');
         return '';
     }

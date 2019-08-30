@@ -42,8 +42,9 @@ export default class LocalistComponent {
         pref_excerpt_length,
         calendarurl,
         apikey,
-        page = '1',
-        pagination
+        page,
+        pagination,
+        win
     }) {
         if (
             !checkPropTypes(
@@ -64,11 +65,21 @@ export default class LocalistComponent {
                 },
                 check.string
             ) &&
-            !checkPropTypes({ innerTemplate, outerTemplate }, check.function)
+            !checkPropTypes({ innerTemplate, outerTemplate }, check.function) &&
+            !checkPropTypes({ win }, check.object)
         ) {
             console.warn('Invalid props types in localist base component.');
             return {};
         }
+        this.win = win;
+        this.doc = win.document;
+        // @todo if not this parent return {};
+        this.parent = this.doc.getElementById(target);
+        // remove any DOM event listeners before you add them.
+        if (this.parent) {
+            this.parent.removeEventListener('click', handleclick, true);
+        }
+
         // The wrapper template params.
         this.wrapperArgs = {
             target,
@@ -115,15 +126,10 @@ export default class LocalistComponent {
         this.pagination = pagination;
         // Should this be in a seperate render function?
         // Renders element on construction.
-        if (typeof document !== 'undefined') {
-            this.parent = document.getElementById(target);
-            // remove any DOM event listeners before you add them.
-            this.parent.removeEventListener('click', handleclick, true);
-            this.eventListeners();
-            this.renderThrobber();
-        } else {
-            this.parent = null;
-        }
+
+        this.eventListeners();
+        this.renderThrobber();
+
         this.getLocalistEvents(this.requestArgs);
     }
 
@@ -204,11 +210,14 @@ export default class LocalistComponent {
      */
     eventListeners() {
         handleclick = eventHandler(this);
-        this.parent.addEventListener('click', handleclick, true);
+        if (this.parent) {
+            this.parent.addEventListener('click', handleclick, true);
+        }
     }
 
     /**
      * Renders the html template string.
+     * @return {string} A html string with inner and outer templates.
      */
     render() {
         // remove loading animation timer
@@ -218,9 +227,8 @@ export default class LocalistComponent {
         const inner = this.buildInnerHtml();
         let outer = this.outerTemplate(inner, this.wrapperArgs);
         outer += this.buildPagination();
-        if (this.parent) {
-            this.parent.innerHTML = outer;
-        }
+        this.doRender(outer);
+        return outer;
     }
 
     /**
@@ -234,12 +242,18 @@ export default class LocalistComponent {
                 <span class="fa fa-spin fa-cog"></span>
             </div>
         `;
-        this.parent.innerHTML = loadingNode;
+        this.doRender(loadingNode);
         this.c_loader = setTimeout(() => {
             const [loader] = [...this.parent.getElementsByClassName('loader')];
             if (loader) {
                 loader.classList.remove('fadeOut');
             }
         }, 500); // skip loading animation if under 0.5s
+    }
+
+    doRender(innerhtml) {
+        if (this.parent) {
+            this.parent.innerHTML = innerhtml;
+        }
     }
 }

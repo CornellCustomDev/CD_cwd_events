@@ -3,20 +3,31 @@ import localList from '../js/localList';
 import localistConnector from '../js/services/localistApiConnector';
 import {CheckDate, add_calendar } from '../js/helpers/template-helpers';
 import {eventFilters} from '../js/helpers/eventFilters';
+import { standardInner, standardWrapper } from '../js/templates/standard';
+import { inlineCompactInner, inlineCompactWrapper } from '../js/templates/inlineCompact';
+import { modernCompactInner, modernCompactWrapper } from '../js/templates/modernCompact';
+import { modernStandardInner, modernStandardWrapper } from '../js/templates/modernStandard';
+import { archiveInner, archiveWrapper } from '../js/templates/archive';
+import paginationTemplate from '../js/templates/paginationTemplate'
 const assert = require('assert');
 var expect = require('chai').expect;
 var should = require('chai').should();
 var request = require('request');
 var chai = require('chai');
-chai.use(require('chai-http'));
 
+chai.use(require('chai-http'));
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+const { window } = new JSDOM(`...`);
+const { document } = (new JSDOM(`...`)).window;
 
 var data;
 var requester = chai.request('http://localhost:8080');
 var innerHtmlString;
 var outerString;
 
-var ll =localList({
+const llprops = {
     format:'compact',
     target:'standard',
     depts: "",
@@ -29,9 +40,26 @@ var ll =localList({
     apikey: '',
     filterby: 'group',
     pagination: 'false',
+    win: window
+}
 
-});
-//maybe use https://github.com/ctimmerm/axios-mock-adapter
+var ll =localList(llprops);
+
+llprops.format="standard";
+var llStandard = localList(llprops);
+
+llprops.format="inline_compact";
+var llIC = localList(llprops);
+
+llprops.format="modern_compact";
+var llMC = localList(llprops);
+
+llprops.format="modern_standard";
+var llMS = localList(llprops);
+
+llprops.format="archive";
+var llA = localList(llprops);
+
 describe('cd events application unit tests', () => {
         const beargs = {
             addcal: 'true',
@@ -168,6 +196,7 @@ describe('cd events application unit tests', () => {
             });
 
             describe('eventFilters()', function(){
+
                 const ef = eventFilters(ll.wrapperArgs.filters, undefined);
                 it('should be empty because they requrie a valid window: must be tested in browser.', function(){
                     expect(ef).to.be.empty;
@@ -183,5 +212,61 @@ describe('cd events application unit tests', () => {
                 })
             })
         });
+        describe('Templates', function() {
+            describe('paginator', function(){
+                var page = {size:3, current:1, total:4}
+                var paginator = paginationTemplate(page)
+                var html = paginator.render();
+                expect(html).to.contain('page-item');
+            })
+        });
+
+        describe('Components', function() {
+            describe('standard', function(){
+                describe('template', function(){
+                    it('should return valid html string.', function(){
+                        const html = llStandard.render();
+                        expect(html).to.contain('class="standard"');
+                    })
+                });
+            });
+            describe('inline_compact', function(){
+                describe('template', function(){
+                    it('should return valid html string.', function(){
+                        const html = llIC.render();
+                        expect(html).to.contain("events-listing-inline inline no-thumbnails");
+                    })
+                });
+            });
+
+            describe('modern_compact', function(){
+                describe('template', function(){
+                    it('should return valid html string.', function(){
+                        const html = llMC.render();
+                        expect(html).to.contain('class="secondary modern"');
+                    })
+                });
+            });
+
+            describe('modern_standard', function(){
+                describe('template', function(){
+                    it('should return valid html string.', function(){
+                        const html = llMS.render();
+                        expect(html).to.contain('class="modern"');
+                    })
+                });
+            });
+
+
+            describe('archive', function(){
+                describe('template', function(){
+                    it('should return valid html string.', function(){
+                        const html = llA.render();
+                        expect(html).to.contain("archive-events");
+                    })
+                });
+            });
+
+        })
 
 });

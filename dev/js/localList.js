@@ -8,12 +8,12 @@ import inline_compact from './components/inlineCompact';
 const check = require('check-types');
 
 /**
- * Test params property types.
- * @param {obj} params The block element data.
+ * Test props property types.
+ * @param {obj} props The block element data.
  * @return {boolean} Valid proptype.
  */
-const checkPropTypes = params => {
-    const valid = check.map(params, {
+const checkPropTypes = props => {
+    const valid = check.map(props, {
         target: check.string,
         depts: check.string,
         entries: check.string,
@@ -35,10 +35,10 @@ const checkPropTypes = params => {
  *   Selects the coresponding component based on format name.
  *   @todo add support for unused options. [filter, addcal]
  *   @todo impliment filter options and pagination.
- * @param {obj} params The base Component params.
+ * @param {obj} props The base Component props.
  * @return {Component} a localist component of the type param.format.
  */
-export default params => {
+export default props => {
     // Map out formats for look up. These must match Drupal block.
     const formatOptions = {
         standard,
@@ -48,21 +48,29 @@ export default params => {
         inline_compact,
         archive
     };
-    // The following are static filter params.
-    params.filterby_filters = 'true';
-    params.addcal = params.addcal || 'false';
-    params.pref_excerpt_length = '250';
-    if (params.pagination === 'true') {
-        const url = new URL(window.location.href);
-        params.page = url.searchParams.get('page');
-    } else {
-        params.page = '1';
+    // The following are static filter props.
+    props.filterby_filters = 'true';
+    props.pref_excerpt_length = '250';
+    // optional props
+    props.addcal = props.addcal || 'false';
+    if (typeof window !== 'undefined') {
+        props.win = props.win || window;
     }
-    if (checkPropTypes(params) && params.format in formatOptions) {
-        const Component = formatOptions[params.format];
-        const component = new Component(params);
+    if (
+        checkPropTypes(props) &&
+        props.format in formatOptions &&
+        typeof props.win === 'object'
+    ) {
+        if (props.pagination === 'true') {
+            const url = new URL(props.win.location.href);
+            props.page = url.searchParams.get('page');
+        } else {
+            props.page = '1';
+        }
+        const Component = formatOptions[props.format];
+        const component = new Component(props);
         return component;
     }
-    console.error('invalid props - all props should be strings');
-    return { error: 'invalid props - all props should be strings' };
+    console.error('localist recieved invalid props');
+    return { error: 'localist recieved invalid props' };
 };

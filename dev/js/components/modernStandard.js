@@ -1,6 +1,6 @@
 import LocalistComponent from './_localistComponent';
 import {
-    moderStandardInner,
+    modernStandardInner,
     modernStandardWrapper
 } from '../templates/modernStandard';
 /**
@@ -11,7 +11,7 @@ import {
  */
 export default class ModernStandard extends LocalistComponent {
     constructor(props) {
-        props.innerTemplate = moderStandardInner;
+        props.innerTemplate = modernStandardInner;
         props.outerTemplate = modernStandardWrapper;
         super(props);
     }

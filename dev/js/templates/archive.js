@@ -36,7 +36,7 @@ export const archiveInner = builtData => /* html */ `
  * @return {string} Html string
  */
 export const archiveWrapper = inner => /* html */ `
-    <div class="view view-events view-id-events cuenergy-events">
+    <div class="view view-events view-id-events archive-events">
         <div class="view-content">
             ${inner}
         </div>

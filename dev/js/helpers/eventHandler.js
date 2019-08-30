@@ -1,3 +1,9 @@
+/**
+ * This returns an event handler, that handles all on click events.
+ * The pagination event handler mutates the window location and history.
+ * @param {obj} that The localList component.
+ * @return {func} The parent click event handler.
+ */
 export default that => {
     const domStr = that.target.replace(/[^\w]/gi, '');
     const targetElem = that.parent;
@@ -70,9 +76,9 @@ export default that => {
                 const url = new URL(e.target.href);
                 const it = url.searchParams.get('page');
                 that.requestArgs.page = `${it}`;
-                const newurl = `${window.location.origin}?page=${it}`;
-                window.history.pushState({}, null, newurl);
-                that.getLocalistEvents();
+                const newurl = `${that.win.location.origin}?page=${it}`;
+                that.win.history.pushState({}, null, newurl);
+                that.getLocalistEvents(that.requestArgs);
             }
         }
     };

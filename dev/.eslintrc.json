@@ -54,7 +54,6 @@
       "requireReturn": false
     }],
     "no-unused-vars": ["warn"],
-
     "operator-linebreak": ["error", "after", { "overrides": { "?": "ignore", ":": "ignore" } }],
     "no-console": ["error", { "allow": ["warn", "error" ]}]
   }

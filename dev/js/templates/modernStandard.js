@@ -23,7 +23,7 @@ const tagStr = event_types => {
  *   @todo add prop type validation.
  * @return {string} Html string
  */
-export const moderStandardInner = builtData => /* html */ `
+export const modernStandardInner = builtData => /* html */ `
     <div
         class="card event-node dept-${builtData.department} type-${
     builtData.type
