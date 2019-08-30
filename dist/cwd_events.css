@@ -1,15 +1,13 @@
-@charset "UTF-8";
-
 /* Category Filters
   -------------------- */
 
 .cwd-events-style {
   /* begin event */
   /* CWD Localist Events
-  	 ************************************ */
+	 ************************************ */
   /* event details toggle */
   /* Compact Mode
-      -------------------- */
+     -------------------- */
   /* compact filters */
   /* calendar */
   /***** Events *****/
@@ -19,7 +17,7 @@
     -------------------------------------*/
   /*@ todo make this actually fade out */
   /* Animated Loading Icon
-    -------------------- */
+      -------------------- */
   /* Add To Calendar
     -----------------*/
   /* required change to visually hidden*/
@@ -45,7 +43,7 @@
 
 .cwd-events-style section.standard .events-listing .node h3 {
   margin-bottom: 8px;
-  font-family: Avenir Next, Proxima Nova, "proxima-nova", Segoe UI Bold, Helvetica Neue, sans-serif;
+  font-family: Avenir Next, Proxima Nova, 'proxima-nova', Segoe UI Bold, Helvetica Neue, sans-serif;
   font-weight: 600;
   font-size: 16px;
 }
@@ -162,8 +160,8 @@
   width: 100%;
   background: #fff;
   background: linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ffffff", endColorstr="#f2f2f2",GradientType=1 );
-  font-family: Avenir Next, Proxima Nova, "proxima-nova", Segoe UI Semibold, Helvetica Neue, sans-serif;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f2f2f2',GradientType=1 );
+  font-family: Avenir Next, Proxima Nova, 'proxima-nova', Segoe UI Semibold, Helvetica Neue, sans-serif;
   font-weight: 500;
 }
 
@@ -241,7 +239,7 @@
 
 .cwd-events-style section.standard .events-listing .type .fa:before {
   margin-right: 5px;
-  content: "\F124";
+  content: '\F124';
   font-size: 14px;
 }
 
@@ -323,7 +321,7 @@
   top: -6px;
   font-size: 10px;
   margin-left: 3px;
-  letter-spacing: 0.005em;
+  letter-spacing: .005em;
 }
 
 .cwd-events-style #eventsInlineCompact .event-title-and-location a {
