@@ -1478,14 +1478,14 @@ __webpack_require__.r(__webpack_exports__);
 
 var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
 /**
- * Test params property types.
- * @param {obj} params The block element data.
+ * Test props property types.
+ * @param {obj} props The block element data.
  * @return {boolean} Valid proptype.
  */
 
 
-var checkPropTypes = function checkPropTypes(params) {
-  var valid = check.map(params, {
+var checkPropTypes = function checkPropTypes(props) {
+  var valid = check.map(props, {
     target: check.string,
     depts: check.string,
     entries: check.string,
@@ -1506,12 +1506,13 @@ var checkPropTypes = function checkPropTypes(params) {
  *   Selects the coresponding component based on format name.
  *   @todo add support for unused options. [filter, addcal]
  *   @todo impliment filter options and pagination.
- * @param {obj} params The base Component params.
+ * @param {obj} props The base Component props.
+ * @param {obj} win The dom.
  * @return {Component} a localist component of the type param.format.
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function (params) {
+/* harmony default export */ __webpack_exports__["default"] = (function (props, win) {
   // Map out formats for look up. These must match Drupal block.
   var formatOptions = {
     standard: _components_standard__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -1520,28 +1521,29 @@ var checkPropTypes = function checkPropTypes(params) {
     modern_standard: _components_modernStandard__WEBPACK_IMPORTED_MODULE_2__["default"],
     inline_compact: _components_inlineCompact__WEBPACK_IMPORTED_MODULE_5__["default"],
     archive: _components_archive__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }; // The following are static filter params.
+  }; // The following are static filter props.
 
-  params.filterby_filters = 'true';
-  params.addcal = params.addcal || 'false';
-  params.pref_excerpt_length = '250';
+  props.filterby_filters = 'true';
+  props.addcal = props.addcal || 'false';
+  props.pref_excerpt_length = '250';
+  win = win || window;
 
-  if (params.pagination === 'true') {
-    var url = new URL(window.location.href);
-    params.page = url.searchParams.get('page');
-  } else {
-    params.page = '1';
-  }
+  if (checkPropTypes(props) && props.format in formatOptions) {
+    if (props.pagination === 'true') {
+      var url = new URL(window.location.href);
+      props.page = url.searchParams.get('page');
+    } else {
+      props.page = '1';
+    }
 
-  if (checkPropTypes(params) && params.format in formatOptions) {
-    var Component = formatOptions[params.format];
-    var component = new Component(params);
+    var Component = formatOptions[props.format];
+    var component = new Component(props, win);
     return component;
   }
 
-  console.error('invalid props - all props should be strings');
+  console.error('localist recieved invalid props');
   return {
-    error: 'invalid props - all props should be strings'
+    error: 'localist recieved invalid props'
   };
 });
 
