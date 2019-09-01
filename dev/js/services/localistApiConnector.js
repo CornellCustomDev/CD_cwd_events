@@ -35,7 +35,8 @@ export default props => {
                 keyword: props.keyword,
                 days: props.days,
                 apikey: props.apikey,
-                calendarurl: props.calendarurl
+                calendarurl: props.calendarurl,
+                page: props.page
             },
             props
         )

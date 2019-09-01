@@ -1662,7 +1662,8 @@ var checkPropTypes = function checkPropTypes(params, props) {
     keyword: props.keyword,
     days: props.days,
     apikey: props.apikey,
-    calendarurl: props.calendarurl
+    calendarurl: props.calendarurl,
+    page: props.page
   }, props)) {
     console.warn('invalid prop types in localist connect.');
     return axios.get('');
