@@ -1,79 +1,74 @@
+import validatProps from '../helpers/common';
+
 const axios = require('axios');
 const moment = require('moment');
-
 const check = require('check-types');
 
 /**
  * Test params property types.
  * @param {obj} params The block element data.
+ * @param {obj} props The block element data.
  * @return {boolean} Valid proptype.
  */
-const checkPropTypes = params => {
-    const valid = check.map(params, check.string);
+const checkPropTypes = (params, props) => {
+    let valid = validatProps(params, props);
+    if (!valid) {
+        return false;
+    }
+    valid = check.map(params, check.string);
     return check.all(valid);
 };
 
 /**
  * Configures request params and Get events from loacalist api.
- * @param {obj} param0 The optional api config params.
+ * @param {obj} props The optional api config params.
  * @return {axios} A axios promise;
  */
-export default ({
-    depts,
-    entries,
-    format,
-    group,
-    keyword,
-    apikey,
-    calendarurl,
-    page,
-    days = 365
-}) => {
+export default props => {
     if (
         !checkPropTypes(
             {
-                depts,
-                entries,
-                format,
-                group,
-                keyword,
-                apikey,
-                calendarurl
+                depts: props.depts,
+                entries: props.depts,
+                format: props.format,
+                group: props.group,
+                keyword: props.keyword,
+                days: props.days,
+                apikey: props.apikey,
+                calendarurl: props.calendarurl
             },
-            check.string
+            props
         )
     ) {
         console.warn('invalid prop types in localist connect.');
-        return {};
+        return axios.get('');
     }
     const params = {
-        apikey,
-        days,
+        apikey: props.apikey,
+        days: props.days,
         distinct: true,
-        pp: entries,
-        page,
+        pp: props.entries,
+        page: props.page,
         start:
-            format !== 'archive'
+            props.format !== 'archive'
                 ? moment().format('YYYY-MM-DD')
                 : moment()
-                      .subtract(1, 'Y')
-                      .format('YYYY-MM-DD')
+                      .subtract(props.days, 'D')
+                      .format('YYYY-MM-DD'),
+        direction: props.format !== 'archive' ? 'desc' : 'asc'
     };
     // Supports multiple departments with CSV string.
-    if (depts && depts !== '0') {
+    if (props.depts && props.depts !== '0') {
         params.type = [];
-        depts.split(',').forEach(item => {
+        props.depts.split(',').forEach(item => {
             params.type.push(item.trim());
         });
     }
-    if (group && group !== '0') {
-        params.group_id = group;
+    if (props.group && props.group !== '0') {
+        params.group_id = props.group;
     }
-    if (keyword && keyword !== '') {
-        params.keyword = keyword;
+    if (props.keyword && props.keyword !== '') {
+        params.keyword = props.keyword;
     }
-    if (format === 'archive') {
-        params.direction = 'desc';
-    }
-    return axios.get(calendarurl, { params });
+    return axios.get(props.calendarurl, { params });
 };

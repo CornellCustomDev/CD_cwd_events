@@ -51,6 +51,10 @@ export default props => {
     // The following are static filter props.
     props.filterby_filters = 'true';
     props.pref_excerpt_length = '250';
+    // Gets all of the events for the past year.
+    // Warning large datasets may take a long time to fetch.
+    // It may be better to chunk these up by day.
+    props.days = '365';
     // optional props
     props.addcal = props.addcal || 'false';
     if (typeof window !== 'undefined') {

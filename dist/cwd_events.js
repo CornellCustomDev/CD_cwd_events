@@ -227,6 +227,7 @@ function () {
         depts = _ref.depts,
         entries = _ref.entries,
         group = _ref.group,
+        days = _ref.days,
         format = _ref.format,
         heading = _ref.heading,
         keyword = _ref.keyword,
@@ -248,6 +249,7 @@ function () {
       target: target,
       depts: depts,
       entries: entries,
+      days: days,
       group: group,
       format: format,
       heading: heading,
@@ -294,7 +296,8 @@ function () {
       apikey: apikey,
       // Move api key to drupal block?
       calendarurl: calendarurl,
-      page: page
+      page: page,
+      days: days
     }; // The build event params.
 
     this.BE_args = {
@@ -342,11 +345,15 @@ function () {
 
       var beargs = args || this.requestArgs;
       this.findAll(beargs).then(function (response) {
-        _this.setState({
-          events: response.data.events,
-          date: response.data.date,
-          page: response.data.page
-        });
+        if (typeof response.data.events !== 'undefined') {
+          _this.setState({
+            events: response.data.events,
+            date: response.data.date,
+            page: response.data.page
+          });
+        } else {
+          console.warn('localist returned invalid data');
+        }
       })["catch"](function (error) {
         console.error(error);
       });
@@ -900,6 +907,31 @@ var checkPropTypes = function checkPropTypes(params) {
   be.event_types = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventType"])(event, args.filterby);
   return be;
 });
+
+/***/ }),
+
+/***/ "./js/helpers/common.js":
+/*!******************************!*\
+  !*** ./js/helpers/common.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var validatProps = function validatProps(params, props) {
+  var paramsKeys = Object.keys(params).sort().join(',');
+  var propsKeys = Object.keys(props).sort().join(',');
+
+  if (paramsKeys !== propsKeys) {
+    console.warn("Unsupported prop exiting ".concat(paramsKeys, " != ").concat(propsKeys));
+    return false;
+  }
+
+  return true;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (validatProps);
 
 /***/ }),
 
@@ -1546,7 +1578,11 @@ var checkPropTypes = function checkPropTypes(props) {
   }; // The following are static filter props.
 
   props.filterby_filters = 'true';
-  props.pref_excerpt_length = '250'; // optional props
+  props.pref_excerpt_length = '250'; // Gets all of the events for the past year.
+  // Warning large datasets may take a long time to fetch.
+  // It may be better to chunk these up by day.
+
+  props.days = '365'; // optional props
 
   props.addcal = props.addcal || 'false';
 
@@ -1584,6 +1620,9 @@ var checkPropTypes = function checkPropTypes(props) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/common */ "./js/helpers/common.js");
+
+
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
@@ -1592,75 +1631,69 @@ var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/s
 /**
  * Test params property types.
  * @param {obj} params The block element data.
+ * @param {obj} props The block element data.
  * @return {boolean} Valid proptype.
  */
 
 
-var checkPropTypes = function checkPropTypes(params) {
-  var valid = check.map(params, check.string);
+var checkPropTypes = function checkPropTypes(params, props) {
+  var valid = Object(_helpers_common__WEBPACK_IMPORTED_MODULE_0__["default"])(params, props);
+
+  if (!valid) {
+    return false;
+  }
+
+  valid = check.map(params, check.string);
   return check.all(valid);
 };
 /**
  * Configures request params and Get events from loacalist api.
- * @param {obj} param0 The optional api config params.
+ * @param {obj} props The optional api config params.
  * @return {axios} A axios promise;
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var depts = _ref.depts,
-      entries = _ref.entries,
-      format = _ref.format,
-      group = _ref.group,
-      keyword = _ref.keyword,
-      apikey = _ref.apikey,
-      calendarurl = _ref.calendarurl,
-      page = _ref.page,
-      _ref$days = _ref.days,
-      days = _ref$days === void 0 ? 365 : _ref$days;
-
+/* harmony default export */ __webpack_exports__["default"] = (function (props) {
   if (!checkPropTypes({
-    depts: depts,
-    entries: entries,
-    format: format,
-    group: group,
-    keyword: keyword,
-    apikey: apikey,
-    calendarurl: calendarurl
-  }, check.string)) {
+    depts: props.depts,
+    entries: props.depts,
+    format: props.format,
+    group: props.group,
+    keyword: props.keyword,
+    days: props.days,
+    apikey: props.apikey,
+    calendarurl: props.calendarurl
+  }, props)) {
     console.warn('invalid prop types in localist connect.');
-    return {};
+    return axios.get('');
   }
 
   var params = {
-    apikey: apikey,
-    days: days,
+    apikey: props.apikey,
+    days: props.days,
     distinct: true,
-    pp: entries,
-    page: page,
-    start: format !== 'archive' ? moment().format('YYYY-MM-DD') : moment().subtract(1, 'Y').format('YYYY-MM-DD')
+    pp: props.entries,
+    page: props.page,
+    start: props.format !== 'archive' ? moment().format('YYYY-MM-DD') : moment().subtract(props.days, 'D').format('YYYY-MM-DD'),
+    direction: props.format !== 'archive' ? 'desc' : 'asc'
   }; // Supports multiple departments with CSV string.
 
-  if (depts && depts !== '0') {
+  if (props.depts && props.depts !== '0') {
     params.type = [];
-    depts.split(',').forEach(function (item) {
+    props.depts.split(',').forEach(function (item) {
       params.type.push(item.trim());
     });
   }
 
-  if (group && group !== '0') {
-    params.group_id = group;
+  if (props.group && props.group !== '0') {
+    params.group_id = props.group;
   }
 
-  if (keyword && keyword !== '') {
-    params.keyword = keyword;
+  if (props.keyword && props.keyword !== '') {
+    params.keyword = props.keyword;
   }
 
-  if (format === 'archive') {
-    params.direction = 'desc';
-  }
-
-  return axios.get(calendarurl, {
+  return axios.get(props.calendarurl, {
     params: params
   });
 });
@@ -34953,8 +34986,8 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\psw58\Desktop\mySites\cwd_events\CD_cwd_events\dev\js\app.js */"./js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\psw58\Desktop\mySites\cwd_events\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
+__webpack_require__(/*! c:\Users\psw58\Desktop\mySites\cwd_events\CD_cwd_events\dev\js\app.js */"./js/app.js");
+module.exports = __webpack_require__(/*! c:\Users\psw58\Desktop\mySites\cwd_events\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
 
 
 /***/ })

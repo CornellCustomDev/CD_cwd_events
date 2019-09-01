@@ -31,6 +31,7 @@ export default class LocalistComponent {
         depts,
         entries,
         group,
+        days,
         format,
         heading,
         keyword,
@@ -52,6 +53,7 @@ export default class LocalistComponent {
                     target,
                     depts,
                     entries,
+                    days,
                     group,
                     format,
                     heading,
@@ -96,7 +98,8 @@ export default class LocalistComponent {
             keyword,
             apikey, // Move api key to drupal block?
             calendarurl,
-            page
+            page,
+            days
         };
         // The build event params.
         this.BE_args = {
@@ -142,11 +145,15 @@ export default class LocalistComponent {
         const beargs = args || this.requestArgs;
         this.findAll(beargs)
             .then(response => {
-                this.setState({
-                    events: response.data.events,
-                    date: response.data.date,
-                    page: response.data.page
-                });
+                if (typeof response.data.events !== 'undefined') {
+                    this.setState({
+                        events: response.data.events,
+                        date: response.data.date,
+                        page: response.data.page
+                    });
+                } else {
+                    console.warn('localist returned invalid data');
+                }
             })
             .catch(error => {
                 console.error(error);
