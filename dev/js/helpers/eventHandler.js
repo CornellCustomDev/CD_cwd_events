@@ -76,7 +76,8 @@ export default that => {
                 const url = new URL(e.target.href);
                 const it = url.searchParams.get('page');
                 that.requestArgs.page = `${it}`;
-                const newurl = `${that.props.win.location.origin}?page=${it}`;
+                const loc = that.props.win.location;
+                const newurl = `${loc.origin}${loc.pathname}?page=${it}`;
                 that.props.win.history.pushState({}, null, newurl);
                 that.getLocalistEvents(that.requestArgs);
             }

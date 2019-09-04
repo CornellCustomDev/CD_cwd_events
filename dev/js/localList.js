@@ -27,7 +27,11 @@ const checkPropTypes = props => {
         apikey: check.string,
         addcal: check.string
     });
-    return check.all(valid);
+    const isValid = check.all(valid);
+    if (!isValid) {
+        console.warn(valid);
+    }
+    return isValid;
 };
 
 /**
@@ -61,7 +65,6 @@ export default props => {
     }
     const url = new URL(props.win.location.href);
     props.page = url.searchParams.get('page') || '1';
-
     if (
         checkPropTypes(props) &&
         props.format in formatOptions &&

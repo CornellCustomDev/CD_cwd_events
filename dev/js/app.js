@@ -17,7 +17,7 @@ if (
     typeof Drupal !== 'undefined' &&
     typeof window === 'object'
 ) {
-    (function($, Drupal) {
+    (function($, Drupal, window) {
         Drupal.behaviors.cwdEvents = {
             attach(context) {
                 $('div.events-listing', context)
@@ -25,7 +25,7 @@ if (
                     .each(function() {
                         const data = { ...this.dataset };
                         data.win = window;
-                        localList({ data });
+                        localList(data);
                     });
             }
         };

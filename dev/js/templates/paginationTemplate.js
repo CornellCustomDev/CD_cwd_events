@@ -18,7 +18,7 @@ export default page => {
             if (result.previous) {
                 html += /* html */ `
                 <li class="pager__item pager__item--previos">
-                    <a href="${prelink}${result.previous}"
+                    <a class='page-link' href="${prelink}${result.previous}"
                     >${paginator.options.translator('PREVIOUS')}
                     </a>
                 </li>`;
@@ -28,14 +28,16 @@ export default page => {
                     if (result.range[i] === result.current) {
                         html += /* html */ `
                         <li class="is-active pager__item">
-                            <a href="${prelink}${result.range[i]}">
+                            <a class='page-link'
+                                href="${prelink}${result.range[i]}"
+                            >
                             ${result.range[i]}
                             </a>
                         </li>`;
                     } else {
                         html += /* html */ `
                         <li class="pager__item">
-                            <a
+                            <a class='page-link'
                                 href="${prelink}${result.range[i]}"
                             >${result.range[i]}
                             </a>
@@ -46,7 +48,7 @@ export default page => {
             if (result.next) {
                 html += /* html */ `
                 <li class="pager__item pager__item--next">
-                    <a href="${prelink}${result.next}">
+                    <a class='page-link' href="${prelink}${result.next}">
                     ${paginator.options.translator('NEXT')}
                     </a>
                 </li>`;
