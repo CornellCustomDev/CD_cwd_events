@@ -5,7 +5,7 @@
  * @return {func} The parent click event handler.
  */
 export default that => {
-    const domStr = that.target.replace(/[^\w]/gi, '');
+    const domStr = that.props.target.replace(/[^\w]/gi, '');
     const targetElem = that.parent;
     // handles filter events
     const toggleFilters = (id, target) => {
@@ -76,8 +76,8 @@ export default that => {
                 const url = new URL(e.target.href);
                 const it = url.searchParams.get('page');
                 that.requestArgs.page = `${it}`;
-                const newurl = `${that.win.location.origin}?page=${it}`;
-                that.win.history.pushState({}, null, newurl);
+                const newurl = `${that.props.win.location.origin}?page=${it}`;
+                that.props.win.history.pushState({}, null, newurl);
                 that.getLocalistEvents(that.requestArgs);
             }
         }

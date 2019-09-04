@@ -1,25 +1,20 @@
 import buildEvent from '../js/helpers/buildEvent';
 import localList from '../js/localList';
 import localistConnector from '../js/services/localistApiConnector';
-import {CheckDate, add_calendar } from '../js/helpers/template-helpers';
-import {eventFilters} from '../js/helpers/eventFilters';
-import { standardInner, standardWrapper } from '../js/templates/standard';
-import { inlineCompactInner, inlineCompactWrapper } from '../js/templates/inlineCompact';
-import { modernCompactInner, modernCompactWrapper } from '../js/templates/modernCompact';
-import { modernStandardInner, modernStandardWrapper } from '../js/templates/modernStandard';
-import { archiveInner, archiveWrapper } from '../js/templates/archive';
 import paginationTemplate from '../js/templates/paginationTemplate'
-const assert = require('assert');
 var expect = require('chai').expect;
 var should = require('chai').should();
-var request = require('request');
 var chai = require('chai');
 
 chai.use(require('chai-http'));
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
-const { window } = new JSDOM(`...`);
+const { window } = new JSDOM(/* html */`
+    <!DOCTYPE html>
+        <div id='target'>
+        </div>
+    `);
 const { document } = (new JSDOM(`...`)).window;
 
 var data;
@@ -29,7 +24,7 @@ var outerString;
 
 const llprops = {
     format:'compact',
-    target:'standard',
+    target:'target',
     depts: "",
     entries: "4",
     group: "",
@@ -40,27 +35,13 @@ const llprops = {
     apikey: '',
     filterby: 'group',
     pagination: 'false',
+    page: '1',
     win: window
 }
 
 var ll =localList(llprops);
 
-llprops.format="standard";
-var llStandard = localList(llprops);
-
-llprops.format="inline_compact";
-var llIC = localList(llprops);
-
-llprops.format="modern_compact";
-var llMC = localList(llprops);
-
-llprops.format="modern_standard";
-var llMS = localList(llprops);
-
-llprops.format="archive";
-var llA = localList(llprops);
-
-describe('cd events application unit tests', () => {
+describe('cd events application unit tests', function(){
         const beargs = {
             addcal: 'true',
             pref_excerpt_length: '150',
@@ -85,6 +66,8 @@ describe('cd events application unit tests', () => {
                 group: '0',
                 keyword: '',
                 apikey: '',
+                page: '1',
+                days: '365',
             };
             const connection = localistConnector(requestArgs);
             connection
@@ -131,30 +114,39 @@ describe('cd events application unit tests', () => {
         describe('js/locaList.js localList()', function() {
 
             it('should have a innerTemplate function.', function() {
-                ll.should.have.own.property('innerTemplate')
+                // console.log(ll);
+                llprops.format="compact";
+                ll = localList(llprops);
+                ll.props.should.have.own.property('innerTemplate')
             });
 
             it('should return a valid inner html string', function() {
+                llprops.format="compact";
+                ll = localList(llprops);
                 const be = buildEvent(data.events[0].event, beargs);
-                innerHtmlString = ll.innerTemplate(be);
+                innerHtmlString = ll.props.innerTemplate(be);
                 expect(innerHtmlString).to.be.a('string');
-                // innerHtmlString.should.be.a.string;//include('<h4 class="meta date"><span class="fulldate">Aug 21</span></h4>');
-                // innerHtmlString.should.include('Threats to pollinator health are intense and varied, from habitat loss and climate change to diseases and pesticides. A summer exhibit in the  Mann Ga…')
             });
 
             it('should also have a outerTemplate function.', function() {
-                ll.should.have.own.property('outerTemplate')
+                llprops.format="compact";
+                ll = localList(llprops);
+                ll.props.should.have.own.property('outerTemplate')
             });
 
             it('should return a valid outer html string', function() {
-                outerString = ll.outerTemplate(innerHtmlString, {'heading':'this is a test'})
+                llprops.format="compact";
+                ll = localList(llprops);
+                outerString = ll.props.outerTemplate(innerHtmlString, {'heading':'this is a test'})
                 outerString.should.include('<h2>this is a test</h2>');
             });
 
             it('should also contain the inner html sub-string', function() {
+                llprops.format="compact";
+                ll = localList(llprops);
                 const be = buildEvent(data.events[0].event, beargs);
-                innerHtmlString = ll.innerTemplate(be);
-                outerString = ll.outerTemplate(innerHtmlString, {'heading':'this is a test'})
+                innerHtmlString = ll.props.innerTemplate(be);
+                outerString = ll.props.outerTemplate(innerHtmlString, {'heading':'this is a test'})
                 outerString.should.include('<h4 class="meta date"><span class="fulldate">Aug 21</span></h4>');
             });
             describe('#addcal', function(){
@@ -165,108 +157,21 @@ describe('cd events application unit tests', () => {
                 it('should also not have a addcal html if addcal is set to false.', function() {
                     beargs.addcal = 'false';
                     const be = buildEvent(data.events[0].event, beargs);
-                    innerHtmlString = ll.innerTemplate(be);
-                    outerString = ll.outerTemplate(innerHtmlString, {'heading':'this is a test'})
+                    innerHtmlString = ll.props.innerTemplate(be);
+                    outerString = ll.props.outerTemplate(innerHtmlString, {'heading':'this is a test'})
                     outerString.should.not.include('add to calendar');
                 });
             })
 
         });
 
-        describe('js/helpers/templatehelpers.js', function() {
-
-            describe('CheckDate()', function() {
-                const cd = new CheckDate();
-                it('should return html string if a day is not stored.', function(){
-                    const be = buildEvent(data.events[0].event, beargs);
-                    const day = cd.day(be);
-                    const month = cd.month(be);
-                    expect(day).to.not.be.empty;
-                    expect(month).to.not.be.empty;
-                })
-
-                it('it should return html empty string if a day is not stored.', function(){
-                    const be = buildEvent(data.events[0].event, beargs);
-                    const day = cd.day(be);
-                    const month = cd.month(be);
-                    expect(day).to.be.empty;
-                    expect(month).to.be.empty;
-                })
-
-            });
-
-            describe('eventFilters()', function(){
-
-                const ef = eventFilters(ll.wrapperArgs.filters, undefined);
-                it('should be empty because they requrie a valid window: must be tested in browser.', function(){
-                    expect(ef).to.be.empty;
-                })
-            })
-
-            describe('add_calendar()', function(){
-                it('should return valid html string.', function(){
-                    const ac = add_calendar(data.events[0].event);
-                    expect(ac).to.contain("Google");
-                    expect(ac).to.contain("iCal");
-                    expect(ac).to.contain("Outlook");
-                })
-            })
-        });
         describe('Templates', function() {
             describe('paginator', function(){
                 var page = {size:3, current:1, total:4}
                 var paginator = paginationTemplate(page)
                 var html = paginator.render();
-                expect(html).to.contain('page-item');
+                expect(html).to.contain('<nav class="pager">');
             })
         });
-
-        describe('Components', function() {
-            describe('standard', function(){
-                describe('template', function(){
-                    it('should return valid html string.', function(){
-                        const html = llStandard.render();
-                        expect(html).to.contain('class="standard"');
-                    })
-                });
-            });
-            describe('inline_compact', function(){
-                describe('template', function(){
-                    it('should return valid html string.', function(){
-                        const html = llIC.render();
-                        expect(html).to.contain("events-listing-inline inline no-thumbnails");
-                    })
-                });
-            });
-
-            describe('modern_compact', function(){
-                describe('template', function(){
-                    it('should return valid html string.', function(){
-                        const html = llMC.render();
-                        expect(html).to.contain('class="secondary modern"');
-                    })
-                });
-            });
-
-            describe('modern_standard', function(){
-                describe('template', function(){
-                    it('should return valid html string.', function(){
-                        const html = llMS.render();
-                        expect(html).to.contain('class="modern"');
-                    })
-                });
-            });
-
-
-            describe('archive', function(){
-                describe('template', function(){
-                    it('should return valid html string.', function(){
-                        const html = llA.render();
-                        expect(html).to.contain("archive-events");
-                    })
-                });
-            });
-
-        })
 
 });

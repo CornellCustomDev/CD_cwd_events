@@ -57,30 +57,33 @@ const eventFilters = (filterObjs, domTarget) => {
  */
 const buildEventWrapperFilters = (event, that) => {
     if (
-        that.filterby === 'type' &&
+        that.props.filterby === 'type' &&
         that.builtEvent.type !== 0 &&
         event.filters.event_types
     ) {
         that.wrapperArgs.filters[event.filters.event_types[0].name] = {
             id: event.filters.event_types[0].id,
             name: event.filters.event_types[0].name,
-            filterby: that.filterby
+            filterby: that.props.filterby
         };
     } else if (
-        that.filterby === 'dept' &&
+        that.props.filterby === 'dept' &&
         that.builtEvent.department !== 0 &&
         event.filters.departments
     ) {
         that.wrapperArgs.filters[event.filters.departments[0].name] = {
             id: event.filters.departments[0].id,
             name: event.filters.departments[0].name,
-            filterby: that.filterby
+            filterby: that.props.filterby
         };
-    } else if (that.filterby === 'group' && that.builtEvent.group_name !== '') {
+    } else if (
+        that.props.filterby === 'group' &&
+        that.builtEvent.group_name !== ''
+    ) {
         that.wrapperArgs.filters[that.builtEvent.group_name] = {
             id: that.builtEvent.group_id,
             name: that.builtEvent.group_name,
-            filterby: that.filterby
+            filterby: that.props.filterby
         };
     }
 };

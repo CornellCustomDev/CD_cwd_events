@@ -1,8 +1,8 @@
 # CD_cwd_events
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/cubear/cwd_events.svg?style=flat-square)](https://packagist.org/packages/cubear/cwd_events) ![Build passing](https://img.shields.io/badge/build-passing-brightgreen "All tests passed") ![Code Coverage](https://img.shields.io/badge/coverage-85%25-yellowgreen "Test cover 85% of code")
+[![Latest Stable Version](https://img.shields.io/packagist/v/cubear/cwd_events.svg?style=flat-square)](https://packagist.org/packages/cubear/cwd_events) ![Build passing](https://img.shields.io/badge/build-passing-brightgreen "All tests passed") ![Code Coverage](https://img.shields.io/badge/coverage-85%25-yellowgreen "Test cover 83% of code")
 
-A light weight Drupal module to pull localist and render in a cwd_events block. With Eight options for built in views.
+A light weight Drupal module to pull localist and render in a cwd_events block. With six options for built in views.
 
 ## [Interactive Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/demo.html) | [Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/index.html)
 
@@ -39,33 +39,30 @@ npm install -global http-server
 then run
 
 ```bash
-npm test
+npm run test
 ```
+
+check for test coverage:
+
+```bash
+npm run coverage
+```
+
+view browser tests
+[Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/test.html)
 
 @todo impliment browser testing
 
 ### Break down into end to end tests
 
-NPM will test for the following cases.
+Test are loocated in the dev/test folder and test for:
 
-```bash
-cd events application unit tests
-    Server status
-      √ should return 200
-    localist-api-connector
-      √ should return an array of four events. {events: [{event: Objects}...]}.
-    #buildEvent()
-      √ should return an object with properties.
-    #locaList()
-      √ it should fetch localist event data.
-      √ it should have a innerTemplate function.
-      √ it should also have a outerTemplate function.
-      #innerTemplate()
-        √ it should return a valid inner html string
-      #outerTemplate()
-        √ it should return a valid outer html string
-        √ it should also contain the inner html sub-string
-```
+- localist main function
+- localist connector
+- all templates
+- all helper functions
+
+    button click events are not currently tested and must be done manually.
 
 ### And coding style tests
 

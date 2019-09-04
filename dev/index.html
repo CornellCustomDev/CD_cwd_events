@@ -315,7 +315,7 @@
                                         Use paging for long lists.
                                     </div>
                                 </div>
-                                <div
+                                <!-- <div
                                     class="js-form-item form-item js-form-type-checkbox form-type-checkbox js-form-item-settings-cwd-events-display-config-cwd-events-styling form-item-settings-cwd-events-display-config-cwd-events-styling">
                                     <input
                                         data-drupal-selector="edit-settings-cwd-events-display-config-cwd-events-styling"
@@ -332,7 +332,7 @@
                                         class="description">
                                         Uncheck this box to remove all module styling.
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </fieldset>
@@ -370,7 +370,7 @@
      * @todo impliment the rest of the drupal block elements
      *   Styling, read more, ...
      * */
-    function renderForm(loaded){
+    function renderForm(){
         var formData = $('form').first().serializeArray();
 
         const dataArray = [
@@ -385,8 +385,7 @@
             'format',
             'addcal',
             'pagination',
-            'filterby',
-            'styling'
+            'filterby'
         ];
         var data = {}
         formData.map(function(obj){
@@ -400,13 +399,12 @@
         })
         // Drupal uses block titles not data heading.
         data.heading = formData[1].name == "settings[label_display]" ? formData[0].value : ''
-        data.loaded = loaded;
         // This class is added or removed in php.
-        if (data.styling != '1'){
-            $('#events_block').removeClass('cwd-events-style');
-        }else{
-            $('div#events_block').addClass('cwd-events-style');
-        }
+        // if (data.styling != '1'){
+        //     $('#events_block').removeClass('cwd-events-style');
+        // }else{
+        //     $('div#events_block').addClass('cwd-events-style');
+        // }
         // Drupal php assigns data-target.
         data.target = 'events_block';
         myLocalList(data);

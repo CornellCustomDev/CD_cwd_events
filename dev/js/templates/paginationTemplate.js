@@ -9,7 +9,7 @@ export default page => {
         template: result => {
             let i;
             let len;
-            let html = /* html */ `<div><ul class="pagination">`;
+            let html = /* html */ `<nav class="pager"><ul class="pager__items js-pager__items">`;
             if (result.pageCount < 2) {
                 html += /* html */ `</ul></div>`;
                 return html;
@@ -17,8 +17,8 @@ export default page => {
             const prelink = paginator.preparePreLink(result.prelink);
             if (result.previous) {
                 html += /* html */ `
-                <li class="page-item">
-                    <a class="page-link" href="${prelink}${result.previous}"
+                <li class="pager__item pager__item--previos">
+                    <a href="${prelink}${result.previous}"
                     >${paginator.options.translator('PREVIOUS')}
                     </a>
                 </li>`;
@@ -27,17 +27,15 @@ export default page => {
                 for (i = 0, len = result.range.length; i < len; i++) {
                     if (result.range[i] === result.current) {
                         html += /* html */ `
-                        <li class="active page-item">
-                            <a class="page-link"
-                                href="${prelink}${result.range[i]}"
-                            >${result.range[i]}
+                        <li class="is-active pager__item">
+                            <a href="${prelink}${result.range[i]}">
+                            ${result.range[i]}
                             </a>
                         </li>`;
                     } else {
                         html += /* html */ `
-                        <li class="page-item">
+                        <li class="pager__item">
                             <a
-                                class="page-link"
                                 href="${prelink}${result.range[i]}"
                             >${result.range[i]}
                             </a>
@@ -47,14 +45,13 @@ export default page => {
             }
             if (result.next) {
                 html += /* html */ `
-                <li class="page-item">
-                    <a class="page-link" href="${prelink}${result.next}"
-                        class="paginator-next"
-                    >${paginator.options.translator('NEXT')}
+                <li class="pager__item pager__item--next">
+                    <a href="${prelink}${result.next}">
+                    ${paginator.options.translator('NEXT')}
                     </a>
                 </li>`;
             }
-            html += /* html */ `</ul></div>`;
+            html += /* html */ `</ul></nav>`;
             return html;
         }
     });

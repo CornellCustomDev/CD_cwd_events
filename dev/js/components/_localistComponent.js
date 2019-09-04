@@ -4,135 +4,64 @@ import findAll from '../services/localistApiConnector';
 import paginatorTemplate from '../templates/paginationTemplate';
 import eventHandler from '../helpers/eventHandler';
 import { buildEventWrapperFilters } from '../helpers/eventFilters';
-
-const check = require('check-types');
+import { checkLocalistPropTypes } from '../helpers/common';
 
 // Bind a persistent event handler function.
 let handleclick;
 
 /**
- * Test params property types.
- * @param {obj} params The block element data.
- * @param {obj} type The check.type
- * @return {boolean} Valid proptype.
- */
-const checkPropTypes = (params, type) => {
-    const valid = check.map(params, type);
-    return check.all(valid);
-};
-
-/**
  * The base component
- * @param {obj} parm0 The base parameters.
+ * @param {obj} props The base parameters.
  */
 export default class LocalistComponent {
-    constructor({
-        target,
-        depts,
-        entries,
-        group,
-        days,
-        format,
-        heading,
-        keyword,
-        filterby_filters,
-        filterby,
-        innerTemplate,
-        outerTemplate,
-        addcal,
-        pref_excerpt_length,
-        calendarurl,
-        apikey,
-        page,
-        pagination,
-        win
-    }) {
-        if (
-            !checkPropTypes(
-                {
-                    target,
-                    depts,
-                    entries,
-                    days,
-                    group,
-                    format,
-                    heading,
-                    keyword,
-                    addcal,
-                    filterby_filters,
-                    filterby,
-                    pref_excerpt_length,
-                    calendarurl,
-                    pagination
-                },
-                check.string
-            ) &&
-            !checkPropTypes({ innerTemplate, outerTemplate }, check.function) &&
-            !checkPropTypes({ win }, check.object)
-        ) {
+    constructor(props) {
+        if (!checkLocalistPropTypes(props)) {
             console.warn('Invalid props types in localist base component.');
             return {};
         }
-        this.win = win;
-        this.doc = win.document;
-        // @todo if not this parent return {};
-        this.parent = this.doc.getElementById(target);
-        // remove any DOM event listeners before you add them.
-        if (this.parent) {
-            this.parent.removeEventListener('click', handleclick, true);
+        this.props = props;
+        this.parent = props.win.document.getElementById(props.target);
+        if (!this.parent) {
+            console.warn('Target not found');
+            return {};
         }
-
+        // remove any DOM event listeners before you add them.
+        this.parent.removeEventListener('click', handleclick, true);
         // The wrapper template params.
         this.wrapperArgs = {
-            target,
-            title: 'Events List',
-            heading,
+            target: props.target,
+            heading: props.heading,
             filters: {}
         };
         // The localist api request params
         this.requestArgs = {
-            depts,
-            entries,
-            format,
-            group,
-            keyword,
-            apikey, // Move api key to drupal block?
-            calendarurl,
-            page,
-            days
+            depts: props.depts,
+            entries: props.entries,
+            format: props.format,
+            group: props.group,
+            keyword: props.keyword,
+            apikey: props.apikey,
+            calendarurl: props.calendarurl,
+            page: props.page,
+            days: props.days
         };
-        // The build event params.
-        this.BE_args = {
-            pref_excerpt_length,
-            pref_eventdetails: 'event details',
-            addcal
-        };
-        this.loaded = false;
+        // The localist api connector
         this.findAll = findAll;
-        // Is this used?
-        this.group = group;
-        this.depts = depts;
-        this.entries = entries;
-        // The categories to filter on.
-        this.filterby = filterby;
-        this.filterby_filters = filterby_filters;
+        // Holders for the response data
         this.events = [];
-        this.target = target;
-        this.format = format; // used by inner template to check if standard
-        this.innerTemplate = innerTemplate;
-        this.outerTemplate = outerTemplate;
-        // Event data.
         this.date = {};
         this.page = {};
 
-        // Sets if pagination should be used or not.
-        this.pagination = pagination;
-        // Should this be in a seperate render function?
-        // Renders element on construction.
+        // The build event params.
+        // @todo move these last two to templates
+        this.BE_args = {
+            pref_excerpt_length: props.pref_excerpt_length,
+            addcal: props.addcal
+        };
 
+        // this.pagination = props.pagination;
         this.eventListeners();
         this.renderThrobber();
-
         this.getLocalistEvents(this.requestArgs);
     }
 
@@ -173,19 +102,11 @@ export default class LocalistComponent {
     }
 
     /**
-     * Sets the rapperArgs filters for the template.
-     * @param {obj} event The localist event obj.
-     */
-    buildFilters(event) {
-        buildEventWrapperFilters(event, this);
-    }
-
-    /**
      * Bulds pagination if used.
      * @return {string} A HTML string.
      */
     buildPagination() {
-        if (this.pagination !== 'true') {
+        if (this.props.pagination !== 'true') {
             return '';
         }
         // attach events
@@ -200,26 +121,27 @@ export default class LocalistComponent {
     buildInnerHtml() {
         let inner = '';
         // standard is the only format that uses a date grouping wrapper.
-        const checkDate = this.format === 'standard' ? new CheckDate() : null;
+        const checkDate =
+            this.props.format === 'standard' ? new CheckDate() : null;
         this.events.forEach(event => {
             this.builtEvent = buildEvent(event.event, this.BE_args);
-            if (this.format === 'standard') {
+            if (this.props.format === 'standard') {
                 this.builtEvent.checkDate = checkDate;
             }
-            this.buildFilters(event.event);
-            inner += this.innerTemplate(this.builtEvent);
+            buildEventWrapperFilters(event.event, this);
+            inner += this.props.innerTemplate(this.builtEvent);
         });
         return inner;
     }
 
     /**
      * Handles window events { filters and pagination }.
+     * @return {mixed} The handle clisck event.
      */
     eventListeners() {
         handleclick = eventHandler(this);
-        if (this.parent) {
-            this.parent.addEventListener('click', handleclick, true);
-        }
+        this.parent.addEventListener('click', handleclick, true);
+        return handleclick;
     }
 
     /**
@@ -232,7 +154,7 @@ export default class LocalistComponent {
             clearTimeout(this.c_loader);
         }
         const inner = this.buildInnerHtml();
-        let outer = this.outerTemplate(inner, this.wrapperArgs);
+        let outer = this.props.outerTemplate(inner, this.wrapperArgs);
         outer += this.buildPagination();
         this.doRender(outer);
         return outer;
@@ -259,8 +181,6 @@ export default class LocalistComponent {
     }
 
     doRender(innerhtml) {
-        if (this.parent) {
-            this.parent.innerHTML = innerhtml;
-        }
+        this.parent.innerHTML = innerhtml;
     }
 }

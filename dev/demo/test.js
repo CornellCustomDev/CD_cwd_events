@@ -16,10 +16,10 @@ describe('cd events browser tests app', function(){
             assert.equal(typeof elem, 'object');
         });
 
-        it('should have 11 data attributes', function() {
+        it('should have 12 data attributes', function() {
             dl = Object.assign({}, elem.dataset);
             var keys = Object.keys(dl)
-            assert.equal(keys.length, 11);
+            assert.equal(keys.length, 12);
             console.log(keys)
             // assert.deepEqual(keys, [
             //     "target",

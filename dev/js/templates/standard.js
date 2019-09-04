@@ -69,7 +69,7 @@ export const standardInner = builtData => /* html */ `
  * @return {string} Html string
  */
 export const standardWrapper = (inner, args) => /* html */ `
-        <section class="standard" id="eventStandard" title="${args.title}">
+        <section class="standard" id="eventStandard" title="Events List">
             ${args.heading ? `<h2>${args.heading}</h2>` : ''}
             <div class="main-body">
                 <div class="events-listing no-thumbnails">

@@ -53,24 +53,20 @@ export default props => {
     props.pref_excerpt_length = '250';
     // Gets all of the events for the past year.
     // Warning large datasets may take a long time to fetch.
-    // It may be better to chunk these up by day.
     props.days = '365';
     // optional props
     props.addcal = props.addcal || 'false';
     if (typeof window !== 'undefined') {
         props.win = props.win || window;
     }
+    const url = new URL(props.win.location.href);
+    props.page = url.searchParams.get('page') || '1';
+
     if (
         checkPropTypes(props) &&
         props.format in formatOptions &&
         typeof props.win === 'object'
     ) {
-        if (props.pagination === 'true') {
-            const url = new URL(props.win.location.href);
-            props.page = url.searchParams.get('page');
-        } else {
-            props.page = '1';
-        }
         const Component = formatOptions[props.format];
         const component = new Component(props);
         return component;
