@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-This module is made for use with a Drupal websites.
+This module is made for use with a Drupal websites. Development requires Node and NPM.
 
 ### Installing
 
@@ -26,6 +26,13 @@ or download directly from [Github Repo](https://github.com/CU-CommunityApps/CD_c
 
 ```bash
 cd modules/custom && git clone https://github.com/CU-CommunityApps/CD_cwd_events
+```
+
+Development to compile sass and javascript.
+```bash
+cd ./dev
+npm install
+npm run watch
 ```
 
 ## Running the tests
@@ -51,8 +58,6 @@ npm run coverage
 view browser tests
 [Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/test.html)
 
-@todo impliment browser testing
-
 ### Break down into end to end tests
 
 Test are loocated in the dev/test folder and test for:
@@ -62,7 +67,7 @@ Test are loocated in the dev/test folder and test for:
 - all templates
 - all helper functions
 
-    button click events are not currently tested and must be done manually.
+    button click events are not currently tested and must be done manually using the demo page.
 
 ### And coding style tests
 
@@ -91,13 +96,19 @@ This is an example of the block output:
       <a class="cwd_events_readmore" href="/events">Read More</a>
         <div
             id="events-listing-UUID"
-            class="events-listing cwd-events-style"
+            class="drupal-events-listing cwd-events-style"
+            data-target="standard"
             data-depts="0"
-            data-entries="5"
-            data-format="modern_standard"
+            data-entries="4"
+            data-format="standard"
             data-group="0"
-            data-keyword=""
-            data-heading=""
+            data-keyword="Sustainability"
+            data-heading="Test"
+            data-calendarurl= "../test/testData.json"
+            data-apikey= 'KLhy2GtuSAGirYGY'
+            data-filterby= 'group'
+            data-addcal= "true"
+            data-pagination="true"
         ></div>
   </section>
 ```
