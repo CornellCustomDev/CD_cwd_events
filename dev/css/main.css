@@ -1,0 +1,39 @@
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css");
+@import url("fonts/font-awesome.min.css");
+@import url("framework/base.css");
+@import url("framework/cornell.css");
+@import url("../dist/cwd_events.css");
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.min.css");
+
+
+#mocha-stats {
+    top: 90px;
+    right: 100px;
+    /* position: fixed; */
+}
+.progress {
+    height: 42px;
+    background-color: white;
+}
+
+#index .well{
+    border: solid 1px #ededed87;
+}
+#index .events-listing{
+    padding: 10px;
+}
+.cwd-events-style{
+    padding: 15px;
+}
+p.text-muted {
+    padding-bottom: 5px;
+}
+.border{
+    border:3px solid #eee;
+    height: 100%
+}
+h1{
+    line-height: 2;
+}
+

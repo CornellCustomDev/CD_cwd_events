@@ -1,6 +1,14 @@
 cwd_events:
+  calendarurl: "//events.cornell.edu/api/2.1/events"
+  apikey: "KLhy2GtuSAGirYGY"
   depts: 0
-  entries: 3
-  format: standard
   group: 0
-  keyword: "Sustainability"
+  entries: 3
+  keyword: ""
+  readmore: "Read More"
+  url: "/events"
+  format: "standard"
+  addcal: "false"
+  pagination: "false"
+  filterby: "group"
+  styling: 1

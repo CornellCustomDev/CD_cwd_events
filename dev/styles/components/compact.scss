@@ -2,9 +2,9 @@
      -------------------- */
 section.standard .events-listing {
     &.compact {
-        #events-filters {
-            display: none;
-        }
+        // #events-filters {
+        //     display: none;
+        // }
         margin-top: 0;
         .node {
             border-bottom: 1px solid #e0e0e0;
@@ -68,9 +68,9 @@ section.standard .events-listing {
         .location {
         width: 70%;
         }
-        .date .start, .description {
-        display: none;
-        }
+        // .date .start, .description {
+        // display: none;
+        // }
     }
 }
 
@@ -103,6 +103,6 @@ ul.events-filters {
     a {
         padding: 2px 8px 1px;
     }
-}	
+}
 
 }
