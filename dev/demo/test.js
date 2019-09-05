@@ -49,10 +49,10 @@ describe('cd events browser tests app', function(){
                 it('should fetch 1 events', function(done) {
                     this.timeout(5000);
                     // use the test data.
-                    dl.url = "test/testData.json"
+                    dl.calendarurl = "./test/testData.json"
                     ll = localList(dl);
                     console.log(ll);
-                    ll.requestArgs.calendarurl ="test/testData.json";
+                    ll.requestArgs.calendarurl ="./test/testData.json";
                     // console.log(ll.requestArgs);
                     ll.findAll(ll.requestArgs).then(function(res) {
                         // console.log(res);
