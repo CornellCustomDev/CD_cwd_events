@@ -4,7 +4,7 @@
 
 A light weight Drupal module to pull localist and render in a cwd_events block. With six options for built in views.
 
-## [Interactive Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/index.html) | [Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/index.html)
+## [Interactive Demo Page](https://cu-communityapps.github.io/CD_cwd_events/dev/index.html) | [Test Page](https://cu-communityapps.github.io/CD_cwd_events/dev/test.html)
 
 ## Getting Started
 
