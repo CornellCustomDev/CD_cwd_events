@@ -77,3 +77,4 @@ export default props => {
     console.error('localist recieved invalid props');
     return { error: 'localist recieved invalid props' };
 };
+

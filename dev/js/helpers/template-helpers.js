@@ -13,12 +13,12 @@ export const add_calendar = myEvent => {
             <a
                 class="fa fa-google google"
                 href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=${gDateStart}%2F${gDateStop}&amp;details=${encodeURIComponent(
-            myObj.description_text.replace(/[\r\n]/g, `<br />`)
-        )}&amp;location=${encodeURIComponent(
-            myObj.location
-        )}&amp;sprop=website%3Aevents.cornell.edu&amp;text=${encodeURIComponent(
-            myObj.title
-        )}"
+    myObj.description_text.replace(/[\r\n]/g, `<br />`)
+)}&amp;location=${encodeURIComponent(
+    myObj.location
+)}&amp;sprop=website%3Aevents.cornell.edu&amp;text=${encodeURIComponent(
+    myObj.title
+)}"
                 title="Save to Google Calendar"
                 target="_blank"
             >

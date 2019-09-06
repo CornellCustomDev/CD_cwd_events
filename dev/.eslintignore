@@ -2,3 +2,4 @@
 /node_modules
 /webpack.mix.js
 *test*
+*.js

@@ -18,10 +18,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.3",
-    "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "check-types": "^10.0.0",
@@ -37,12 +37,12 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jsdom": "^15.1.1",
-    "laravel-mix": "^4.0.14",
+    "laravel-mix": "^4.1.4",
     "mocha": "^6.2.0",
     "moment": "^2.24.0",
     "nyc": "^14.1.1",
     "pagination": "^0.4.6",
-    "prop-types": "^15.7.2",
+    "react-a11y": "^1.1.0",
     "request": "^2.88.0",
     "resolve-url-loader": "^3.1.0",
     "sass": "^1.22.10",
@@ -50,5 +50,10 @@
     "truncate": "^2.1.0",
     "vue-template-compiler": "^2.6.10"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  }
 }

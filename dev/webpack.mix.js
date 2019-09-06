@@ -24,7 +24,7 @@ mix.setPublicPath('./dist')
     // into the dist/js folder
     .js('js/app.js', './cwd_events.js')
     .sass('styles/app.scss', './cwd_events.css')
-    .copy('dist', '../dist');
+    //.copy('dist', '../dist');
 
 // Full API
 // mix.js(src, output);
