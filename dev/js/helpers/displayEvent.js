@@ -242,3 +242,14 @@ export const getEventType = (event, prefCategory) => {
     }
     return eventTypes;
 };
+
+/**
+ * Gets start date in compact format.
+ * @param {event} event The event.
+ * @return {string} The MMM D".
+ */
+export const getEventDateCompact = event => {
+    const startDateTime = getEventStartDate(event);
+    const eventDateCompact = moment(startDateTime).format('MMM D');
+    return eventDateCompact;
+};

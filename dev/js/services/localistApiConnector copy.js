@@ -13,10 +13,15 @@ const check = require('check-types');
 const checkPropTypes = (params, props) => {
     let valid = validatProps(params, props);
     if (!valid) {
+        console.warn(valid);
         return false;
     }
     valid = check.map(params, check.string);
-    return check.all(valid);
+    const isValid = check.all(valid);
+    if (!isValid) {
+        console.warn(valid);
+    }    
+    return isValid
 };
 
 /**
@@ -25,6 +30,9 @@ const checkPropTypes = (params, props) => {
  * @return {axios} A axios promise;
  */
 export default props => {
+    console.log(props);
+    props.days = '365';
+    props.page = '1';
     if (
         !checkPropTypes(
             {

@@ -1,9 +1,9 @@
-import standard from './components/standard';
-import compact from './components/compact';
-import modern_standard from './components/modernStandard';
-import modern_compact from './components/modernCompact';
-import archive from './components/archive';
-import inline_compact from './components/inlineCompact';
+import standard from './_components/standard';
+import compact from './_components/compact';
+import modern_standard from './_components/modernStandard';
+import modern_compact from './_components/modernCompact';
+import archive from './_components/archive';
+import inline_compact from './_components/inlineCompact';
 
 const check = require('check-types');
 

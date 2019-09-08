@@ -352,7 +352,20 @@
         </div>
         <div class="col-sm-12 col-md-12 col-lg-6">
             <div class='border'>
-                <div id="events_block" class="cwd-events-style">
+                <div id="events_block" class="cwd-events-style events-listing"
+                    data-target = 'events_block'
+                    data-depts="0" 
+                    data-entries="4" 
+                    data-format="standard"
+                    data-group="0" 
+                    data-keyword="" 
+                    data-addcal="true"
+                    data-heading="standard"
+                    data-calendarurl="//events.cornell.edu/api/2.1/events"
+                    data-apikey="KLhy2GtuSAGirYGY" 
+                    data-filterby="group"
+                    data-pagination="true"
+                >
                 </div>
             </div>
         </div>
@@ -365,6 +378,7 @@
     <!-- <script src="demo/main.js"></script> -->
     <script>
     var myLocalList = window.localList;
+    console.log(myLocalList)
     /**
      * Get the data from the form and initiate new localist element
      * @todo impliment the rest of the drupal block elements
@@ -407,7 +421,8 @@
         // }
         // Drupal php assigns data-target.
         data.target = 'events_block';
-        myLocalList(data);
+        data.title = 'it still works';
+        myLocalList.setState(data);
     }
 
     $('#submit').on('click', function(e){

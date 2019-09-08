@@ -100,7 +100,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _localist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./localist */ "./js/localist.jsx");
-/* harmony import */ var _localList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localList */ "./js/localList.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -124,7 +123,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 
 
-
 __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
 /** *********************** START LOCALIST ********************************* /
  * Localist Events
@@ -144,8 +142,7 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined' && (typeof win
         $('div.events-listing', context).once('cwd_events').each(function () {
           var data = _objectSpread({}, this.dataset);
 
-          data.win = window; // localList(data);
-
+          data.win = window;
           react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById(data.target));
         });
       }
@@ -157,777 +154,455 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined' && (typeof win
   var eventListings = _toConsumableArray(document.getElementsByClassName('events-listing'));
 
   eventListings.forEach(function (elem) {
-    var data = _objectSpread({}, elem.dataset);
+    var _elem$dataset = _objectSpread({}, elem.dataset),
+        target = _elem$dataset.target,
+        depts = _elem$dataset.depts,
+        entries = _elem$dataset.entries,
+        format = _elem$dataset.format,
+        group = _elem$dataset.group,
+        keyword = _elem$dataset.keyword,
+        heading = _elem$dataset.heading,
+        filterby = _elem$dataset.filterby,
+        calendarurl = _elem$dataset.calendarurl,
+        apikey = _elem$dataset.apikey,
+        addcal = _elem$dataset.addcal,
+        pref_excerpt_length = _elem$dataset.pref_excerpt_length,
+        filterby_filters = _elem$dataset.filterby_filters,
+        days = _elem$dataset.days,
+        page = _elem$dataset.page;
 
-    data.win = window;
-    react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById(data.target));
-  }); // If not drupal expose localList.
-
-  if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object') {
-    window.localList = _localList__WEBPACK_IMPORTED_MODULE_3__["default"];
-  }
+    react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      win: window,
+      target: target,
+      depts: depts,
+      entries: entries,
+      format: format,
+      group: group,
+      keyword: keyword,
+      heading: heading,
+      filterby: filterby,
+      calendarurl: calendarurl,
+      apikey: apikey,
+      addcal: addcal,
+      pref_excerpt_length: pref_excerpt_length,
+      filterby_filters: filterby_filters,
+      days: days,
+      page: page
+    }), document.getElementById(target));
+  });
 }
 
 /***/ }),
 
-/***/ "./js/components/_localistComponent.js":
-/*!*********************************************!*\
-  !*** ./js/components/_localistComponent.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LocalistComponent; });
-/* harmony import */ var _helpers_buildEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/buildEvent */ "./js/helpers/buildEvent.js");
-/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
-/* harmony import */ var _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/localistApiConnector */ "./js/services/localistApiConnector.js");
-/* harmony import */ var _templates_paginationTemplate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../templates/paginationTemplate */ "./js/templates/paginationTemplate.js");
-/* harmony import */ var _helpers_eventHandler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/eventHandler */ "./js/helpers/eventHandler.js");
-/* harmony import */ var _helpers_eventFilters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../helpers/eventFilters */ "./js/helpers/eventFilters.js");
-/* harmony import */ var _helpers_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helpers/common */ "./js/helpers/common.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-
-
-
- // Bind a persistent event handler function.
-
-var handleclick;
-/**
- * The base component
- * @param {obj} props The base parameters.
- */
-
-var LocalistComponent =
-/*#__PURE__*/
-function () {
-  function LocalistComponent(props) {
-    _classCallCheck(this, LocalistComponent);
-
-    if (!Object(_helpers_common__WEBPACK_IMPORTED_MODULE_6__["checkLocalistPropTypes"])(props)) {
-      console.warn('Invalid props types in localist base component.');
-      return {};
-    }
-
-    this.props = props;
-    this.parent = props.win.document.getElementById(props.target);
-
-    if (!this.parent) {
-      console.warn('Target not found');
-      return {};
-    } // remove any DOM event listeners before you add them.
-
-
-    this.parent.removeEventListener('click', handleclick, true); // The wrapper template params.
-
-    this.wrapperArgs = {
-      target: props.target,
-      heading: props.heading,
-      filters: {}
-    }; // The localist api request params
-
-    this.requestArgs = {
-      depts: props.depts,
-      entries: props.entries,
-      format: props.format,
-      group: props.group,
-      keyword: props.keyword,
-      apikey: props.apikey,
-      calendarurl: props.calendarurl,
-      page: props.page,
-      days: props.days
-    }; // The localist api connector
-
-    this.findAll = _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_2__["default"]; // Holders for the response data
-
-    this.events = [];
-    this.date = {};
-    this.page = {}; // The build event params.
-    // @todo move these last two to templates
-
-    this.BE_args = {
-      pref_excerpt_length: props.pref_excerpt_length,
-      addcal: props.addcal
-    }; // this.pagination = props.pagination;
-
-    this.eventListeners();
-    this.renderThrobber();
-    this.getLocalistEvents(this.requestArgs);
-  }
-  /**
-   * Connects to localist and fetches event data.
-   * After data is recieved sets the new Component state.
-   * @param {obj} args The request params.
-   */
-
-
-  _createClass(LocalistComponent, [{
-    key: "getLocalistEvents",
-    value: function getLocalistEvents(args) {
-      var _this = this;
-
-      var beargs = args || this.requestArgs;
-      this.findAll(beargs).then(function (response) {
-        if (typeof response.data.events !== 'undefined') {
-          _this.setState({
-            events: response.data.events,
-            date: response.data.date,
-            page: response.data.page
-          });
-        } else {
-          console.warn('localist returned invalid data');
-        }
-      })["catch"](function (error) {
-        console.error(error);
-      });
-    }
-    /**
-     * Sets the new values and rerenders template.
-     * @param {obj} args The target and the data { target: data }
-     */
-
-  }, {
-    key: "setState",
-    value: function setState(args) {
-      var _this2 = this;
-
-      var keys = Object.keys(args);
-      keys.forEach(function (key) {
-        _this2[key] = args[key];
-      });
-      this.render();
-    }
-    /**
-     * Bulds pagination if used.
-     * @return {string} A HTML string.
-     */
-
-  }, {
-    key: "buildPagination",
-    value: function buildPagination() {
-      if (this.props.pagination !== 'true') {
-        return '';
-      } // attach events
-
-
-      var paginator = Object(_templates_paginationTemplate__WEBPACK_IMPORTED_MODULE_3__["default"])(this.page);
-      return paginator.render();
-    }
-    /**
-     * Bulds the inner HTML template.
-     * @return {string} A HTML string.
-     */
-
-  }, {
-    key: "buildInnerHtml",
-    value: function buildInnerHtml() {
-      var _this3 = this;
-
-      var inner = ''; // standard is the only format that uses a date grouping wrapper.
-
-      var checkDate = this.props.format === 'standard' ? new _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_1__["CheckDate"]() : null;
-      this.events.forEach(function (event) {
-        _this3.builtEvent = Object(_helpers_buildEvent__WEBPACK_IMPORTED_MODULE_0__["default"])(event.event, _this3.BE_args);
-
-        if (_this3.props.format === 'standard') {
-          _this3.builtEvent.checkDate = checkDate;
-        }
-
-        Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_5__["buildEventWrapperFilters"])(event.event, _this3);
-        inner += _this3.props.innerTemplate(_this3.builtEvent);
-      });
-      return inner;
-    }
-    /**
-     * Handles window events { filters and pagination }.
-     * @return {mixed} The handle clisck event.
-     */
-
-  }, {
-    key: "eventListeners",
-    value: function eventListeners() {
-      handleclick = Object(_helpers_eventHandler__WEBPACK_IMPORTED_MODULE_4__["default"])(this);
-      this.parent.addEventListener('click', handleclick, true);
-      return handleclick;
-    }
-    /**
-     * Renders the html template string.
-     * @return {string} A html string with inner and outer templates.
-     */
-
-  }, {
-    key: "render",
-    value: function render() {
-      // remove loading animation timer
-      if (this.c_loader) {
-        clearTimeout(this.c_loader);
-      }
-
-      var inner = this.buildInnerHtml();
-      var outer = this.props.outerTemplate(inner, this.wrapperArgs);
-      outer += this.buildPagination();
-      this.doRender(outer);
-      return outer;
-    }
-    /**
-     * Inserts throbber while data is loading.
-     * Throbber is timer is turned off and deleted on localList render.
-     * @warning this.c_loader is defined here.
-     */
-
-  }, {
-    key: "renderThrobber",
-    value: function renderThrobber() {
-      var _this4 = this;
-
-      var loadingNode =
-      /* html */
-      "\n            <div class=\"fadeOut loader\">\n                <span class=\"fa fa-spin fa-cog\"></span>\n            </div>\n        ";
-      this.doRender(loadingNode);
-      this.c_loader = setTimeout(function () {
-        var _ref = _toConsumableArray(_this4.parent.getElementsByClassName('loader')),
-            loader = _ref[0];
-
-        if (loader) {
-          loader.classList.remove('fadeOut');
-        }
-      }, 500); // skip loading animation if under 0.5s
-    }
-  }, {
-    key: "doRender",
-    value: function doRender(innerhtml) {
-      this.parent.innerHTML = innerhtml;
-    }
-  }]);
-
-  return LocalistComponent;
-}();
-
-
-
-/***/ }),
-
-/***/ "./js/components/archive.js":
-/*!**********************************!*\
-  !*** ./js/components/archive.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Archive; });
-/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
-/* harmony import */ var _templates_archive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/archive */ "./js/templates/archive.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-/**
- * The Archive component.
- *
- * @constructor
- * @extends LocalistComponent
- */
-
-var Archive =
-/*#__PURE__*/
-function (_LocalistComponent) {
-  _inherits(Archive, _LocalistComponent);
-
-  function Archive(props) {
-    _classCallCheck(this, Archive);
-
-    props.innerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveInner"];
-    props.outerTemplate = _templates_archive__WEBPACK_IMPORTED_MODULE_1__["archiveWrapper"];
-    props.filterby_filters = 'false';
-    return _possibleConstructorReturn(this, _getPrototypeOf(Archive).call(this, props));
-  }
-
-  return Archive;
-}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
-/***/ "./js/components/compact.js":
-/*!**********************************!*\
-  !*** ./js/components/compact.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Compact; });
-/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
-/* harmony import */ var _templates_compact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/compact */ "./js/templates/compact.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-/**
- * The Compact component.
- *
- * @constructor
- * @extends LocalistComponent
- */
-
-var Compact =
-/*#__PURE__*/
-function (_LocalistComponent) {
-  _inherits(Compact, _LocalistComponent);
-
-  function Compact(props) {
-    _classCallCheck(this, Compact);
-
-    props.innerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactInner"];
-    props.outerTemplate = _templates_compact__WEBPACK_IMPORTED_MODULE_1__["compactWrapper"];
-    props.filterby_filters = 'false';
-    props.pref_excerpt_length = '150';
-    return _possibleConstructorReturn(this, _getPrototypeOf(Compact).call(this, props));
-  }
-
-  return Compact;
-}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
-/***/ "./js/components/inlineCompact.js":
-/*!****************************************!*\
-  !*** ./js/components/inlineCompact.js ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InlineCompact; });
-/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
-/* harmony import */ var _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/inlineCompact */ "./js/templates/inlineCompact.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-/**
- * The InLineCompact component.
- *
- * @constructor
- * @extends LocalistComponent
- */
-
-var InlineCompact =
-/*#__PURE__*/
-function (_LocalistComponent) {
-  _inherits(InlineCompact, _LocalistComponent);
-
-  function InlineCompact(props) {
-    _classCallCheck(this, InlineCompact);
-
-    props.innerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactInner"];
-    props.outerTemplate = _templates_inlineCompact__WEBPACK_IMPORTED_MODULE_1__["inlineCompactWrapper"];
-    props.filterby_filters = 'false';
-    props.pref_excerpt_length = '150';
-    return _possibleConstructorReturn(this, _getPrototypeOf(InlineCompact).call(this, props));
-  }
-
-  return InlineCompact;
-}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
-/***/ "./js/components/modernCompact.js":
-/*!****************************************!*\
-  !*** ./js/components/modernCompact.js ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModernCompact; });
-/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
-/* harmony import */ var _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/modernCompact */ "./js/templates/modernCompact.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-/**
- * The ModernCompact component.
- *
- * @constructor
- * @extends LocalistComponent
- */
-
-var ModernCompact =
-/*#__PURE__*/
-function (_LocalistComponent) {
-  _inherits(ModernCompact, _LocalistComponent);
-
-  function ModernCompact(props) {
-    _classCallCheck(this, ModernCompact);
-
-    props.innerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactInner"];
-    props.outerTemplate = _templates_modernCompact__WEBPACK_IMPORTED_MODULE_1__["modernCompactWrapper"];
-    props.filterby_filters = 'false';
-    props.pref_excerpt_length = '150';
-    return _possibleConstructorReturn(this, _getPrototypeOf(ModernCompact).call(this, props));
-  }
-
-  return ModernCompact;
-}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
-/***/ "./js/components/modernStandard.js":
-/*!*****************************************!*\
-  !*** ./js/components/modernStandard.js ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModernStandard; });
-/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
-/* harmony import */ var _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/modernStandard */ "./js/templates/modernStandard.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-/**
- * The ModernCompact component.
- *
- * @constructor
- * @extends LocalistComponent
- */
-
-var ModernStandard =
-/*#__PURE__*/
-function (_LocalistComponent) {
-  _inherits(ModernStandard, _LocalistComponent);
-
-  function ModernStandard(props) {
-    _classCallCheck(this, ModernStandard);
-
-    props.innerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__["modernStandardInner"];
-    props.outerTemplate = _templates_modernStandard__WEBPACK_IMPORTED_MODULE_1__["modernStandardWrapper"];
-    return _possibleConstructorReturn(this, _getPrototypeOf(ModernStandard).call(this, props));
-  }
-
-  return ModernStandard;
-}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
-/***/ "./js/components/standard.js":
+/***/ "./js/components/archive.jsx":
 /*!***********************************!*\
-  !*** ./js/components/standard.js ***!
+  !*** ./js/components/archive.jsx ***!
   \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Standard; });
-/* harmony import */ var _localistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_localistComponent */ "./js/components/_localistComponent.js");
-/* harmony import */ var _templates_standard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/standard */ "./js/templates/standard.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-/**
- * The Standard component.
- *
- * @constructor
- * @extends LocalistComponent
- */
+var Archive = function Archive() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      count = _useState2[0],
+      setCount = _useState2[1];
 
-var Standard =
-/*#__PURE__*/
-function (_LocalistComponent) {
-  _inherits(Standard, _LocalistComponent);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      return setCount(count + 1);
+    }
+  }, "Click me"));
+};
 
-  function Standard(props) {
-    _classCallCheck(this, Standard);
-
-    props.innerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_1__["standardInner"];
-    props.outerTemplate = _templates_standard__WEBPACK_IMPORTED_MODULE_1__["standardWrapper"];
-    return _possibleConstructorReturn(this, _getPrototypeOf(Standard).call(this, props));
-  }
-
-  return Standard;
-}(_localistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
+/* harmony default export */ __webpack_exports__["default"] = (Archive);
 
 /***/ }),
 
-/***/ "./js/helpers/buildEvent.js":
+/***/ "./js/components/compact.jsx":
+/*!***********************************!*\
+  !*** ./js/components/compact.jsx ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
+/* harmony import */ var _helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/displayEvent */ "./js/helpers/displayEvent.js");
+/* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./filter */ "./js/components/filter.jsx");
+/* eslint-disable react/forbid-prop-types */
+
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
+
+
+
+
+
+
+
+var CompactInner = function CompactInner(props) {
+  var event = props.event;
+
+  var renderEventDate = function renderEventDate(event) {
+    var gedc = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getEventDateCompact"])(event);
+
+    if (gedc) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "meta date"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "fulldate"
+      }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getEventDateCompact"])(event)));
+    }
+  };
+
+  var renderEventLocation = function renderEventLocation(event) {
+    if (event.location_name) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "meta location"
+      }, event.location_name);
+    }
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "event-node dept-".concat(Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getDepartment"])(event), " node\n    type-").concat(Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getType"])(event), " group-").concat(Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getGroupId"])(event))
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    target: "_blank",
+    href: "{builtData.event.localist_url}"
+  }, event.title)), renderEventDate(event), renderEventLocation(event), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "description"
+  }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getTruncDesc"])(event, '150'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "read-more more",
+    href: "${builtData.event.localist_url}",
+    target: "_blank"
+  }, " read more", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "visually-hidden"
+  }, " about $", event.title))));
+};
+
+var Compact = function Compact(props) {
+  // const [count, setCount] = useState(5);
+  var events = props.events,
+      filterby = props.filterby;
+  var filters = {};
+
+  var buildEventWrapperFilters = function buildEventWrapperFilters(event) {
+    // const department = getDepartment(event);
+    // const type = getType(event);
+    var group_name = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getGroupName"])(event);
+    var group_id = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_4__["getGroupId"])(event); // const event_types = getEventType(event, filterby);
+
+    if (filterby === 'type' && event.filters.event_types) {
+      filters[event.filters.event_types[0].name] = {
+        id: event.filters.event_types[0].id,
+        name: event.filters.event_types[0].name,
+        filterby: filterby
+      };
+    } else if (filterby === 'dept' && event.filters.departments) {
+      filters[event.filters.departments[0].name] = {
+        id: event.filters.departments[0].id,
+        name: event.filters.departments[0].name,
+        filterby: filterby
+      };
+    } else if (filterby === 'group' && group_name !== '') {
+      filters[group_name] = {
+        id: group_id,
+        name: group_name,
+        filterby: filterby
+      };
+    }
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    className: "standard",
+    id: "standardCompact",
+    title: "Events List"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "main-body"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events-listing no-thumbnails compact"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    filterObjs: filters
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events-list"
+  }, events.map(function (event) {
+    buildEventWrapperFilters(event.event);
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CompactInner, {
+      key: event.event.id,
+      event: event.event
+    });
+  })))));
+};
+
+Compact.propTypes = {
+  events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+};
+Compact.defaultProps = {
+  events: []
+};
+CompactInner.propTypes = {
+  event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object
+};
+CompactInner.defaultProps = {
+  event: {}
+};
+/* harmony default export */ __webpack_exports__["default"] = (Compact);
+
+/***/ }),
+
+/***/ "./js/components/filter.jsx":
 /*!**********************************!*\
-  !*** ./js/helpers/buildEvent.js ***!
+  !*** ./js/components/filter.jsx ***!
   \**********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _displayEvent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./displayEvent */ "./js/helpers/displayEvent.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+/* eslint-disable react/forbid-prop-types */
 
 
-
-var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
 /**
- * Test params property types.
- * @todo define params.
- * @param {obj} params The block element data.
- * @return {boolean} Valid proptype.
+ * @todo ad target id to data filter string.
+ * @param {obj} props The props.
  */
 
+var EventFilters = function EventFilters(props) {
+  var filterObjs = props.filterObjs;
+  var filterKeys = Object.keys(filterObjs);
 
-var checkPropTypes = function checkPropTypes(params) {
-  return check.all(check.map(params, check.string));
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('filterAll'),
+      _useState2 = _slicedToArray(_useState, 2),
+      active = _useState2[0],
+      setActive = _useState2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events-filters-wrap"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "hidden"
+  }, "Show:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "events-filters"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    id: "filterAll",
+    "data-filter": "all",
+    className: "filter-btn ".concat(active === 'filterAll' ? 'active' : ''),
+    type: "button",
+    onClick: function onClick() {
+      setActive('filterAll');
+    }
+  }, "All Events")), filterKeys.map(function (key) {
+    var obj = filterObjs[key];
+    var id = obj.id,
+        name = obj.name;
+    var filterId = 'filter' + id;
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: id
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      id: filterId,
+      "data-filter": "filter",
+      className: "filter-btn ".concat(active === filterId ? 'active' : ''),
+      type: "button",
+      onClick: function onClick() {
+        setActive(filterId);
+      }
+    }, name));
+  })));
 };
-/**
- * A Helper function to convert localist event data into display formats.
- * @todo make this a function!
- * @todo Move all of this functionality to templates.
- *
- * @param {obj} event The localist event json data
- * @param {obj} args Formating instructions.
- *
- * @return {obj} see docs/buildEvent.config
- */
 
-
-/* harmony default export */ __webpack_exports__["default"] = (function (event, args) {
-  if (!checkPropTypes(args)) {
-    console.error(' Build Event props must be a string ');
-    return {
-      error: 'prop types must be string'
-    };
-  }
-
-  var be = {};
-  var startDateTime = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventStartDate"])(event);
-  be.event = event;
-  be.args = args;
-  be.description = event.description;
-  be.addcal = args.addcal;
-  be.event_time = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventTime"])(event);
-  be.event_date_compact = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('MMM D');
-  be.event_date = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventDate"])(event);
-  be.displayDate = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getDisplayDate"])(event, be.format);
-  be.dateTime = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('YYYY-MM-DD');
-  be.abbrMonth = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('MMM');
-  be.month = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('MMMM');
-  be.day = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getDay"])(event);
-  be.monthHeader = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('MMMM YYYY');
-  be.event_time_end = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventEndTime"])(event);
-  be.description = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getTruncDesc"])(event, args.pref_excerpt_length); // options
-
-  be.department = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getDepartment"])(event);
-  be.type = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getType"])(event);
-  be.group_name = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getGroupName"])(event);
-  be.group_id = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getGroupId"])(event);
-  be.event_types = Object(_displayEvent__WEBPACK_IMPORTED_MODULE_1__["getEventType"])(event, args.filterby);
-  return be;
-});
+EventFilters.propTypes = {
+  filterObjs: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
+};
+/* harmony default export */ __webpack_exports__["default"] = (EventFilters);
 
 /***/ }),
 
-/***/ "./js/helpers/common.js":
-/*!******************************!*\
-  !*** ./js/helpers/common.js ***!
-  \******************************/
-/*! exports provided: checkLocalistPropTypes, default */
+/***/ "./js/components/inline_compact.jsx":
+/*!******************************************!*\
+  !*** ./js/components/inline_compact.jsx ***!
+  \******************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkLocalistPropTypes", function() { return checkLocalistPropTypes; });
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-var validatProps = function validatProps(params, props) {
-  var paramsKeys = Object.keys(params).sort().join(',');
-  var propsKeys = Object.keys(props).sort().join(',');
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-  if (paramsKeys !== propsKeys) {
-    console.warn("Unsupported prop exiting ".concat(paramsKeys, " != ").concat(propsKeys));
-  }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-  return true;
+
+
+var InlineCompact = function InlineCompact() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      count = _useState2[0],
+      setCount = _useState2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      return setCount(count + 1);
+    }
+  }, "Click me"));
 };
-/**
- * Test params property types.
- * @param {obj} props The block element data.
- * @param {obj} type The check.type
- * @return {boolean} Valid proptype.
- */
+
+/* harmony default export */ __webpack_exports__["default"] = (InlineCompact);
+
+/***/ }),
+
+/***/ "./js/components/modern_compact.jsx":
+/*!******************************************!*\
+  !*** ./js/components/modern_compact.jsx ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-var checkLocalistPropTypes = function checkLocalistPropTypes(props) {
-  var params = {
-    target: props.target,
-    depts: props.depts,
-    entries: props.entries,
-    days: props.days,
-    group: props.group,
-    format: props.format,
-    heading: props.heading,
-    keyword: props.keyword,
-    addcal: props.addcal,
-    apikey: props.apikey,
-    filterby_filters: props.filterby_filters,
-    filterby: props.filterby,
-    pref_excerpt_length: props.pref_excerpt_length,
-    calendarurl: props.calendarurl,
-    pagination: props.pagination,
-    page: props.page,
-    innerTemplate: props.innerTemplate,
-    outerTemplate: props.outerTemplate,
-    win: {} // Define window in validation
 
-  };
-  var propTypes = {
-    target: check.string,
-    depts: check.string,
-    entries: check.string,
-    days: check.string,
-    group: check.string,
-    format: check.string,
-    heading: check.string,
-    keyword: check.string,
-    addcal: check.string,
-    filterby_filters: check.string,
-    filterby: check.string,
-    pref_excerpt_length: check.string,
-    calendarurl: check.string,
-    pagination: check.string,
-    innerTemplate: check["function"],
-    outerTemplate: check["function"],
-    page: check.string,
-    apikey: check.string,
-    win: check.object
-  };
-  var valid = validatProps(props, propTypes) && _typeof(props.win) === 'object';
+var ModernCompact = function ModernCompact() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      count = _useState2[0],
+      setCount = _useState2[1];
 
-  if (!valid) {
-    return false;
-  }
-
-  valid = check.map(params, propTypes);
-  var isValid = check.all(valid);
-
-  if (!isValid) {
-    console.warn(valid);
-  }
-
-  return isValid;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      return setCount(count + 1);
+    }
+  }, "Click me"));
 };
-/* harmony default export */ __webpack_exports__["default"] = (validatProps);
+
+/* harmony default export */ __webpack_exports__["default"] = (ModernCompact);
+
+/***/ }),
+
+/***/ "./js/components/modern_standard.jsx":
+/*!*******************************************!*\
+  !*** ./js/components/modern_standard.jsx ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var ModernStandard = function ModernStandard() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      count = _useState2[0],
+      setCount = _useState2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      return setCount(count + 1);
+    }
+  }, "Click me"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ModernStandard);
+
+/***/ }),
+
+/***/ "./js/components/standard.jsx":
+/*!************************************!*\
+  !*** ./js/components/standard.jsx ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var Standard = function Standard() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      count = _useState2[0],
+      setCount = _useState2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    onClick: function onClick() {
+      return setCount(count + 1);
+    }
+  }, "Click me"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Standard);
 
 /***/ }),
 
@@ -935,7 +610,7 @@ var checkLocalistPropTypes = function checkLocalistPropTypes(props) {
 /*!************************************!*\
   !*** ./js/helpers/displayEvent.js ***!
   \************************************/
-/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getEventEndDate, stripDate, getCalStartDate, getCalEndDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getType, getDepartment, getEventType */
+/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getEventEndDate, stripDate, getCalStartDate, getCalEndDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getType, getDepartment, getEventType, getEventDateCompact */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -959,6 +634,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getType", function() { return getType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDepartment", function() { return getDepartment; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventType", function() { return getEventType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventDateCompact", function() { return getEventDateCompact; });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var truncate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! truncate */ "./node_modules/truncate/truncate.js");
@@ -1220,179 +896,17 @@ var getEventType = function getEventType(event, prefCategory) {
 
   return eventTypes;
 };
-
-/***/ }),
-
-/***/ "./js/helpers/eventFilters.js":
-/*!************************************!*\
-  !*** ./js/helpers/eventFilters.js ***!
-  \************************************/
-/*! exports provided: eventFilters, buildEventWrapperFilters */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventFilters", function() { return eventFilters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildEventWrapperFilters", function() { return buildEventWrapperFilters; });
 /**
- * Renders the filter elemet usually used in the wrapper.
- *
- * @todo Add wai-aria controls support
- *
- * @param {array} filterObjs A array of objects [{id:'',name:'',filterby:''}]
- * @param {string} domTarget A string of html id #id should exist and be unique.
- * @return {string} A html string.
+ * Gets start date in compact format.
+ * @param {event} event The event.
+ * @return {string} The MMM D".
  */
-var eventFilters = function eventFilters(filterObjs, domTarget) {
-  if (typeof filterObjs === 'undefined' || typeof domTarget === 'undefined') {
-    console.error('invalid props in eventFilters()');
-    return '';
-  } // make sure function names are safe strings
 
-
-  var domStr = domTarget.replace(/[^\w]/gi, '');
-  return (
-    /* html */
-    "\n        <div class=\"events-filters-wrap\">\n            <h3 class=\"hidden\">Show:</h3>\n            <ul class=\"events-filters\">\n                <li>\n                    <button\n                        id=\"filterAll-".concat(domStr, "\"\n                        data-filter=\"all\"\n                        class=\"filter-btn active\"\n                    >\n                        All Events\n                    </button>\n                </li>\n                ").concat(filterObjs ? Object.keys(filterObjs).map(function (key) {
-      return "<li><button id='filter".concat(filterObjs[key].id, "-").concat(domStr, "' data-filter=\"").concat(filterObjs[key].filterby, "-").concat(filterObjs[key].id, "\" class=\"filter-btn\" >").concat(filterObjs[key].name, "</button></li>");
-    }).join('') : '', "\n            </ul>\n        </div>\n    ")
-  );
+var getEventDateCompact = function getEventDateCompact(event) {
+  var startDateTime = getEventStartDate(event);
+  var eventDateCompact = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('MMM D');
+  return eventDateCompact;
 };
-/**
- * @todo Try not to use that return the filter.
- * @param {obj} event The localist event object.
- * @param {obj} that The component.
- */
-
-
-var buildEventWrapperFilters = function buildEventWrapperFilters(event, that) {
-  if (that.props.filterby === 'type' && that.builtEvent.type !== 0 && event.filters.event_types) {
-    that.wrapperArgs.filters[event.filters.event_types[0].name] = {
-      id: event.filters.event_types[0].id,
-      name: event.filters.event_types[0].name,
-      filterby: that.props.filterby
-    };
-  } else if (that.props.filterby === 'dept' && that.builtEvent.department !== 0 && event.filters.departments) {
-    that.wrapperArgs.filters[event.filters.departments[0].name] = {
-      id: event.filters.departments[0].id,
-      name: event.filters.departments[0].name,
-      filterby: that.props.filterby
-    };
-  } else if (that.props.filterby === 'group' && that.builtEvent.group_name !== '') {
-    that.wrapperArgs.filters[that.builtEvent.group_name] = {
-      id: that.builtEvent.group_id,
-      name: that.builtEvent.group_name,
-      filterby: that.props.filterby
-    };
-  }
-};
-
-
-
-/***/ }),
-
-/***/ "./js/helpers/eventHandler.js":
-/*!************************************!*\
-  !*** ./js/helpers/eventHandler.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-/**
- * This returns an event handler, that handles all on click events.
- * The pagination event handler mutates the window location and history.
- * @param {obj} that The localList component.
- * @return {func} The parent click event handler.
- */
-/* harmony default export */ __webpack_exports__["default"] = (function (that) {
-  var domStr = that.props.target.replace(/[^\w]/gi, '');
-  var targetElem = that.parent; // handles filter events
-
-  var toggleFilters = function toggleFilters(id, target) {
-    // remove active class from all filter buttons
-    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-    allFilterBtns.forEach(function (value) {
-      value.classList.remove('active');
-    });
-    var elem = targetElem.querySelector("#".concat(id)); // set the current item active
-
-    elem.classList.add('active'); // onclick button will only hide non target elements
-    // hide all filter elements
-
-    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-    allEvents.forEach(function (value) {
-      value.classList.add('fadeOut');
-    }); // show the target elements
-
-    var targetElems = _toConsumableArray(targetElem.getElementsByClassName(target));
-
-    targetElems.forEach(function (value) {
-      value.classList.remove('fadeOut');
-    });
-  }; // Removes all fadeout classes
-
-
-  var showAllEvents = function showAllEvents() {
-    // remove active class from all filter buttons
-    var allFilterBtns = _toConsumableArray(targetElem.getElementsByClassName('filter-btn'));
-
-    allFilterBtns.forEach(function (value) {
-      value.classList.remove('active');
-    });
-    var elem = targetElem.querySelector("#filterAll-".concat(domStr)); // set the current item active
-
-    elem.classList.add('active'); // show all filter elements
-
-    var allEvents = _toConsumableArray(targetElem.getElementsByClassName('event-node'));
-
-    allEvents.forEach(function (value) {
-      value.classList.remove('fadeOut');
-    });
-  };
-  /**
-   * @todo refactor this into a seperate handler
-   * @param {event} e The event to be handled.
-   */
-
-
-  var handleclick = function handleclick(e) {
-    if (/filterAll.*/.test(e.target.id)) {
-      // handle All events filter button at top
-      showAllEvents();
-    } else if (/filter.*/.test(e.target.id)) {
-      // handle other events filters.
-      toggleFilters(e.target.id, e.target.dataset.filter);
-    } else if (e.target.classList.contains('page-link')) {
-      // handle pagination click with ajax
-      e.preventDefault();
-
-      if (!e.target.parentNode || !e.target.parentNode.classList.contains('active')) {
-        that.renderThrobber();
-        var url = new URL(e.target.href);
-        var it = url.searchParams.get('page');
-        that.requestArgs.page = "".concat(it);
-        var loc = that.props.win.location;
-        var newurl = "".concat(loc.origin).concat(loc.pathname, "?page=").concat(it);
-        that.props.win.history.pushState({}, null, newurl);
-        that.getLocalistEvents(that.requestArgs);
-      }
-    }
-  };
-
-  return handleclick;
-});
 
 /***/ }),
 
@@ -1504,111 +1018,6 @@ function () {
 
 /***/ }),
 
-/***/ "./js/localList.js":
-/*!*************************!*\
-  !*** ./js/localList.js ***!
-  \*************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_standard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/standard */ "./js/components/standard.js");
-/* harmony import */ var _components_compact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/compact */ "./js/components/compact.js");
-/* harmony import */ var _components_modernStandard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/modernStandard */ "./js/components/modernStandard.js");
-/* harmony import */ var _components_modernCompact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/modernCompact */ "./js/components/modernCompact.js");
-/* harmony import */ var _components_archive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/archive */ "./js/components/archive.js");
-/* harmony import */ var _components_inlineCompact__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/inlineCompact */ "./js/components/inlineCompact.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-
-
-
-
-
-
-
-var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
-/**
- * Test props property types.
- * @param {obj} props The block element data.
- * @return {boolean} Valid proptype.
- */
-
-
-var checkPropTypes = function checkPropTypes(props) {
-  var valid = check.map(props, {
-    target: check.string,
-    depts: check.string,
-    entries: check.string,
-    format: check.string,
-    group: check.string,
-    keyword: check.string,
-    heading: check.string,
-    filterby: check.string,
-    filterby_filters: check.string,
-    calendarurl: check.string,
-    apikey: check.string,
-    addcal: check.string
-  });
-  var isValid = check.all(valid);
-
-  if (!isValid) {
-    console.warn(valid);
-  }
-
-  return isValid;
-};
-/**
- * Get the party started!
- *   Selects the coresponding component based on format name.
- *   @todo add support for unused options. [filter, addcal]
- *   @todo impliment filter options and pagination.
- * @param {obj} props The base Component props.
- * @return {Component} a localist component of the type param.format.
- */
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (props) {
-  // Map out formats for look up. These must match Drupal block.
-  var formatOptions = {
-    standard: _components_standard__WEBPACK_IMPORTED_MODULE_0__["default"],
-    compact: _components_compact__WEBPACK_IMPORTED_MODULE_1__["default"],
-    modern_compact: _components_modernCompact__WEBPACK_IMPORTED_MODULE_3__["default"],
-    modern_standard: _components_modernStandard__WEBPACK_IMPORTED_MODULE_2__["default"],
-    inline_compact: _components_inlineCompact__WEBPACK_IMPORTED_MODULE_5__["default"],
-    archive: _components_archive__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }; // The following are static filter props.
-
-  props.filterby_filters = 'true';
-  props.pref_excerpt_length = '250'; // Gets all of the events for the past year.
-  // Warning large datasets may take a long time to fetch.
-
-  props.days = '365'; // optional props
-
-  props.addcal = props.addcal || 'false';
-
-  if (typeof window !== 'undefined') {
-    props.win = props.win || window;
-  }
-
-  var url = new URL(props.win.location.href);
-  props.page = url.searchParams.get('page') || '1';
-
-  if (checkPropTypes(props) && props.format in formatOptions && _typeof(props.win) === 'object') {
-    var Component = formatOptions[props.format];
-    var component = new Component(props);
-    return component;
-  }
-
-  console.error('localist recieved invalid props');
-  return {
-    error: 'localist recieved invalid props'
-  };
-});
-
-/***/ }),
-
 /***/ "./js/localist.jsx":
 /*!*************************!*\
   !*** ./js/localist.jsx ***!
@@ -1622,6 +1031,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_paginate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-paginate */ "./node_modules/react-paginate/dist/index.js");
+/* harmony import */ var react_paginate__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_paginate__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_standard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/standard */ "./js/components/standard.jsx");
+/* harmony import */ var _components_compact__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/compact */ "./js/components/compact.jsx");
+/* harmony import */ var _components_modern_standard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/modern_standard */ "./js/components/modern_standard.jsx");
+/* harmony import */ var _components_modern_compact__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/modern_compact */ "./js/components/modern_compact.jsx");
+/* harmony import */ var _components_archive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/archive */ "./js/components/archive.jsx");
+/* harmony import */ var _components_inline_compact__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/inline_compact */ "./js/components/inline_compact.jsx");
+/* harmony import */ var _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/localistApiConnector */ "./js/services/localistApiConnector.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1632,21 +1050,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-/* eslint-disable react/require-default-props */
+/* eslint-disable react/forbid-prop-types */
 
-/* eslint-disable react/destructuring-assignment */
+
+
+
+
+
+
+
 
 
 /**
- * Localist Hello World Component
+ * Localist Component
  */
 
 var Localist =
@@ -1654,10 +1078,6 @@ var Localist =
 function (_Component) {
   _inherits(Localist, _Component);
 
-  /**
-   * set the title property
-   * @param {object} props
-   */
   function Localist(props) {
     var _this;
 
@@ -1665,22 +1085,197 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Localist).call(this, props));
     _this.state = {
-      title: props.title ? props.title : 'Hello World'
+      events: [],
+      llPage: {},
+      depts: props.depts,
+      entries: props.entries,
+      format: props.format,
+      group: props.group,
+      keyword: props.keyword,
+      days: props.days,
+      page: props.page,
+      loading: true
     };
+    props.win.localList = _assertThisInitialized(_this);
+    _this.formatOptions = ['standard', 'compact', 'modern_compact', 'modern_standard', 'inline_compact', 'archive'];
+    _this.curPage = 1;
+    _this.handlePageClick = _this.handlePageClick.bind(_assertThisInitialized(_this));
     return _this;
   }
-  /**
-   * render the component
-   * @return {JSX} the hello world view
-   */
-
 
   _createClass(Localist, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var page = this.props.page;
+      this.getEvents(page);
+    }
+  }, {
+    key: "getComponentFromFormat",
+    value: function getComponentFromFormat() {
+      var component;
+      var _this$state = this.state,
+          events = _this$state.events,
+          page = _this$state.page,
+          loading = _this$state.loading;
+      var _this$props = this.props,
+          format = _this$props.format,
+          heading = _this$props.heading,
+          filterby_filters = _this$props.filterby_filters;
+
+      if (loading) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "p-4"
+        }, "Loading...page ", page);
+      }
+
+      switch (format) {
+        case 'standard':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_standard__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            key: page,
+            heading: heading,
+            events: events,
+            filterby: filterby_filters
+          });
+          break;
+
+        case 'compact':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_compact__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            key: page,
+            heading: heading,
+            events: events,
+            filterby: filterby_filters
+          });
+          break;
+
+        case 'modern_standard':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modern_standard__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            key: page,
+            heading: heading,
+            events: events,
+            filterby: filterby_filters
+          });
+          break;
+
+        case 'modern_compact':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modern_compact__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            key: page,
+            heading: heading,
+            events: events,
+            filterby: filterby_filters
+          });
+          break;
+
+        case 'inline_compact':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_inline_compact__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            key: page,
+            heading: heading,
+            events: events,
+            filterby: filterby_filters
+          });
+          break;
+
+        case 'archive':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_archive__WEBPACK_IMPORTED_MODULE_7__["default"], {
+            key: page,
+            heading: heading,
+            events: events,
+            filterby: filterby_filters
+          });
+          break;
+
+        default:
+          break;
+      }
+
+      return component;
+    }
+  }, {
+    key: "getEvents",
+    value: function getEvents(page) {
+      var _this2 = this;
+
+      setTimeout(function () {
+        var page = this.state.page;
+
+        if (this.curPage !== page) {
+          this.setState({
+            loading: true
+          });
+        }
+      }.bind(this), 300);
+      var _this$state2 = this.state,
+          depts = _this$state2.depts,
+          entries = _this$state2.entries,
+          format = _this$state2.format,
+          group = _this$state2.group,
+          keyword = _this$state2.keyword,
+          days = _this$state2.days;
+      var _this$props2 = this.props,
+          apikey = _this$props2.apikey,
+          calendarurl = _this$props2.calendarurl;
+      Object(_services_localistApiConnector__WEBPACK_IMPORTED_MODULE_9__["default"])(depts, entries, format, group, keyword, days, apikey, calendarurl, page).then(function (response) {
+        if (typeof response.data.events !== 'undefined') {
+          console.warn(response.data.page.current, response.data);
+
+          _this2.setState({
+            events: response.data.events,
+            llPage: response.data.page,
+            loading: false
+          });
+
+          _this2.curPage = response.data.page.current;
+        } else {
+          console.warn('localist returned invalid data');
+        }
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    }
+  }, {
+    key: "handlePageClick",
+    value: function handlePageClick(data) {
+      var newPage = data.selected + 1;
+      this.setState({
+        page: newPage
+      });
+      this.getEvents(newPage);
+    }
+  }, {
+    key: "renderAddCal",
+    value: function renderAddCal() {
+      var addcal = this.props.addcal;
+      var llPage = this.state.llPage;
+      var total = llPage.total;
+
+      if (addcal === 'true') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+          className: "pager"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_paginate__WEBPACK_IMPORTED_MODULE_2___default.a, {
+          previousLabel: "previous",
+          nextLabel: "next",
+          breakLabel: "...",
+          breakClassName: "break-me",
+          pageCount: total - 1,
+          marginPagesDisplayed: 1,
+          pageRangeDisplayed: 3,
+          onPageChange: this.handlePageClick,
+          containerClassName: "pager_items",
+          subContainerClassName: "pager__item",
+          activeClassName: "is-active"
+        }));
+      }
+    }
+  }, {
+    key: "renderHeading",
+    value: function renderHeading() {
+      var heading = this.props.heading;
+      var renderHeading = heading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, heading) : '';
+      return renderHeading;
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: ""
-      }, this.state.title, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It worked!"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.renderHeading(), this.getComponentFromFormat(), this.renderAddCal());
     }
   }]);
 
@@ -1688,434 +1283,79 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 Localist.propTypes = {
-  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  win: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
+  depts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  format: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  group: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  keyword: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  heading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  // // filterby: PropTypes.string.isRequired,
+  calendarurl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  apikey: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  // // pref_excerpt_length: PropTypes.string,
+  filterby_filters: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  days: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  page: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
+Localist.defaultProps = {
+  page: 1,
+  days: '365',
+  heading: '',
+  filterby_filters: 'type'
 };
 /* harmony default export */ __webpack_exports__["default"] = (Localist);
 
 /***/ }),
 
-/***/ "./js/services/localistApiConnector.js":
-/*!*********************************************!*\
-  !*** ./js/services/localistApiConnector.js ***!
-  \*********************************************/
+/***/ "./js/services/localistApiConnector.jsx":
+/*!**********************************************!*\
+  !*** ./js/services/localistApiConnector.jsx ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/common */ "./js/helpers/common.js");
-
-
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var check = __webpack_require__(/*! check-types */ "./node_modules/check-types/src/check-types.js");
 /**
- * Test params property types.
- * @param {obj} params The block element data.
- * @param {obj} props The block element data.
- * @return {boolean} Valid proptype.
+ * Sets params and returns axios Promise.
  */
 
 
-var checkPropTypes = function checkPropTypes(params, props) {
-  var valid = Object(_helpers_common__WEBPACK_IMPORTED_MODULE_0__["default"])(params, props);
-
-  if (!valid) {
-    return false;
-  }
-
-  valid = check.map(params, check.string);
-  return check.all(valid);
-};
-/**
- * Configures request params and Get events from loacalist api.
- * @param {obj} props The optional api config params.
- * @return {axios} A axios promise;
- */
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (props) {
-  if (!checkPropTypes({
-    depts: props.depts,
-    entries: props.depts,
-    format: props.format,
-    group: props.group,
-    keyword: props.keyword,
-    days: props.days,
-    apikey: props.apikey,
-    calendarurl: props.calendarurl,
-    page: props.page
-  }, props)) {
-    console.warn('invalid prop types in localist connect.');
-    return axios.get('');
-  }
-
+/* harmony default export */ __webpack_exports__["default"] = (function (depts, entries, format, group, keyword, days, apikey, calendarurl, page) {
   var params = {
-    apikey: props.apikey,
-    days: props.days,
+    apikey: apikey,
+    days: days,
     distinct: true,
-    pp: props.entries,
-    page: props.page,
-    start: props.format !== 'archive' ? moment().format('YYYY-MM-DD') : moment().subtract(props.days, 'D').format('YYYY-MM-DD'),
-    direction: props.format !== 'archive' ? 'desc' : 'asc'
+    pp: entries,
+    page: page,
+    start: format !== 'archive' ? moment().format('YYYY-MM-DD') : moment().subtract(days, 'D').format('YYYY-MM-DD'),
+    direction: format !== 'archive' ? 'asc' : 'desc'
   }; // Supports multiple departments with CSV string.
 
-  if (props.depts && props.depts !== '0') {
+  if (depts && depts !== '0') {
     params.type = [];
-    props.depts.split(',').forEach(function (item) {
+    depts.split(',').forEach(function (item) {
       params.type.push(item.trim());
     });
   }
 
-  if (props.group && props.group !== '0') {
-    params.group_id = props.group;
+  if (group && group !== '0') {
+    params.group_id = group;
   }
 
-  if (props.keyword && props.keyword !== '') {
-    params.keyword = props.keyword;
+  if (keyword && keyword !== '') {
+    params.keyword = keyword;
   }
 
-  return axios.get(props.calendarurl, {
+  return axios.get(calendarurl, {
     params: params
   });
 });
-
-/***/ }),
-
-/***/ "./js/templates/archive.js":
-/*!*********************************!*\
-  !*** ./js/templates/archive.js ***!
-  \*********************************/
-/*! exports provided: archiveInner, archiveWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "archiveInner", function() { return archiveInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "archiveWrapper", function() { return archiveWrapper; });
-/**
- *   @todo add prop type validation.
- * @param {obj} builtData A buildEvents.js obj.
- * @return {string} Html string
- */
-var archiveInner = function archiveInner(builtData) {
-  return (
-    /* html */
-    "\n    <div class=\"views-row\">\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-sm-12 event-title-and-location\">\n                    <div>\n                        <a href=\"".concat(builtData.event.localist_url, "\">\n                            ").concat(builtData.event.title, "\n                        </a>\n                    </div>\n                    <div>\n                        <span class=\"event-date\">\n                            ").concat(builtData.event_date, "\n                        </span>\n                        - ").concat(builtData.event_time, "\n                        ").concat(builtData.event.location_name ? " | ".concat(builtData.event.location_name) : '', "\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n")
-  );
-};
-/**
- *   @todo add prop type validation.
- * @param {string} inner The html inner string.
- * @return {string} Html string
- */
-
-var archiveWrapper = function archiveWrapper(inner) {
-  return (
-    /* html */
-    "\n    <div class=\"view view-events view-id-events archive-events\">\n        <div class=\"view-content\">\n            ".concat(inner, "\n        </div>\n    </div>\n")
-  );
-};
-
-/***/ }),
-
-/***/ "./js/templates/compact.js":
-/*!*********************************!*\
-  !*** ./js/templates/compact.js ***!
-  \*********************************/
-/*! exports provided: compactInner, compactWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compactInner", function() { return compactInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compactWrapper", function() { return compactWrapper; });
-/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
-/**
- *   @todo add prop type validation.
- * @param {obj} builtData A buildEvents.js obj.
- * @return {string} Html string
- */
-
-var compactInner = function compactInner(builtData) {
-  return (
-    /* html */
-    "\n<div\n    class=\"event-node dept-".concat(builtData.department, " node\n    type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n>\n    <h3>\n        <a\n            target=\"_blank\"\n            href=\"").concat(builtData.event.localist_url, "\"\n        >\n            ").concat(builtData.event.title, "\n        </a>\n    </h3>\n    ").concat(builtData.event_date_compact ? "<h4 class=\"meta date\"><span class=\"fulldate\">".concat(builtData.event_date_compact, "</span></h4>") : '', "\n    ").concat(builtData.event.location_name ? "<h4 class=\"meta location\">".concat(builtData.event.location_name, "</h4>") : '', "\n    <p class=\"description\">\n        ").concat(builtData.description, "\n        <a\n            class=\"read-more more\"\n            href=\"").concat(builtData.event.localist_url, "\"\n            target=\"_blank\"\n        > read more\n        <span class='visually-hidden'> about ").concat(builtData.event.title, "</span>\n        </a>\n    </p>\n    ").concat(builtData.addcal === 'true' ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n</div><!--end of node -->")
-  );
-};
-/**
- *   @todo add prop type validation.
- * @param {string} inner The html inner string.
- * @param {obj} args Mostly unused try and remove these.
- * @return {string} Html string
- */
-
-var compactWrapper = function compactWrapper(inner, args) {
-  return (
-    /* html */
-    "\n    <section class='standard' id=\"standarCompact\" title=\"Events List\">\n    ".concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div class=\"main-body\">\n            <div class=\"events-listing no-thumbnails compact\">\n                <!--filters options not supported -->\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </section><!--end of section -->")
-  );
-};
-
-/***/ }),
-
-/***/ "./js/templates/inlineCompact.js":
-/*!***************************************!*\
-  !*** ./js/templates/inlineCompact.js ***!
-  \***************************************/
-/*! exports provided: inlineCompactInner, inlineCompactWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inlineCompactInner", function() { return inlineCompactInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inlineCompactWrapper", function() { return inlineCompactWrapper; });
-/**
- *   @todo add prop type validation.
- * @param {obj} builtEvent A buildEvents.js obj.
- * @return {string} Html string
- */
-var inlineCompactInner = function inlineCompactInner(builtEvent) {
-  return (
-    /* html */
-    "\n<div class=\"views-row\">\n    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-sm-2 event-month-and-day\">\n                <div>\n                    <span class=\"event-month\">".concat(builtEvent.abbrMonth, "</span>\n                    <span class=\"event-day\">").concat(builtEvent.day, "</span>\n                </div>\n            </div>\n            <div class=\"col-sm-8 event-title-and-location\">\n                <div class=\"event-title\">\n                    <a href=\"").concat(builtEvent.event.localist_url, "\" hreflang=\"en\">\n                        '").concat(builtEvent.event.title, "'\n                    </a>\n                </div>\n                <div class=\"event-times\">\n                    <span class=\"fa fa-clock-o\"></span>\n                    ").concat(builtEvent.event_time, "\n                    ").concat(builtEvent.event_time_end ? " - ".concat(builtEvent.event_time_end) : '', "\n                </div>\n                <div class=\"event-location\">\n                ").concat(builtEvent.event.location_name ? "<span class=\"fa fa-map-marker\"></span>\n                            ".concat(builtEvent.event.location_name) : '', "\n                </div>\n            </div>\n        </div>\n    </div>\n</div>")
-  );
-};
-/**
- *   @todo add prop type validation.
- * @param {string} innerHtml The html inner string.
- * @param {obj} args Mostly unused try and remove these.
- * @return {string} Html string
- */
-
-var inlineCompactWrapper = function inlineCompactWrapper(innerHtml, args) {
-  return (
-    /* html */
-    "\n    <section id='eventsInlineCompact' title=\"Events List\">\n        ".concat(args.heading ? "<h2 class=\"block-title\">".concat(args.heading, "</h2>") : '', "\n        <div class=\"events-listing events-listing-inline inline no-thumbnails\">\n            ").concat(innerHtml, "\n        </div>\n    </section>")
-  );
-};
-
-/***/ }),
-
-/***/ "./js/templates/modernCompact.js":
-/*!***************************************!*\
-  !*** ./js/templates/modernCompact.js ***!
-  \***************************************/
-/*! exports provided: modernCompactInner, modernCompactWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernCompactInner", function() { return modernCompactInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernCompactWrapper", function() { return modernCompactWrapper; });
-/**
- *   @todo add prop type validation.
- * @param {obj} builtData A buildEvents.js obj.
- * @return {string} Html string
- */
-var modernCompactInner = function modernCompactInner(builtData) {
-  return (
-    /* html */
-    "\n<div class=\"card\">\n    <div class=\"events\">\n        <a href=\"".concat(builtData.event.localist_url, "\" class=\"group-link-wrapper field-group-link\">\n            <time title=\"").concat(builtData.event_date, "\" datetime=\"").concat(builtData.dateTime, "\">\n                <span class='month'>").concat(builtData.abbrMonth, "</span>\n                <span class='day'>").concat(builtData.day, "</span>\n            </time>\n            <div class=\"field title\">\n                <h3>").concat(builtData.event.title, "</h3>\n            </div>\n            <div class=\"field meta\">\n            <p>").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "</p>\n            </div>\n            <div class=\"field field-name-summary summary\">\n                <p>").concat(builtData.description, "</p>\n            </div>\n        </a>\n    </div>\n</div>\n")
-  );
-};
-/**
- *   @todo add prop type validation.
- * @param {string} inner The html inner string.
- * @param {obj} args Mostly unused try and remove these.
- * @return {string} Html string
- */
-
-var modernCompactWrapper = function modernCompactWrapper(inner, args) {
-  return (
-    /* html */
-    "\n    <div id='eventsModernCompact' class=\"secondary modern\">\n         ".concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div class=\"cwd-component cwd-card-grid three-card singles compact no-thumbnails\">\n            <div id=\"cwd-homeEvents-list\" class=\"compact no-thumbnails\">\n                <!--no filters -->\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div><!--events listing -->\n        </div><!-- main-body -->\n    </div><!--end of section -->")
-  );
-};
-
-/***/ }),
-
-/***/ "./js/templates/modernStandard.js":
-/*!****************************************!*\
-  !*** ./js/templates/modernStandard.js ***!
-  \****************************************/
-/*! exports provided: modernStandardInner, modernStandardWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernStandardInner", function() { return modernStandardInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modernStandardWrapper", function() { return modernStandardWrapper; });
-/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
-/* harmony import */ var _helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/eventFilters */ "./js/helpers/eventFilters.js");
-
-
-/**
- *
- * @param {obj} event_types An array of events.
- * @return {string} Html string
- */
-
-var tagStr = function tagStr(event_types) {
-  var spanStr = '';
-
-  if (event_types) {
-    event_types.forEach(function (element) {
-      spanStr +=
-      /* html */
-      "\n                <span class=\"inline-events-type\">".concat(element.name, "</span>\n            ");
-    });
-  }
-
-  return spanStr;
-};
-/**
- *
- * @param {obj} builtData A buildEvents.js obj.
- *   @todo add prop type validation.
- * @return {string} Html string
- */
-
-
-var modernStandardInner = function modernStandardInner(builtData) {
-  return (
-    /* html */
-    "\n    <div\n        class=\"card event-node dept-".concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.group_id, "\"\n    >\n        <div class=\"events\">\n            <a\n                href=\"").concat(builtData.event.localist_url, "\"\n                class=\"group-link-wrapper field-group-link\"\n            >\n                <time\n                    title=\"").concat(builtData.event_date, "\"\n                    datetime=\"").concat(builtData.dateTime, "\"\n                >\n                    <span class=\"month\">").concat(builtData.abbrMonth, "</span>\n                    <span class=\"day\">").concat(builtData.day, "</span>\n                </time>\n                <div class=\"field title\">\n                    <h3>").concat(builtData.event.title, "</h3>\n                </div>\n                <div class=\"field meta\">\n                    <p>\n                        ").concat(builtData.event_time).concat(builtData.event.location_name ? ", ".concat(builtData.event.location_name) : '', "\n                        ").concat(tagStr(builtData.event.filters.event_types), "\n                    </p>\n                </div>\n                <div class=\"field field-name-summary summary\">\n                    <p>").concat(builtData.description, " read more</p>\n                </div>\n            </a>\n            ").concat(builtData.addcal === 'true' ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n        </div>\n        <!--events-->\n    </div>\n    <!--card-->\n")
-  );
-};
-/**
- *
- * @param {string} inner The html inner string.
- * @param {obj} args Mostly unused try and remove these.
- * @return {string} Html string
- */
-
-var modernStandardWrapper = function modernStandardWrapper(inner, args) {
-  return (
-    /* html */
-    "\n    <section id=\"eventsModernStandard\" class=\"modern\" title=\"Events List\">\n        ".concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n        <div>\n            <div\n                class=\"cwd-component cwd-card-grid three-card singles events-listing no-thumbnails\"\n            >\n                ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["eventFilters"])(args.filters, args.target), "\n                <div class=\"events-list\">\n                    ").concat(inner, "\n                </div>\n            </div>\n            <!--events listing -->\n        </div>\n        <!-- main-body -->\n    </section>\n    <!--end of section -->\n")
-  );
-};
-
-/***/ }),
-
-/***/ "./js/templates/paginationTemplate.js":
-/*!********************************************!*\
-  !*** ./js/templates/paginationTemplate.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var Paginator = __webpack_require__(/*! pagination */ "./node_modules/pagination/index.js"); // https://www.npmjs.com/package/pagination
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (page) {
-  var paginator = new Paginator.TemplatePaginator({
-    current: page.current,
-    rowsPerPage: page.size,
-    totalResult: page.total,
-    template: function template(result) {
-      var i;
-      var len;
-      var html =
-      /* html */
-      "<nav class=\"pager\"><ul class=\"pager__items js-pager__items\">";
-
-      if (result.pageCount < 2) {
-        html +=
-        /* html */
-        "</ul></div>";
-        return html;
-      }
-
-      var prelink = paginator.preparePreLink(result.prelink);
-
-      if (result.previous) {
-        html +=
-        /* html */
-        "\n                <li class=\"pager__item pager__item--previos\">\n                    <a class='page-link' href=\"".concat(prelink).concat(result.previous, "\"\n                    >").concat(paginator.options.translator('PREVIOUS'), "\n                    </a>\n                </li>");
-      }
-
-      if (result.range.length) {
-        for (i = 0, len = result.range.length; i < len; i++) {
-          if (result.range[i] === result.current) {
-            html +=
-            /* html */
-            "\n                        <li class=\"is-active pager__item\">\n                            <a class='page-link'\n                                href=\"".concat(prelink).concat(result.range[i], "\"\n                            >\n                            ").concat(result.range[i], "\n                            </a>\n                        </li>");
-          } else {
-            html +=
-            /* html */
-            "\n                        <li class=\"pager__item\">\n                            <a class='page-link'\n                                href=\"".concat(prelink).concat(result.range[i], "\"\n                            >").concat(result.range[i], "\n                            </a>\n                        </li>");
-          }
-        }
-      }
-
-      if (result.next) {
-        html +=
-        /* html */
-        "\n                <li class=\"pager__item pager__item--next\">\n                    <a class='page-link' href=\"".concat(prelink).concat(result.next, "\">\n                    ").concat(paginator.options.translator('NEXT'), "\n                    </a>\n                </li>");
-      }
-
-      html +=
-      /* html */
-      "</ul></nav>";
-      return html;
-    }
-  });
-  return paginator;
-});
-
-/***/ }),
-
-/***/ "./js/templates/standard.js":
-/*!**********************************!*\
-  !*** ./js/templates/standard.js ***!
-  \**********************************/
-/*! exports provided: standardInner, standardWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardInner", function() { return standardInner; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "standardWrapper", function() { return standardWrapper; });
-/* harmony import */ var _helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/template-helpers */ "./js/helpers/template-helpers.js");
-/* harmony import */ var _helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/eventFilters */ "./js/helpers/eventFilters.js");
-
-
-/**
- *
- * @param {obj} builtData A buildEvents.js obj.
- *   @todo add prop type validation.
- * @return {string} Html string
- */
-
-var standardInner = function standardInner(builtData) {
-  return (
-    /* html */
-    "\n    ".concat(builtData.checkDate.month(builtData), " ").concat(builtData.checkDate.day(builtData), "\n    <div\n        class=\"event-node node dept-").concat(builtData.department, " type-").concat(builtData.type, " group-").concat(builtData.event.group_id || '', "\"\n    >\n        <h3>\n            <a target=\"_blank\" href=\"").concat(builtData.event.localist_url, "\"\n                >").concat(builtData.event.title, "</a\n            >\n        </h3>\n        ").concat(builtData.event_time ?
-    /* html */
-    "\n                  <h4 class=\"meta date\">\n                      <span class=\"start\">".concat(builtData.event_time, "</span>\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event.location_name ?
-    /* html */
-    "\n                  <h4 class=\"meta location\">\n                      ".concat(builtData.event.location_name, "\n                  </h4>\n                ") : '', "\n        ").concat(builtData.event_types ? "<h4 class=\"meta type\"><span class=\"fa\"></span>".concat(builtData.event_types, "</h4>") : '', "\n        <p class=\"description\">\n            ").concat(builtData.description, "\n            <a\n                class=\"read-more more\"\n                href=\"").concat(builtData.event.localist_url, "\"\n                target=\"_blank\"\n                > read more <span class=\"visually-hidden\">\n                    about ").concat(builtData.event.title, "</span\n                ></a\n            >\n        </p>\n        ").concat(builtData.addcal === 'true' ? "".concat(Object(_helpers_template_helpers__WEBPACK_IMPORTED_MODULE_0__["add_calendar"])(builtData.event)) : '', "\n    </div>\n    <!--end of node -->\n")
-  );
-};
-/**
- *
- * @param {string} inner The html inner string.
- * @param {obj} args Mostly unused try and remove these.
- * @return {string} Html string
- */
-
-var standardWrapper = function standardWrapper(inner, args) {
-  return (
-    /* html */
-    "\n        <section class=\"standard\" id=\"eventStandard\" title=\"Events List\">\n            ".concat(args.heading ? "<h2>".concat(args.heading, "</h2>") : '', "\n            <div class=\"main-body\">\n                <div class=\"events-listing no-thumbnails\">\n                    ").concat(Object(_helpers_eventFilters__WEBPACK_IMPORTED_MODULE_1__["eventFilters"])(args.filters, args.target), "\n                    <div class=\"events-list\">\n                        ").concat(inner, "\n                    </div>\n                </div>\n                <!--events listing -->\n            </div>\n            <!-- main-body -->\n        </section>\n        <!--end of section -->\n    ")
-  );
-};
 
 /***/ }),
 
@@ -14158,928 +13398,6 @@ __webpack_require__(/*! ./modules/web.timers */ "./node_modules/babel-polyfill/n
 __webpack_require__(/*! ./modules/web.immediate */ "./node_modules/babel-polyfill/node_modules/core-js/modules/web.immediate.js");
 __webpack_require__(/*! ./modules/web.dom.iterable */ "./node_modules/babel-polyfill/node_modules/core-js/modules/web.dom.iterable.js");
 module.exports = __webpack_require__(/*! ./modules/_core */ "./node_modules/babel-polyfill/node_modules/core-js/modules/_core.js");
-
-
-/***/ }),
-
-/***/ "./node_modules/check-types/src/check-types.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/check-types/src/check-types.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*globals define, module, Symbol */
-/*jshint -W056 */
-
-(function (globals) {
-  'use strict';
-
-  var messages, predicates, functions, assert, not, maybe, collections,
-     slice, neginf, posinf, isArray, keys, haveSymbols;
-
-  messages = {};
-  predicates = {};
-
-  [
-    { n: 'equal', f: equal, s: 'equal {e}' },
-    { n: 'undefined', f: isUndefined, s: 'be undefined' },
-    { n: 'null', f: isNull, s: 'be null' },
-    { n: 'assigned', f: assigned, s: 'be assigned' },
-    { n: 'primitive', f: primitive, s: 'be primitive type' },
-    { n: 'contains', f: contains, s: 'contain {e}' },
-    { n: 'in', f: isIn, s: 'be in {e}' },
-    { n: 'zero', f: zero, s: 'be 0' },
-    { n: 'infinity', f: infinity, s: 'be infinity' },
-    { n: 'number', f: number, s: 'be Number' },
-    { n: 'integer', f: integer, s: 'be integer' },
-    { n: 'even', f: even, s: 'be even number' },
-    { n: 'odd', f: odd, s: 'be odd number' },
-    { n: 'greater', f: greater, s: 'be greater than {e}' },
-    { n: 'less', f: less, s: 'be less than {e}' },
-    { n: 'between', f: between, s: 'be between {e} and {e2}' },
-    { n: 'greaterOrEqual', f: greaterOrEqual, s: 'be greater than or equal to {e}' },
-    { n: 'lessOrEqual', f: lessOrEqual, s: 'be less than or equal to {e}' },
-    { n: 'inRange', f: inRange, s: 'be in the range {e} to {e2}' },
-    { n: 'positive', f: positive, s: 'be positive number' },
-    { n: 'negative', f: negative, s: 'be negative number' },
-    { n: 'string', f: string, s: 'be String' },
-    { n: 'emptyString', f: emptyString, s: 'be empty string' },
-    { n: 'nonEmptyString', f: nonEmptyString, s: 'be non-empty string' },
-    { n: 'match', f: match, s: 'match {e}' },
-    { n: 'boolean', f: boolean, s: 'be Boolean' },
-    { n: 'object', f: object, s: 'be Object' },
-    { n: 'emptyObject', f: emptyObject, s: 'be empty object' },
-    { n: 'nonEmptyObject', f: nonEmptyObject, s: 'be non-empty object' },
-    { n: 'instanceStrict', f: instanceStrict, s: 'be instanceof {t}' },
-    { n: 'instance', f: instance, s: 'be {t}' },
-    { n: 'like', f: like, s: 'be like {e}' },
-    { n: 'array', f: array, s: 'be Array' },
-    { n: 'emptyArray', f: emptyArray, s: 'be empty array' },
-    { n: 'nonEmptyArray', f: nonEmptyArray, s: 'be non-empty array' },
-    { n: 'arrayLike', f: arrayLike, s: 'be array-like' },
-    { n: 'iterable', f: iterable, s: 'be iterable' },
-    { n: 'date', f: date, s: 'be valid Date' },
-    { n: 'function', f: isFunction, s: 'be Function' },
-    { n: 'hasLength', f: hasLength, s: 'have length {e}' },
-  ].map(function (data) {
-    var n = data.n;
-    messages[n] = 'assert failed: expected {a} to ' + data.s;
-    predicates[n] = data.f;
-  });
-
-  functions = {
-    map: map,
-    all: all,
-    any: any
-  };
-
-  collections = [ 'array', 'arrayLike', 'iterable', 'object' ];
-  slice = Array.prototype.slice;
-  neginf = Number.NEGATIVE_INFINITY;
-  posinf = Number.POSITIVE_INFINITY;
-  isArray = Array.isArray;
-  keys = Object.keys;
-  haveSymbols = typeof Symbol === 'function';
-
-  functions = mixin(functions, predicates);
-  assert = createModifiedPredicates(assertModifier, assertImpl);
-  not = createModifiedPredicates(notModifier, notImpl);
-  maybe = createModifiedPredicates(maybeModifier, maybeImpl);
-  assert.not = createModifiedModifier(assertModifier, not, 'not ');
-  assert.maybe = createModifiedModifier(assertModifier, maybe, 'maybe ');
-
-  collections.forEach(createOfPredicates);
-  createOfModifiers(assert, assertModifier);
-  createOfModifiers(not, notModifier);
-  collections.forEach(createMaybeOfModifiers);
-
-  exportFunctions(mixin(functions, {
-    assert: assert,
-    not: not,
-    maybe: maybe
-  }));
-
-  /**
-   * Public function `equal`.
-   *
-   * Returns true if `lhs` and `rhs` are strictly equal, without coercion.
-   * Returns false otherwise.
-   */
-  function equal (lhs, rhs) {
-    return lhs === rhs;
-  }
-
-  /**
-   * Public function `undefined`.
-   *
-   * Returns true if `data` is undefined, false otherwise.
-   */
-  function isUndefined (data) {
-    return data === undefined;
-  }
-
-  /**
-   * Public function `null`.
-   *
-   * Returns true if `data` is null, false otherwise.
-   */
-  function isNull (data) {
-    return data === null;
-  }
-
-  /**
-   * Public function `assigned`.
-   *
-   * Returns true if `data` is not null or undefined, false otherwise.
-   */
-  function assigned (data) {
-    return data !== undefined && data !== null;
-  }
-
-  /**
-   * Public function `primitive`.
-   *
-   * Returns true if `data` is a primitive type, false otherwise.
-   */
-  function primitive (data) {
-    var type;
-
-    switch (data) {
-      case null:
-      case undefined:
-      case false:
-      case true:
-        return true;
-    }
-
-    type = typeof data;
-    return type === 'string' || type === 'number' || (haveSymbols && type === 'symbol');
-  }
-
-  /**
-   * Public function `zero`.
-   *
-   * Returns true if `data` is zero, false otherwise.
-   */
-  function zero (data) {
-    return data === 0;
-  }
-
-  /**
-   * Public function `infinity`.
-   *
-   * Returns true if `data` is positive or negative infinity, false otherwise.
-   */
-  function infinity (data) {
-    return data === neginf || data === posinf;
-  }
-
-  /**
-   * Public function `number`.
-   *
-   * Returns true if `data` is a number, false otherwise.
-   */
-  function number (data) {
-    return typeof data === 'number' && data > neginf && data < posinf;
-  }
-
-  /**
-   * Public function `integer`.
-   *
-   * Returns true if `data` is an integer, false otherwise.
-   */
-  function integer (data) {
-    return typeof data === 'number' && data % 1 === 0;
-  }
-
-  /**
-   * Public function `even`.
-   *
-   * Returns true if `data` is an even number, false otherwise.
-   */
-  function even (data) {
-    return typeof data === 'number' && data % 2 === 0;
-  }
-
-  /**
-   * Public function `odd`.
-   *
-   * Returns true if `data` is an odd number, false otherwise.
-   */
-  function odd (data) {
-    return integer(data) && data % 2 !== 0;
-  }
-
-  /**
-   * Public function `greater`.
-   *
-   * Returns true if `lhs` is a number greater than `rhs`, false otherwise.
-   */
-  function greater (lhs, rhs) {
-    return number(lhs) && lhs > rhs;
-  }
-
-  /**
-   * Public function `less`.
-   *
-   * Returns true if `lhs` is a number less than `rhs`, false otherwise.
-   */
-  function less (lhs, rhs) {
-    return number(lhs) && lhs < rhs;
-  }
-
-  /**
-   * Public function `between`.
-   *
-   * Returns true if `data` is a number between `x` and `y`, false otherwise.
-   */
-  function between (data, x, y) {
-    if (x < y) {
-      return greater(data, x) && data < y;
-    }
-
-    return less(data, x) && data > y;
-  }
-
-  /**
-   * Public function `greaterOrEqual`.
-   *
-   * Returns true if `lhs` is a number greater than or equal to `rhs`, false
-   * otherwise.
-   */
-  function greaterOrEqual (lhs, rhs) {
-    return number(lhs) && lhs >= rhs;
-  }
-
-  /**
-   * Public function `lessOrEqual`.
-   *
-   * Returns true if `lhs` is a number less than or equal to `rhs`, false
-   * otherwise.
-   */
-  function lessOrEqual (lhs, rhs) {
-    return number(lhs) && lhs <= rhs;
-  }
-
-  /**
-   * Public function `inRange`.
-   *
-   * Returns true if `data` is a number in the range `x..y`, false otherwise.
-   */
-  function inRange (data, x, y) {
-    if (x < y) {
-      return greaterOrEqual(data, x) && data <= y;
-    }
-
-    return lessOrEqual(data, x) && data >= y;
-  }
-
-  /**
-   * Public function `positive`.
-   *
-   * Returns true if `data` is a positive number, false otherwise.
-   */
-  function positive (data) {
-    return greater(data, 0);
-  }
-
-  /**
-   * Public function `negative`.
-   *
-   * Returns true if `data` is a negative number, false otherwise.
-   */
-  function negative (data) {
-    return less(data, 0);
-  }
-
-  /**
-   * Public function `string`.
-   *
-   * Returns true if `data` is a string, false otherwise.
-   */
-  function string (data) {
-    return typeof data === 'string';
-  }
-
-  /**
-   * Public function `emptyString`.
-   *
-   * Returns true if `data` is the empty string, false otherwise.
-   */
-  function emptyString (data, options) {
-    if (options && options.trim && string(data)) {
-      return data.trim() === '';
-    }
-
-    return data === '';
-  }
-
-  /**
-   * Public function `nonEmptyString`.
-   *
-   * Returns true if `data` is a non-empty string, false otherwise.
-   */
-  function nonEmptyString (data, options) {
-    if (options && options.trim) {
-      return string(data) && data.trim() !== '';
-    }
-
-    return string(data) && data !== '';
-  }
-
-  /**
-   * Public function `match`.
-   *
-   * Returns true if `data` is a string that matches `regex`, false otherwise.
-   */
-  function match (data, regex) {
-    return string(data) && !! data.match(regex);
-  }
-
-  /**
-   * Public function `boolean`.
-   *
-   * Returns true if `data` is a boolean value, false otherwise.
-   */
-  function boolean (data) {
-    return data === false || data === true;
-  }
-
-  /**
-   * Public function `object`.
-   *
-   * Returns true if `data` is a plain-old JS object, false otherwise.
-   */
-  function object (data) {
-    return Object.prototype.toString.call(data) === '[object Object]';
-  }
-
-  /**
-   * Public function `emptyObject`.
-   *
-   * Returns true if `data` is an empty object, false otherwise.
-   */
-  function emptyObject (data) {
-    return object(data) && !some(data, function () {
-      return true;
-    });
-  }
-
-  function some (data, predicate) {
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        if (predicate(key, data[key])) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Public function `nonEmptyObject`.
-   *
-   * Returns true if `data` is a non-empty object, false otherwise.
-   */
-  function nonEmptyObject (data) {
-    return object(data) && some(data, function () {
-      return true;
-    });
-  }
-
-  /**
-   * Public function `instanceStrict`.
-   *
-   * Returns true if `data` is an instance of `prototype`, false otherwise.
-   */
-  function instanceStrict (data, prototype) {
-    try {
-      return data instanceof prototype;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /**
-   * Public function `instance`.
-   *
-   * Returns true if `data` is an instance of `prototype`, false otherwise.
-   * Falls back to testing constructor.name and Object.prototype.toString
-   * if the initial instanceof test fails.
-   */
-  function instance (data, prototype) {
-    try {
-      return instanceStrict(data, prototype) ||
-        data.constructor.name === prototype.name ||
-        Object.prototype.toString.call(data) === '[object ' + prototype.name + ']';
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /**
-   * Public function `like`.
-   *
-   * Tests whether `data` 'quacks like a duck'. Returns true if `data` has all
-   * of the properties of `archetype` (the 'duck'), false otherwise.
-   */
-  function like (data, archetype) {
-    var name;
-
-    for (name in archetype) {
-      if (archetype.hasOwnProperty(name)) {
-        if (data.hasOwnProperty(name) === false || typeof data[name] !== typeof archetype[name]) {
-          return false;
-        }
-
-        if (object(data[name]) && like(data[name], archetype[name]) === false) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * Public function `array`.
-   *
-   * Returns true if `data` is an array, false otherwise.
-   */
-  function array (data) {
-    return isArray(data);
-  }
-
-  /**
-   * Public function `emptyArray`.
-   *
-   * Returns true if `data` is an empty array, false otherwise.
-   */
-  function emptyArray (data) {
-    return isArray(data) && data.length === 0;
-  }
-
-  /**
-   * Public function `nonEmptyArray`.
-   *
-   * Returns true if `data` is a non-empty array, false otherwise.
-   */
-  function nonEmptyArray (data) {
-    return isArray(data) && data.length > 0;
-  }
-
-  /**
-   * Public function `arrayLike`.
-   *
-   * Returns true if `data` is an array-like object, false otherwise.
-   */
-  function arrayLike (data) {
-    return assigned(data) && data.length >= 0;
-  }
-
-  /**
-   * Public function `iterable`.
-   *
-   * Returns true if `data` is an iterable, false otherwise.
-   */
-  function iterable (data) {
-    if (! haveSymbols) {
-      // Fall back to `arrayLike` predicate in pre-ES6 environments.
-      return arrayLike(data);
-    }
-
-    return assigned(data) && isFunction(data[Symbol.iterator]);
-  }
-
-  /**
-   * Public function `contains`.
-   *
-   * Returns true if `data` contains `value`, false otherwise.
-   * Works with objects, arrays and array-likes (including strings).
-   */
-  function contains (data, value) {
-    var iterator, iteration;
-
-    if (! assigned(data)) {
-      return false;
-    }
-
-    if (string(data)) {
-      return data.indexOf(value) !== -1;
-    }
-
-    if (haveSymbols && data[Symbol.iterator] && isFunction(data.values)) {
-      iterator = data.values();
-
-      do {
-        iteration = iterator.next();
-
-        if (iteration.value === value) {
-          return true;
-        }
-      } while (! iteration.done);
-
-      return false;
-    }
-
-    return some(data, function (key, dataValue) {
-      return dataValue === value;
-    });
-  }
-
-  /**
-   * Public function `in`.
-   *
-   * Returns true if `data` is in `value`, false otherwise.
-   * Like `contains`, but with arguments flipped.
-   */
-  function isIn (data, value) {
-    return contains(value, data);
-  }
-
-  /**
-   * Public function `hasLength`.
-   *
-   * Returns true if `data` has a length property that equals `length`, false
-   * otherwise.
-   */
-  function hasLength (data, length) {
-    return assigned(data) && data.length === length;
-  }
-
-  /**
-   * Public function `date`.
-   *
-   * Returns true if `data` is a valid date, false otherwise.
-   */
-  function date (data) {
-    return instanceStrict(data, Date) && integer(data.getTime());
-  }
-
-  /**
-   * Public function `function`.
-   *
-   * Returns true if `data` is a function, false otherwise.
-   */
-  function isFunction (data) {
-    return typeof data === 'function';
-  }
-
-  /**
-   * Public function `map`.
-   *
-   * Maps each value from `data` to the corresponding predicate and returns
-   * the results. If the same function is to be applied across all of the data,
-   * a single predicate function may be passed in.
-   */
-  function map (data, predicates) {
-    var result;
-
-    if (isArray(data)) {
-      result = [];
-    } else {
-      result = {};
-    }
-
-    if (isFunction(predicates)) {
-      forEach(data, function (key, value) {
-        result[key] = predicates(value);
-      });
-    } else {
-      if (! isArray(predicates)) {
-        assert.object(predicates);
-      }
-
-      var dataKeys = keys(data || {});
-
-      forEach(predicates, function (key, predicate) {
-        dataKeys.some(function (dataKey, index) {
-          if (dataKey === key) {
-            dataKeys.splice(index, 1);
-            return true;
-          }
-          return false;
-        });
-
-        if (isFunction(predicate)) {
-          if (not.assigned(data)) {
-            result[key] = !!predicate.m;
-          } else {
-            result[key] = predicate(data[key]);
-          }
-        } else {
-          result[key] = map(data[key], predicate);
-        }
-      });
-    }
-
-    return result;
-  }
-
-  function forEach (object, action) {
-    for (var key in object) {
-      if (object.hasOwnProperty(key)) {
-        action(key, object[key]);
-      }
-    }
-  }
-
-  /**
-   * Public function `all`
-   *
-   * Check that all boolean values are true
-   * in an array or object returned from `map`.
-   */
-  function all (data) {
-    if (isArray(data)) {
-      return testArray(data, false);
-    }
-
-    assert.object(data);
-
-    return testObject(data, false);
-  }
-
-  function testArray (data, result) {
-    var i;
-
-    for (i = 0; i < data.length; i += 1) {
-      if (data[i] === result) {
-        return result;
-      }
-    }
-
-    return !result;
-  }
-
-  function testObject (data, result) {
-    var key, value;
-
-    for (key in data) {
-      if (data.hasOwnProperty(key)) {
-        value = data[key];
-
-        if (object(value) && testObject(value, result) === result) {
-          return result;
-        }
-
-        if (value === result) {
-          return result;
-        }
-      }
-    }
-
-    return !result;
-  }
-
-  /**
-   * Public function `any`
-   *
-   * Check that at least one boolean value is true
-   * in an array or object returned from `map`.
-   */
-  function any (data) {
-    if (isArray(data)) {
-      return testArray(data, true);
-    }
-
-    assert.object(data);
-
-    return testObject(data, true);
-  }
-
-  function mixin (target, source) {
-    forEach(source, function (key, value) {
-      target[key] = value;
-    });
-
-    return target;
-  }
-
-  /**
-   * Public modifier `assert`.
-   *
-   * Throws if `predicate` returns false.
-   */
-  function assertModifier (predicate, defaultMessage) {
-    return function () {
-      var args = arguments;
-      var argCount = predicate.l || predicate.length;
-      var message = args[argCount];
-      var ErrorType = args[argCount + 1];
-
-      assertImpl(
-        predicate.apply(null, args),
-        nonEmptyString(message) ? message : defaultMessage
-          .replace('{a}', messageFormatter(args[0]))
-          .replace('{e}', messageFormatter(args[1]))
-          .replace('{e2}', messageFormatter(args[2]))
-          .replace('{t}', function () {
-            var arg = args[1];
-
-            if (arg && arg.name) {
-              return arg.name;
-            }
-
-            return arg;
-          }),
-        isFunction(ErrorType) ? ErrorType : TypeError
-      );
-
-      return args[0];
-    };
-  }
-
-  function messageFormatter (arg) {
-    return function () {
-      if (string(arg)) {
-        return '"' + arg.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
-      }
-
-      if (arg && arg.constructor && ! instanceStrict(arg, RegExp) && typeof arg !== 'number') {
-        return arg.constructor.name;
-      }
-
-      return arg;
-    };
-  }
-
-  function assertImpl (value, message, ErrorType) {
-    if (value) {
-      return value;
-    }
-    throw new (ErrorType || Error)(message || 'assert failed');
-  }
-
-  /**
-   * Public modifier `not`.
-   *
-   * Negates `predicate`.
-   */
-  function notModifier (predicate) {
-    var modifiedPredicate = function () {
-      return notImpl(predicate.apply(null, arguments));
-    };
-    modifiedPredicate.l = predicate.length;
-    return modifiedPredicate;
-  }
-
-  function notImpl (value) {
-    return !value;
-  }
-
-  /**
-   * Public modifier `maybe`.
-   *
-   * Returns true if predicate argument is  null or undefined,
-   * otherwise propagates the return value from `predicate`.
-   */
-  function maybeModifier (predicate) {
-    var modifiedPredicate = function () {
-      if (not.assigned(arguments[0])) {
-        return true;
-      }
-
-      return predicate.apply(null, arguments);
-    };
-    modifiedPredicate.l = predicate.length;
-
-    // Hackishly indicate that this is a maybe.xxx predicate.
-    // Without this flag, the alternative would be to iterate
-    // through the maybe predicates or use indexOf to check,
-    // which would be time-consuming.
-    modifiedPredicate.m = true;
-
-    return modifiedPredicate;
-  }
-
-  function maybeImpl (value) {
-    if (assigned(value) === false) {
-      return true;
-    }
-
-    return value;
-  }
-
-  /**
-   * Public modifier `of`.
-   *
-   * Applies the chained predicate to members of the collection.
-   */
-  function ofModifier (target, type, predicate) {
-    var modifiedPredicate = function () {
-      var collection, args;
-
-      collection = arguments[0];
-
-      if (target === 'maybe' && not.assigned(collection)) {
-        return true;
-      }
-
-      if (!type(collection)) {
-        return false;
-      }
-
-      collection = coerceCollection(type, collection);
-      args = slice.call(arguments, 1);
-
-      try {
-        collection.forEach(function (item) {
-          if (
-            (target !== 'maybe' || assigned(item)) &&
-            !predicate.apply(null, [ item ].concat(args))
-          ) {
-            // TODO: Replace with for...of when ES6 is required.
-            throw 0;
-          }
-        });
-      } catch (ignore) {
-        return false;
-      }
-
-      return true;
-    };
-    modifiedPredicate.l = predicate.length;
-    return modifiedPredicate;
-  }
-
-  function coerceCollection (type, collection) {
-    switch (type) {
-      case arrayLike:
-        return slice.call(collection);
-      case object:
-        return keys(collection).map(function (key) {
-          return collection[key];
-        });
-      default:
-        return collection;
-    }
-  }
-
-  function createModifiedPredicates (modifier, object) {
-    return createModifiedFunctions([ modifier, predicates, object, '' ]);
-  }
-
-  function createModifiedFunctions (args) {
-    var modifier, messageModifier, object, functions;
-
-    modifier = args.shift();
-    messageModifier = args.pop();
-    object = args.pop();
-    functions = args.pop();
-
-    forEach(functions, function (key, fn) {
-      var message = messages[key];
-      if (message && messageModifier) {
-        message = message.replace('to', messageModifier + 'to');
-      }
-
-      Object.defineProperty(object, key, {
-        configurable: false,
-        enumerable: true,
-        writable: false,
-        value: modifier.apply(null, args.concat(fn, message))
-      });
-    });
-
-    return object;
-  }
-
-  function createModifiedModifier (modifier, modified, messageModifier) {
-    return createModifiedFunctions([ modifier, modified, {}, messageModifier ]);
-  }
-
-  function createOfPredicates (key) {
-    predicates[key].of = createModifiedFunctions(
-      [ ofModifier.bind(null, null), predicates[key], predicates, {}, '' ]
-    );
-  }
-
-  function createOfModifiers (base, modifier) {
-    collections.forEach(function (key) {
-      base[key].of = createModifiedModifier(modifier, predicates[key].of);
-    });
-  }
-
-  function createMaybeOfModifiers (key) {
-    maybe[key].of = createModifiedFunctions(
-      [ ofModifier.bind(null, 'maybe'), predicates[key], predicates, {}, '' ]
-    );
-    assert.maybe[key].of = createModifiedModifier(assertModifier, maybe[key].of);
-    assert.not[key].of = createModifiedModifier(assertModifier, not[key].of);
-  }
-
-  function exportFunctions (functions) {
-    if (true) {
-      !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-        return functions;
-      }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else {}
-  }
-}(this));
 
 
 /***/ }),
@@ -32808,491 +31126,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	}
 
 	return to;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/pagination/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/pagination/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var util = __webpack_require__(/*! util */ "./node_modules/util/util.js");
-var pagination = __webpack_require__(/*! ./lib/pagination */ "./node_modules/pagination/lib/pagination.js");
-__webpack_require__(/*! ./lib/item_paginator */ "./node_modules/pagination/lib/item_paginator.js").module(pagination, util);
-__webpack_require__(/*! ./lib/search_paginator */ "./node_modules/pagination/lib/search_paginator.js").module(pagination, util);
-__webpack_require__(/*! ./lib/template_paginator */ "./node_modules/pagination/lib/template_paginator.js").module(pagination, util);
-__webpack_require__(/*! ./lib/template */ "./node_modules/pagination/lib/template.js").module(pagination, util);
-
-module.exports = pagination;
-
-
-/***/ }),
-
-/***/ "./node_modules/pagination/lib/item_paginator.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/pagination/lib/item_paginator.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-exports.module = function(pagination, util) {
-	"use strict";
-	var translationCache = {
-		CURRENT_PAGE_REPORT : {}
-	};
-	var ItemPaginator = pagination.ItemPaginator = function(options) {
-		pagination.Paginator.call(this, options);
-		this.set('pageLinks', 1);
-	};
-	util.inherits(ItemPaginator, pagination.Paginator);
-	ItemPaginator.prototype.renderCurrentPageReport = function(fromResult, toResult, totalResult) {
-		var template;
-		if(!this.options.translationCache) {
-			return this.options.translator('CURRENT_PAGE_REPORT').replace('{FromResult}', fromResult).replace('{ToResult}', toResult).replace('{TotalResult}', totalResult);
-		}
-		if(!translationCache.CURRENT_PAGE_REPORT.hasOwnProperty(this.options.translationCacheKey)) {
-			template = "return '" + (this.options.translator('CURRENT_PAGE_REPORT').replace("'", "\'").replace('{FromResult}', "' + fromResult + '").replace('{ToResult}', "' + toResult + '").replace('{TotalResult}', "' + totalResult + '")) + "';";
-			translationCache.CURRENT_PAGE_REPORT[this.options.translationCacheKey] = new Function('fromResult, toResult, totalResult', template);
-		}
-		return translationCache.CURRENT_PAGE_REPORT[this.options.translationCacheKey](fromResult, toResult, totalResult);
-	};
-	ItemPaginator.prototype.render = function() {
-		var result = this.getPaginationData();
-		var prelink = this.preparePreLink(result.prelink);
-		var html = '<div class="paginator">';
-		html += '<span class="paginator-current-report">';
-		html += this.renderCurrentPageReport(result.fromResult, result.toResult, result.totalResult);
-		html += '</span>';
-
-		if(result.first) {
-			html += '<a href="' + prelink + result.first + '" class="paginator-first">' + this.options.translator('FIRST') + '</a>';
-		} else {
-			html += '<span class="paginator-first">' + this.options.translator('FIRST') + '</span>';
-		}
-
-		if(result.previous) {
-			html += '<a href="' + prelink + result.previous + '" class="paginator-previous">' + this.options.translator('PREVIOUS') + '</a>';
-		} else {
-			html += '<span class="paginator-previous">' + this.options.translator('PREVIOUS') + '</span>';
-		}
-
-		if(result.next) {
-			html += '<a href="' + prelink + result.next + '" class="paginator-next">' + this.options.translator('NEXT') + '</a>';
-		} else {
-			html += '<span class="paginator-next">' + this.options.translator('NEXT') + '</span>';
-		}
-
-		if(result.last) {
-			html += '<a href="' + prelink + result.last + '" class="paginator-last">' + this.options.translator('LAST') + '</a>';
-		} else {
-			html += '<span class="paginator-last">' + this.options.translator('LAST') + '</span>';
-		}
-		html += '</div>';
-		return html;
-	};
-	pagination.registerFactory('item', ItemPaginator);
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/pagination/lib/pagination.js":
-/*!***************************************************!*\
-  !*** ./node_modules/pagination/lib/pagination.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function(exports) {
-	"use strict";
-	var factories = {};
-	
-	var translations = {
-		'NEXT' : 'Next',
-		'PREVIOUS' : 'Previous',
-		'FIRST' : 'First',
-		'LAST' : 'Last',
-		'CURRENT_PAGE_REPORT' : 'Results {FromResult} - {ToResult} of {TotalResult}'
-	};
-	
-	var translationKeys = exports.translationKeys = Object.keys(translations);
-	
-	var translationCache = {
-		CURRENT_PAGE_REPORT : {}
-	};
-
-	var translator = function(str) {
-		return translations[str];
-	};
-	var Paginator = function(options) {
-		var keys, i, len;
-		/* validate in this.set if needed */
-		this.options = {
-			totalResult : 0,
-			prelink : '',
-			rowsPerPage : 10,
-			pageLinks : 5,
-			current : 1,
-			translator : translator,
-			translationCache : false,
-			translationCacheKey : 'en',
-			pageParamName : 'page',
-			slashSeparator : false
-		};
-		for( keys = Object.keys(options), i = 0, len = keys.length; i < len; i++) {
-			this.set(keys[i], options[keys[i]]);
-		}
-		this._result = null;
-	};
-
-	exports.Paginator = Paginator;
-
-	Paginator.prototype = {
-		getPaginationData : function() {
-			if(!this._result) {
-				this._result = this.calc();
-			}
-			return this._result;
-		},
-		calc : function() {
-			var totalResult = this.options.totalResult;
-			var pageLinks = this.options.pageLinks;
-			var rowsPerPage = this.options.rowsPerPage;
-			var current = this.options.current;
-			var startPage, endPage, pageCount;
-			var oldPageLinks = (pageLinks % 2 === 0) ? 1 : 0, i, half;
-			var result = {
-				prelink : this.options.prelink,
-				current : current,
-				previous : null,
-				next : null,
-				first : null,
-				last : null,
-				range : [],
-				fromResult : null,
-				toResult : null,
-				totalResult : totalResult,
-				pageCount : null
-			};
-			/* zero division; negative */
-			if(rowsPerPage <= 0) {
-				return result;
-			}
-			pageCount = Math.ceil(totalResult / rowsPerPage);
-			result.pageCount = pageCount;
-			if(pageCount < 2) {
-				result.fromResult = 1;
-				result.toResult = totalResult;
-				return result;
-			}
-
-			if(current > pageCount) {
-				current = pageCount;
-				result.current = current;
-			}
-			half = Math.floor(pageLinks / 2);
-			startPage = current - half;
-			endPage = current + half - oldPageLinks;
-
-			if(startPage < 1) {
-				startPage = 1;
-				endPage = startPage + pageLinks -1;
-				if(endPage > pageCount) {
-					endPage = pageCount;
-				}
-			}
-
-			if(endPage > pageCount) {
-				endPage = pageCount;
-				startPage = endPage - pageLinks + 1;
-				if(startPage < 1) {
-					startPage = 1;
-				}
-			}
-
-			for( i = startPage; i <= endPage; i++) {
-				result.range.push(i);
-			}
-
-			if(current > 1) {
-				result.first = 1;
-				result.previous = current - 1;
-			}
-
-			if(current < pageCount) {
-				result.last = pageCount;
-				result.next = current + 1;
-			}
-
-			result.fromResult = (current - 1) * rowsPerPage + 1;
-			if(current === pageCount) {
-				result.toResult = totalResult;
-			} else {
-				result.toResult = result.fromResult + rowsPerPage - 1;
-			}
-
-			return result;
-		},
-		set : function(option, value) {
-			if(this.options.hasOwnProperty(option)) {
-				switch(option) {
-					case 'current':
-					case 'totalResult':
-					case 'pageLinks':
-					case 'rowsPerPage':
-						value = parseInt(value, 10);
-						if (isNaN(value)) {
-							throw new Error('Invalid value for "' + option + '", expected an integer');
-						}
-						break;
-					case 'translator':
-						if (!(value && value.constructor && value.call && value.apply)) {
-							throw new Error('Translator must be a function');
-						}
-						break;
-					case 'translationCacheKey':
-					case 'pageParamName':
-					case 'prelink':
-						value = String(value);
-						break;
-				}
-				this.options[option] = value;
-				if (this._result) {
-					this._result = null;
-				}
-			}
-		},
-		preparePreLink : function(prelink) {
-			if (this.options.slashSeparator) {
-				if (prelink[prelink.length - 1] !== '/') {
-					prelink += '/';
-				}
-				return prelink + this.options.pageParamName + '/';
-			}
-			if(prelink.indexOf('?') !== -1) {
-				if(prelink[prelink.length - 1] !== '?' && prelink[prelink.length - 1] !== '&') {
-					prelink += '&';
-				}
-			} else {
-				prelink += '?';
-			}
-			
-			return prelink + this.options.pageParamName + '=';
-		},
-		render : function() {
-			throw new Error('Implement');
-		}
-	};
-	exports.registerFactory = function(type, factory) {
-		if (factories.hasOwnProperty(type)) {
-			throw new Error(type + ' already exists');
-		}
-		factories[type] = factory;
-	};
-	exports.create = function(type, options) {
-		if (factories.hasOwnProperty(type)) {
-			return new factories[type](options);
-		} else {
-			throw new Error('Paginator type'+type+' not found in register');
-		}
-	};
-})(exports);
-
-
-/***/ }),
-
-/***/ "./node_modules/pagination/lib/search_paginator.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/pagination/lib/search_paginator.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-exports.module = function(pagination, util) {
-	"use strict";
-	var SearchPaginator = function(options) {
-		pagination.Paginator.call(this, options);
-	};
-
-	pagination.SearchPaginator = SearchPaginator;
-
-	util.inherits(SearchPaginator, pagination.Paginator);
-
-	SearchPaginator.prototype.render = function() {
-		var i, len, className, prelink;
-		var result = this.getPaginationData();
-		var html = '<div class="paginator">';
-
-		if(result.pageCount < 2) {
-			html += '</div>';
-			return html;
-		}
-		
-		prelink = this.preparePreLink(result.prelink);
-		
-		if(result.previous) {
-			html += '<a href="' + prelink + result.previous + '" class="paginator-previous">' + this.options.translator('PREVIOUS') + '</a>';
-		}
-
-		if(result.range.length) {
-			for( i = 0, len = result.range.length; i < len; i++) {
-				className = 'paginator-page';
-
-				if(result.range[i] === result.current) {
-					className = 'paginator-current';
-				}
-				if(i === 0) {
-					className += ' paginator-page-first';
-				} else if(i === len - 1) {
-					className += ' paginator-page-last';
-				}
-				html += '<a href="' + prelink + result.range[i] + '" class="' + className + '">' + result.range[i] + '</a>';
-			}
-		}
-		if(result.next) {
-			html += '<a href="' + prelink + result.next + '" class="paginator-next">' + this.options.translator('NEXT') + '</a>';
-		}
-		html += '</div>';
-		return html;
-	};
-	pagination.registerFactory('search', SearchPaginator);
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/pagination/lib/template.js":
-/*!*************************************************!*\
-  !*** ./node_modules/pagination/lib/template.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-exports.module = function(pagination, util) {
-	"use strict";
-	var cache = {};
-	var parse = function(str, options) {
-		var options = options || {}
-		,open = options.open || '<%'
-		,close = options.close || '%>';
-		var prefix, postfix, i, end, len, js, start, n;
-		var buf = ["var buf = [];",
-		           "\nwith (paginationData) {",
-		           "\n  buf.push('"];
-		for (i = 0, len = str.length; i < len; ++i) {
-			if (str.slice(i, open.length + i) === open) {
-				i += open.length;
-				switch (str.substr(i, 1)) {
-					case '=':
-						prefix = "', escape(";
-						postfix = "), '";
-						++i;
-						break;
-					case '-':
-						prefix = "', (" ;
-						postfix = "), '";
-						++i;
-						break;
-					default:
-						prefix = "');";
-						postfix = "; buf.push('";
-				}
-				end = str.indexOf(close, i);
-				js = str.substring(i, end);
-				start = i; n = 0;
-				while (~(n = js.indexOf("\n", n))) n++;
-				buf.push(prefix, js, postfix);
-				i += end - start + close.length - 1;
-			} else if (str.substr(i, 1) === "\\") {
-				buf.push("\\\\");
-			} else if (str.substr(i, 1) === "'") {
-				buf.push("\\'");
-			} else if (str.substr(i, 1) === "\r") {
-				buf.push(" ");
-			} else if (str.substr(i, 1) === "\n") {
-				buf.push("\\n");
-			} else {
-				buf.push(str.substr(i, 1));
-			}
-		}
-		buf.push("');\n}\nreturn buf.join('');");
-		return buf.join('');
-	};
-	var _escape = function(text) {
-		return String(text)
-				.replace(/&/g, '&amp;')
-				.replace(/</g, '&lt;')
-				.replace(/>/g, '&gt;')
-				.replace(/"/g, '&quot;')
-				.replace(/'/g, '&#39;');
-	};
-	var _compile = function(str, options) {
-		var fn = new Function('paginationData, escape', parse(str, options));
-		return function(paginationData){
-			return fn.call(this, paginationData, _escape);
-		};
-	};
-	
-	var compile = function(str, options){
-		var fn, options = options || {};
-		if (options.cache) {
-			if (options.id) {
-				fn = cache[options.id] || (cache[options.id] = _compile(str, options));
-			} else {
-				throw new Error('"cache" option requires "id"');
-			}
-		} else {
-			fn = _compile(str, options);
-		}
-		return fn;
-	};
-	
-	pagination.TemplateEngine = {
-		parse : parse,
-		compile : compile
-	};
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/pagination/lib/template_paginator.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/pagination/lib/template_paginator.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-exports.module = function(pagination, util) {
-	"use strict";
-	
-	var TemplatePaginator = pagination.TemplatePaginator = function(options) {
-		var template = options.template;
-		if (!template) {
-			throw new Error('Template compile to function needed');
-		}
-		
-		if (!(template.constructor && template.call && template.apply)) {
-			template = pagination.TemplateEngine.compile(String(template), options);
-		}
-		pagination.Paginator.call(this, options);
-		this.renderer = template;
-	};
-	util.inherits(TemplatePaginator, pagination.Paginator);
-	TemplatePaginator.prototype.render = function() {
-		var i, len, data = this.getPaginationData();
-		data.preparedPreLink = this.preparePreLink(data.prelink);
-		data.translations = {};
-		for (i = 0, len = pagination.translationKeys.length; i < len; i++) {
-			data.translations[pagination.translationKeys[i]] = this.options.translator(pagination.translationKeys[i]);
-		}
-		return this.renderer(data);
-	};
-	pagination.registerFactory('template', TemplatePaginator);
 };
 
 
@@ -59793,6 +57626,588 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react-paginate/dist/BreakView.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-paginate/dist/BreakView.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BreakView = function BreakView(props) {
+  var breakLabel = props.breakLabel,
+      breakClassName = props.breakClassName,
+      breakLinkClassName = props.breakLinkClassName,
+      onClick = props.onClick;
+
+  var className = breakClassName || 'break';
+
+  return _react2.default.createElement(
+    'li',
+    { className: className },
+    _react2.default.createElement(
+      'a',
+      {
+        className: breakLinkClassName,
+        onClick: onClick,
+        role: 'button',
+        tabIndex: '0',
+        onKeyPress: onClick
+      },
+      breakLabel
+    )
+  );
+};
+
+BreakView.propTypes = {
+  breakLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
+  breakClassName: _propTypes2.default.string,
+  breakLinkClassName: _propTypes2.default.string,
+  onClick: _propTypes2.default.func.isRequired
+};
+
+exports.default = BreakView;
+//# sourceMappingURL=BreakView.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-paginate/dist/PageView.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-paginate/dist/PageView.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PageView = function PageView(props) {
+  var pageClassName = props.pageClassName;
+  var pageLinkClassName = props.pageLinkClassName;
+
+  var onClick = props.onClick;
+  var href = props.href;
+  var ariaLabel = props.ariaLabel || 'Page ' + props.page + (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
+  var ariaCurrent = null;
+
+  if (props.selected) {
+    ariaCurrent = 'page';
+
+    ariaLabel = props.ariaLabel || 'Page ' + props.page + ' is your current page';
+
+    if (typeof pageClassName !== 'undefined') {
+      pageClassName = pageClassName + ' ' + props.activeClassName;
+    } else {
+      pageClassName = props.activeClassName;
+    }
+
+    if (typeof pageLinkClassName !== 'undefined') {
+      if (typeof props.activeLinkClassName !== 'undefined') {
+        pageLinkClassName = pageLinkClassName + ' ' + props.activeLinkClassName;
+      }
+    } else {
+      pageLinkClassName = props.activeLinkClassName;
+    }
+  }
+
+  return _react2.default.createElement(
+    'li',
+    { className: pageClassName },
+    _react2.default.createElement(
+      'a',
+      {
+        onClick: onClick,
+        role: 'button',
+        className: pageLinkClassName,
+        href: href,
+        tabIndex: '0',
+        'aria-label': ariaLabel,
+        'aria-current': ariaCurrent,
+        onKeyPress: onClick
+      },
+      props.page
+    )
+  );
+};
+
+PageView.propTypes = {
+  onClick: _propTypes2.default.func.isRequired,
+  selected: _propTypes2.default.bool.isRequired,
+  pageClassName: _propTypes2.default.string,
+  pageLinkClassName: _propTypes2.default.string,
+  activeClassName: _propTypes2.default.string,
+  activeLinkClassName: _propTypes2.default.string,
+  extraAriaContext: _propTypes2.default.string,
+  href: _propTypes2.default.string,
+  ariaLabel: _propTypes2.default.string,
+  page: _propTypes2.default.number.isRequired
+};
+
+exports.default = PageView;
+//# sourceMappingURL=PageView.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-paginate/dist/PaginationBoxView.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/react-paginate/dist/PaginationBoxView.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _PageView = __webpack_require__(/*! ./PageView */ "./node_modules/react-paginate/dist/PageView.js");
+
+var _PageView2 = _interopRequireDefault(_PageView);
+
+var _BreakView = __webpack_require__(/*! ./BreakView */ "./node_modules/react-paginate/dist/BreakView.js");
+
+var _BreakView2 = _interopRequireDefault(_BreakView);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PaginationBoxView = function (_Component) {
+  _inherits(PaginationBoxView, _Component);
+
+  function PaginationBoxView(props) {
+    _classCallCheck(this, PaginationBoxView);
+
+    var _this = _possibleConstructorReturn(this, (PaginationBoxView.__proto__ || Object.getPrototypeOf(PaginationBoxView)).call(this, props));
+
+    _this.handlePreviousPage = function (evt) {
+      var selected = _this.state.selected;
+
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+      if (selected > 0) {
+        _this.handlePageSelected(selected - 1, evt);
+      }
+    };
+
+    _this.handleNextPage = function (evt) {
+      var selected = _this.state.selected;
+      var pageCount = _this.props.pageCount;
+
+
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+      if (selected < pageCount - 1) {
+        _this.handlePageSelected(selected + 1, evt);
+      }
+    };
+
+    _this.handlePageSelected = function (selected, evt) {
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+
+      if (_this.state.selected === selected) return;
+
+      _this.setState({ selected: selected });
+
+      // Call the callback with the new selected item:
+      _this.callCallback(selected);
+    };
+
+    _this.handleBreakClick = function (index, evt) {
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+
+      var selected = _this.state.selected;
+
+
+      _this.handlePageSelected(selected < index ? _this.getForwardJump() : _this.getBackwardJump(), evt);
+    };
+
+    _this.callCallback = function (selectedItem) {
+      if (typeof _this.props.onPageChange !== 'undefined' && typeof _this.props.onPageChange === 'function') {
+        _this.props.onPageChange({ selected: selectedItem });
+      }
+    };
+
+    _this.pagination = function () {
+      var items = [];
+      var _this$props = _this.props,
+          pageRangeDisplayed = _this$props.pageRangeDisplayed,
+          pageCount = _this$props.pageCount,
+          marginPagesDisplayed = _this$props.marginPagesDisplayed,
+          breakLabel = _this$props.breakLabel,
+          breakClassName = _this$props.breakClassName,
+          breakLinkClassName = _this$props.breakLinkClassName;
+      var selected = _this.state.selected;
+
+
+      if (pageCount <= pageRangeDisplayed) {
+        for (var index = 0; index < pageCount; index++) {
+          items.push(_this.getPageElement(index));
+        }
+      } else {
+        var leftSide = pageRangeDisplayed / 2;
+        var rightSide = pageRangeDisplayed - leftSide;
+
+        // If the selected page index is on the default right side of the pagination,
+        // we consider that the new right side is made up of it (= only one break element).
+        // If the selected page index is on the default left side of the pagination,
+        // we consider that the new left side is made up of it (= only one break element).
+        if (selected > pageCount - pageRangeDisplayed / 2) {
+          rightSide = pageCount - selected;
+          leftSide = pageRangeDisplayed - rightSide;
+        } else if (selected < pageRangeDisplayed / 2) {
+          leftSide = selected;
+          rightSide = pageRangeDisplayed - leftSide;
+        }
+
+        var _index = void 0;
+        var page = void 0;
+        var breakView = void 0;
+        var createPageView = function createPageView(index) {
+          return _this.getPageElement(index);
+        };
+
+        for (_index = 0; _index < pageCount; _index++) {
+          page = _index + 1;
+
+          // If the page index is lower than the margin defined,
+          // the page has to be displayed on the left side of
+          // the pagination.
+          if (page <= marginPagesDisplayed) {
+            items.push(createPageView(_index));
+            continue;
+          }
+
+          // If the page index is greater than the page count
+          // minus the margin defined, the page has to be
+          // displayed on the right side of the pagination.
+          if (page > pageCount - marginPagesDisplayed) {
+            items.push(createPageView(_index));
+            continue;
+          }
+
+          // If the page index is near the selected page index
+          // and inside the defined range (pageRangeDisplayed)
+          // we have to display it (it will create the center
+          // part of the pagination).
+          if (_index >= selected - leftSide && _index <= selected + rightSide) {
+            items.push(createPageView(_index));
+            continue;
+          }
+
+          // If the page index doesn't meet any of the conditions above,
+          // we check if the last item of the current "items" array
+          // is a break element. If not, we add a break element, else,
+          // we do nothing (because we don't want to display the page).
+          if (breakLabel && items[items.length - 1] !== breakView) {
+            breakView = _react2.default.createElement(_BreakView2.default, {
+              key: _index,
+              breakLabel: breakLabel,
+              breakClassName: breakClassName,
+              breakLinkClassName: breakLinkClassName,
+              onClick: _this.handleBreakClick.bind(null, _index)
+            });
+            items.push(breakView);
+          }
+        }
+      }
+
+      return items;
+    };
+
+    var initialSelected = void 0;
+    if (props.initialPage) {
+      initialSelected = props.initialPage;
+    } else if (props.forcePage) {
+      initialSelected = props.forcePage;
+    } else {
+      initialSelected = 0;
+    }
+
+    _this.state = {
+      selected: initialSelected
+    };
+    return _this;
+  }
+
+  _createClass(PaginationBoxView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _props = this.props,
+          initialPage = _props.initialPage,
+          disableInitialCallback = _props.disableInitialCallback,
+          extraAriaContext = _props.extraAriaContext;
+      // Call the callback with the initialPage item:
+
+      if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
+        this.callCallback(initialPage);
+      }
+
+      if (extraAriaContext) {
+        console.warn('DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.');
+      }
+    }
+  }, {
+    key: 'UNSAFE_componentWillReceiveProps',
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
+      if (typeof nextProps.forcePage !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
+        this.setState({ selected: nextProps.forcePage });
+      }
+    }
+  }, {
+    key: 'getForwardJump',
+    value: function getForwardJump() {
+      var selected = this.state.selected;
+      var _props2 = this.props,
+          pageCount = _props2.pageCount,
+          pageRangeDisplayed = _props2.pageRangeDisplayed;
+
+
+      var forwardJump = selected + pageRangeDisplayed;
+      return forwardJump >= pageCount ? pageCount - 1 : forwardJump;
+    }
+  }, {
+    key: 'getBackwardJump',
+    value: function getBackwardJump() {
+      var selected = this.state.selected;
+      var pageRangeDisplayed = this.props.pageRangeDisplayed;
+
+
+      var backwardJump = selected - pageRangeDisplayed;
+      return backwardJump < 0 ? 0 : backwardJump;
+    }
+  }, {
+    key: 'hrefBuilder',
+    value: function hrefBuilder(pageIndex) {
+      var _props3 = this.props,
+          hrefBuilder = _props3.hrefBuilder,
+          pageCount = _props3.pageCount;
+
+      if (hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < pageCount) {
+        return hrefBuilder(pageIndex + 1);
+      }
+    }
+  }, {
+    key: 'ariaLabelBuilder',
+    value: function ariaLabelBuilder(pageIndex) {
+      var selected = pageIndex === this.state.selected;
+      if (this.props.ariaLabelBuilder && pageIndex >= 0 && pageIndex < this.props.pageCount) {
+        var label = this.props.ariaLabelBuilder(pageIndex + 1, selected);
+        // DEPRECATED: The extraAriaContext prop was used to add additional context
+        // to the aria-label. Users should now use the ariaLabelBuilder instead.
+        if (this.props.extraAriaContext && !selected) {
+          label = label + ' ' + this.props.extraAriaContext;
+        }
+        return label;
+      }
+    }
+  }, {
+    key: 'getPageElement',
+    value: function getPageElement(index) {
+      var selected = this.state.selected;
+      var _props4 = this.props,
+          pageClassName = _props4.pageClassName,
+          pageLinkClassName = _props4.pageLinkClassName,
+          activeClassName = _props4.activeClassName,
+          activeLinkClassName = _props4.activeLinkClassName,
+          extraAriaContext = _props4.extraAriaContext;
+
+
+      return _react2.default.createElement(_PageView2.default, {
+        key: index,
+        onClick: this.handlePageSelected.bind(null, index),
+        selected: selected === index,
+        pageClassName: pageClassName,
+        pageLinkClassName: pageLinkClassName,
+        activeClassName: activeClassName,
+        activeLinkClassName: activeLinkClassName,
+        extraAriaContext: extraAriaContext,
+        href: this.hrefBuilder(index),
+        ariaLabel: this.ariaLabelBuilder(index),
+        page: index + 1
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props5 = this.props,
+          disabledClassName = _props5.disabledClassName,
+          previousClassName = _props5.previousClassName,
+          nextClassName = _props5.nextClassName,
+          pageCount = _props5.pageCount,
+          containerClassName = _props5.containerClassName,
+          previousLinkClassName = _props5.previousLinkClassName,
+          previousLabel = _props5.previousLabel,
+          nextLinkClassName = _props5.nextLinkClassName,
+          nextLabel = _props5.nextLabel;
+      var selected = this.state.selected;
+
+
+      var previousClasses = previousClassName + (selected === 0 ? ' ' + disabledClassName : '');
+      var nextClasses = nextClassName + (selected === pageCount - 1 ? ' ' + disabledClassName : '');
+
+      var previousAriaDisabled = selected === 0 ? 'true' : 'false';
+      var nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+
+      return _react2.default.createElement(
+        'ul',
+        { className: containerClassName },
+        _react2.default.createElement(
+          'li',
+          { className: previousClasses },
+          _react2.default.createElement(
+            'a',
+            {
+              onClick: this.handlePreviousPage,
+              className: previousLinkClassName,
+              href: this.hrefBuilder(selected - 1),
+              tabIndex: '0',
+              role: 'button',
+              onKeyPress: this.handlePreviousPage,
+              'aria-disabled': previousAriaDisabled
+            },
+            previousLabel
+          )
+        ),
+        this.pagination(),
+        _react2.default.createElement(
+          'li',
+          { className: nextClasses },
+          _react2.default.createElement(
+            'a',
+            {
+              onClick: this.handleNextPage,
+              className: nextLinkClassName,
+              href: this.hrefBuilder(selected + 1),
+              tabIndex: '0',
+              role: 'button',
+              onKeyPress: this.handleNextPage,
+              'aria-disabled': nextAriaDisabled
+            },
+            nextLabel
+          )
+        )
+      );
+    }
+  }]);
+
+  return PaginationBoxView;
+}(_react.Component);
+
+PaginationBoxView.propTypes = {
+  pageCount: _propTypes2.default.number.isRequired,
+  pageRangeDisplayed: _propTypes2.default.number.isRequired,
+  marginPagesDisplayed: _propTypes2.default.number.isRequired,
+  previousLabel: _propTypes2.default.node,
+  nextLabel: _propTypes2.default.node,
+  breakLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
+  hrefBuilder: _propTypes2.default.func,
+  onPageChange: _propTypes2.default.func,
+  initialPage: _propTypes2.default.number,
+  forcePage: _propTypes2.default.number,
+  disableInitialCallback: _propTypes2.default.bool,
+  containerClassName: _propTypes2.default.string,
+  pageClassName: _propTypes2.default.string,
+  pageLinkClassName: _propTypes2.default.string,
+  activeClassName: _propTypes2.default.string,
+  activeLinkClassName: _propTypes2.default.string,
+  previousClassName: _propTypes2.default.string,
+  nextClassName: _propTypes2.default.string,
+  previousLinkClassName: _propTypes2.default.string,
+  nextLinkClassName: _propTypes2.default.string,
+  disabledClassName: _propTypes2.default.string,
+  breakClassName: _propTypes2.default.string,
+  breakLinkClassName: _propTypes2.default.string,
+  extraAriaContext: _propTypes2.default.string,
+  ariaLabelBuilder: _propTypes2.default.func
+};
+PaginationBoxView.defaultProps = {
+  pageCount: 10,
+  pageRangeDisplayed: 2,
+  marginPagesDisplayed: 3,
+  activeClassName: 'selected',
+  previousClassName: 'previous',
+  nextClassName: 'next',
+  previousLabel: 'Previous',
+  nextLabel: 'Next',
+  breakLabel: '...',
+  disabledClassName: 'disabled',
+  disableInitialCallback: false
+};
+exports.default = PaginationBoxView;
+//# sourceMappingURL=PaginationBoxView.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-paginate/dist/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-paginate/dist/index.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _PaginationBoxView = __webpack_require__(/*! ./PaginationBoxView */ "./node_modules/react-paginate/dist/PaginationBoxView.js");
+
+var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _PaginationBoxView2.default;
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
 /***/ "./node_modules/react/cjs/react.development.js":
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
@@ -64311,771 +62726,6 @@ if (false) {} else {
     }
 }(String));
 
-
-/***/ }),
-
-/***/ "./node_modules/util/node_modules/inherits/inherits_browser.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/util/node_modules/inherits/inherits_browser.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor
-    var TempCtor = function () {}
-    TempCtor.prototype = superCtor.prototype
-    ctor.prototype = new TempCtor()
-    ctor.prototype.constructor = ctor
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/util/support/isBufferBrowser.js":
-/*!******************************************************!*\
-  !*** ./node_modules/util/support/isBufferBrowser.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function isBuffer(arg) {
-  return arg && typeof arg === 'object'
-    && typeof arg.copy === 'function'
-    && typeof arg.fill === 'function'
-    && typeof arg.readUInt8 === 'function';
-}
-
-/***/ }),
-
-/***/ "./node_modules/util/util.js":
-/*!***********************************!*\
-  !*** ./node_modules/util/util.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
-  function getOwnPropertyDescriptors(obj) {
-    var keys = Object.keys(obj);
-    var descriptors = {};
-    for (var i = 0; i < keys.length; i++) {
-      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
-    }
-    return descriptors;
-  };
-
-var formatRegExp = /%[sdj%]/g;
-exports.format = function(f) {
-  if (!isString(f)) {
-    var objects = [];
-    for (var i = 0; i < arguments.length; i++) {
-      objects.push(inspect(arguments[i]));
-    }
-    return objects.join(' ');
-  }
-
-  var i = 1;
-  var args = arguments;
-  var len = args.length;
-  var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
-    if (i >= len) return x;
-    switch (x) {
-      case '%s': return String(args[i++]);
-      case '%d': return Number(args[i++]);
-      case '%j':
-        try {
-          return JSON.stringify(args[i++]);
-        } catch (_) {
-          return '[Circular]';
-        }
-      default:
-        return x;
-    }
-  });
-  for (var x = args[i]; i < len; x = args[++i]) {
-    if (isNull(x) || !isObject(x)) {
-      str += ' ' + x;
-    } else {
-      str += ' ' + inspect(x);
-    }
-  }
-  return str;
-};
-
-
-// Mark that a method should not be used.
-// Returns a modified function which warns once by default.
-// If --no-deprecation is set, then it is a no-op.
-exports.deprecate = function(fn, msg) {
-  if (typeof process !== 'undefined' && process.noDeprecation === true) {
-    return fn;
-  }
-
-  // Allow for deprecating things in the process of starting up.
-  if (typeof process === 'undefined') {
-    return function() {
-      return exports.deprecate(fn, msg).apply(this, arguments);
-    };
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (process.throwDeprecation) {
-        throw new Error(msg);
-      } else if (process.traceDeprecation) {
-        console.trace(msg);
-      } else {
-        console.error(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-};
-
-
-var debugs = {};
-var debugEnviron;
-exports.debuglog = function(set) {
-  if (isUndefined(debugEnviron))
-    debugEnviron = process.env.NODE_DEBUG || '';
-  set = set.toUpperCase();
-  if (!debugs[set]) {
-    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
-      var pid = process.pid;
-      debugs[set] = function() {
-        var msg = exports.format.apply(exports, arguments);
-        console.error('%s %d: %s', set, pid, msg);
-      };
-    } else {
-      debugs[set] = function() {};
-    }
-  }
-  return debugs[set];
-};
-
-
-/**
- * Echos the value of a value. Trys to print the value out
- * in the best way possible given the different types.
- *
- * @param {Object} obj The object to print out.
- * @param {Object} opts Optional options object that alters the output.
- */
-/* legacy: obj, showHidden, depth, colors*/
-function inspect(obj, opts) {
-  // default options
-  var ctx = {
-    seen: [],
-    stylize: stylizeNoColor
-  };
-  // legacy...
-  if (arguments.length >= 3) ctx.depth = arguments[2];
-  if (arguments.length >= 4) ctx.colors = arguments[3];
-  if (isBoolean(opts)) {
-    // legacy...
-    ctx.showHidden = opts;
-  } else if (opts) {
-    // got an "options" object
-    exports._extend(ctx, opts);
-  }
-  // set default options
-  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-  if (isUndefined(ctx.depth)) ctx.depth = 2;
-  if (isUndefined(ctx.colors)) ctx.colors = false;
-  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-  if (ctx.colors) ctx.stylize = stylizeWithColor;
-  return formatValue(ctx, obj, ctx.depth);
-}
-exports.inspect = inspect;
-
-
-// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-inspect.colors = {
-  'bold' : [1, 22],
-  'italic' : [3, 23],
-  'underline' : [4, 24],
-  'inverse' : [7, 27],
-  'white' : [37, 39],
-  'grey' : [90, 39],
-  'black' : [30, 39],
-  'blue' : [34, 39],
-  'cyan' : [36, 39],
-  'green' : [32, 39],
-  'magenta' : [35, 39],
-  'red' : [31, 39],
-  'yellow' : [33, 39]
-};
-
-// Don't use 'blue' not visible on cmd.exe
-inspect.styles = {
-  'special': 'cyan',
-  'number': 'yellow',
-  'boolean': 'yellow',
-  'undefined': 'grey',
-  'null': 'bold',
-  'string': 'green',
-  'date': 'magenta',
-  // "name": intentionally not styling
-  'regexp': 'red'
-};
-
-
-function stylizeWithColor(str, styleType) {
-  var style = inspect.styles[styleType];
-
-  if (style) {
-    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
-           '\u001b[' + inspect.colors[style][1] + 'm';
-  } else {
-    return str;
-  }
-}
-
-
-function stylizeNoColor(str, styleType) {
-  return str;
-}
-
-
-function arrayToHash(array) {
-  var hash = {};
-
-  array.forEach(function(val, idx) {
-    hash[val] = true;
-  });
-
-  return hash;
-}
-
-
-function formatValue(ctx, value, recurseTimes) {
-  // Provide a hook for user-specified inspect functions.
-  // Check that value is an object with an inspect function on it
-  if (ctx.customInspect &&
-      value &&
-      isFunction(value.inspect) &&
-      // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)) {
-    var ret = value.inspect(recurseTimes, ctx);
-    if (!isString(ret)) {
-      ret = formatValue(ctx, ret, recurseTimes);
-    }
-    return ret;
-  }
-
-  // Primitive types cannot have properties
-  var primitive = formatPrimitive(ctx, value);
-  if (primitive) {
-    return primitive;
-  }
-
-  // Look up the keys of the object.
-  var keys = Object.keys(value);
-  var visibleKeys = arrayToHash(keys);
-
-  if (ctx.showHidden) {
-    keys = Object.getOwnPropertyNames(value);
-  }
-
-  // IE doesn't make error fields non-enumerable
-  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
-  if (isError(value)
-      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
-    return formatError(value);
-  }
-
-  // Some type of object without properties can be shortcutted.
-  if (keys.length === 0) {
-    if (isFunction(value)) {
-      var name = value.name ? ': ' + value.name : '';
-      return ctx.stylize('[Function' + name + ']', 'special');
-    }
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    }
-    if (isDate(value)) {
-      return ctx.stylize(Date.prototype.toString.call(value), 'date');
-    }
-    if (isError(value)) {
-      return formatError(value);
-    }
-  }
-
-  var base = '', array = false, braces = ['{', '}'];
-
-  // Make Array say that they are Array
-  if (isArray(value)) {
-    array = true;
-    braces = ['[', ']'];
-  }
-
-  // Make functions say that they are functions
-  if (isFunction(value)) {
-    var n = value.name ? ': ' + value.name : '';
-    base = ' [Function' + n + ']';
-  }
-
-  // Make RegExps say that they are RegExps
-  if (isRegExp(value)) {
-    base = ' ' + RegExp.prototype.toString.call(value);
-  }
-
-  // Make dates with properties first say the date
-  if (isDate(value)) {
-    base = ' ' + Date.prototype.toUTCString.call(value);
-  }
-
-  // Make error with message first say the error
-  if (isError(value)) {
-    base = ' ' + formatError(value);
-  }
-
-  if (keys.length === 0 && (!array || value.length == 0)) {
-    return braces[0] + base + braces[1];
-  }
-
-  if (recurseTimes < 0) {
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    } else {
-      return ctx.stylize('[Object]', 'special');
-    }
-  }
-
-  ctx.seen.push(value);
-
-  var output;
-  if (array) {
-    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
-  } else {
-    output = keys.map(function(key) {
-      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
-    });
-  }
-
-  ctx.seen.pop();
-
-  return reduceToSingleString(output, base, braces);
-}
-
-
-function formatPrimitive(ctx, value) {
-  if (isUndefined(value))
-    return ctx.stylize('undefined', 'undefined');
-  if (isString(value)) {
-    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-                                             .replace(/'/g, "\\'")
-                                             .replace(/\\"/g, '"') + '\'';
-    return ctx.stylize(simple, 'string');
-  }
-  if (isNumber(value))
-    return ctx.stylize('' + value, 'number');
-  if (isBoolean(value))
-    return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
-  if (isNull(value))
-    return ctx.stylize('null', 'null');
-}
-
-
-function formatError(value) {
-  return '[' + Error.prototype.toString.call(value) + ']';
-}
-
-
-function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
-  var output = [];
-  for (var i = 0, l = value.length; i < l; ++i) {
-    if (hasOwnProperty(value, String(i))) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          String(i), true));
-    } else {
-      output.push('');
-    }
-  }
-  keys.forEach(function(key) {
-    if (!key.match(/^\d+$/)) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          key, true));
-    }
-  });
-  return output;
-}
-
-
-function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-  var name, str, desc;
-  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
-  if (desc.get) {
-    if (desc.set) {
-      str = ctx.stylize('[Getter/Setter]', 'special');
-    } else {
-      str = ctx.stylize('[Getter]', 'special');
-    }
-  } else {
-    if (desc.set) {
-      str = ctx.stylize('[Setter]', 'special');
-    }
-  }
-  if (!hasOwnProperty(visibleKeys, key)) {
-    name = '[' + key + ']';
-  }
-  if (!str) {
-    if (ctx.seen.indexOf(desc.value) < 0) {
-      if (isNull(recurseTimes)) {
-        str = formatValue(ctx, desc.value, null);
-      } else {
-        str = formatValue(ctx, desc.value, recurseTimes - 1);
-      }
-      if (str.indexOf('\n') > -1) {
-        if (array) {
-          str = str.split('\n').map(function(line) {
-            return '  ' + line;
-          }).join('\n').substr(2);
-        } else {
-          str = '\n' + str.split('\n').map(function(line) {
-            return '   ' + line;
-          }).join('\n');
-        }
-      }
-    } else {
-      str = ctx.stylize('[Circular]', 'special');
-    }
-  }
-  if (isUndefined(name)) {
-    if (array && key.match(/^\d+$/)) {
-      return str;
-    }
-    name = JSON.stringify('' + key);
-    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-      name = name.substr(1, name.length - 2);
-      name = ctx.stylize(name, 'name');
-    } else {
-      name = name.replace(/'/g, "\\'")
-                 .replace(/\\"/g, '"')
-                 .replace(/(^"|"$)/g, "'");
-      name = ctx.stylize(name, 'string');
-    }
-  }
-
-  return name + ': ' + str;
-}
-
-
-function reduceToSingleString(output, base, braces) {
-  var numLinesEst = 0;
-  var length = output.reduce(function(prev, cur) {
-    numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
-    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
-  }, 0);
-
-  if (length > 60) {
-    return braces[0] +
-           (base === '' ? '' : base + '\n ') +
-           ' ' +
-           output.join(',\n  ') +
-           ' ' +
-           braces[1];
-  }
-
-  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
-}
-
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-function isArray(ar) {
-  return Array.isArray(ar);
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return isObject(re) && objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return isObject(d) && objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-
-function isError(e) {
-  return isObject(e) &&
-      (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "./node_modules/util/support/isBufferBrowser.js");
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-
-function pad(n) {
-  return n < 10 ? '0' + n.toString(10) : n.toString(10);
-}
-
-
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-              'Oct', 'Nov', 'Dec'];
-
-// 26 Feb 16:19:34
-function timestamp() {
-  var d = new Date();
-  var time = [pad(d.getHours()),
-              pad(d.getMinutes()),
-              pad(d.getSeconds())].join(':');
-  return [d.getDate(), months[d.getMonth()], time].join(' ');
-}
-
-
-// log is just a thin wrapper to console.log that prepends a timestamp
-exports.log = function() {
-  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
-};
-
-
-/**
- * Inherit the prototype methods from one constructor into another.
- *
- * The Function.prototype.inherits from lang.js rewritten as a standalone
- * function (not on Function.prototype). NOTE: If this file is to be loaded
- * during bootstrapping this function needs to be rewritten using some native
- * functions as prototype setup using normal JavaScript does not work as
- * expected during bootstrapping (see mirror.js in r114903).
- *
- * @param {function} ctor Constructor function which needs to inherit the
- *     prototype.
- * @param {function} superCtor Constructor function to inherit prototype from.
- */
-exports.inherits = __webpack_require__(/*! inherits */ "./node_modules/util/node_modules/inherits/inherits_browser.js");
-
-exports._extend = function(origin, add) {
-  // Don't do anything if add isn't an object
-  if (!add || !isObject(add)) return origin;
-
-  var keys = Object.keys(add);
-  var i = keys.length;
-  while (i--) {
-    origin[keys[i]] = add[keys[i]];
-  }
-  return origin;
-};
-
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
-
-exports.promisify = function promisify(original) {
-  if (typeof original !== 'function')
-    throw new TypeError('The "original" argument must be of type Function');
-
-  if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
-    var fn = original[kCustomPromisifiedSymbol];
-    if (typeof fn !== 'function') {
-      throw new TypeError('The "util.promisify.custom" argument must be of type Function');
-    }
-    Object.defineProperty(fn, kCustomPromisifiedSymbol, {
-      value: fn, enumerable: false, writable: false, configurable: true
-    });
-    return fn;
-  }
-
-  function fn() {
-    var promiseResolve, promiseReject;
-    var promise = new Promise(function (resolve, reject) {
-      promiseResolve = resolve;
-      promiseReject = reject;
-    });
-
-    var args = [];
-    for (var i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-    args.push(function (err, value) {
-      if (err) {
-        promiseReject(err);
-      } else {
-        promiseResolve(value);
-      }
-    });
-
-    try {
-      original.apply(this, args);
-    } catch (err) {
-      promiseReject(err);
-    }
-
-    return promise;
-  }
-
-  Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
-
-  if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
-    value: fn, enumerable: false, writable: false, configurable: true
-  });
-  return Object.defineProperties(
-    fn,
-    getOwnPropertyDescriptors(original)
-  );
-}
-
-exports.promisify.custom = kCustomPromisifiedSymbol
-
-function callbackifyOnRejected(reason, cb) {
-  // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
-  // Because `null` is a special error value in callbacks which means "no error
-  // occurred", we error-wrap so the callback consumer can distinguish between
-  // "the promise rejected with null" or "the promise fulfilled with undefined".
-  if (!reason) {
-    var newReason = new Error('Promise was rejected with a falsy value');
-    newReason.reason = reason;
-    reason = newReason;
-  }
-  return cb(reason);
-}
-
-function callbackify(original) {
-  if (typeof original !== 'function') {
-    throw new TypeError('The "original" argument must be of type Function');
-  }
-
-  // We DO NOT return the promise as it gives the user a false sense that
-  // the promise is actually somehow related to the callback's execution
-  // and that the callback throwing will reject the promise.
-  function callbackified() {
-    var args = [];
-    for (var i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-
-    var maybeCb = args.pop();
-    if (typeof maybeCb !== 'function') {
-      throw new TypeError('The last argument must be of type Function');
-    }
-    var self = this;
-    var cb = function() {
-      return maybeCb.apply(self, arguments);
-    };
-    // In true node style we process the callback on `nextTick` with all the
-    // implications (stack, `uncaughtException`, `async_hooks`)
-    original.apply(this, args)
-      .then(function(ret) { process.nextTick(cb, null, ret) },
-            function(rej) { process.nextTick(callbackifyOnRejected, rej, cb) });
-  }
-
-  Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
-  Object.defineProperties(callbackified,
-                          getOwnPropertyDescriptors(original));
-  return callbackified;
-}
-exports.callbackify = callbackify;
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 

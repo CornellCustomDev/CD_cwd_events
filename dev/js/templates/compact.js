@@ -50,7 +50,7 @@ export const compactInner = builtData => /* html */ `
  * @return {string} Html string
  */
 export const compactWrapper = (inner, args) => /* html */ `
-    <section class='standard' id="standarCompact" title="Events List">
+    <section class='standard' id="standardCompact" title="Events List">
     ${args.heading ? `<h2>${args.heading}</h2>` : ''}
         <div class="main-body">
             <div class="events-listing no-thumbnails compact">

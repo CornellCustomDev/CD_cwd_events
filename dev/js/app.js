@@ -3,7 +3,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import Localist from './localist';
-import localList from './localList';
 
 require('babel-polyfill');
 
@@ -29,7 +28,6 @@ if (
                     .each(function() {
                         const data = { ...this.dataset };
                         data.win = window;
-                        // localList(data);
                         ReactDOM.render(
                             <Localist />, 
                             document.getElementById(data.target)
@@ -44,12 +42,40 @@ if (
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        const data = { ...elem.dataset };
-        data.win = window;
-        ReactDOM.render(<Localist />, document.getElementById(data.target));
+        const {    
+            target,
+            depts,
+            entries,
+            format,
+            group,
+            keyword,
+            heading,
+            filterby,
+            calendarurl,
+            apikey,
+            addcal,
+            pref_excerpt_length,
+            filterby_filters,
+            days,
+            page
+        } = { ...elem.dataset };
+        ReactDOM.render(<Localist 
+            win= {window}
+            target= {target}
+            depts= {depts}
+            entries= {entries}
+            format= {format}
+            group= {group}
+            keyword= {keyword}
+            heading= {heading}
+            filterby= {filterby}
+            calendarurl= {calendarurl}
+            apikey= {apikey}
+            addcal= {addcal}
+            pref_excerpt_length= {pref_excerpt_length}
+            filterby_filters= {filterby_filters}
+            days= {days}
+            page= {page}
+        />, document.getElementById(target));
     });
-    // If not drupal expose localList.
-    if (typeof window === 'object') {
-        window.localList = localList;
-    }
 }
