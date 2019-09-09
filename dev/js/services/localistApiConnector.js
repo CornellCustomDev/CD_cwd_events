@@ -56,7 +56,7 @@ export default props => {
                 : moment()
                       .subtract(props.days, 'D')
                       .format('YYYY-MM-DD'),
-        direction: props.format !== 'archive' ? 'desc' : 'asc'
+        direction: props.format === 'archive' ? 'desc' : 'asc'
     };
     // Supports multiple departments with CSV string.
     if (props.depts && props.depts !== '0') {

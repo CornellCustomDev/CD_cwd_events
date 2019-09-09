@@ -29,6 +29,7 @@ cd modules/custom && git clone https://github.com/CU-CommunityApps/CD_cwd_events
 ```
 
 Development to compile sass and javascript.
+
 ```bash
 cd ./dev
 npm install
