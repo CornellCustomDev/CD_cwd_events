@@ -15,6 +15,10 @@ $waLightBlue: #017bb1;
     @import 'components/modern';
     @import 'components/cuenergy';
 
+    .cwd-card-grid .group-image{
+        width: 100%;
+    }
+
   .event-subscribe {
     float: right;
     font-size: 13px;

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
  * @param {obj} props The props.
  */
 const EventFilters = props => {
-    const {filterObjs} = props;
+    const {filterObjs, applyFilter} = props;
     const filterKeys = Object.keys(filterObjs);
     const [active, setActive] = useState('filterAll');
 
@@ -22,6 +22,8 @@ const EventFilters = props => {
                         className={`filter-btn ${active === 'filterAll' ? 'active' : ''}`}
                         type="button"
                         onClick={()=>{
+                            const obj = {id:'filterAll', name:'filterAll'};
+                            applyFilter(obj);
                             setActive('filterAll')
                         }}
                     >
@@ -40,7 +42,8 @@ const EventFilters = props => {
                                 className={`filter-btn ${active === filterId ? 'active' : ''}`}
                                 type="button"
                                 onClick={()=>{
-                                    setActive(filterId)
+                                    applyFilter(obj);
+                                    setActive(filterId);
                                 }}
                             >{name}
                             </button>
@@ -54,6 +57,7 @@ const EventFilters = props => {
 
 EventFilters.propTypes = {
     filterObjs: PropTypes.object.isRequired,
+    applyFilter: PropTypes.func.isRequired,
 }
 
 export default EventFilters

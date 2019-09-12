@@ -193,18 +193,18 @@ export const getGroupId = event => {
 };
 
 /**
- * The event type id.
- * @todo add support for multiple types per event per event ( event_types[1+] )
+ * The event type ids.
  * @param {obj} event The event object.
- *
- * @return {integer} An array of fields.
+ * @return {array} An array of event type ids.
  */
-export const getType = event => {
-    let type = '';
+export const getTypeIds = event => {
+    let types = [];
     if (typeof event.filters.event_types !== 'undefined') {
-        type = event.filters.event_types[0].id; //
+        types = event.filters.event_types.map(type=>{
+            return type.id
+        })
     }
-    return type;
+    return types;
 };
 
 /**
@@ -223,25 +223,46 @@ export const getDepartment = event => {
 
 /**
  * Gets the appropriate event type.
+ * @todo add support for multiple filter types.
  * @param {obj} event The localist Event.
  * @param {string} prefCategory The preffered category filter.
- * @return {string} The filter text.
+ * @return {mixed} An array or a string if only one.
  */
 export const getEventType = (event, prefCategory) => {
     const department = getDepartment(event);
     const groupName = getGroupName(event);
     let eventTypes = '';
     if (typeof event.filters.event_types !== 'undefined') {
-        eventTypes = event.filters.event_types[0].name;
+        eventTypes = getFiltersType(event);
     }
     if (prefCategory === 'dept' && department !== 0) {
-        eventTypes = event.filters.departments[0].name;
+        eventTypes = getFiltersDepartments(event);
     }
     if (prefCategory === 'group' && groupName !== '') {
-        eventTypes = this.group_name;
+        eventTypes = group_name;
     }
     return eventTypes;
 };
+
+/**
+ * An array of the filters event types.
+ * @todo departments are an array get all of the departments.
+ * @param {obj} event The localist Event.
+ * @return {string} The filter text.
+ */
+export const getFiltersType = (event) => {
+    return event.filters.event_types;
+}
+
+/**
+ * Get an array of the filters departments.
+ * @todo departments are an array get all of the departments.
+ * @param {obj} event The localist Event.
+ * @return {string} The filter text.
+ */
+export const getFiltersDepartments = (event) => {
+    return event.filters.departments;
+}
 
 /**
  * Gets start date in compact format.
@@ -253,3 +274,17 @@ export const getEventDateCompact = event => {
     const eventDateCompact = moment(startDateTime).format('MMM D');
     return eventDateCompact;
 };
+
+/**
+ * Gets start date in standard format.
+ * @param {event} event The event.
+ * @return {string} The MMMM YYYY".
+ */
+export const getMonthHeader = event => {
+    const startDateTime = getEventStartDate(event);
+    const eventMonthHeader = moment(startDateTime).format('MMMM YYYY');
+    return eventMonthHeader;
+};
+
+
+

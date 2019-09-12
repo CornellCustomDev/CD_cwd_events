@@ -1,10 +1,16 @@
  /* Compact Mode
      -------------------- */
+$cornelian: #b31b1b;
 section.standard .events-listing {
     &.compact {
         // #events-filters {
         //     display: none;
         // }
+
+        .card{
+            border: none;
+        }
+
         margin-top: 0;
         .node {
             border-bottom: 1px solid #e0e0e0;
@@ -34,6 +40,15 @@ section.standard .events-listing {
         .event-details {
             padding-left: 0;
             clear: both;
+        }
+        img {
+            float: left;
+            margin: 0 20px 0px 0px;
+            object-fit: cover;
+            object-position: 100% 0;
+            width: 100%;
+            height: auto;
+            border-bottom: 8px solid $cornelian;
         }
     }
     &.no-thumbnails {
@@ -72,6 +87,7 @@ section.standard .events-listing {
         // display: none;
         // }
     }
+
 }
 
 /* compact filters */

@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
@@ -55,7 +54,9 @@ class Localist extends Component {
         const {format, heading, filterby_filters} = this.props;
         if (loading){
             return (
-                <div className='p-4'>Loading...page {page}</div>
+                <div className="loader p-4">
+                    <span className="fa fa-spin fa-cog"></span>
+                </div>
             )
         }
         switch (format) {
@@ -120,7 +121,7 @@ class Localist extends Component {
             if (this.curPage !== page){
                 this.setState({loading: true})
             }
-        }.bind(this), 300)
+        }.bind(this), 400)
 
         const {
             depts,
@@ -152,6 +153,7 @@ class Localist extends Component {
                         events: response.data.events,
                         llPage: response.data.page,
                         loading: false,
+                        page: page,
                     });
                     this.curPage = response.data.page.current
                 } else {
@@ -165,15 +167,14 @@ class Localist extends Component {
 
     handlePageClick(data){
         const newPage = data.selected + 1;
-        this.setState({page:newPage});
         this.getEvents(newPage);
     }
 
-    renderAddCal(){
-        const {addcal} = this.props
+    renderPagination(){
+        const {pagination} = this.props
         const {llPage} = this.state
         const {total} = llPage
-        if (addcal === 'true'){
+        if (pagination === 'true'){
             return (
                 <nav className="pager">
                     <ReactPaginate
@@ -181,7 +182,7 @@ class Localist extends Component {
                         nextLabel="next"
                         breakLabel="..."
                         breakClassName="break-me"
-                        pageCount={total-1}
+                        pageCount={total}
                         marginPagesDisplayed={1}
                         pageRangeDisplayed={3}
                         onPageChange={this.handlePageClick}
@@ -206,7 +207,7 @@ class Localist extends Component {
             <div>
                 { this.renderHeading() }
                 { this.getComponentFromFormat() }
-                { this.renderAddCal() }
+                { this.renderPagination() }
             </div>
         );
     }
@@ -223,9 +224,11 @@ Localist.propTypes = {
     // // filterby: PropTypes.string.isRequired,
     calendarurl: PropTypes.string.isRequired,
     apikey: PropTypes.string.isRequired,
-    addcal: PropTypes.string.isRequired,
+    // addcal: PropTypes.string.isRequired,
     // // pref_excerpt_length: PropTypes.string,
+    pagination: PropTypes.string,
     filterby_filters: PropTypes.string,
+
     days: PropTypes.string,
     page: PropTypes.number,
 };
@@ -235,7 +238,8 @@ Localist.defaultProps = {
     page : 1,
     days : '365',
     heading: '',
-    filterby_filters: 'type'
+    filterby_filters: 'type',
+    pagination: 'true',
 };
 
 export default Localist;

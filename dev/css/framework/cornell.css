@@ -67,6 +67,12 @@
   margin-top: 0.5em;
 }
 
+.cu-search fieldset.search-filters {
+  padding: 0;
+  border: 0;
+  margin: 0.5em 0 0;
+}
+
 .cu-search .search-filters label {
   font-size: 14px;
   font-weight: 500;
@@ -114,7 +120,15 @@
 
 /* Brand Header */
 .cu-seal #cu-header {
-  background: #ebebeb;
+  background: #ededed;
+}
+
+.cu-seal.no-main-nav #cu-header {
+  background: #f7f7f7;
+  background: -moz-linear-gradient(-45deg, #f2f2f2 0%, #f7f7f7 100%);
+  background: -webkit-linear-gradient(-45deg, #f2f2f2 0%, #f7f7f7 100%);
+  background: linear-gradient(135deg, #f2f2f2 0%, #f7f7f7 100%);
+  border-bottom: 2px solid #ebebeb;
 }
 
 #cu-header .cu-brand {
@@ -134,7 +148,7 @@
 
 #cu-header .cu45-helper:before {
   content: '';
-  background: #ebebeb;
+  background: #ededed;
   position: absolute;
   top: 0;
   left: 0;
@@ -152,7 +166,7 @@
 }
 
 .cu-seal #cu-header .cu-brand h1 {
-  margin: 0 0 8px;
+  margin: 2px 0 8px;
 }
 
 .cu-seal #cu-header .cu-brand h1 a {
@@ -168,7 +182,7 @@
 #cu-header .cu-brand h3 {
   margin: 0.3em 0 0;
   font-size: 12px;
-  color: #92929f;
+  color: #868695;
   font-weight: 500;
 }
 
@@ -309,16 +323,25 @@
 .cu-seal.cu-red #cu-header {
   background: #b31b1b;
   color: #fff;
+  border-bottom: 0;
 }
 
 .cu-seal.cu-black #cu-header {
   background: #000;
   color: #fff;
+  border-bottom: 0;
 }
 
 .cu-seal.cu-gray #cu-header {
   background: #222;
   color: #fff;
+  border-bottom: 0;
+}
+
+.cu-seal.cu-gray.no-main-nav #cu-header {
+  background: -moz-linear-gradient(-45deg, #222222 0%, #474747 100%);
+  background: -webkit-linear-gradient(-45deg, #222222 0%, #474747 100%);
+  background: linear-gradient(135deg, #222222 0%, #474747 100%);
 }
 
 .cu-red #cu-header .cu45-helper:before {
@@ -346,7 +369,7 @@
 }
 
 .cu-seal.cu-black #cu-header .cu-brand h3, .cu-seal.cu-gray #cu-header .cu-brand h3 {
-  color: #a7e6ff;
+  color: #bebebe;
 }
 
 /* Header Buttons */
@@ -391,7 +414,7 @@
   height: 39px;
   margin-top: -4px;
   background-color: #b31b1b;
-  background-position: 50% 55%;
+  background-position: 50% 56%;
 }
 
 .cu-red.cu-seal .mobile-button {
@@ -761,3 +784,5 @@
     width: 100%;
   }
 }
+
+/*# sourceMappingURL=cornell.css.map */

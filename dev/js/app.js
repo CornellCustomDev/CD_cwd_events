@@ -29,7 +29,7 @@ if (
                         const data = { ...this.dataset };
                         data.win = window;
                         ReactDOM.render(
-                            <Localist />, 
+                            <Localist />,
                             document.getElementById(data.target)
                         );
                     });
@@ -42,7 +42,7 @@ if (
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        const {    
+        const {
             target,
             depts,
             entries,
@@ -57,9 +57,10 @@ if (
             pref_excerpt_length,
             filterby_filters,
             days,
-            page
+            page,
+            pagination
         } = { ...elem.dataset };
-        ReactDOM.render(<Localist 
+        ReactDOM.render(<Localist
             win= {window}
             target= {target}
             depts= {depts}
@@ -76,6 +77,7 @@ if (
             filterby_filters= {filterby_filters}
             days= {days}
             page= {page}
+            pagination = {pagination}
         />, document.getElementById(target));
     });
 }

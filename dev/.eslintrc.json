@@ -4,7 +4,7 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
-    "prettier", 
+    "prettier",
     "prettier/react"
   ],
   "root": true,
@@ -35,7 +35,7 @@
   "plugins": [
     "react",
     "jsx-a11y"
-  ],  
+  ],
   "rules": {
     "max-len":["error", {
       "ignoreComments": true,
@@ -44,6 +44,7 @@
     }],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}],
     "indent": [2, 4, {"SwitchCase": 1}],
-    "no-console": ["error", { "allow": ["warn", "error"] }]
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "react/forbid-prop-types": ["off", { "forbid": ["any"], "checkContextTypes": false, "checkChildContextTypes": false }]
   }
 }

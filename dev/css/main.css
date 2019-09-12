@@ -2,6 +2,11 @@
 @import url("fonts/font-awesome.min.css");
 @import url("framework/base.css");
 @import url("framework/cornell.css");
+@import url("framework/cwd_card_slider.css");
+@import url("framework/cwd_gallery.css");
+@import url("framework/cwd_slider.css");
+@import url("framework/cwd_utilities.css");
+@import url("framework/drupal.css");
 @import url("../dist/cwd_events.css");
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/mocha/2.3.4/mocha.min.css");

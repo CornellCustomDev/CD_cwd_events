@@ -2,7 +2,8 @@
 /* CWD Localist Events
 	 ************************************ */
 
-$waLightGreen: #597F34;//4.66:1 on white
+$month: #762425;//4.66:1 on white
+$day: #b31b1b;
 
 section.standard .events-listing {
 	position: relative;
@@ -55,8 +56,8 @@ section.standard .events-listing {
 	  margin-bottom: 12px;
 	}
 	.type {
-	  float: left;
-	  display: none;
+      float: left;
+      display: none;
 	}
 	.location {
 	  float: right;
@@ -102,7 +103,7 @@ section.standard .events-listing {
 	.month-header {
 	  text-align: center;
 	  color: #fff;
-	  background: $waLightGreen;
+	  background: $month;
 	  float: left;
 	  width: 100%;
 	  padding: 9px 0;
@@ -116,7 +117,7 @@ section.standard .events-listing {
 	  margin-bottom: 5px;
 	  float: left;
 	  width: 100%;
-	  background: #fff;
+	  background: 4;
 	  background: -moz-linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);
 	  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #ffffff), color-stop(100%, #f2f2f2));
 	  background: -webkit-linear-gradient(45deg, #ffffff 0%, #f2f2f2 100%);
@@ -132,7 +133,24 @@ section.standard .events-listing {
 		color: #555;
 		padding-left: 1px;
 	  }
-	}
+    }
+    img {
+        float: left;
+        margin: 0 20px 0px 0px;
+        object-fit: cover;
+        object-position: 100% 0;
+        width: 200px;
+        height: 150px;
+    }
+    @media only screen and (min-width: 1200px) {
+        .type {
+            display: block;
+            max-width: 15%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+      }
 }
 
 /* event details toggle */
