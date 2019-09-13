@@ -638,6 +638,18 @@
   margin-left: 10px;
 }
 
+.cwd-events-style #eventsModernCompact img,
+.cwd-events-style #eventsModernStandard img {
+  float: left;
+  margin: 0 20px 0px 0px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 100% 0;
+     object-position: 100% 0;
+  width: 200px;
+  height: 150px;
+}
+
 .cwd-events-style .events-listing .cuenergy-events .event-title-and-location a {
   font-size: 24px;
   margin-bottom: unset;
@@ -680,7 +692,7 @@
 .cwd-events-style .events-filters-wrap {
   float: left;
   width: 100%;
-  margin: 10px 0;
+  margin: 10px 0px 20px 0px;
 }
 
 .cwd-events-style .events-filters-wrap ul {

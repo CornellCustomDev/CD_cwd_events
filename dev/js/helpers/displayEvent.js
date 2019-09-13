@@ -286,5 +286,16 @@ export const getMonthHeader = event => {
     return eventMonthHeader;
 };
 
+/**
+ * Gets start date in standard format.
+ * @param {event} event The event.
+ * @return {string} The MMM".
+ */
+export const getAbbrMonth = event => {
+    const startDateTime = getEventStartDate(event);
+    const abbrMonth = moment(startDateTime).format('MMM');
+    return abbrMonth;
+};
+
 
 

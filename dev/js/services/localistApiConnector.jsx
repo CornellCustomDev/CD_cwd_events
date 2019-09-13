@@ -22,7 +22,7 @@ export default (
         pp: entries,
         page: page,
         start:
-            format !== 'archive'
+            format === 'archive'
                 ? moment().format('YYYY-MM-DD')
                 : moment()
                     .subtract(days, 'D')

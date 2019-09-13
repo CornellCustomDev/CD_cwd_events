@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RenderTitle = props => {
+const EventTitle = props => {
     const {title, url} = props;
     return (
         <h3>
@@ -16,12 +16,12 @@ const RenderTitle = props => {
     )
 }
 
-RenderTitle.propTypes = {
+EventTitle.propTypes = {
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
 };
 
-const RenderDate = props => {
+const EventDate = props => {
     const {date} = props;
     return(
         <h4 className='meta date'>
@@ -32,11 +32,11 @@ const RenderDate = props => {
     );
 }
 
-RenderDate.propTypes = {
+EventDate.propTypes = {
     date: PropTypes.string.isRequired,
 };
 
-const RenderLocation = props => {
+const EventLocation = props => {
     const {locationName} = props;
     if (locationName){
         return <h4 className='meta location'>{locationName}</h4>
@@ -44,14 +44,14 @@ const RenderLocation = props => {
         return '';
     }
 }
-RenderLocation.propTypes = {
+EventLocation.propTypes = {
     locationName: PropTypes.string,
 };
-RenderLocation.defaultProps = {
-    RenderLocation: null,
+EventLocation.defaultProps = {
+    EventLocation: null,
 }
 
-const RenderThumbnail = props => {
+const EventThumbnail = props => {
     const {thumbnail, photoUrl, title, photoCrop} = props;
     const photo = photoUrl.replace('huge', photoCrop);
     if (thumbnail === 'true') {
@@ -70,18 +70,18 @@ const RenderThumbnail = props => {
     }
 }
 
-RenderThumbnail.propTypes = {
+EventThumbnail.propTypes = {
     photoUrl: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     thumbnail: PropTypes.string,
     photoCrop:PropTypes.oneOf(['huge', 'big', 'big_square']),
 };
-RenderThumbnail.defaultProps = {
+EventThumbnail.defaultProps = {
     thumbnail: null,
     photoCrop: 'big',
 }
 
-const RenderDescription = props =>{
+const EventDescription = props =>{
     const {description, title} = props;
     return (
         <p className='description'>
@@ -99,15 +99,41 @@ const RenderDescription = props =>{
     )
 }
 
-RenderDescription.propTypes = {
+EventDescription.propTypes = {
     description: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
 };
 
+const EventTypes = props => {
+    const {eventTypes} = props;
+    if (eventTypes) {
+        return (
+            <h4 className="meta type">
+                <span className="fa"></span>
+                {eventTypes.map(event_type => {
+                    return event_type.name
+                }).join(', ')}
+            </h4>
+        )
+    }
+    else{
+        return '';
+    }
+}
+EventTypes.propTypes = {
+    eventTypes: PropTypes.array,
+};
+
+EventThumbnail.defaultProps = {
+    eventTypes: null,
+}
+
+
 export {
-    RenderTitle,
-    RenderDate,
-    RenderLocation,
-    RenderThumbnail,
-    RenderDescription
+    EventTitle,
+    EventDate,
+    EventLocation,
+    EventThumbnail,
+    EventDescription,
+    EventTypes
 };

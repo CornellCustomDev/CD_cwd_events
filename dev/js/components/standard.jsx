@@ -12,102 +12,41 @@ import EventFilters from './filter';
 import AddCal from './addCal'
 import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
 import {
-    RenderTitle,
-    RenderDate,
-    RenderLocation,
-    RenderThumbnail,
-    RenderDescription,
+    EventTitle,
+    EventDate,
+    EventLocation,
+    EventThumbnail,
+    EventDescription,
+    EventTypes,
 } from './partials';
 
 const StandardInner = props => {
-    const {event, filterby, addcal, excerptlength, thumbnail, innerClass} = props;
-
-    const renderEventTime = (event) => {
-        const gedc = getEventTime(event);
-        if (gedc){
-            return(
-                <h4 className="meta date">
-                    <span className="start">
-                        {getEventTime(event)}
-                    </span>
-                </h4>
-            )
-        }
-    }
-
-    const renderEventLocation = (event) => {
-        if (event.location_name) {
-            return (
-                <h4 className="meta location">{event.location_name}</h4>
-            )
-        }
-    }
-
-    const renderThumbnail = (event) => {
-        // const photoBigSquare = event.photo_url.replace('huge', 'big_square');
-        const photoBig = event.photo_url.replace('huge', 'big');
-        if (thumbnail === 'true') {
-            return (
-                <img
-                    alt={event.title}
-                    height="200"
-                    src={photoBig}
-                    width="200"
-                ></img>
-
-            )
-        }
-    }
-
-
-
-    const renderEventTypes = (event, filterby) => {
-        const eventTypes = getEventType(event, filterby);
-        if (eventTypes) {
-            return (
-                <h4 className="meta type">
-                    <span className="fa"></span>
-                    {eventTypes.map(event_type => {
-                        return event_type.name
-                    }).join(', ')}
-                </h4>
-            )
-        }
-    }
-
-    const renderDescription = event => {
-        return (
-            <p className="description">
-                {getTruncDesc(event, excerptlength)}
-                <a
-                    className="read-more more"
-                    href={event.localist_url}
-                    rel='noreferrer noopener'
-                    target="_blank"
-                > read more
-                    <span className='visually-hidden'> about ${event.title}
-                    </span>
-                </a>
-            </p>
-        )
-    }
+    const {
+        event,
+        filterby,
+        addcal,
+        excerptlength,
+        thumbnail,
+        innerClass} = props;
 
     return (
         <div className={`views-row ${innerClass}`}>
             <div className="event-node node">
-                <RenderTitle title={event.title} url={event.localist_url} />
-                <RenderLocation locationName={event.location_name} />
-                <div>
-                    <RenderDate date={getEventTime(event)} />
-                    {renderEventTypes(event, filterby)}
+                <div className="field title">
+                    <EventTitle title={event.title} url={event.localist_url} />
                 </div>
-                <RenderThumbnail
+                <EventLocation locationName={event.location_name} />
+                <div>
+                    <EventDate date={getEventTime(event)} />
+                    <EventTypes eventTypes={getEventType(event, filterby)} />
+                </div>
+                <EventThumbnail
                     photoUrl={event.photo_url}
                     title={event.title}
                     thumbnail={thumbnail}
                     photoCrop='big'
                 />
-                <RenderDescription
+                <EventDescription
                     description={getTruncDesc(event, excerptlength)}
                     title = {event.title}
                 />

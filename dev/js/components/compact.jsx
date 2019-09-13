@@ -9,28 +9,28 @@ import EventFilters from './filter';
 import AddCal from './addCal'
 import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
 import {
-    RenderTitle,
-    RenderDate,
-    RenderLocation,
-    RenderThumbnail,
-    RenderDescription,
+    EventTitle,
+    EventDate,
+    EventLocation,
+    EventThumbnail,
+    EventDescription,
 } from './partials';
 
 const CompactInner = props => {
-    const {event, addcal, thumbnail, excerptlength, innerClass} = props;
+    const {event, addcal, thumbnail, excerptlength, eventclass} = props;
     return (
-        <div className={`views-row ${innerClass}`}>
-            <RenderThumbnail
+        <div className={`views-row ${eventclass}`}>
+            <EventThumbnail
                 photoUrl={event.photo_url}
                 title={event.title}
                 thumbnail={thumbnail}
                 photoCrop='big'
             />
             <div className="event-node node">
-                <RenderTitle title={event.title} url={event.localist_url} />
-                <RenderLocation locationName={event.location_name} />
-                <RenderDate date={getEventDateCompact(event)} />
-                <RenderDescription
+                <EventTitle title={event.title} url={event.localist_url} />
+                <EventLocation locationName={event.location_name} />
+                <EventDate date={getEventDateCompact(event)} />
+                <EventDescription
                     description={getTruncDesc(event, excerptlength)}
                     title = {event.title}
                 />
@@ -49,7 +49,7 @@ CompactInner.propTypes = {
     addcal: PropTypes.string.isRequired,
     excerptlength: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    innerClass: PropTypes.string.isRequired,
+    eventclass: PropTypes.string.isRequired,
 };
 
 const Compact = (props) => {
@@ -59,7 +59,10 @@ const Compact = (props) => {
         usefilterby,
         addcal,
         excerptlength,
-        thumbnail} = props;
+        thumbnail,
+        eventclass,
+        eventslistclass,
+        wrapperclass} = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
@@ -79,14 +82,14 @@ const Compact = (props) => {
     return (
         <section className='standard' id="standardCompact" title="Events List">
             <div className="main-body">
-                <div className={`events-listing ${thumbNailClass} compact cwd-card-grid three-card`}>
+                <div className={`events-listing ${thumbNailClass} compact ${wrapperclass}`}>
                     { usefilterby === 'true'
                         ? <EventFilters
                             filterObjs={filterObjs}
                             applyFilter={applyFilter}
                         />
                         : ''}
-                    <div className="events-list view-content cards">
+                    <div className={`events-list view-content ${eventslistclass}`}>
                         {filterEvents.length > 0
                             ? filterEvents.map( event => {
                                 return (
@@ -97,7 +100,7 @@ const Compact = (props) => {
                                         addcal={addcal}
                                         excerptlength={excerptlength}
                                         thumbnail={thumbnail}
-                                        innerClass='card'
+                                        eventclass={eventclass}
                                     />
                                 )
                             })
@@ -116,7 +119,9 @@ Compact.propTypes = {
     addcal: PropTypes.string,
     excerptlength: PropTypes.string,
     thumbnail: PropTypes.string,
-    innerClass: PropTypes.string,
+    wrapperclass: PropTypes.string,
+    eventslistclass: PropTypes.string,
+    eventclass: PropTypes.string,
 };
 
 Compact.defaultProps = {
@@ -125,7 +130,10 @@ Compact.defaultProps = {
     addcal: 'false',
     excerptlength: '150',
     thumbnail: 'true',
-    innerClass: '',
+    wrapperclass: '', //cwd-card-grid three-card',
+    eventslistclass: '', //cards',
+    eventclass: '', //card',
+
 };
 
 export default Compact;

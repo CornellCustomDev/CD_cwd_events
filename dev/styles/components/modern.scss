@@ -109,4 +109,14 @@
     color: #000;
     margin-left: 10px;
   }
+
+  img {
+        float: left;
+        margin: 0 20px 0px 0px;
+        object-fit: cover;
+        object-position: 100% 0;
+        width: 200px;
+        height: 150px;
+    }
+
 }
