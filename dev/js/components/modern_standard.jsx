@@ -16,7 +16,7 @@ import {
     EventTitle,
     EventDate,
     EventLocation,
-    EventThumbnail,
+    EventImg,
     EventDescription,
 } from './partials';
 
@@ -64,7 +64,7 @@ const ModernStandardInner = props => {
                     </div>
                     <div className="field field-name-summary summary">
                         <p>
-                            <EventThumbnail
+                            <EventImg
                                 photoUrl={event.photo_url}
                                 title={event.title}
                                 thumbnail={thumbnail}

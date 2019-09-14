@@ -724,7 +724,7 @@ var ModernStandardInner = function ModernStandardInner(props) {
     className: "field meta"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, eventTime, event.location_name ? ", ".concat(event.location_name) : '', tagStr(event.filters.event_types))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "field field-name-summary summary"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventThumbnail"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventImg"], {
     photoUrl: event.photo_url,
     title: event.title,
     thumbnail: thumbnail,
@@ -832,7 +832,7 @@ ModernStandard.defaultProps = {
 /*!************************************!*\
   !*** ./js/components/partials.jsx ***!
   \************************************/
-/*! exports provided: EventTitle, EventDate, EventLocation, EventThumbnail, EventDescription, EventTypes */
+/*! exports provided: EventTitle, EventDate, EventLocation, EventThumbnail, EventDescription, EventTypes, EventImg */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -843,6 +843,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventThumbnail", function() { return EventThumbnail; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventDescription", function() { return EventDescription; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventTypes", function() { return EventTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventImg", function() { return EventImg; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
@@ -897,7 +898,7 @@ EventLocation.defaultProps = {
   EventLocation: null
 };
 
-var EventThumbnail = function EventThumbnail(props) {
+var EventImg = function EventImg(props) {
   var thumbnail = props.thumbnail,
       photoUrl = props.photoUrl,
       title = props.title,
@@ -905,12 +906,41 @@ var EventThumbnail = function EventThumbnail(props) {
   var photo = photoUrl.replace('huge', photoCrop);
 
   if (thumbnail === 'true') {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "group-image"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       alt: title,
       height: "150",
       src: photo
+    });
+  } else {
+    return '';
+  }
+};
+
+EventImg.propTypes = {
+  photoUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  photoCrop: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['huge', 'big', 'big_square'])
+};
+EventImg.defaultProps = {
+  thumbnail: null,
+  photoCrop: 'big'
+};
+
+var EventThumbnail = function EventThumbnail(props) {
+  var thumbnail = props.thumbnail,
+      photoUrl = props.photoUrl,
+      title = props.title,
+      photoCrop = props.photoCrop;
+
+  if (thumbnail === 'true') {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "group-image"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(EventImg, {
+      thumbnail: thumbnail,
+      photoUrl: photoUrl,
+      title: title,
+      photoCrop: photoCrop
     }));
   } else {
     return '';

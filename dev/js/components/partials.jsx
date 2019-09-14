@@ -51,17 +51,44 @@ EventLocation.defaultProps = {
     EventLocation: null,
 }
 
-const EventThumbnail = props => {
+const EventImg = props => {
     const {thumbnail, photoUrl, title, photoCrop} = props;
     const photo = photoUrl.replace('huge', photoCrop);
     if (thumbnail === 'true') {
         return (
+            <img
+                alt={title}
+                height='150'
+                src={photo}
+            ></img>
+        );
+    } else{
+        return '';
+    }
+}
+
+EventImg.propTypes = {
+    photoUrl: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string,
+    photoCrop:PropTypes.oneOf(['huge', 'big', 'big_square']),
+};
+EventImg.defaultProps = {
+    thumbnail: null,
+    photoCrop: 'big',
+}
+
+const EventThumbnail = props => {
+    const {thumbnail, photoUrl, title, photoCrop} = props;
+    if (thumbnail === 'true') {
+        return (
             <div className='group-image'>
-                <img
-                    alt={title}
-                    height='150'
-                    src={photo}
-                ></img>
+                <EventImg
+                    thumbnail={thumbnail}
+                    photoUrl={photoUrl}
+                    title={title}
+                    photoCrop={photoCrop}
+                />
             </div>
 
         );
@@ -135,5 +162,6 @@ export {
     EventLocation,
     EventThumbnail,
     EventDescription,
-    EventTypes
+    EventTypes,
+    EventImg,
 };

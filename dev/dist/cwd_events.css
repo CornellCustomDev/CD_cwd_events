@@ -564,7 +564,8 @@
 
 .cwd-events-style #eventsModernCompact .cwd-component .events a,
 .cwd-events-style #eventsModernStandard .cwd-component .events a {
-  display: block;
+  display: inline-block;
+  width: 100%;
   text-decoration: none;
   color: #000;
   transition: background 0.15s, box-shadow 0.15s;
