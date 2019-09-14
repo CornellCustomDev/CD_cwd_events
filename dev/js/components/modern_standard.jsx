@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
     getTruncDesc,
     getTypeIds,
-    getEventDateCompact,
     getAbbrMonth,
     getDay,
     getEventDate,
@@ -12,13 +11,7 @@ import {
 import EventFilters from './filter';
 import AddCal from './addCal'
 import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
-import {
-    EventTitle,
-    EventDate,
-    EventLocation,
-    EventImg,
-    EventDescription,
-} from './partials';
+import {EventImg} from './partials';
 
 const ModernStandardInner = props => {
     const {event, addcal, thumbnail, excerptlength, eventclass} = props;

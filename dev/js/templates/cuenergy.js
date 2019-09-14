@@ -77,7 +77,7 @@ export const cuenergyCompactInner = builtData => /* html */ `
  * @return {string} Html string
  */
 export const cuenergyCompactWrapper = inner => /* html */ `
-    <div id="block-cuenergy-views-block-events-block-1" class="form-group">
+    <div class="form-group">
         <div class="view view-events view-id-events">
             <div class="view-content">
                 ${inner}

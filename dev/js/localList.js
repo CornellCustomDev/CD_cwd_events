@@ -2,7 +2,7 @@ import standard from './_components/standard';
 import compact from './_components/compact';
 import modern_standard from './_components/modernStandard';
 import modern_compact from './_components/modernCompact';
-import archive from './_components/archive';
+import classic from './_components/classic';
 import inline_compact from './_components/inlineCompact';
 
 const check = require('check-types');
@@ -50,7 +50,7 @@ export default props => {
         modern_compact,
         modern_standard,
         inline_compact,
-        archive
+        classic
     };
     // The following are static filter props.
     props.filterby_filters = 'true';

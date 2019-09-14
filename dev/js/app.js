@@ -58,7 +58,10 @@ if (
             filterby_filters,
             days,
             page,
-            pagination
+            pagination,
+            wrapperclass,
+            eventslistclass,
+            eventclass,
         } = { ...elem.dataset };
         ReactDOM.render(<Localist
             win= {window}
@@ -78,6 +81,9 @@ if (
             days= {days}
             page= {page}
             pagination = {pagination}
+            wrapperclass= {wrapperclass}
+            eventslistclass= {eventslistclass}
+            eventclass= {eventclass}
         />, document.getElementById(target));
     });
 }

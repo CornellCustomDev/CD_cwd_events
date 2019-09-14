@@ -506,6 +506,11 @@
   float: none;
 }
 
+.cwd-events-style #eventsModernCompact .card,
+.cwd-events-style #eventsModernStandard .card {
+  border: none;
+}
+
 .cwd-events-style #eventsModernCompact .cwd-component .events .field,
 .cwd-events-style #eventsModernStandard .cwd-component .events .field {
   clear: both;
@@ -649,6 +654,20 @@
      object-position: 100% 0;
   width: 200px;
   height: 150px;
+}
+
+.cwd-events-style #eventsModernCompact .group-image,
+.cwd-events-style #eventsModernStandard .group-image {
+  width: 100%;
+}
+
+.cwd-events-style #eventsModernCompact .group-image img,
+.cwd-events-style #eventsModernStandard .group-image img {
+  vertical-align: middle;
+  width: 100%;
+  height: auto;
+  border-bottom: 8px solid #b31b1b;
+  margin-bottom: 1em;
 }
 
 .cwd-events-style .events-listing .cuenergy-events .event-title-and-location a {

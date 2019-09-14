@@ -66,7 +66,7 @@
                 Supports multiple calenders on same page with different settings
                 options
             </p>
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-9 well">
                     <div
                         id="standard"
@@ -104,9 +104,9 @@
                         data-days= '1'
                     ></div>
                 </div>
-            </div> -->
+            </div>
             <div class="row">
-                <div class="col-md-8 well">
+                <div class="col-md-9 well">
                     <div
                         id="modern_standard"
                         class="events-listing cwd-events-style"
@@ -125,13 +125,13 @@
                         data-days= '2'
                     ></div>
                 </div>
-                <div class="col-md-4 well">
+                <div class="col-md-3 well">
                     <div
                         id="modern_compact"
                         class="events-listing cwd-events-style"
                         data-target="modern_compact"
                         data-depts="0"
-                        data-entries="4"
+                        data-entries="3"
                         data-format="modern_compact"
                         data-group="0"
                         data-keyword=""
@@ -145,33 +145,59 @@
                     ></div>
                 </div>
             </div>
-            <!--
+
             <div class="row">
-                <div class="col-md-8 well">
+                <div class="well">
                     <div
-                        id="archive"
+                        id="feature"
                         class="events-listing cwd-events-style"
-                        data-target="archive"
-                        data-depts=""
-                        data-entries="5"
-                        data-format="archive"
+                        data-target="feature"
+                        data-depts="0"
+                        data-entries="3"
+                        data-format="modern_compact"
                         data-group="0"
                         data-keyword=""
-                        data-addCal="false"
-                        data-heading="archive with nostyle"
+                        data-addCal="true"
+                        data-heading="modern-compact with added classes"
                         data-calendarurl= "//events.cornell.edu/api/2.1/events"
                         data-apikey= 'KLhy2GtuSAGirYGY'
                         data-filterby= 'group'
-                        data-pagination= 'fasle'
+                        data-pagination= 'false'
+                        data-wrapperclass= 'cwd-card-grid three-card'
+                        data-eventslistclass= 'cards'
+                        data-eventclass= 'card'
+                        data-days= '2'
                     ></div>
                 </div>
-                <div class="col-md-4 well">
+            </div>
+
+            <div class="row">
+                <div class="col-md-9 well">
+                    <div
+                        id="classic"
+                        class="events-listing cwd-events-style"
+                        data-target="classic"
+                        data-depts=""
+                        data-entries="15"
+                        data-format="classic"
+                        data-group="0"
+                        data-keyword=""
+                        data-addCal="false"
+                        data-heading="classic"
+                        data-calendarurl= "//events.cornell.edu/api/2.1/events"
+                        data-apikey= 'KLhy2GtuSAGirYGY'
+                        data-filterby= 'group'
+                        data-days= '3'
+                        data-pagination= 'true'
+                    ></div>
+                </div>
+                <div class="col-md-3 well">
                     <div
                         id="inline_compact"
                         class="events-listing cwd-events-style"
                         data-target="inline_compact"
                         data-depts="39623,139827,139828,4865"
-                        data-entries="4"
+                        data-entries="3"
                         data-format="inline_compact"
                         data-group="0"
                         data-keyword=""
@@ -183,7 +209,46 @@
                         data-pagination= 'false'
                     ></div>
                 </div>
-            </div> -->
+            </div>
+            <div class="row">
+                <!-- <div class="col-md-8 well">
+                    <div
+                        id="classic"
+                        class="events-listing cwd-events-style"
+                        data-target="classic"
+                        data-depts=""
+                        data-entries="5"
+                        data-format="classic"
+                        data-group="0"
+                        data-keyword=""
+                        data-addCal="false"
+                        data-heading="classic"
+                        data-calendarurl= "//events.cornell.edu/api/2.1/events"
+                        data-apikey= 'KLhy2GtuSAGirYGY'
+                        data-filterby= 'group'
+                        data-pagination= 'fasle'
+                    ></div>
+                </div> -->
+                <div class="col-md-4 well">
+                    <div
+                        id="classic_compact"
+                        class="events-listing cwd-events-style"
+                        data-target="classic_compact"
+                        data-depts=""
+                        data-entries="4"
+                        data-format="classic_compact"
+                        data-group="0"
+                        data-keyword=""
+                        data-addCal="true"
+                        data-heading="classic_compact"
+                        data-calendarurl= "//events.cornell.edu/api/2.1/events"
+                        data-apikey= 'KLhy2GtuSAGirYGY'
+                        data-filterby= 'group'
+                        data-pagination= 'false'
+                        data-days= '1'
+                    ></div>
+                </div>
+            </div>
         </div>
         <script src="./dist/cwd_events.js"></script>
         <!-- Loads nav -->

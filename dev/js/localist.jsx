@@ -6,7 +6,8 @@ import Standard from './components/standard';
 import Compact from './components/compact';
 import ModernStandard from './components/modern_standard';
 import ModernCompact from './components/modern_compact';
-import Archive from './components/archive';
+import Classic from './components/classic';
+import ClassicCompact from './components/classic_compact';
 import InlineCompact from './components/inline_compact';
 import localistApiConnector from './services/localistApiConnector'
 
@@ -36,7 +37,7 @@ class Localist extends Component {
             'modern_compact',
             'modern_standard',
             'inline_compact',
-            'archive'
+            'classic'
         ];
         this.curPage = 1;
         this.handlePageClick = this.handlePageClick.bind(this)
@@ -51,7 +52,14 @@ class Localist extends Component {
     getComponentFromFormat(){
         let component;
         const {events, page, loading} = this.state;
-        const {format, heading, filterby_filters} = this.props;
+        const {
+            format,
+            heading,
+            filterby_filters,
+            wrapperclass,
+            eventslistclass,
+            eventclass,
+        } = this.props;
         if (loading){
             return (
                 <div className="loader p-4">
@@ -66,6 +74,9 @@ class Localist extends Component {
                     heading= {heading}
                     events= {events}
                     filterby= {filterby_filters}
+                    wrapperclass = {wrapperclass}
+                    eventslistclass = {eventslistclass}
+                    eventclass = {eventclass}
                 />
                 break;
             case 'compact':
@@ -74,6 +85,9 @@ class Localist extends Component {
                     heading= {heading}
                     events= {events}
                     filterby= {filterby_filters}
+                    wrapperclass = {wrapperclass}
+                    eventslistclass = {eventslistclass}
+                    eventclass = {eventclass}
                 />
                 break;
             case 'modern_standard':
@@ -82,6 +96,9 @@ class Localist extends Component {
                     heading= {heading}
                     events= {events}
                     filterby= {filterby_filters}
+                    wrapperclass = {wrapperclass}
+                    eventslistclass = {eventslistclass}
+                    eventclass = {eventclass}
                 />
                 break;
             case 'modern_compact':
@@ -90,6 +107,9 @@ class Localist extends Component {
                     heading= {heading}
                     events= {events}
                     filterby= {filterby_filters}
+                    wrapperclass = {wrapperclass}
+                    eventslistclass = {eventslistclass}
+                    eventclass = {eventclass}
                 />
                 break;
             case 'inline_compact':
@@ -98,14 +118,31 @@ class Localist extends Component {
                     heading= {heading}
                     events= {events}
                     filterby= {filterby_filters}
+                    wrapperclass = {wrapperclass}
+                    eventslistclass = {eventslistclass}
+                    eventclass = {eventclass}
                 />
                 break;
-            case 'archive':
-                component = <Archive
+            case 'classic':
+                component = <Classic
                     key = {page}
                     heading= {heading}
                     events= {events}
                     filterby= {filterby_filters}
+                    wrapperclass = {wrapperclass}
+                    eventslistclass = {eventslistclass}
+                    eventclass = {eventclass}
+                />
+                break;
+            case 'classic_compact':
+                component = <ClassicCompact
+                    key = {page}
+                    heading= {heading}
+                    events= {events}
+                    filterby= {filterby_filters}
+                    wrapperclass = {wrapperclass}
+                    eventslistclass = {eventslistclass}
+                    eventclass = {eventclass}
                 />
                 break;
             default:
@@ -228,7 +265,9 @@ Localist.propTypes = {
     // // pref_excerpt_length: PropTypes.string,
     pagination: PropTypes.string,
     filterby_filters: PropTypes.string,
-
+    wrapperclass: PropTypes.string,
+    eventslistclass: PropTypes.string,
+    eventclass: PropTypes.string,
     days: PropTypes.string,
     page: PropTypes.number,
 };
@@ -240,6 +279,9 @@ Localist.defaultProps = {
     heading: '',
     filterby_filters: 'type',
     pagination: 'true',
+    wrapperclass: '',
+    eventslistclass: '',
+    eventclass: '',
 };
 
 export default Localist;

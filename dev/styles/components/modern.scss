@@ -8,6 +8,10 @@
     float: none;
   }
 
+  .card{
+      border: none;
+  }
+
   .cwd-component .events {
     .field {
       clear: both;
@@ -119,6 +123,17 @@
         object-position: 100% 0;
         width: 200px;
         height: 150px;
+    }
+
+    .group-image {
+        width: 100%;
+        img {
+            vertical-align: middle;
+            width: 100%;
+            height: auto;
+            border-bottom: 8px solid $cornelian;
+            margin-bottom: 1em;
+        }
     }
 
 }

@@ -170,7 +170,10 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined' && (typeof win
         filterby_filters = _elem$dataset.filterby_filters,
         days = _elem$dataset.days,
         page = _elem$dataset.page,
-        pagination = _elem$dataset.pagination;
+        pagination = _elem$dataset.pagination,
+        wrapperclass = _elem$dataset.wrapperclass,
+        eventslistclass = _elem$dataset.eventslistclass,
+        eventclass = _elem$dataset.eventclass;
 
     react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
       win: window,
@@ -189,7 +192,10 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined' && (typeof win
       filterby_filters: filterby_filters,
       days: days,
       page: page,
-      pagination: pagination
+      pagination: pagination,
+      wrapperclass: wrapperclass,
+      eventslistclass: eventslistclass,
+      eventclass: eventclass
     }), document.getElementById(target));
   });
 }
@@ -284,9 +290,9 @@ AddCal.propTypes = {
 
 /***/ }),
 
-/***/ "./js/components/archive.jsx":
+/***/ "./js/components/classic.jsx":
 /*!***********************************!*\
-  !*** ./js/components/archive.jsx ***!
+  !*** ./js/components/classic.jsx ***!
   \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -295,31 +301,149 @@ AddCal.propTypes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/displayEvent */ "./js/helpers/displayEvent.js");
 
 
 
-var Archive = function Archive() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
-      _useState2 = _slicedToArray(_useState, 2),
-      count = _useState2[0],
-      setCount = _useState2[1];
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button",
-    onClick: function onClick() {
-      return setCount(count + 1);
-    }
-  }, "Click me"));
+var ClassicInner = function ClassicInner(props) {
+  var event = props.event,
+      eventclass = props.eventclass;
+  var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
+  var date = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventDate"])(event);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "views-row ".concat(eventclass)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container-fluid"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-sm-12 event-title-and-location"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "${builtData.event.localist_url}"
+  }, event.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "event-date"
+  }, date), "-", eventTime, event.location_name ? " | ".concat(event.location_name) : '')))));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Archive);
+ClassicInner.propTypes = {
+  event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+};
+
+var Classic = function Classic(props) {
+  var events = props.events,
+      eventclass = props.eventclass,
+      eventslistclass = props.eventslistclass,
+      wrapperclass = props.wrapperclass;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "view view-events view-id-events cuenergy-events ".concat(wrapperclass)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events-list view-content ".concat(eventslistclass)
+  }, events.length > 0 ? events.map(function (event) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ClassicInner, {
+      key: event.event.id,
+      event: event.event,
+      eventclass: eventclass
+    });
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")));
+};
+
+Classic.propTypes = {
+  events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+};
+Classic.defaultProps = {
+  events: [],
+  wrapperclass: '',
+  eventslistclass: '',
+  eventclass: ''
+};
+/* harmony default export */ __webpack_exports__["default"] = (Classic);
+
+/***/ }),
+
+/***/ "./js/components/classic_compact.jsx":
+/*!*******************************************!*\
+  !*** ./js/components/classic_compact.jsx ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/displayEvent */ "./js/helpers/displayEvent.js");
+
+
+
+
+var ClassicCompactInner = function ClassicCompactInner(props) {
+  var event = props.event,
+      eventclass = props.eventclass;
+  var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "views-row ".concat(eventclass)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container-fluid"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-sm-3 event-month-and-day"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "event-month"
+  }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getAbbrMonth"])(event)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "event-day"
+  }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getDay"])(event)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-sm-9 event-title-and-location"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: event.localist_url
+  }, event.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, eventTime, event.location_name ? " | ".concat(event.location_name) : '')))));
+};
+
+ClassicCompactInner.propTypes = {
+  event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+};
+
+var ClassicCompact = function ClassicCompact(props) {
+  var events = props.events,
+      eventclass = props.eventclass,
+      eventslistclass = props.eventslistclass,
+      wrapperclass = props.wrapperclass;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "view view-events view-id-events cuenergy-events ".concat(wrapperclass)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events-list view-content ".concat(eventslistclass)
+  }, events.length > 0 ? events.map(function (event) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ClassicCompactInner, {
+      key: event.event.id,
+      event: event.event,
+      eventclass: eventclass
+    });
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")));
+};
+
+ClassicCompact.propTypes = {
+  events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+};
+ClassicCompact.defaultProps = {
+  events: [],
+  wrapperclass: '',
+  eventslistclass: '',
+  eventclass: ''
+};
+/* harmony default export */ __webpack_exports__["default"] = (ClassicCompact);
 
 /***/ }),
 
@@ -578,30 +702,96 @@ EventFilters.propTypes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/displayEvent */ "./js/helpers/displayEvent.js");
 
 
 
-var InlineCompact = function InlineCompact() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
-      _useState2 = _slicedToArray(_useState, 2),
-      count = _useState2[0],
-      setCount = _useState2[1];
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button",
-    onClick: function onClick() {
-      return setCount(count + 1);
+var InlineCompactInner = function InlineCompactInner(props) {
+  var event = props.event,
+      eventclass = props.eventclass;
+  var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
+  var endTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventEndTime"])(event);
+
+  var renderEventLocation = function renderEventLocation(locationName) {
+    if (locationName) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "event-location"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "fa fa-map-marker"
+      }), event.location_name);
     }
-  }, "Click me"));
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "views-row ".concat(eventclass)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container-fluid"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-sm-2 event-month-and-day"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "event-month"
+  }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getAbbrMonth"])(event)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "event-day"
+  }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getDay"])(event)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-sm-8 event-title-and-location"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "event-title"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "${builtEvent.event.localist_url}",
+    hrefLang: "en"
+  }, event.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "event-times"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "fa fa-clock-o"
+  }), eventTime, endTime ? " - ".concat(endTime) : ''), renderEventLocation(event)))));
 };
 
+InlineCompactInner.propTypes = {
+  event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+};
+
+var InlineCompact = function InlineCompact(props) {
+  var events = props.events,
+      eventclass = props.eventclass,
+      eventslistclass = props.eventslistclass,
+      wrapperclass = props.wrapperclass;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    className: "modern",
+    id: "eventsInlineCompact",
+    title: "Events List"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "main-body"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "cwd-component compact events-listing ".concat(wrapperclass)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events-list view-content ".concat(eventslistclass)
+  }, events.length > 0 ? events.map(function (event) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InlineCompactInner, {
+      key: event.event.id,
+      event: event.event,
+      eventclass: eventclass
+    });
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
+};
+
+InlineCompact.propTypes = {
+  events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+};
+InlineCompact.defaultProps = {
+  events: [],
+  wrapperclass: '',
+  eventslistclass: '',
+  eventclass: ''
+};
 /* harmony default export */ __webpack_exports__["default"] = (InlineCompact);
 
 /***/ }),
@@ -617,6 +807,13 @@ var InlineCompact = function InlineCompact() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/displayEvent */ "./js/helpers/displayEvent.js");
+/* harmony import */ var _filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filter */ "./js/components/filter.jsx");
+/* harmony import */ var _addCal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./addCal */ "./js/components/addCal.jsx");
+/* harmony import */ var _helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../helpers/buildEventWrapperFilters */ "./js/helpers/buildEventWrapperFilters.js");
+/* harmony import */ var _partials__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./partials */ "./js/components/partials.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -627,20 +824,139 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var ModernCompact = function ModernCompact() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
-      _useState2 = _slicedToArray(_useState, 2),
-      count = _useState2[0],
-      setCount = _useState2[1];
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "You clicked ", count, " times"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button",
-    onClick: function onClick() {
-      return setCount(count + 1);
-    }
-  }, "Click me"));
+
+
+
+
+
+var ModernCompactInner = function ModernCompactInner(props) {
+  var event = props.event,
+      addcal = props.addcal,
+      thumbnail = props.thumbnail,
+      excerptlength = props.excerptlength,
+      eventclass = props.eventclass;
+  var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "card event-node ".concat(eventclass)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: event.localist_url,
+    className: "group-link-wrapper field-group-link"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventThumbnail"], {
+    photoUrl: event.photo_url,
+    title: event.title,
+    thumbnail: thumbnail,
+    photoCrop: "big"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("time", {
+    title: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventDate"])(event),
+    dateTime: eventTime
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "month"
+  }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getAbbrMonth"])(event)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "day"
+  }, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getDay"])(event))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "field title"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, event.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "field meta"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, eventTime, event.location_name ? ", ".concat(event.location_name) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "field field-name-summary summary"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength)))), addcal === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    event: event
+  }) : ''));
 };
 
+ModernCompactInner.propTypes = {
+  event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
+  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+};
+
+var ModernCompact = function ModernCompact(props) {
+  var events = props.events,
+      filterby = props.filterby,
+      usefilterby = props.usefilterby,
+      addcal = props.addcal,
+      excerptlength = props.excerptlength,
+      thumbnail = props.thumbnail,
+      eventclass = props.eventclass,
+      eventslistclass = props.eventslistclass,
+      wrapperclass = props.wrapperclass;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
+      _useState2 = _slicedToArray(_useState, 2),
+      filterEvents = _useState2[0],
+      handleEventFilter = _useState2[1];
+
+  var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
+  var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
+
+  var applyFilter = function applyFilter(obj) {
+    if (obj.name === 'filterAll') {
+      handleEventFilter(events);
+    } else {
+      var filters = events.filter(function (event) {
+        if (Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTypeIds"])(event.event).includes(obj.id)) {
+          return event;
+        }
+      });
+      handleEventFilter(filters);
+    }
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    className: "modern",
+    id: "eventsModernCompact",
+    title: "Events List"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "main-body"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "cwd-component compact events-listing ".concat(thumbNailClass, " ").concat(wrapperclass)
+  }, usefilterby === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    filterObjs: filterObjs,
+    applyFilter: applyFilter
+  }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "events-list view-content ".concat(eventslistclass)
+  }, filterEvents.length > 0 ? filterEvents.map(function (event) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ModernCompactInner, {
+      key: event.event.id,
+      event: event.event,
+      filterby: filterby,
+      addcal: addcal,
+      excerptlength: excerptlength,
+      thumbnail: thumbnail,
+      eventclass: eventclass
+    });
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
+};
+
+ModernCompact.propTypes = {
+  events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+};
+ModernCompact.defaultProps = {
+  events: [],
+  usefilterby: 'false',
+  addcal: 'false',
+  excerptlength: '150',
+  thumbnail: 'true',
+  wrapperclass: '',
+  //cwd-card-grid three-card',
+  eventslistclass: '',
+  //cards',
+  eventclass: '' //card',
+
+};
 /* harmony default export */ __webpack_exports__["default"] = (ModernCompact);
 
 /***/ }),
@@ -1614,9 +1930,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_compact__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/compact */ "./js/components/compact.jsx");
 /* harmony import */ var _components_modern_standard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/modern_standard */ "./js/components/modern_standard.jsx");
 /* harmony import */ var _components_modern_compact__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/modern_compact */ "./js/components/modern_compact.jsx");
-/* harmony import */ var _components_archive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/archive */ "./js/components/archive.jsx");
-/* harmony import */ var _components_inline_compact__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/inline_compact */ "./js/components/inline_compact.jsx");
-/* harmony import */ var _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/localistApiConnector */ "./js/services/localistApiConnector.jsx");
+/* harmony import */ var _components_classic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/classic */ "./js/components/classic.jsx");
+/* harmony import */ var _components_classic_compact__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/classic_compact */ "./js/components/classic_compact.jsx");
+/* harmony import */ var _components_inline_compact__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/inline_compact */ "./js/components/inline_compact.jsx");
+/* harmony import */ var _services_localistApiConnector__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/localistApiConnector */ "./js/services/localistApiConnector.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1634,6 +1951,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1673,7 +1991,7 @@ function (_Component) {
       loading: true
     };
     props.win.localList = _assertThisInitialized(_this);
-    _this.formatOptions = ['standard', 'compact', 'modern_compact', 'modern_standard', 'inline_compact', 'archive'];
+    _this.formatOptions = ['standard', 'compact', 'modern_compact', 'modern_standard', 'inline_compact', 'classic'];
     _this.curPage = 1;
     _this.handlePageClick = _this.handlePageClick.bind(_assertThisInitialized(_this));
     return _this;
@@ -1696,7 +2014,10 @@ function (_Component) {
       var _this$props = this.props,
           format = _this$props.format,
           heading = _this$props.heading,
-          filterby_filters = _this$props.filterby_filters;
+          filterby_filters = _this$props.filterby_filters,
+          wrapperclass = _this$props.wrapperclass,
+          eventslistclass = _this$props.eventslistclass,
+          eventclass = _this$props.eventclass;
 
       if (loading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1712,7 +2033,10 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters
+            filterby: filterby_filters,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
           });
           break;
 
@@ -1721,7 +2045,10 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters
+            filterby: filterby_filters,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
           });
           break;
 
@@ -1730,7 +2057,10 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters
+            filterby: filterby_filters,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
           });
           break;
 
@@ -1739,25 +2069,46 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters
+            filterby: filterby_filters,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
           });
           break;
 
         case 'inline_compact':
-          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_inline_compact__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_inline_compact__WEBPACK_IMPORTED_MODULE_9__["default"], {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters
+            filterby: filterby_filters,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
           });
           break;
 
-        case 'archive':
-          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_archive__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        case 'classic':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_classic__WEBPACK_IMPORTED_MODULE_7__["default"], {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters
+            filterby: filterby_filters,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
+          });
+          break;
+
+        case 'classic_compact':
+          component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_classic_compact__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            key: page,
+            heading: heading,
+            events: events,
+            filterby: filterby_filters,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
           });
           break;
 
@@ -1791,7 +2142,7 @@ function (_Component) {
       var _this$props2 = this.props,
           apikey = _this$props2.apikey,
           calendarurl = _this$props2.calendarurl;
-      Object(_services_localistApiConnector__WEBPACK_IMPORTED_MODULE_9__["default"])(depts, entries, format, group, keyword, days, apikey, calendarurl, page).then(function (response) {
+      Object(_services_localistApiConnector__WEBPACK_IMPORTED_MODULE_10__["default"])(depts, entries, format, group, keyword, days, apikey, calendarurl, page).then(function (response) {
         if (typeof response.data.events !== 'undefined') {
           console.warn(response.data.page.current, response.data);
 
@@ -1873,6 +2224,9 @@ Localist.propTypes = {
   // // pref_excerpt_length: PropTypes.string,
   pagination: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   filterby_filters: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   days: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   page: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
 };
@@ -1881,7 +2235,10 @@ Localist.defaultProps = {
   days: '365',
   heading: '',
   filterby_filters: 'type',
-  pagination: 'true'
+  pagination: 'true',
+  wrapperclass: '',
+  eventslistclass: '',
+  eventclass: ''
 };
 /* harmony default export */ __webpack_exports__["default"] = (Localist);
 
