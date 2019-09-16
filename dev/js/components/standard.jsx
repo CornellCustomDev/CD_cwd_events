@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {
     getTruncDesc,
-    getTypeIds,
     getEventTime,
     getEventType,
     getMonthHeader,
@@ -83,23 +82,11 @@ const Standard = (props) => {
         excerptlength,
         thumbnail} = props;
     const [filterEvents, handleEventFilter] = useState(events);
+    // An array of filters id, name, filterby
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
     let lastMonth = '';
     let lastDay = '';
-
-    const applyFilter = obj => {
-        if (obj.name === 'filterAll'){
-            handleEventFilter(events);
-        } else {
-            const filters = events.filter( event => {
-                if (getTypeIds(event.event).includes(obj.id)){
-                    return event;
-                }
-            })
-            handleEventFilter(filters);
-        }
-    }
 
     const getMonth = event => {
         const month = getMonthHeader(event);
@@ -133,7 +120,9 @@ const Standard = (props) => {
                     { usefilterby === 'true'
                         ? <EventFilters
                             filterObjs={filterObjs}
-                            applyFilter={applyFilter}
+                            events={events}
+                            handleEventFilter={handleEventFilter}
+                            filterby={filterby}
                         />
                         : ''}
                     <div className="events-list">

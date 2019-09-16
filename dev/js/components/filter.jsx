@@ -2,14 +2,37 @@
 import React, { useState }  from 'react';
 import PropTypes from 'prop-types';
 
+import {
+    getTypeIds,
+    getGroupId,
+    getDepartmentIds,
+} from '../helpers/displayEvent';
+
 /**
  * @todo ad target id to data filter string.
  * @param {obj} props The props.
  */
 const EventFilters = props => {
-    const {filterObjs, applyFilter} = props;
+    const {filterObjs, handleEventFilter, filterby, events} = props;
     const filterKeys = Object.keys(filterObjs);
     const [active, setActive] = useState('filterAll');
+
+    const applyFilter = obj => {
+        if (obj.name === 'filterAll'){
+            handleEventFilter(events);
+        } else {
+            const filters = events.filter( event => {
+                if (filterby === 'type' && getTypeIds(event.event).includes(obj.id)){
+                    return event;
+                }else if (filterby === 'dept' && getDepartmentIds(event.event).includes(obj.id)){
+                    return event;
+                } else if (filterby === 'group' && getGroupId(event.event).includes(obj.id)){
+                    return event;
+                }
+            })
+            handleEventFilter(filters);
+        }
+    }
 
     return (
         <div className="events-filters-wrap">
@@ -56,8 +79,11 @@ const EventFilters = props => {
 }
 
 EventFilters.propTypes = {
+    // Filterby will have shape of uniquefiltername:{id:integer, name:string, filterby:string}.
     filterObjs: PropTypes.object.isRequired,
-    applyFilter: PropTypes.func.isRequired,
+    handleEventFilter: PropTypes.func.isRequired,
+    filterby: PropTypes.string.isRequired,
+    events: PropTypes.array.isRequired,
 }
 
 export default EventFilters

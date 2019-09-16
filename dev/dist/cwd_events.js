@@ -537,20 +537,6 @@ var Compact = function Compact(props) {
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
   var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
-
-  var applyFilter = function applyFilter(obj) {
-    if (obj.name === 'filterAll') {
-      handleEventFilter(events);
-    } else {
-      var filters = events.filter(function (event) {
-        if (Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTypeIds"])(event.event).includes(obj.id)) {
-          return event;
-        }
-      });
-      handleEventFilter(filters);
-    }
-  };
-
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "standard",
     id: "standardCompact",
@@ -561,7 +547,9 @@ var Compact = function Compact(props) {
     className: "events-listing ".concat(thumbNailClass, " compact ").concat(wrapperclass)
   }, usefilterby === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_3__["default"], {
     filterObjs: filterObjs,
-    applyFilter: applyFilter
+    events: events,
+    handleEventFilter: handleEventFilter,
+    filterby: filterby
   }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "events-list view-content ".concat(eventslistclass)
   }, filterEvents.length > 0 ? filterEvents.map(function (event) {
@@ -618,6 +606,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/displayEvent */ "./js/helpers/displayEvent.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -629,6 +618,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 /* eslint-disable react/forbid-prop-types */
 
 
+
 /**
  * @todo ad target id to data filter string.
  * @param {obj} props The props.
@@ -636,13 +626,32 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var EventFilters = function EventFilters(props) {
   var filterObjs = props.filterObjs,
-      applyFilter = props.applyFilter;
+      handleEventFilter = props.handleEventFilter,
+      filterby = props.filterby,
+      events = props.events;
   var filterKeys = Object.keys(filterObjs);
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('filterAll'),
       _useState2 = _slicedToArray(_useState, 2),
       active = _useState2[0],
       setActive = _useState2[1];
+
+  var applyFilter = function applyFilter(obj) {
+    if (obj.name === 'filterAll') {
+      handleEventFilter(events);
+    } else {
+      var filters = events.filter(function (event) {
+        if (filterby === 'type' && Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTypeIds"])(event.event).includes(obj.id)) {
+          return event;
+        } else if (filterby === 'dept' && Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getDepartmentIds"])(event.event).includes(obj.id)) {
+          return event;
+        } else if (filterby === 'group' && Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getGroupId"])(event.event).includes(obj.id)) {
+          return event;
+        }
+      });
+      handleEventFilter(filters);
+    }
+  };
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "events-filters-wrap"
@@ -684,8 +693,11 @@ var EventFilters = function EventFilters(props) {
 };
 
 EventFilters.propTypes = {
+  // Filterby will have shape of uniquefiltername:{id:integer, name:string, filterby:string}.
   filterObjs: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  applyFilter: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+  handleEventFilter: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
+  filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (EventFilters);
 
@@ -893,20 +905,6 @@ var ModernCompact = function ModernCompact(props) {
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
   var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
-
-  var applyFilter = function applyFilter(obj) {
-    if (obj.name === 'filterAll') {
-      handleEventFilter(events);
-    } else {
-      var filters = events.filter(function (event) {
-        if (Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTypeIds"])(event.event).includes(obj.id)) {
-          return event;
-        }
-      });
-      handleEventFilter(filters);
-    }
-  };
-
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "modern",
     id: "eventsModernCompact",
@@ -917,7 +915,9 @@ var ModernCompact = function ModernCompact(props) {
     className: "cwd-component compact events-listing ".concat(thumbNailClass, " ").concat(wrapperclass)
   }, usefilterby === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_3__["default"], {
     filterObjs: filterObjs,
-    applyFilter: applyFilter
+    events: events,
+    handleEventFilter: handleEventFilter,
+    filterby: filterby
   }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "events-list view-content ".concat(eventslistclass)
   }, filterEvents.length > 0 ? filterEvents.map(function (event) {
@@ -1076,20 +1076,6 @@ var ModernStandard = function ModernStandard(props) {
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
   var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
-
-  var applyFilter = function applyFilter(obj) {
-    if (obj.name === 'filterAll') {
-      handleEventFilter(events);
-    } else {
-      var filters = events.filter(function (event) {
-        if (Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTypeIds"])(event.event).includes(obj.id)) {
-          return event;
-        }
-      });
-      handleEventFilter(filters);
-    }
-  };
-
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "modern",
     id: "eventsModernStandard",
@@ -1100,7 +1086,9 @@ var ModernStandard = function ModernStandard(props) {
     className: "cwd-component cwd-card-grid three-card singles events-listing ".concat(thumbNailClass, " ").concat(wrapperclass)
   }, usefilterby === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_3__["default"], {
     filterObjs: filterObjs,
-    applyFilter: applyFilter
+    events: events,
+    handleEventFilter: handleEventFilter,
+    filterby: filterby
   }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "events-list view-content ".concat(eventslistclass)
   }, filterEvents.length > 0 ? filterEvents.map(function (event) {
@@ -1219,7 +1207,7 @@ var EventImg = function EventImg(props) {
       photoUrl = props.photoUrl,
       title = props.title,
       photoCrop = props.photoCrop;
-  var photo = photoUrl.replace('huge', photoCrop);
+  var photo = photoUrl.replace('/huge/', "/".concat(photoCrop, "/"));
 
   if (thumbnail === 'true') {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1413,25 +1401,13 @@ var Standard = function Standard(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
       _useState2 = _slicedToArray(_useState, 2),
       filterEvents = _useState2[0],
-      handleEventFilter = _useState2[1];
+      handleEventFilter = _useState2[1]; // An array of filters id, name, filterby
+
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
   var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
   var lastMonth = '';
   var lastDay = '';
-
-  var applyFilter = function applyFilter(obj) {
-    if (obj.name === 'filterAll') {
-      handleEventFilter(events);
-    } else {
-      var filters = events.filter(function (event) {
-        if (Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTypeIds"])(event.event).includes(obj.id)) {
-          return event;
-        }
-      });
-      handleEventFilter(filters);
-    }
-  };
 
   var getMonth = function getMonth(event) {
     var month = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getMonthHeader"])(event);
@@ -1471,7 +1447,9 @@ var Standard = function Standard(props) {
     className: "events-listing ".concat(thumbNailClass)
   }, usefilterby === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_filter__WEBPACK_IMPORTED_MODULE_3__["default"], {
     filterObjs: filterObjs,
-    applyFilter: applyFilter
+    events: events,
+    handleEventFilter: handleEventFilter,
+    filterby: filterby
   }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "events-list"
   }, filterEvents.length > 0 ? filterEvents.map(function (event) {
@@ -1555,6 +1533,8 @@ var buildEventWrapperFilters = function buildEventWrapperFilters(events, filterb
       };
     }
   });
+  console.log('buildEventWrapperFilters');
+  console.log(filters);
   return filters;
 };
 
@@ -1566,7 +1546,7 @@ var buildEventWrapperFilters = function buildEventWrapperFilters(events, filterb
 /*!************************************!*\
   !*** ./js/helpers/displayEvent.js ***!
   \************************************/
-/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getEventEndDate, stripDate, getCalStartDate, getCalEndDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getTypeIds, getDepartment, getEventType, getFiltersType, getFiltersDepartments, getEventDateCompact, getMonthHeader, getAbbrMonth */
+/*! exports provided: getTimefromDateTime, getMonthDayfromDateTime, getDayfromDateTime, getEventStartDate, getEventEndDate, stripDate, getCalStartDate, getCalEndDate, getDisplayDate, getEventDate, getTruncDesc, getDay, getEventEndTime, getEventTime, getGroupName, getGroupId, getTypeIds, getDepartmentIds, getDepartment, getEventType, getFiltersType, getFiltersDepartments, getEventDateCompact, getMonthHeader, getAbbrMonth */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1588,6 +1568,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupName", function() { return getGroupName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGroupId", function() { return getGroupId; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTypeIds", function() { return getTypeIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDepartmentIds", function() { return getDepartmentIds; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDepartment", function() { return getDepartment; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEventType", function() { return getEventType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFiltersType", function() { return getFiltersType; });
@@ -1813,6 +1794,24 @@ var getTypeIds = function getTypeIds(event) {
   return types;
 };
 /**
+ * The events deartments id
+ * @param {obj} event The event object.
+ *
+ * @return {array} The department id.
+ */
+
+var getDepartmentIds = function getDepartmentIds(event) {
+  var departments = [];
+
+  if (typeof event.filters.departments !== 'undefined') {
+    departments = event.filters.departments.map(function (dept) {
+      return dept.id;
+    });
+  }
+
+  return departments;
+};
+/**
  * The events deartment id
  * @param {obj} event The event object.
  *
@@ -1839,7 +1838,7 @@ var getDepartment = function getDepartment(event) {
 var getEventType = function getEventType(event, prefCategory) {
   var department = getDepartment(event);
   var groupName = getGroupName(event);
-  var eventTypes = '';
+  var eventTypes = [];
 
   if (typeof event.filters.event_types !== 'undefined') {
     eventTypes = getFiltersType(event);
@@ -1850,7 +1849,8 @@ var getEventType = function getEventType(event, prefCategory) {
   }
 
   if (prefCategory === 'group' && groupName !== '') {
-    eventTypes = group_name;
+    console.log(groupName);
+    eventTypes = [group_name];
   }
 
   return eventTypes;
@@ -2014,7 +2014,7 @@ function (_Component) {
       var _this$props = this.props,
           format = _this$props.format,
           heading = _this$props.heading,
-          filterby_filters = _this$props.filterby_filters,
+          filterby = _this$props.filterby,
           wrapperclass = _this$props.wrapperclass,
           eventslistclass = _this$props.eventslistclass,
           eventclass = _this$props.eventclass;
@@ -2033,7 +2033,7 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters,
+            filterby: filterby,
             wrapperclass: wrapperclass,
             eventslistclass: eventslistclass,
             eventclass: eventclass
@@ -2045,7 +2045,7 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters,
+            filterby: filterby,
             wrapperclass: wrapperclass,
             eventslistclass: eventslistclass,
             eventclass: eventclass
@@ -2057,7 +2057,7 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters,
+            filterby: filterby,
             wrapperclass: wrapperclass,
             eventslistclass: eventslistclass,
             eventclass: eventclass
@@ -2069,7 +2069,7 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters,
+            filterby: filterby,
             wrapperclass: wrapperclass,
             eventslistclass: eventslistclass,
             eventclass: eventclass
@@ -2081,7 +2081,7 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters,
+            filterby: filterby,
             wrapperclass: wrapperclass,
             eventslistclass: eventslistclass,
             eventclass: eventclass
@@ -2093,7 +2093,7 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters,
+            filterby: filterby,
             wrapperclass: wrapperclass,
             eventslistclass: eventslistclass,
             eventclass: eventclass
@@ -2105,7 +2105,7 @@ function (_Component) {
             key: page,
             heading: heading,
             events: events,
-            filterby: filterby_filters,
+            filterby: filterby,
             wrapperclass: wrapperclass,
             eventslistclass: eventslistclass,
             eventclass: eventclass
@@ -2124,8 +2124,6 @@ function (_Component) {
       var _this2 = this;
 
       setTimeout(function () {
-        var page = this.state.page;
-
         if (this.curPage !== page) {
           this.setState({
             loading: true
@@ -2217,13 +2215,13 @@ Localist.propTypes = {
   group: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   keyword: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   heading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  // // filterby: PropTypes.string.isRequired,
+  filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   calendarurl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   apikey: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   // addcal: PropTypes.string.isRequired,
   // // pref_excerpt_length: PropTypes.string,
   pagination: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  filterby_filters: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  // filterby_filters: PropTypes.string, add a value of none
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
@@ -2234,7 +2232,8 @@ Localist.defaultProps = {
   page: 1,
   days: '365',
   heading: '',
-  filterby_filters: 'type',
+  // filterby_filters: 'true',
+  filterby: 'group',
   pagination: 'true',
   wrapperclass: '',
   eventslistclass: '',

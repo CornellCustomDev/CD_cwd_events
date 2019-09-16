@@ -55,7 +55,7 @@ class Localist extends Component {
         const {
             format,
             heading,
-            filterby_filters,
+            filterby,
             wrapperclass,
             eventslistclass,
             eventclass,
@@ -73,7 +73,7 @@ class Localist extends Component {
                     key = {page}
                     heading= {heading}
                     events= {events}
-                    filterby= {filterby_filters}
+                    filterby= {filterby}
                     wrapperclass = {wrapperclass}
                     eventslistclass = {eventslistclass}
                     eventclass = {eventclass}
@@ -84,7 +84,7 @@ class Localist extends Component {
                     key = {page}
                     heading= {heading}
                     events= {events}
-                    filterby= {filterby_filters}
+                    filterby= {filterby}
                     wrapperclass = {wrapperclass}
                     eventslistclass = {eventslistclass}
                     eventclass = {eventclass}
@@ -95,7 +95,7 @@ class Localist extends Component {
                     key = {page}
                     heading= {heading}
                     events= {events}
-                    filterby= {filterby_filters}
+                    filterby= {filterby}
                     wrapperclass = {wrapperclass}
                     eventslistclass = {eventslistclass}
                     eventclass = {eventclass}
@@ -106,7 +106,7 @@ class Localist extends Component {
                     key = {page}
                     heading= {heading}
                     events= {events}
-                    filterby= {filterby_filters}
+                    filterby= {filterby}
                     wrapperclass = {wrapperclass}
                     eventslistclass = {eventslistclass}
                     eventclass = {eventclass}
@@ -117,7 +117,7 @@ class Localist extends Component {
                     key = {page}
                     heading= {heading}
                     events= {events}
-                    filterby= {filterby_filters}
+                    filterby= {filterby}
                     wrapperclass = {wrapperclass}
                     eventslistclass = {eventslistclass}
                     eventclass = {eventclass}
@@ -128,7 +128,7 @@ class Localist extends Component {
                     key = {page}
                     heading= {heading}
                     events= {events}
-                    filterby= {filterby_filters}
+                    filterby= {filterby}
                     wrapperclass = {wrapperclass}
                     eventslistclass = {eventslistclass}
                     eventclass = {eventclass}
@@ -139,7 +139,7 @@ class Localist extends Component {
                     key = {page}
                     heading= {heading}
                     events= {events}
-                    filterby= {filterby_filters}
+                    filterby= {filterby}
                     wrapperclass = {wrapperclass}
                     eventslistclass = {eventslistclass}
                     eventclass = {eventclass}
@@ -154,7 +154,6 @@ class Localist extends Component {
 
     getEvents(page){
         setTimeout(function() {
-            const {page} = this.state;
             if (this.curPage !== page){
                 this.setState({loading: true})
             }
@@ -258,13 +257,13 @@ Localist.propTypes = {
     group: PropTypes.string.isRequired,
     keyword: PropTypes.string.isRequired,
     heading: PropTypes.string,
-    // // filterby: PropTypes.string.isRequired,
+    filterby: PropTypes.string,
     calendarurl: PropTypes.string.isRequired,
     apikey: PropTypes.string.isRequired,
     // addcal: PropTypes.string.isRequired,
     // // pref_excerpt_length: PropTypes.string,
     pagination: PropTypes.string,
-    filterby_filters: PropTypes.string,
+    // filterby_filters: PropTypes.string, add a value of none
     wrapperclass: PropTypes.string,
     eventslistclass: PropTypes.string,
     eventclass: PropTypes.string,
@@ -277,7 +276,8 @@ Localist.defaultProps = {
     page : 1,
     days : '365',
     heading: '',
-    filterby_filters: 'type',
+    // filterby_filters: 'true',
+    filterby: 'group',
     pagination: 'true',
     wrapperclass: '',
     eventslistclass: '',

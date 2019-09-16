@@ -53,7 +53,7 @@
         </div>
 
     </nav>
-    <div class="container">
+    <div class="flex-container p-4">
         <div class='row'>
             <h1>CWD_Events Interactive Demo</h1>
             <p class='text-muted'>
@@ -77,9 +77,9 @@
 
                         <form class="block-form" id="block-form"
                         data-drupal-selector="block-form-l4ycnl2m4u0"
-                        action="/admin/structure/block/add/cwd_events_block/bartik?region=content"
-                        method="post" id="block-form--L4YCnl2m4U0" accept-charset="UTF-8"
-                        data-drupal-form-fields="edit-settings-label--RyUZqJDyMrI,edit-settings-label-display--2iGPV3UAVxQ,edit-settings-cwd-events-localist-config-cwd-events-calendarurl--nITcvZT10fw,edit-settings-cwd-events-localist-config-cwd-events-apikey--KgxoF6rmORA,edit-settings-cwd-events-localist-config-cwd-events-depts--4NUTVf-Lrxs,edit-settings-cwd-events-localist-config-cwd-events-entries--wQeblngT0w0,edit-settings-cwd-events-localist-config-cwd-events-group--eLp-zFIOvbE,edit-settings-cwd-events-localist-config-cwd-events-keyword--u8lT9OcfTDY,edit-settings-cwd-events-display-config-cwd-events-readmore--VqSkvhshGJU,edit-settings-cwd-events-display-config-cwd-events-url--N32ymueZXU8,edit-settings-cwd-events-display-config-cwd-events-format--Pyhx2S3z8hg,edit-settings-cwd-events-display-config-cwd-events-filterby--wWREbKZe4Lk,edit-settings-cwd-events-display-config-cwd-events-addcal--9dM9uPrVAQE,edit-settings-cwd-events-display-config-cwd-events-pagination--Ep2P-ywQIZI,edit-settings-cwd-events-display-config-cwd-events-styling--xNZLco8cvBM,edit-visibility-node-type-bundles-article--vktc15it_Pw,edit-visibility-node-type-bundles-kba--Co-dOCrGQAo,edit-visibility-node-type-bundles-page--HQFHJptsoK0,edit-visibility-request-path-pages--InSfW0UZz1o,edit-visibility-request-path-negate-0--lDVCtlidKEA,edit-visibility-request-path-negate-1--G34kqnAC-WI,edit-visibility-user-role-roles-anonymous--lHJlY_aWc6k,edit-visibility-user-role-roles-authenticated--QndaYfTPhqk,edit-visibility-user-role-roles-administrator--A0Fvp_NPz3E,edit-id--ce3L96zncww,edit-region--U_m_3qdzLqc,edit-actions-submit--BB9jwo5mraU">
+                        action="/"
+                        method="get" id="block-form--L4YCnl2m4U0" accept-charset="UTF-8"
+                        >
                         <div id="edit-settings-admin-label--RHtSmM3Lp2E">
                             <label for="edit-settings-admin-label--RHtSmM3Lp2E">Block
                                 description</label>
@@ -94,16 +94,6 @@
                                 value="Events block" size="60" maxlength="255"
                                 class="form-text required machine-name-source" required="required"
                                 aria-required="true">
-                        </div>
-                        <div
-                            class="js-form-item form-item js-form-type-checkbox form-type-checkbox js-form-item-settings-label-display form-item-settings-label-display">
-                            <input data-drupal-selector="edit-settings-label-display"
-                                type="checkbox" id="edit-settings-label-display--2iGPV3UAVxQ"
-                                name="settings[label_display]" value="visible" checked="checked"
-                                class="form-checkbox">
-
-                            <label for="edit-settings-label-display--2iGPV3UAVxQ"
-                                class="option">Display title</label>
                         </div>
                         <fieldset data-drupal-selector="edit-settings-cwd-events-localist-config"
                             id="edit-settings-cwd-events-localist-config--QSmD_eI4Hgg"
@@ -336,17 +326,16 @@
 
                             </div>
                         </fieldset>
-                    </form>
-
-                    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-                        <div class="ui-dialog-buttonset form-actions">
-                            <button type="button"
-                                id='submit'
-                                class="button button--primary js-form-submit form-submit ui-button ui-corner-all ui-widget">
-                                Update Block
-                            </button>
+                        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                            <div class="ui-dialog-buttonset form-actions">
+                                <button type="submit"
+                                    id='submit'
+                                    class="button button--primary js-form-submit form-submit ui-button ui-corner-all ui-widget">
+                                    Update Block
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -354,15 +343,15 @@
             <div class='border'>
                 <div id="events_block" class="cwd-events-style events-listing"
                     data-target = 'events_block'
-                    data-depts="0" 
-                    data-entries="4" 
+                    data-depts="0"
+                    data-entries="4"
                     data-format="standard"
-                    data-group="0" 
-                    data-keyword="" 
+                    data-group="0"
+                    data-keyword=""
                     data-addcal="true"
-                    data-heading="standard"
+                    data-heading="Events Block"
                     data-calendarurl="//events.cornell.edu/api/2.1/events"
-                    data-apikey="KLhy2GtuSAGirYGY" 
+                    data-apikey="KLhy2GtuSAGirYGY"
                     data-filterby="group"
                     data-pagination="true"
                 >
@@ -371,22 +360,21 @@
         </div>
     </div>
     </div>
-
-    <!--script src="js/app.js"></script-->
-    <script src="./dist/cwd_events.js"></script>
-    <!-- Loads nav -->
-    <!-- <script src="demo/main.js"></script> -->
     <script>
-    var myLocalList = window.localList;
-    console.log(myLocalList)
-    /**
-     * Get the data from the form and initiate new localist element
-     * @todo impliment the rest of the drupal block elements
-     *   Styling, read more, ...
-     * */
-    function renderForm(){
-        var formData = $('form').first().serializeArray();
-
+        /**
+         * Make the form interactive
+         */
+        // checkbox names.
+        const cbs = [
+            "settings[cwd_events_display_config][cwd_events_pagination]",
+            "settings[cwd_events_display_config][cwd_events_addcal]",
+        ]
+        // select elements.
+        const selects = [
+            "settings[cwd_events_display_config][cwd_events_format]",
+            "settings[cwd_events_display_config][cwd_events_filterby]",
+        ]
+        // the data elements of the div
         const dataArray = [
             'calendarurl',
             'apikey',
@@ -401,43 +389,46 @@
             'pagination',
             'filterby'
         ];
-        var data = {}
-        formData.map(function(obj){
-            // console.log(obj.name);
+        // Get params from form submit.
+        var url = new URL(window.location);
+        for (const val in cbs){
+            const res = url.searchParams.get(cbs[val]);
+            if (res == 'true'){
+                $('form').first().find("input[name='"+cbs[val]+"']").prop( "checked", true );
+            }else{
+                $('form').first().find("input[name='"+cbs[val]+"']").prop( "checked", false );
+            }
             dataArray.map(function(arr){
-                if(obj.name.indexOf(arr.toLowerCase()) >= 0){
-                    // console.log(obj.name + " " + arr)
-                    data[arr] = obj.value
+                if(cbs[val].indexOf(arr.toLowerCase()) >= 0){
+                    $('#events_block').attr('data-'+arr, res);
                 }
             })
-        })
-        // Drupal uses block titles not data heading.
-        data.heading = formData[1].name == "settings[label_display]" ? formData[0].value : ''
-        // This class is added or removed in php.
-        // if (data.styling != '1'){
-        //     $('#events_block').removeClass('cwd-events-style');
-        // }else{
-        //     $('div#events_block').addClass('cwd-events-style');
-        // }
-        // Drupal php assigns data-target.
-        data.target = 'events_block';
-        data.title = 'it still works';
-        myLocalList.setState(data);
-    }
-
-    $('#submit').on('click', function(e){
-        e.preventDefault;
-        // clear any old content
-
-        $('#events_block').html('');
-        delete myLocalList.paginator;
-        renderForm();
-    })
-
-    $(document).ready(function(){
-        renderForm();
-    })
+        }
+        const searchParams = url.searchParams;
+        for (const [key, val] of searchParams) {
+            console.log(key, val)
+            if (cbs.indexOf(key) >= 0){
+                // pass
+            } else if ( selects.indexOf(key) >= 0){
+                const elem = $('form').first().find("select[name='"+key+"']");
+                elem.find("option[value='"+val+"']").attr("selected", true);
+            } else{
+                $('form').first().find("input[name='"+key+"']").val(val);
+            }
+            // check the data nad see if key exists in sting
+            dataArray.map(function(arr){
+                if(key.indexOf(arr.toLowerCase()) >= 0){
+                    $('#events_block').attr('data-'+arr, val);
+                }
+            })
+            // set the heading unused in blocks
+            if (key == "settings[label]"){
+                $('#events_block').attr('data-heading', val);
+            }
+        }
     </script>
+    <!-- load the app -->
+    <script src="./dist/cwd_events.js"></script>
 </body>
 
 </html>

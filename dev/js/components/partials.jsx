@@ -53,7 +53,7 @@ EventLocation.defaultProps = {
 
 const EventImg = props => {
     const {thumbnail, photoUrl, title, photoCrop} = props;
-    const photo = photoUrl.replace('huge', photoCrop);
+    const photo = photoUrl.replace('/huge/', `/${photoCrop}/`);
     if (thumbnail === 'true') {
         return (
             <img

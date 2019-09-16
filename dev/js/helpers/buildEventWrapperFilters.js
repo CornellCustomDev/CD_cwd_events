@@ -2,6 +2,7 @@ import {
     getGroupName,
     getGroupId,
 } from './displayEvent';
+
 /**
  * @todo add support for array of departments, and types.
  * @param {obj} event The localist event.
@@ -48,6 +49,8 @@ const buildEventWrapperFilters = (events, filterby) => {
             };
         }
     })
+    console.log('buildEventWrapperFilters');
+    console.log(filters);
     return filters
 
 };

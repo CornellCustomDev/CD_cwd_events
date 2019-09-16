@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {
     getTruncDesc,
-    getTypeIds,
     getAbbrMonth,
     getDay,
     getEventDate,
@@ -84,18 +83,6 @@ const ModernCompact= props =>{
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
-    const applyFilter = obj => {
-        if (obj.name === 'filterAll'){
-            handleEventFilter(events);
-        } else {
-            const filters = events.filter( event => {
-                if (getTypeIds(event.event).includes(obj.id)){
-                    return event;
-                }
-            })
-            handleEventFilter(filters);
-        }
-    }
 
     return (
         <section className='modern' id="eventsModernCompact" title="Events List">
@@ -104,7 +91,9 @@ const ModernCompact= props =>{
                     { usefilterby === 'true'
                         ? <EventFilters
                             filterObjs={filterObjs}
-                            applyFilter={applyFilter}
+                            events={events}
+                            handleEventFilter={handleEventFilter}
+                            filterby={filterby}
                         />
                         : ''}
                     <div className={`events-list view-content ${eventslistclass}`}>

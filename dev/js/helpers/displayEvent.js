@@ -208,6 +208,22 @@ export const getTypeIds = event => {
 };
 
 /**
+ * The events deartments id
+ * @param {obj} event The event object.
+ *
+ * @return {array} The department id.
+ */
+export const getDepartmentIds = event => {
+    let departments = [];
+    if (typeof event.filters.departments !== 'undefined') {
+        departments = event.filters.departments.map(dept=>{
+            return dept.id
+        })
+    }
+    return departments ;
+};
+
+/**
  * The events deartment id
  * @param {obj} event The event object.
  *
@@ -231,7 +247,7 @@ export const getDepartment = event => {
 export const getEventType = (event, prefCategory) => {
     const department = getDepartment(event);
     const groupName = getGroupName(event);
-    let eventTypes = '';
+    let eventTypes = [];
     if (typeof event.filters.event_types !== 'undefined') {
         eventTypes = getFiltersType(event);
     }
@@ -239,7 +255,8 @@ export const getEventType = (event, prefCategory) => {
         eventTypes = getFiltersDepartments(event);
     }
     if (prefCategory === 'group' && groupName !== '') {
-        eventTypes = group_name;
+        console.log(groupName);
+        eventTypes = [group_name];
     }
     return eventTypes;
 };
