@@ -108,13 +108,13 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /* eslint-disable react/jsx-filename-extension */
 
@@ -135,15 +135,53 @@ __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/ind
  */
 
 
-if (typeof jQuery === 'function' && typeof Drupal !== 'undefined' && (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object') {
-  (function ($, Drupal, window) {
+if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
+  (function ($, Drupal) {
     Drupal.behaviors.cwdEvents = {
       attach: function attach(context) {
         $('div.events-listing', context).once('cwd_events').each(function () {
           var data = _objectSpread({}, this.dataset);
 
-          data.win = window;
-          react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById(data.target));
+          var target = data.target,
+              depts = data.depts,
+              entries = data.entries,
+              format = data.format,
+              group = data.group,
+              keyword = data.keyword,
+              heading = data.heading,
+              filterby = data.filterby,
+              calendarurl = data.calendarurl,
+              apikey = data.apikey,
+              addcal = data.addcal,
+              pref_excerpt_length = data.pref_excerpt_length,
+              filterby_filters = data.filterby_filters,
+              days = data.days,
+              page = data.page,
+              pagination = data.pagination,
+              wrapperclass = data.wrapperclass,
+              eventslistclass = data.eventslistclass,
+              eventclass = data.eventclass;
+          react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            target: target,
+            depts: depts,
+            entries: entries,
+            format: format,
+            group: group,
+            keyword: keyword,
+            heading: heading,
+            filterby: filterby,
+            calendarurl: calendarurl,
+            apikey: apikey,
+            addcal: addcal,
+            pref_excerpt_length: pref_excerpt_length,
+            filterby_filters: filterby_filters,
+            days: days,
+            page: page,
+            pagination: pagination,
+            wrapperclass: wrapperclass,
+            eventslistclass: eventslistclass,
+            eventclass: eventclass
+          }), document.getElementById(target));
         });
       }
     };
@@ -176,7 +214,6 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined' && (typeof win
         eventclass = _elem$dataset.eventclass;
 
     react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      win: window,
       target: target,
       depts: depts,
       entries: entries,
@@ -1213,7 +1250,8 @@ var EventImg = function EventImg(props) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       alt: title,
       height: "150",
-      src: photo
+      src: photo,
+      loading: "lazy"
     });
   } else {
     return '';
@@ -1990,7 +2028,6 @@ function (_Component) {
       page: props.page,
       loading: true
     };
-    props.win.localList = _assertThisInitialized(_this);
     _this.formatOptions = ['standard', 'compact', 'modern_compact', 'modern_standard', 'inline_compact', 'classic'];
     _this.curPage = 1;
     _this.handlePageClick = _this.handlePageClick.bind(_assertThisInitialized(_this));
@@ -2208,7 +2245,6 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 Localist.propTypes = {
-  win: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
   depts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   format: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
@@ -63852,8 +63888,8 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! e:\mySites\cd_events\CD_cwd_events\dev\js\app.js */"./js/app.js");
-module.exports = __webpack_require__(/*! e:\mySites\cd_events\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
+__webpack_require__(/*! e:\mySites\d8_psw\modules\custom\CD_cwd_events\dev\js\app.js */"./js/app.js");
+module.exports = __webpack_require__(/*! e:\mySites\d8_psw\modules\custom\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
 
 
 /***/ })

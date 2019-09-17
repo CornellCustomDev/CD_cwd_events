@@ -60,6 +60,7 @@ const EventImg = props => {
                 alt={title}
                 height='150'
                 src={photo}
+                loading='lazy'
             ></img>
         );
     } else{

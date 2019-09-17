@@ -30,7 +30,6 @@ class Localist extends Component {
             page: props.page,
             loading: true,
         };
-        props.win.localList = this;
         this.formatOptions = [
             'standard',
             'compact',
@@ -250,7 +249,6 @@ class Localist extends Component {
 }
 
 Localist.propTypes = {
-    win: PropTypes.object.isRequired,
     depts: PropTypes.string.isRequired,
     entries: PropTypes.string.isRequired,
     format: PropTypes.string.isRequired,

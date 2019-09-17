@@ -17,21 +17,57 @@ require('babel-polyfill');
  */
 if (
     typeof jQuery === 'function' &&
-    typeof Drupal !== 'undefined' &&
-    typeof window === 'object'
+    typeof Drupal !== 'undefined'
 ) {
-    (function($, Drupal, window) {
+    (function($, Drupal) {
         Drupal.behaviors.cwdEvents = {
             attach(context) {
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
                         const data = { ...this.dataset };
-                        data.win = window;
-                        ReactDOM.render(
-                            <Localist />,
-                            document.getElementById(data.target)
-                        );
+                        const {
+                            target,
+                            depts,
+                            entries,
+                            format,
+                            group,
+                            keyword,
+                            heading,
+                            filterby,
+                            calendarurl,
+                            apikey,
+                            addcal,
+                            pref_excerpt_length,
+                            filterby_filters,
+                            days,
+                            page,
+                            pagination,
+                            wrapperclass,
+                            eventslistclass,
+                            eventclass,
+                        } = data;
+                        ReactDOM.render(<Localist
+                            target= {target}
+                            depts= {depts}
+                            entries= {entries}
+                            format= {format}
+                            group= {group}
+                            keyword= {keyword}
+                            heading= {heading}
+                            filterby= {filterby}
+                            calendarurl= {calendarurl}
+                            apikey= {apikey}
+                            addcal= {addcal}
+                            pref_excerpt_length= {pref_excerpt_length}
+                            filterby_filters= {filterby_filters}
+                            days= {days}
+                            page= {page}
+                            pagination = {pagination}
+                            wrapperclass= {wrapperclass}
+                            eventslistclass= {eventslistclass}
+                            eventclass= {eventclass}
+                        />, document.getElementById(target));
                     });
             }
         };
@@ -64,7 +100,6 @@ if (
             eventclass,
         } = { ...elem.dataset };
         ReactDOM.render(<Localist
-            win= {window}
             target= {target}
             depts= {depts}
             entries= {entries}
