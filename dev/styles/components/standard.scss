@@ -2,9 +2,6 @@
 /* CWD Localist Events
 	 ************************************ */
 
-$month: #762425;//4.66:1 on white
-$day: #b31b1b;
-
 section.standard .events-listing {
 	position: relative;
 	float: left;
@@ -103,7 +100,6 @@ section.standard .events-listing {
 	.month-header {
 	  text-align: center;
 	  color: #fff;
-	  background: $month;
 	  float: left;
 	  width: 100%;
 	  padding: 9px 0;
