@@ -1401,7 +1401,7 @@ var Standard = function Standard(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
       _useState2 = _slicedToArray(_useState, 2),
       filterEvents = _useState2[0],
-      handleEventFilter = _useState2[1]; // An array of filters id, name, filterby
+      handleEventFilter = _useState2[1]; // An object of filters id, name, filterby objects.
 
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);

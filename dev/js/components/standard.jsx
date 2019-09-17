@@ -82,7 +82,7 @@ const Standard = (props) => {
         excerptlength,
         thumbnail} = props;
     const [filterEvents, handleEventFilter] = useState(events);
-    // An array of filters id, name, filterby
+    // An object of filters id, name, filterby objects.
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
     let lastMonth = '';
@@ -130,8 +130,8 @@ const Standard = (props) => {
                             ? filterEvents.map( event => {
                                 return (
                                     <div key={event.event.id}>
-                                        { getMonth(event.event) }
-                                        { getDay(event.event, filterby) }
+                                        {getMonth(event.event)}
+                                        {getDay(event.event, filterby)}
                                         <StandardInner
                                             event={event.event}
                                             filterby={filterby}
