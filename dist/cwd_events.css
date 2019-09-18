@@ -186,7 +186,6 @@
 .cwd-events-style section.standard .events-listing .month-header {
   text-align: center;
   color: #fff;
-  background: #762425;
   float: left;
   width: 100%;
   padding: 9px 0;
@@ -530,8 +529,6 @@
   line-height: 1;
   font-weight: 400;
   padding: 9px 12px;
-  background: #b83739;
-  color: #f8e0c4;
   text-transform: uppercase;
 }
 
@@ -542,8 +539,6 @@
   line-height: 1;
   font-weight: 400;
   padding: 9px 12px;
-  background: #b83739;
-  background: #a63133;
 }
 
 .cwd-events-style #eventsModernCompact .cwd-component .events h3,
@@ -637,7 +632,7 @@
 .cwd-events-style #eventsModernStandard .inline-events-type {
   float: none;
   padding: 2px 8px 1px;
-  background: #FCF3E1;
+  background: #fcf3e1;
   border-radius: 4px;
   text-decoration: none !important;
   color: #000;

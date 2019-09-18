@@ -56,23 +56,30 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
           . $this->t('@readmore', ["@readmore" => $this->configuration['cwd_events_readmore']]) .
         '</a>'
       : '';
-    $class = ($this->configuration['cwd_events_styling'] == 1) ? 'cwd-events-style' : '';
+    $class = ($this->configuration['cwd_events_hidestyling'] != "false") ? 'cwd-events-style' : '';
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
       '#markup' => $teaser . "<div
                 id = 'events-listing-" . $id . "'
                 class = 'events-listing " . $class . "'
                 data-target = 'events-listing-" . $id . "'
-                data-depts = '" . $this->configuration['cwd_events_depts'] . "'
-                data-entries = '" . $this->configuration['cwd_events_entries'] . "'
-                data-format = '" . $this->configuration['cwd_events_format'] . "'
-                data-group = '" . $this->configuration['cwd_events_group'] . "'
-                data-keyword = '" . $this->configuration['cwd_events_keyword'] . "'
-                data-addcal = '" . $this->configuration['cwd_events_addcal'] . "'
                 data-calendarurl = '" . $this->configuration['cwd_events_calendarurl'] . "'
                 data-apikey = '" . $this->configuration['cwd_events_apikey'] . "'
+                data-format = '" . $this->configuration['cwd_events_format'] . "'
+                data-entries = '" . $this->configuration['cwd_events_entries'] . "'
+                data-daysahead = '" . $this->configuration['cwd_events_daysahead'] . "'
+                data-depts = '" . $this->configuration['cwd_events_depts'] . "'
+                data-group = '" . $this->configuration['cwd_events_group'] . "'
+                data-keyword = '" . $this->configuration['cwd_events_keyword'] . "'
+                data-hidedescription = '" . $this->configuration['cwd_events_hidedescription'] . "'
+                data-truncatedescription = '" . $this->configuration['cwd_events_truncatedescription'] . "'
+                data-hideimages = '" . $this->configuration['cwd_events_hideimages'] . "'
+                data-addcal = '" . $this->configuration['cwd_events_addcal'] . "'
                 data-pagination = '" . $this->configuration['cwd_events_pagination'] . "'
                 data-filterby = '" . $this->configuration['cwd_events_filterby'] . "'
+                data-addcal = '" . $this->configuration['cwd_events_wrapperclass'] . "'
+                data-addcal = '" . $this->configuration['cwd_events_listclass'] . "'
+                data-addcal = '" . $this->configuration['cwd_events_itemclass'] . "'
                 data-heading = ''
               ></div>",
     ];
@@ -125,7 +132,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#default_value' => isset($config['cwd_events_format']) ? $config['cwd_events_format'] : 'standard',
     ];
 
-
     $form['cwd_events_display_config']['cwd_events_entries'] = [
       '#type' => 'number',
       '#title' => $this->t('Number of Results'),
@@ -133,7 +139,13 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#default_value' => isset($config['cwd_events_entries']) ? $config['cwd_events_entries'] : 3,
     ];
 
-    // @todo add "Days Ahead".
+    $form['cwd_events_display_config']['cwd_events_daysahead'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Days Ahead'),
+      '#description' => $this->t('Up to 365. Set to negative for archive events.'),
+      '#default_value' => isset($config['cwd_events_daysahead']) ? $config['cwd_events_daysahead'] : 365,
+    ];
+
     $form['cwd_events_display_config']['cwd_events_depts'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Departments'),
@@ -165,11 +177,26 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
 
     // @todo add option for "Widget Type" list or row.
 
-    // Hide description.
+    $form['cwd_events_display_options']['cwd_events_hidedescription'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide Descriptions'),
+      '#return_value' => 'true',
+      '#default_value' => isset($config['cwd_events_hidedescription']) ? $config['cwd_events_hidedescription'] : 'false',
+    ];
 
-    // Truncate Descriptions.
+    $form['cwd_events_display_options']['cwd_events_truncatedescription'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Truncate Description length'),
+      '#description' => $this->t('The character length of the description. Leave blank for full description.'),
+      '#default_value' => isset($config['cwd_events_truncatedescription']) ? $config['cwd_events_truncatedescription'] : 150,
+    ];
 
-    // Hide Event Images
+    $form['cwd_events_display_options']['cwd_events_hideimages'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide Event Images'),
+      '#return_value' => 'true',
+      '#default_value' => isset($config['cwd_events_hideimages']) ? $config['cwd_events_hideimages'] : 'false',
+    ];
 
     $form['cwd_events_display_options']['cwd_events_readmore'] = [
       '#type' => 'textfield',
@@ -187,16 +214,15 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
 
     $form['cwd_events_display_options']['cwd_events_filterby'] = [
       '#type' => 'select',
-      '#title' => $this->t('Filter By'),
-      '#description' => $this->t('If none is selected no filtering will be used. Can be configured to expose filters for: group (default), dept(department), and type'),
+      '#title' => $this->t('Expose filters'),
+      '#description' => $this->t('Exposes filters buttons for: group (default), dept(department), and type. If none is selected filters will not be exposed.'),
       '#options' => $filterOptions,
       '#default_value' => isset($config['cwd_events_filterby']) ? $config['cwd_events_filterby'] : 'group',
     ];
 
     $form['cwd_events_display_options']['cwd_events_addcal'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Add Calendar link'),
-      '#description' => $this->t('Check this box to display links to add calendar .'),
+      '#title' => $this->t('Add Calendar links'),
       '#return_value' => 'true',
       '#default_value' => isset($config['cwd_events_addcal']) ? $config['cwd_events_addcal'] : 'false',
     ];
@@ -204,24 +230,38 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $form['cwd_events_display_options']['cwd_events_pagination'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Pagination'),
-      '#description' => $this->t('Use paging for long lists.'),
       '#return_value' => 'true',
       '#default_value' => isset($config['cwd_events_pagination']) ? $config['cwd_events_pagination'] : 'false',
     ];
 
     $form['cwd_events_display_options']['cwd_events_styling'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Use Module Styling'),
-      '#description' => $this->t('Uncheck this box to remove all module styling.'),
+      '#title' => $this->t('Hide Styling'),
+      '#description' => $this->t('Check this box to remove all module styling.'),
       '#return_value' => 1,
       '#default_value' => isset($config['cwd_events_styling']) ? $config['cwd_events_styling'] : 1,
     ];
 
-    // add wrapper class
+    $form['cwd_events_display_options']['cwd_events_wrapperclass'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Add class to events wrapper'),
+      '#description' => $this->t('example:cwd-card-grid three-card'),
+      '#default_value' => isset($config['cwd_events_wrapperclass']) ? $config['cwd_events_wrapperclass'] : '',
+    ];
 
-    // add list class
+    $form['cwd_events_display_options']['cwd_events_listclass'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Add class to events list'),
+      '#description' => $this->t('example:cards'),
+      '#default_value' => isset($config['cwd_events_listclass']) ? $config['cwd_events_listclass'] : '',
+    ];
 
-    // add item class
+    $form['cwd_events_display_options']['cwd_events_itemclass'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Add class to event list item'),
+      '#description' => $this->t('example:card'),
+      '#default_value' => isset($config['cwd_events_itemclass']) ? $config['cwd_events_itemclass'] : '',
+    ];
 
     return $form;
   }
@@ -238,16 +278,22 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
 
     $this->configuration['cwd_events_format'] = $formatOptions[$values['cwd_events_display_config']['cwd_events_format']];
     $this->configuration['cwd_events_entries'] = $values['cwd_events_display_config']['cwd_events_entries'];
+    $this->configuration['cwd_events_daysahead'] = $values['cwd_events_display_config']['cwd_events_daysahead'];
     $this->configuration['cwd_events_depts'] = $values['cwd_events_display_config']['cwd_events_depts'];
     $this->configuration['cwd_events_group'] = $values['cwd_events_display_config']['cwd_events_group'];
     $this->configuration['cwd_events_keyword'] = $values['cwd_events_display_config']['cwd_events_keyword'];
 
     $this->configuration['cwd_events_readmore'] = $values['cwd_events_display_options']['cwd_events_readmore'];
     $this->configuration['cwd_events_url'] = $values['cwd_events_display_options']['cwd_events_url'];
-    $this->configuration['cwd_events_filterby'] = $values['cwd_events_display_options']['cwd_events_filterby'];
+    $this->configuration['cwd_events_hidedescription'] = $values['cwd_events_display_options']['cwd_events_hidedescription'];
+    $this->configuration['cwd_events_truncatedescription'] = $values['cwd_events_display_options']['cwd_events_truncatedescription'];
+    $this->configuration['cwd_events_hideimages'] = $values['cwd_events_display_options']['cwd_events_hideimages'];
     $this->configuration['cwd_events_addcal'] = $values['cwd_events_display_options']['cwd_events_addcal'];
     $this->configuration['cwd_events_pagination'] = $values['cwd_events_display_options']['cwd_events_pagination'];
-    $this->configuration['cwd_events_styling'] = $values['cwd_events_display_options']['cwd_events_styling'];
+    $this->configuration['cwd_events_filterby'] = $values['cwd_events_display_options']['cwd_events_filterby'];
+
+
+    $this->configuration['cwd_events_hidestyling'] = $values['cwd_events_display_hidestyling']['cwd_events_hidestyling'];
 
   }
 

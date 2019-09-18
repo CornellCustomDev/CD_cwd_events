@@ -47,7 +47,7 @@
       font-family: Iowan Old Style, Georgia, Athelas, Baskerville, Sitka Display, Constansia, serif;
     }
     .meta {
-      color: #767676;
+      color: $grey;
       font-size: 13px;
       font-weight: 400;
     }
@@ -62,18 +62,18 @@
     display: inline-block;
     width: 100%;
     text-decoration: none;
-    color: #000;
+    color: $black;
     transition: background 0.15s, box-shadow 0.15s;
     &:hover h3, &:focus h3 {
       text-decoration: underline;
-      color: #127cb5;
+      color: $lightblue;
     }
     &:active h3 {
-      color: #000;
+      color: $black;
     }
     &:hover, &:focus {
-      background: rgba(0, 0, 0, 0.05);
-      box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.05);
+      background: $alphagrey;
+      box-shadow: 0 0 0 15px $alphagrey;
     }
     &:active {
       background: rgba(0, 0, 0, 0.09);
@@ -105,12 +105,12 @@
   .inline-events-type {
     float: none;
     padding: 2px 8px 1px;
-    background: #FCF3E1;
+    background: $offwhite;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     text-decoration: none !important;
-    color: #000;
+    color: $black;
     margin-left: 10px;
   }
 
@@ -129,7 +129,7 @@
             vertical-align: middle;
             width: 100%;
             height: auto;
-            border-bottom: 8px solid $cornelian;
+            border-bottom: 8px solid $red;
             margin-bottom: 1em;
         }
     }
