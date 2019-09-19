@@ -22,7 +22,7 @@
     .pager ul li a:focus {
         background: rgba(0, 0, 0, 0.06);
         border: 1px solid rgba(0, 0, 0, 0.1);
-        color: #000;
+        color: black;
     }
     .pager ul li.pager__item a,
     .pager ul li.is-active a {
@@ -34,7 +34,7 @@
     .pager ul li.is-active a {
         background: #3584ba !important;
         font-weight: 600;
-        color: #fff;
+        color: $white;
         border: 1px solid #3584ba;
     }
 }

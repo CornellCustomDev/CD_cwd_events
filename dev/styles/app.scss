@@ -3,13 +3,21 @@
 //common styles
 $waThemeBlue: #4B7995;//4:70:1 on white
 $waGoogleGreen: #2d863e;//4.57:1 on white
+$appleBlueGray: #545a5f;
 $waLightBlue: #017bb1;
-$grey: #767676;
-$red: #b31b1b;;
 $black: #000;
+$lightblack: #111;
+$lightblackalpha: rgba(0, 0, 0, 0.2);
+$alphagrey: rgba(0, 0, 0, 0.05);
+$grey: #767676;
+$red: #b31b1b;
+$lightgrey: #ccc;
 $lightblue: #127cb5;
+$lighterblue: #d3e1e8;
+$lightestblue: #e7eff3;
+$white: #fff;
 $offwhite: #fcf3e1;
-$alphagrey: $alphagrey;
+
 /* Category Filters
   -------------------- */
 .cwd-events-style{
@@ -20,6 +28,14 @@ $alphagrey: $alphagrey;
     @import 'components/modern';
     @import 'components/cuenergy';
 
+    &.cwd_events_readmore {
+        float: right;
+        margin-top: 0.5em;
+        position: relative;
+        z-index: 1;
+        font-size: 15px;
+      }
+
     .cwd-card-grid .group-image{
         width: 100%;
     }
@@ -29,15 +45,37 @@ $alphagrey: $alphagrey;
     font-size: 13px;
     padding-bottom: 20px;
     > a {
-      font-size: 20px;
-      padding-right: 8px;
-      color: #111;
-      text-decoration: none;
-      display: inline-block !important;
+        width: auto !important;
+        font-size: 20px;
+        padding-right: 8px;
+        color: $lightblack;
+        text-decoration: none;
+        display: inline-block !important;
     }
     a:first-child {
       padding-left: 10px;
     }
+    /* Add To Calendar
+    -----------------*/
+    .google {
+        color: $waGoogleGreen !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+    .microsoft {
+      color: $waLightBlue !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .apple {
+      color: $appleBlueGray !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+
   }
 
   .events-filters-wrap {
@@ -66,19 +104,19 @@ $alphagrey: $alphagrey;
     button {
       float: left;
       padding: 5px 13px 5px;
-      background: #e7eff3;
+      background: $lightestblue;
       -moz-border-radius: 4px;
       -webkit-border-radius: 4px;
       border-radius: 4px;
       text-decoration: none !important;
       border-style: none;
       &.active {
-        color: #fff !important;
+        color: $white!important;
         background: $waThemeBlue !important;
       }
         &:hover {
-        background: #d3e1e8;
-        color: #000;
+        background: $lighterblue;
+        color: $black;
       }
     }
   }
@@ -102,31 +140,10 @@ $alphagrey: $alphagrey;
     width: 50px;
     text-align: center;
     font-size: 24px;
-    color: #ccc;
-    color: rgba(0, 0, 0, 0.2);
+    color: $lightgrey;
+    color: $lightblackalpha;
     margin: auto;
     }
-
-
-  /* Add To Calendar
-    -----------------*/
-  .google {
-      color: $waGoogleGreen !important;
-      background: transparent !important;
-      box-shadow: none !important;
-    }
-
-  .microsoft {
-    color: $waLightBlue !important;
-      background: transparent !important;
-      box-shadow: none !important;
-  }
-
-  .apple {
-    color: #545a5f !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
 
   /* required change to visually hidden*/
   .hidden {

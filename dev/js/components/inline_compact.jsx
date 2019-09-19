@@ -8,7 +8,7 @@ import {
 } from '../helpers/displayEvent';
 
 const InlineCompactInner = props => {
-    const {event, eventclass} = props;
+    const {event, itemclass} = props;
     const eventTime = getEventTime(event);
     const endTime = getEventEndTime(event);
 
@@ -24,7 +24,7 @@ const InlineCompactInner = props => {
     }
 
     return (
-        <div className={`views-row ${eventclass}`}>
+        <div className={`views-row ${itemclass}`}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-2 event-month-and-day">
@@ -54,28 +54,28 @@ const InlineCompactInner = props => {
 
 InlineCompactInner.propTypes = {
     event: PropTypes.object.isRequired,
-    eventclass: PropTypes.string.isRequired,
+    itemclass: PropTypes.string.isRequired,
 };
 
 const InlineCompact= props =>{
     const {
         events,
-        eventclass,
-        eventslistclass,
+        itemclass,
+        listclass,
         wrapperclass} = props;
 
     return (
         <section className='modern' id="eventsInlineCompact" title="Events List">
             <div className="main-body">
                 <div className={`cwd-component compact events-listing ${wrapperclass}`}>
-                    <div className={`events-list view-content ${eventslistclass}`}>
+                    <div className={`events-list view-content ${listclass}`}>
                         {events.length > 0
                             ? events.map( event => {
                                 return (
                                     <InlineCompactInner
                                         key={event.event.id}
                                         event={event.event}
-                                        eventclass={eventclass}
+                                        itemclass={itemclass}
                                     />
                                 )
                             })
@@ -91,15 +91,15 @@ const InlineCompact= props =>{
 InlineCompact.propTypes = {
     events: PropTypes.array,
     wrapperclass: PropTypes.string,
-    eventslistclass: PropTypes.string,
-    eventclass: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
 };
 
 InlineCompact.defaultProps = {
     events: [],
     wrapperclass: '',
-    eventslistclass: '',
-    eventclass: '',
+    listclass: '',
+    itemclass: '',
 
 };
 export default InlineCompact;

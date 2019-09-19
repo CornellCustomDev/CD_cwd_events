@@ -16,9 +16,9 @@ import {
 } from './partials';
 
 const CompactInner = props => {
-    const {event, addcal, thumbnail, excerptlength, eventclass} = props;
+    const {event, addcal, thumbnail, excerptlength, itemclass} = props;
     return (
-        <div className={`views-row ${eventclass}`}>
+        <div className={`views-row ${itemclass}`}>
             <EventThumbnail
                 photoUrl={event.photo_url}
                 title={event.title}
@@ -48,7 +48,7 @@ CompactInner.propTypes = {
     addcal: PropTypes.string.isRequired,
     excerptlength: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    eventclass: PropTypes.string.isRequired,
+    itemclass: PropTypes.string.isRequired,
 };
 
 const Compact = (props) => {
@@ -59,8 +59,8 @@ const Compact = (props) => {
         addcal,
         excerptlength,
         thumbnail,
-        eventclass,
-        eventslistclass,
+        itemclass,
+        listclass,
         wrapperclass} = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
@@ -78,7 +78,7 @@ const Compact = (props) => {
                             filterby={filterby}
                         />
                         : ''}
-                    <div className={`events-list view-content ${eventslistclass}`}>
+                    <div className={`events-list view-content ${listclass}`}>
                         {filterEvents.length > 0
                             ? filterEvents.map( event => {
                                 return (
@@ -89,7 +89,7 @@ const Compact = (props) => {
                                         addcal={addcal}
                                         excerptlength={excerptlength}
                                         thumbnail={thumbnail}
-                                        eventclass={eventclass}
+                                        itemclass={itemclass}
                                     />
                                 )
                             })
@@ -109,8 +109,8 @@ Compact.propTypes = {
     excerptlength: PropTypes.string,
     thumbnail: PropTypes.string,
     wrapperclass: PropTypes.string,
-    eventslistclass: PropTypes.string,
-    eventclass: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
 };
 
 Compact.defaultProps = {
@@ -120,8 +120,8 @@ Compact.defaultProps = {
     excerptlength: '150',
     thumbnail: 'true',
     wrapperclass: '', //cwd-card-grid three-card',
-    eventslistclass: '', //cards',
-    eventclass: '', //card',
+    listclass: '', //cards',
+    itemclass: '', //card',
 
 };
 

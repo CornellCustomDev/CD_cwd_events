@@ -13,7 +13,7 @@ import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
 import {EventImg} from './partials';
 
 const ModernStandardInner = props => {
-    const {event, addcal, thumbnail, excerptlength, eventclass} = props;
+    const {event, addcal, thumbnail, excerptlength, itemclass} = props;
 
     /**
      *
@@ -32,7 +32,7 @@ const ModernStandardInner = props => {
     const eventTime = getEventTime(event);
 
     return (
-        <div className={`card event-node ${eventclass}`}>
+        <div className={`card event-node ${itemclass}`}>
             <div className="events">
                 <a
                     href={event.localist_url}
@@ -82,7 +82,7 @@ ModernStandardInner.propTypes = {
     addcal: PropTypes.string.isRequired,
     excerptlength: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    eventclass: PropTypes.string.isRequired,
+    itemclass: PropTypes.string.isRequired,
 };
 
 const ModernStandard= props =>{
@@ -93,14 +93,14 @@ const ModernStandard= props =>{
         addcal,
         excerptlength,
         thumbnail,
-        eventclass,
-        eventslistclass,
+        itemclass,
+        listclass,
         wrapperclass} = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
     return (
-        <section className='modern' id="eventsModernStandard" title="Events List">
+        <section className='events-modern-standard modern' title="Events List">
             <div className="main-body">
                 <div className={`cwd-component cwd-card-grid three-card singles events-listing ${thumbNailClass} ${wrapperclass}`}>
                     { usefilterby === 'true'
@@ -111,7 +111,7 @@ const ModernStandard= props =>{
                             filterby={filterby}
                         />
                         : ''}
-                    <div className={`events-list view-content ${eventslistclass}`}>
+                    <div className={`events-list view-content ${listclass}`}>
                         {filterEvents.length > 0
                             ? filterEvents.map( event => {
                                 return (
@@ -122,7 +122,7 @@ const ModernStandard= props =>{
                                         addcal={addcal}
                                         excerptlength={excerptlength}
                                         thumbnail={thumbnail}
-                                        eventclass={eventclass}
+                                        itemclass={itemclass}
                                     />
                                 )
                             })
@@ -143,8 +143,8 @@ ModernStandard.propTypes = {
     excerptlength: PropTypes.string,
     thumbnail: PropTypes.string,
     wrapperclass: PropTypes.string,
-    eventslistclass: PropTypes.string,
-    eventclass: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
 };
 
 ModernStandard.defaultProps = {
@@ -154,8 +154,8 @@ ModernStandard.defaultProps = {
     excerptlength: '250',
     thumbnail: 'true',
     wrapperclass: '', //cwd-card-grid three-card',
-    eventslistclass: '', //cards',
-    eventclass: '', //card',
+    listclass: '', //cards',
+    itemclass: '', //card',
 
 };
 export default ModernStandard;

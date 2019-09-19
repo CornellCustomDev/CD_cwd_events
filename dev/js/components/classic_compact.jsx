@@ -7,10 +7,10 @@ import {
 } from '../helpers/displayEvent';
 
 const ClassicCompactInner = props => {
-    const {event, eventclass} = props;
+    const {event, itemclass} = props;
     const eventTime = getEventTime(event);
     return (
-        <div className={`views-row ${eventclass}`}>
+        <div className={`views-row ${itemclass}`}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-3 event-month-and-day">
@@ -38,26 +38,26 @@ const ClassicCompactInner = props => {
 
 ClassicCompactInner.propTypes = {
     event: PropTypes.object.isRequired,
-    eventclass: PropTypes.string.isRequired,
+    itemclass: PropTypes.string.isRequired,
 };
 
 const ClassicCompact= props =>{
     const {
         events,
-        eventclass,
-        eventslistclass,
+        itemclass,
+        listclass,
         wrapperclass} = props;
 
     return (
         <div className={`view view-events view-id-events cuenergy-events ${wrapperclass}`}>
-            <div className={`events-list view-content ${eventslistclass}`}>
+            <div className={`events-list view-content ${listclass}`}>
                 {events.length > 0
                     ? events.map( event => {
                         return (
                             <ClassicCompactInner
                                 key={event.event.id}
                                 event={event.event}
-                                eventclass={eventclass}
+                                itemclass={itemclass}
                             />
                         )
                     })
@@ -71,15 +71,15 @@ const ClassicCompact= props =>{
 ClassicCompact.propTypes = {
     events: PropTypes.array,
     wrapperclass: PropTypes.string,
-    eventslistclass: PropTypes.string,
-    eventclass: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
 };
 
 ClassicCompact.defaultProps = {
     events: [],
     wrapperclass: '',
-    eventslistclass: '',
-    eventclass: '',
+    listclass: '',
+    itemclass: '',
 
 };
 export default ClassicCompact;

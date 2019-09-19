@@ -26,7 +26,7 @@ class Localist extends Component {
             format: props.format,
             group: props.group,
             keyword: props.keyword,
-            days: props.days,
+            daysahead: props.daysahead,
             page: props.page,
             loading: true,
         };
@@ -56,8 +56,12 @@ class Localist extends Component {
             heading,
             filterby,
             wrapperclass,
-            eventslistclass,
-            eventclass,
+            listclass,
+            itemclass,
+            hidedescription,
+            truncatedescription,
+            hideimages,
+            hideaddcal,
         } = this.props;
         if (loading){
             return (
@@ -74,8 +78,12 @@ class Localist extends Component {
                     events= {events}
                     filterby= {filterby}
                     wrapperclass = {wrapperclass}
-                    eventslistclass = {eventslistclass}
-                    eventclass = {eventclass}
+                    listclass = {listclass}
+                    itemclass = {itemclass}
+                    hidedescription = {hidedescription}
+                    truncatedescription = {truncatedescription}
+                    hideimages = {hideimages}
+                    hideaddcal = {hideaddcal}
                 />
                 break;
             case 'compact':
@@ -85,8 +93,12 @@ class Localist extends Component {
                     events= {events}
                     filterby= {filterby}
                     wrapperclass = {wrapperclass}
-                    eventslistclass = {eventslistclass}
-                    eventclass = {eventclass}
+                    listclass = {listclass}
+                    itemclass = {itemclass}
+                    hidedescription = {hidedescription}
+                    truncatedescription = {truncatedescription}
+                    hideimages = {hideimages}
+                    hideaddcal = {hideaddcal}
                 />
                 break;
             case 'modern_standard':
@@ -96,8 +108,12 @@ class Localist extends Component {
                     events= {events}
                     filterby= {filterby}
                     wrapperclass = {wrapperclass}
-                    eventslistclass = {eventslistclass}
-                    eventclass = {eventclass}
+                    listclass = {listclass}
+                    itemclass = {itemclass}
+                    hidedescription = {hidedescription}
+                    truncatedescription = {truncatedescription}
+                    hideimages = {hideimages}
+                    hideaddcal = {hideaddcal}
                 />
                 break;
             case 'modern_compact':
@@ -107,8 +123,12 @@ class Localist extends Component {
                     events= {events}
                     filterby= {filterby}
                     wrapperclass = {wrapperclass}
-                    eventslistclass = {eventslistclass}
-                    eventclass = {eventclass}
+                    listclass = {listclass}
+                    itemclass = {itemclass}
+                    hidedescription = {hidedescription}
+                    truncatedescription = {truncatedescription}
+                    hideimages = {hideimages}
+                    hideaddcal = {hideaddcal}
                 />
                 break;
             case 'inline_compact':
@@ -118,8 +138,12 @@ class Localist extends Component {
                     events= {events}
                     filterby= {filterby}
                     wrapperclass = {wrapperclass}
-                    eventslistclass = {eventslistclass}
-                    eventclass = {eventclass}
+                    listclass = {listclass}
+                    itemclass = {itemclass}
+                    hidedescription = {hidedescription}
+                    truncatedescription = {truncatedescription}
+                    hideimages = {hideimages}
+                    hideaddcal = {hideaddcal}
                 />
                 break;
             case 'classic':
@@ -129,8 +153,12 @@ class Localist extends Component {
                     events= {events}
                     filterby= {filterby}
                     wrapperclass = {wrapperclass}
-                    eventslistclass = {eventslistclass}
-                    eventclass = {eventclass}
+                    listclass = {listclass}
+                    itemclass = {itemclass}
+                    hidedescription = {hidedescription}
+                    truncatedescription = {truncatedescription}
+                    hideimages = {hideimages}
+                    hideaddcal = {hideaddcal}
                 />
                 break;
             case 'classic_compact':
@@ -140,8 +168,12 @@ class Localist extends Component {
                     events= {events}
                     filterby= {filterby}
                     wrapperclass = {wrapperclass}
-                    eventslistclass = {eventslistclass}
-                    eventclass = {eventclass}
+                    listclass = {listclass}
+                    itemclass = {itemclass}
+                    hidedescription = {hidedescription}
+                    truncatedescription = {truncatedescription}
+                    hideimages = {hideimages}
+                    hideaddcal = {hideaddcal}
                 />
                 break;
             default:
@@ -164,7 +196,7 @@ class Localist extends Component {
             format,
             group,
             keyword,
-            days,
+            daysahead,
         } = this.state
         const {
             apikey,
@@ -176,7 +208,7 @@ class Localist extends Component {
             format,
             group,
             keyword,
-            days,
+            daysahead,
             apikey,
             calendarurl,
             page,
@@ -206,28 +238,30 @@ class Localist extends Component {
     }
 
     renderPagination(){
-        const {pagination} = this.props
+        const {hidepagination} = this.props
         const {llPage} = this.state
         const {total} = llPage
-        if (pagination === 'true'){
-            return (
-                <nav className="pager">
-                    <ReactPaginate
-                        previousLabel="previous"
-                        nextLabel="next"
-                        breakLabel="..."
-                        breakClassName="break-me"
-                        pageCount={total}
-                        marginPagesDisplayed={1}
-                        pageRangeDisplayed={3}
-                        onPageChange={this.handlePageClick}
-                        containerClassName="pager_items"
-                        subContainerClassName="pager__item"
-                        activeClassName="is-active"
-                    />
-                </nav>
-            )
+        if (!total || hidepagination === 'true'){
+            return '';
         }
+
+        return (
+            <nav className="pager">
+                <ReactPaginate
+                    previousLabel="previous"
+                    nextLabel="next"
+                    breakLabel="..."
+                    breakClassName="break-me"
+                    pageCount={total}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={3}
+                    onPageChange={this.handlePageClick}
+                    containerClassName="pager_items"
+                    subContainerClassName="pager__item"
+                    activeClassName="is-active"
+                />
+            </nav>
+        )
     }
 
     renderHeading(){
@@ -249,37 +283,38 @@ class Localist extends Component {
 }
 
 Localist.propTypes = {
-    depts: PropTypes.string.isRequired,
-    entries: PropTypes.string.isRequired,
-    format: PropTypes.string.isRequired,
-    group: PropTypes.string.isRequired,
-    keyword: PropTypes.string.isRequired,
     heading: PropTypes.string,
-    filterby: PropTypes.string,
     calendarurl: PropTypes.string.isRequired,
     apikey: PropTypes.string.isRequired,
-    // addcal: PropTypes.string.isRequired,
-    // // pref_excerpt_length: PropTypes.string,
-    pagination: PropTypes.string,
-    // filterby_filters: PropTypes.string, add a value of none
+    format: PropTypes.string.isRequired,
+    entries: PropTypes.string.isRequired,
+    daysahead: PropTypes.string,
+    depts: PropTypes.string.isRequired,
+    group: PropTypes.string.isRequired,
+    keyword: PropTypes.string.isRequired,
+    hidedescription: PropTypes.string.isRequired,
+    truncatedescription: PropTypes.string.isRequired,
+    hideimages: PropTypes.string.isRequired,
+    hideaddcal: PropTypes.string.isRequired,
+    hidepagination: PropTypes.string,
+    filterby: PropTypes.string,
     wrapperclass: PropTypes.string,
-    eventslistclass: PropTypes.string,
-    eventclass: PropTypes.string,
-    days: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
     page: PropTypes.number,
 };
 
 
 Localist.defaultProps = {
-    page : 1,
-    days : '365',
+
+    daysahead : '365',
     heading: '',
-    // filterby_filters: 'true',
     filterby: 'group',
     pagination: 'true',
     wrapperclass: '',
-    eventslistclass: '',
-    eventclass: '',
+    listclass: '',
+    itemclass: '',
+    page : 1,
 };
 
 export default Localist;

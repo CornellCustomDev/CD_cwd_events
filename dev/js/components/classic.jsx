@@ -6,11 +6,11 @@ import {
 } from '../helpers/displayEvent';
 
 const ClassicInner = props => {
-    const {event, eventclass} = props;
+    const {event, itemclass} = props;
     const eventTime = getEventTime(event);
     const date = getEventDate(event);
     return (
-        <div className={`views-row ${eventclass}`}>
+        <div className={`views-row ${itemclass}`}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12 event-title-and-location">
@@ -37,26 +37,26 @@ const ClassicInner = props => {
 
 ClassicInner.propTypes = {
     event: PropTypes.object.isRequired,
-    eventclass: PropTypes.string.isRequired,
+    itemclass: PropTypes.string.isRequired,
 };
 
 const Classic= props =>{
     const {
         events,
-        eventclass,
-        eventslistclass,
+        itemclass,
+        listclass,
         wrapperclass} = props;
 
     return (
         <div className={`view view-events view-id-events cuenergy-events ${wrapperclass}`}>
-            <div className={`events-list view-content ${eventslistclass}`}>
+            <div className={`events-list view-content ${listclass}`}>
                 {events.length > 0
                     ? events.map( event => {
                         return (
                             <ClassicInner
                                 key={event.event.id}
                                 event={event.event}
-                                eventclass={eventclass}
+                                itemclass={itemclass}
                             />
                         )
                     })
@@ -70,15 +70,15 @@ const Classic= props =>{
 Classic.propTypes = {
     events: PropTypes.array,
     wrapperclass: PropTypes.string,
-    eventslistclass: PropTypes.string,
-    eventclass: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
 };
 
 Classic.defaultProps = {
     events: [],
     wrapperclass: '',
-    eventslistclass: '',
-    eventclass: '',
+    listclass: '',
+    itemclass: '',
 
 };
 export default Classic;

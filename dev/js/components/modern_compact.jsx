@@ -13,11 +13,11 @@ import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
 import {EventThumbnail} from './partials';
 
 const ModernCompactInner = props => {
-    const {event, addcal, thumbnail, excerptlength, eventclass} = props;
+    const {event, addcal, thumbnail, excerptlength, itemclass} = props;
     const eventTime = getEventTime(event);
 
     return (
-        <div className={`card event-node ${eventclass}`}>
+        <div className={`card event-node ${itemclass}`}>
             <div className="events">
                 <a
                     href={event.localist_url}
@@ -66,7 +66,7 @@ ModernCompactInner.propTypes = {
     addcal: PropTypes.string.isRequired,
     excerptlength: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    eventclass: PropTypes.string.isRequired,
+    itemclass: PropTypes.string.isRequired,
 };
 
 const ModernCompact= props =>{
@@ -77,15 +77,15 @@ const ModernCompact= props =>{
         addcal,
         excerptlength,
         thumbnail,
-        eventclass,
-        eventslistclass,
+        itemclass,
+        listclass,
         wrapperclass} = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
 
     return (
-        <section className='modern' id="eventsModernCompact" title="Events List">
+        <section className='events-modern-compact modern' title="Events List">
             <div className="main-body">
                 <div className={`cwd-component compact events-listing ${thumbNailClass} ${wrapperclass}`}>
                     { usefilterby === 'true'
@@ -96,7 +96,7 @@ const ModernCompact= props =>{
                             filterby={filterby}
                         />
                         : ''}
-                    <div className={`events-list view-content ${eventslistclass}`}>
+                    <div className={`events-list view-content ${listclass}`}>
                         {filterEvents.length > 0
                             ? filterEvents.map( event => {
                                 return (
@@ -107,7 +107,7 @@ const ModernCompact= props =>{
                                         addcal={addcal}
                                         excerptlength={excerptlength}
                                         thumbnail={thumbnail}
-                                        eventclass={eventclass}
+                                        itemclass={itemclass}
                                     />
                                 )
                             })
@@ -128,8 +128,8 @@ ModernCompact.propTypes = {
     excerptlength: PropTypes.string,
     thumbnail: PropTypes.string,
     wrapperclass: PropTypes.string,
-    eventslistclass: PropTypes.string,
-    eventclass: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
 };
 
 ModernCompact.defaultProps = {
@@ -139,8 +139,8 @@ ModernCompact.defaultProps = {
     excerptlength: '150',
     thumbnail: 'true',
     wrapperclass: '', //cwd-card-grid three-card',
-    eventslistclass: '', //cards',
-    eventclass: '', //card',
+    listclass: '', //cards',
+    itemclass: '', //card',
 
 };
 export default ModernCompact;

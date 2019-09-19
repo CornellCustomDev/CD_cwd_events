@@ -28,29 +28,30 @@ if (
                         const data = { ...this.dataset };
                         const {
                             target,
-                            depts,
-                            entries,
-                            format,
-                            group,
-                            keyword,
                             heading,
-                            filterby,
                             calendarurl,
                             apikey,
-                            addcal,
-                            pref_excerpt_length,
-                            filterby_filters,
-                            days,
-                            page,
-                            pagination,
+                            format,
+                            entries,
+                            daysahead,
+                            depts,
+                            group,
+                            keyword,
+                            hidedescription,
+                            truncatedescription,
+                            hideimages,
+                            hideaddcal,
+                            hidepagination,
+                            filterby,
                             wrapperclass,
-                            eventslistclass,
-                            eventclass,
+                            listclass,
+                            itemclass,
                         } = data;
                         ReactDOM.render(<Localist
                             target= {target}
                             depts= {depts}
                             entries= {entries}
+                            daysahead= {daysahead}
                             format= {format}
                             group= {group}
                             keyword= {keyword}
@@ -58,15 +59,14 @@ if (
                             filterby= {filterby}
                             calendarurl= {calendarurl}
                             apikey= {apikey}
-                            addcal= {addcal}
-                            pref_excerpt_length= {pref_excerpt_length}
-                            filterby_filters= {filterby_filters}
-                            days= {days}
-                            page= {page}
-                            pagination = {pagination}
+                            hideaddcal= {hideaddcal}
+                            hidedescription= {hidedescription}
+                            truncatedescription= {truncatedescription}
+                            hideimages= {hideimages}
+                            hidepagination = {hidepagination}
                             wrapperclass= {wrapperclass}
-                            eventslistclass= {eventslistclass}
-                            eventclass= {eventclass}
+                            listclass= {listclass}
+                            itemclass= {itemclass}
                         />, document.getElementById(target));
                     });
             }
@@ -80,29 +80,30 @@ if (
     eventListings.forEach(elem => {
         const {
             target,
-            depts,
-            entries,
-            format,
-            group,
-            keyword,
             heading,
-            filterby,
             calendarurl,
             apikey,
-            addcal,
-            pref_excerpt_length,
-            filterby_filters,
-            days,
-            page,
-            pagination,
+            format,
+            entries,
+            daysahead,
+            depts,
+            group,
+            keyword,
+            hidedescription,
+            truncatedescription,
+            hideimages,
+            hideaddcal,
+            hidepagination,
+            filterby,
             wrapperclass,
-            eventslistclass,
-            eventclass,
+            listclass,
+            itemclass,
         } = { ...elem.dataset };
         ReactDOM.render(<Localist
             target= {target}
             depts= {depts}
             entries= {entries}
+            daysahead= {daysahead}
             format= {format}
             group= {group}
             keyword= {keyword}
@@ -110,15 +111,14 @@ if (
             filterby= {filterby}
             calendarurl= {calendarurl}
             apikey= {apikey}
-            addcal= {addcal}
-            pref_excerpt_length= {pref_excerpt_length}
-            filterby_filters= {filterby_filters}
-            days= {days}
-            page= {page}
-            pagination = {pagination}
+            hideaddcal= {hideaddcal}
+            hidedescription= {hidedescription}
+            truncatedescription= {truncatedescription}
+            hideimages= {hideimages}
+            hidepagination = {hide4pagination}
             wrapperclass= {wrapperclass}
-            eventslistclass= {eventslistclass}
-            eventclass= {eventclass}
+            listclass= {listclass}
+            itemclass= {itemclass}
         />, document.getElementById(target));
     });
 }
