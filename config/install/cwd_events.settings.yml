@@ -12,8 +12,8 @@ cwd_events:
   hidedescription: 'false'
   truncatedescription: 150
   hideimages: "false"
-  addcal: "false"
-  pagination: "false"
+  hideaddcal: "false"
+  hidepagination: "false"
   filterby: "group"
   hidestyling: "false"
   wrapperclass: ''

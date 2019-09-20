@@ -13,8 +13,27 @@ import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
 import {EventThumbnail} from './partials';
 
 const ModernCompactInner = props => {
-    const {event, addcal, thumbnail, excerptlength, itemclass} = props;
+    const {
+        event,
+        hideaddcal,
+        hideimages,
+        truncatedescription,
+        itemclass,
+        hidedescription} = props;
     const eventTime = getEventTime(event);
+
+    const getDescription = () => {
+        if (hidedescription === 'true') {
+            return '';
+        }
+        return (
+            <div className="field field-name-summary summary">
+                <p>
+                    {getTruncDesc(event, truncatedescription)}
+                </p>
+            </div>
+        )
+    }
 
     return (
         <div className={`card event-node ${itemclass}`}>
@@ -26,7 +45,7 @@ const ModernCompactInner = props => {
                     <EventThumbnail
                         photoUrl={event.photo_url}
                         title={event.title}
-                        thumbnail={thumbnail}
+                        hideimages={hideimages}
                         photoCrop='big'
                     />
                     <time
@@ -44,14 +63,10 @@ const ModernCompactInner = props => {
                             {eventTime}{ event.location_name ? `, ${event.location_name}` : '' }
                         </p>
                     </div>
-                    <div className="field field-name-summary summary">
-                        <p>
-                            {getTruncDesc(event, excerptlength)}
-                        </p>
-                    </div>
+                    {getDescription()}
                 </a>
                 {
-                    addcal === 'true'
+                    hideaddcal !== 'true'
                         ? <AddCal event={event} />
                         : ''
                 }
@@ -63,10 +78,11 @@ const ModernCompactInner = props => {
 
 ModernCompactInner.propTypes = {
     event: PropTypes.object.isRequired,
-    addcal: PropTypes.string.isRequired,
-    excerptlength: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired,
+    hideaddcal: PropTypes.string.isRequired,
+    truncatedescription: PropTypes.string.isRequired,
+    hideimages: PropTypes.string.isRequired,
     itemclass: PropTypes.string.isRequired,
+    hidedescription: PropTypes.string.isRequired,
 };
 
 const ModernCompact= props =>{
@@ -74,16 +90,16 @@ const ModernCompact= props =>{
         events,
         filterby,
         usefilterby,
-        addcal,
-        excerptlength,
-        thumbnail,
+        hideaddcal,
+        truncatedescription,
+        hideimages,
         itemclass,
         listclass,
+        hidedescription,
         wrapperclass} = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
-    const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
-
+    const thumbNailClass = (hideimages === 'true') ? 'no-thumbnails' : '';
     return (
         <section className='events-modern-compact modern' title="Events List">
             <div className="main-body">
@@ -104,10 +120,11 @@ const ModernCompact= props =>{
                                         key={event.event.id}
                                         event={event.event}
                                         filterby={filterby}
-                                        addcal={addcal}
-                                        excerptlength={excerptlength}
-                                        thumbnail={thumbnail}
+                                        hideaddcal={hideaddcal}
+                                        truncatedescription={truncatedescription}
+                                        hideimages={hideimages}
                                         itemclass={itemclass}
+                                        hidedescription = {hidedescription}
                                     />
                                 )
                             })
@@ -124,23 +141,25 @@ ModernCompact.propTypes = {
     events: PropTypes.array,
     filterby: PropTypes.string.isRequired,
     usefilterby: PropTypes.string,
-    addcal: PropTypes.string,
-    excerptlength: PropTypes.string,
-    thumbnail: PropTypes.string,
+    hideaddcal: PropTypes.string,
+    truncatedescription: PropTypes.string,
+    hideimages: PropTypes.string,
     wrapperclass: PropTypes.string,
     listclass: PropTypes.string,
     itemclass: PropTypes.string,
+    hidedescription: PropTypes.string,
 };
 
 ModernCompact.defaultProps = {
     events: [],
     usefilterby: 'false',
-    addcal: 'false',
-    excerptlength: '150',
-    thumbnail: 'true',
+    hideaddcal: 'false',
+    truncatedescription: '150',
+    hideimages: 'true',
     wrapperclass: '', //cwd-card-grid three-card',
     listclass: '', //cards',
     itemclass: '', //card',
+    hidedescription: '',
 
 };
 export default ModernCompact;

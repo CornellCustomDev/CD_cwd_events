@@ -13,7 +13,7 @@ import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
 import {EventImg} from './partials';
 
 const ModernStandardInner = props => {
-    const {event, addcal, thumbnail, excerptlength, itemclass} = props;
+    const {event, hideaddcal, hideimages, excerptlength, itemclass} = props;
 
     /**
      *
@@ -59,7 +59,7 @@ const ModernStandardInner = props => {
                             <EventImg
                                 photoUrl={event.photo_url}
                                 title={event.title}
-                                thumbnail={thumbnail}
+                                hideimages = {hideimages}
                                 photoCrop='big'
                             />
                             {getTruncDesc(event, excerptlength)} read more
@@ -67,7 +67,7 @@ const ModernStandardInner = props => {
                     </div>
                 </a>
                 {
-                    addcal === 'true'
+                    hideaddcal !== 'true'
                         ? <AddCal event={event} />
                         : ''
                 }
@@ -79,9 +79,9 @@ const ModernStandardInner = props => {
 
 ModernStandardInner.propTypes = {
     event: PropTypes.object.isRequired,
-    addcal: PropTypes.string.isRequired,
+    hideaddcal: PropTypes.string.isRequired,
     excerptlength: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired,
+    hideimages: PropTypes.string.isRequired,
     itemclass: PropTypes.string.isRequired,
 };
 
@@ -90,15 +90,15 @@ const ModernStandard= props =>{
         events,
         filterby,
         usefilterby,
-        addcal,
+        hideaddcal,
         excerptlength,
-        thumbnail,
+        hideimages,
         itemclass,
         listclass,
         wrapperclass} = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
-    const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
+    const thumbNailClass = (hideimages === 'true') ? 'no-thumbnails' : '';
     return (
         <section className='events-modern-standard modern' title="Events List">
             <div className="main-body">
@@ -119,9 +119,9 @@ const ModernStandard= props =>{
                                         key={event.event.id}
                                         event={event.event}
                                         filterby={filterby}
-                                        addcal={addcal}
+                                        hideaddcal={hideaddcal}
                                         excerptlength={excerptlength}
-                                        thumbnail={thumbnail}
+                                        hideimages={hideimages}
                                         itemclass={itemclass}
                                     />
                                 )
@@ -139,9 +139,9 @@ ModernStandard.propTypes = {
     events: PropTypes.array,
     filterby: PropTypes.string.isRequired,
     usefilterby: PropTypes.string,
-    addcal: PropTypes.string,
+    hideaddcal: PropTypes.string,
     excerptlength: PropTypes.string,
-    thumbnail: PropTypes.string,
+    hideimages: PropTypes.string,
     wrapperclass: PropTypes.string,
     listclass: PropTypes.string,
     itemclass: PropTypes.string,
@@ -150,9 +150,9 @@ ModernStandard.propTypes = {
 ModernStandard.defaultProps = {
     events: [],
     usefilterby: 'true',
-    addcal: 'false',
+    hideaddcal: 'false',
     excerptlength: '250',
-    thumbnail: 'true',
+    hideimages: 'false',
     wrapperclass: '', //cwd-card-grid three-card',
     listclass: '', //cards',
     itemclass: '', //card',

@@ -52,60 +52,59 @@ EventLocation.defaultProps = {
 }
 
 const EventImg = props => {
-    const {thumbnail, photoUrl, title, photoCrop} = props;
+    const {hideimages, photoUrl, title, photoCrop} = props;
     const photo = photoUrl.replace('/huge/', `/${photoCrop}/`);
-    if (thumbnail === 'true') {
-        return (
-            <img
-                alt={title}
-                height='150'
-                src={photo}
-                loading='lazy'
-            ></img>
-        );
-    } else{
+    if (hideimages === 'true') {
         return '';
     }
+    return (
+        <img
+            alt={title}
+            height='150'
+            src={photo}
+            loading='lazy'
+        ></img>
+    );
+
 }
 
 EventImg.propTypes = {
     photoUrl: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string,
+    hideimages: PropTypes.string,
     photoCrop:PropTypes.oneOf(['huge', 'big', 'big_square']),
 };
 EventImg.defaultProps = {
-    thumbnail: null,
+    hideimages: null,
     photoCrop: 'big',
 }
 
 const EventThumbnail = props => {
-    const {thumbnail, photoUrl, title, photoCrop} = props;
-    if (thumbnail === 'true') {
-        return (
-            <div className='group-image'>
-                <EventImg
-                    thumbnail={thumbnail}
-                    photoUrl={photoUrl}
-                    title={title}
-                    photoCrop={photoCrop}
-                />
-            </div>
-
-        );
-    } else{
+    const {hideimages, photoUrl, title, photoCrop} = props;
+    if (hideimages === 'true') {
         return '';
     }
+    return (
+        <div className='group-image'>
+            <EventImg
+                hideimages={hideimages}
+                photoUrl={photoUrl}
+                title={title}
+                photoCrop={photoCrop}
+            />
+        </div>
+
+    );
 }
 
 EventThumbnail.propTypes = {
     photoUrl: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string,
+    hideimages: PropTypes.string,
     photoCrop:PropTypes.oneOf(['huge', 'big', 'big_square']),
 };
 EventThumbnail.defaultProps = {
-    thumbnail: null,
+    hideimages: null,
     photoCrop: 'big',
 }
 

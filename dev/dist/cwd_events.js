@@ -881,11 +881,23 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var ModernCompactInner = function ModernCompactInner(props) {
   var event = props.event,
-      addcal = props.addcal,
-      thumbnail = props.thumbnail,
-      excerptlength = props.excerptlength,
-      itemclass = props.itemclass;
+      hideaddcal = props.hideaddcal,
+      hideimages = props.hideimages,
+      truncatedescription = props.truncatedescription,
+      itemclass = props.itemclass,
+      hidedescription = props.hidedescription;
   var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
+
+  var getDescription = function getDescription() {
+    if (hidedescription === 'true') {
+      return '';
+    }
+
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "field field-name-summary summary"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, truncatedescription)));
+  };
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card event-node ".concat(itemclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -896,7 +908,7 @@ var ModernCompactInner = function ModernCompactInner(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventThumbnail"], {
     photoUrl: event.photo_url,
     title: event.title,
-    thumbnail: thumbnail,
+    hideimages: hideimages,
     photoCrop: "big"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("time", {
     title: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventDate"])(event),
@@ -909,30 +921,30 @@ var ModernCompactInner = function ModernCompactInner(props) {
     className: "field title"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, event.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "field meta"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, eventTime, event.location_name ? ", ".concat(event.location_name) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "field field-name-summary summary"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength)))), addcal === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, eventTime, event.location_name ? ", ".concat(event.location_name) : '')), getDescription()), hideaddcal !== 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     event: event
   }) : ''));
 };
 
 ModernCompactInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
 var ModernCompact = function ModernCompact(props) {
   var events = props.events,
       filterby = props.filterby,
       usefilterby = props.usefilterby,
-      addcal = props.addcal,
-      excerptlength = props.excerptlength,
-      thumbnail = props.thumbnail,
+      hideaddcal = props.hideaddcal,
+      truncatedescription = props.truncatedescription,
+      hideimages = props.hideimages,
       itemclass = props.itemclass,
       listclass = props.listclass,
+      hidedescription = props.hidedescription,
       wrapperclass = props.wrapperclass;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
@@ -941,7 +953,7 @@ var ModernCompact = function ModernCompact(props) {
       handleEventFilter = _useState2[1];
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
-  var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
+  var thumbNailClass = hideimages === 'true' ? 'no-thumbnails' : '';
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "events-modern-compact modern",
     title: "Events List"
@@ -961,10 +973,11 @@ var ModernCompact = function ModernCompact(props) {
       key: event.event.id,
       event: event.event,
       filterby: filterby,
-      addcal: addcal,
-      excerptlength: excerptlength,
-      thumbnail: thumbnail,
-      itemclass: itemclass
+      hideaddcal: hideaddcal,
+      truncatedescription: truncatedescription,
+      hideimages: hideimages,
+      itemclass: itemclass,
+      hidedescription: hidedescription
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
 };
@@ -973,25 +986,27 @@ ModernCompact.propTypes = {
   events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 ModernCompact.defaultProps = {
   events: [],
   usefilterby: 'false',
-  addcal: 'false',
-  excerptlength: '150',
-  thumbnail: 'true',
+  hideaddcal: 'false',
+  truncatedescription: '150',
+  hideimages: 'true',
   wrapperclass: '',
   //cwd-card-grid three-card',
   listclass: '',
   //cards',
-  itemclass: '' //card',
-
+  itemclass: '',
+  //card',
+  hidedescription: ''
 };
 /* harmony default export */ __webpack_exports__["default"] = (ModernCompact);
 
@@ -1033,8 +1048,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var ModernStandardInner = function ModernStandardInner(props) {
   var event = props.event,
-      addcal = props.addcal,
-      thumbnail = props.thumbnail,
+      hideaddcal = props.hideaddcal,
+      hideimages = props.hideimages,
       excerptlength = props.excerptlength,
       itemclass = props.itemclass;
   /**
@@ -1079,18 +1094,18 @@ var ModernStandardInner = function ModernStandardInner(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventImg"], {
     photoUrl: event.photo_url,
     title: event.title,
-    thumbnail: thumbnail,
+    hideimages: hideimages,
     photoCrop: "big"
-  }), Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength), " read more"))), addcal === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength), " read more"))), hideaddcal !== 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     event: event
   }) : ''));
 };
 
 ModernStandardInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
@@ -1098,9 +1113,9 @@ var ModernStandard = function ModernStandard(props) {
   var events = props.events,
       filterby = props.filterby,
       usefilterby = props.usefilterby,
-      addcal = props.addcal,
+      hideaddcal = props.hideaddcal,
       excerptlength = props.excerptlength,
-      thumbnail = props.thumbnail,
+      hideimages = props.hideimages,
       itemclass = props.itemclass,
       listclass = props.listclass,
       wrapperclass = props.wrapperclass;
@@ -1111,7 +1126,7 @@ var ModernStandard = function ModernStandard(props) {
       handleEventFilter = _useState2[1];
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
-  var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
+  var thumbNailClass = hideimages === 'true' ? 'no-thumbnails' : '';
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "events-modern-standard modern",
     title: "Events List"
@@ -1131,9 +1146,9 @@ var ModernStandard = function ModernStandard(props) {
       key: event.event.id,
       event: event.event,
       filterby: filterby,
-      addcal: addcal,
+      hideaddcal: hideaddcal,
       excerptlength: excerptlength,
-      thumbnail: thumbnail,
+      hideimages: hideimages,
       itemclass: itemclass
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
@@ -1143,9 +1158,9 @@ ModernStandard.propTypes = {
   events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
@@ -1153,9 +1168,9 @@ ModernStandard.propTypes = {
 ModernStandard.defaultProps = {
   events: [],
   usefilterby: 'true',
-  addcal: 'false',
+  hideaddcal: 'false',
   excerptlength: '250',
-  thumbnail: 'true',
+  hideimages: 'false',
   wrapperclass: '',
   //cwd-card-grid three-card',
   listclass: '',
@@ -1238,63 +1253,63 @@ EventLocation.defaultProps = {
 };
 
 var EventImg = function EventImg(props) {
-  var thumbnail = props.thumbnail,
+  var hideimages = props.hideimages,
       photoUrl = props.photoUrl,
       title = props.title,
       photoCrop = props.photoCrop;
   var photo = photoUrl.replace('/huge/', "/".concat(photoCrop, "/"));
 
-  if (thumbnail === 'true') {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      alt: title,
-      height: "150",
-      src: photo,
-      loading: "lazy"
-    });
-  } else {
+  if (hideimages === 'true') {
     return '';
   }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    alt: title,
+    height: "150",
+    src: photo,
+    loading: "lazy"
+  });
 };
 
 EventImg.propTypes = {
   photoUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   photoCrop: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['huge', 'big', 'big_square'])
 };
 EventImg.defaultProps = {
-  thumbnail: null,
+  hideimages: null,
   photoCrop: 'big'
 };
 
 var EventThumbnail = function EventThumbnail(props) {
-  var thumbnail = props.thumbnail,
+  var hideimages = props.hideimages,
       photoUrl = props.photoUrl,
       title = props.title,
       photoCrop = props.photoCrop;
 
-  if (thumbnail === 'true') {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "group-image"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(EventImg, {
-      thumbnail: thumbnail,
-      photoUrl: photoUrl,
-      title: title,
-      photoCrop: photoCrop
-    }));
-  } else {
+  if (hideimages === 'true') {
     return '';
   }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "group-image"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(EventImg, {
+    hideimages: hideimages,
+    photoUrl: photoUrl,
+    title: title,
+    photoCrop: photoCrop
+  }));
 };
 
 EventThumbnail.propTypes = {
   photoUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   photoCrop: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['huge', 'big', 'big_square'])
 };
 EventThumbnail.defaultProps = {
-  thumbnail: null,
+  hideimages: null,
   photoCrop: 'big'
 };
 
@@ -1736,13 +1751,18 @@ var getEventDate = function getEventDate(event) {
  *   Does not support html.
  *
  * @param {obj} event the event object.
- * @param {integer} excerptLength The length of the excerpt.
+ * @param {string} excerptLength The length of the excerpt.
  *
  * @return {string} The truncated description string
  */
 
 var getTruncDesc = function getTruncDesc(event, excerptLength) {
-  var description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
+  var description = event.description_text;
+
+  if (excerptLength) {
+    description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
+  }
+
   return description;
 };
 /**

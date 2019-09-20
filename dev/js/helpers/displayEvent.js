@@ -122,12 +122,15 @@ export const getEventDate = event => {
  *   Does not support html.
  *
  * @param {obj} event the event object.
- * @param {integer} excerptLength The length of the excerpt.
+ * @param {string} excerptLength The length of the excerpt.
  *
  * @return {string} The truncated description string
  */
 export const getTruncDesc = (event, excerptLength) => {
-    const description = truncate(event.description_text, excerptLength);
+    let description = event.description_text
+    if (excerptLength){
+        description = truncate(event.description_text, excerptLength);
+    }
     return description;
 };
 

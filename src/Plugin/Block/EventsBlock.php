@@ -50,13 +50,13 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
   public function build() {
     $uuid = \Drupal::service('uuid');
     $id = $uuid->generate();
+    $class = ($this->configuration['cwd_events_hidestyling'] === "true") ? '' : 'cwd-events-style' ;
     $teaser = $this->configuration['cwd_events_readmore']
-      ? '<a class="cwd_events_readmore" href='
+      ? '<a class="cwd_events_readmore ' . $class . '" href='
           . $this->configuration['cwd_events_url'] . '>'
           . $this->t('@readmore', ["@readmore" => $this->configuration['cwd_events_readmore']]) .
         '</a>'
       : '';
-    $class = ($this->configuration['cwd_events_hidestyling'] != "false") ? 'cwd-events-style' : '';
     return [
       '#attached' => ['library' => ["cwd_events/cwdeventslib"]],
       '#markup' => $teaser . "<div
@@ -74,13 +74,12 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
                 data-hidedescription = '" . $this->configuration['cwd_events_hidedescription'] . "'
                 data-truncatedescription = '" . $this->configuration['cwd_events_truncatedescription'] . "'
                 data-hideimages = '" . $this->configuration['cwd_events_hideimages'] . "'
-                data-addcal = '" . $this->configuration['cwd_events_addcal'] . "'
-                data-pagination = '" . $this->configuration['cwd_events_pagination'] . "'
+                data-hideaddcal = '" . $this->configuration['cwd_events_hideaddcal'] . "'
+                data-hidepagination = '" . $this->configuration['cwd_events_hidepagination'] . "'
                 data-filterby = '" . $this->configuration['cwd_events_filterby'] . "'
-                data-addcal = '" . $this->configuration['cwd_events_wrapperclass'] . "'
-                data-addcal = '" . $this->configuration['cwd_events_listclass'] . "'
-                data-addcal = '" . $this->configuration['cwd_events_itemclass'] . "'
-                data-heading = ''
+                data-wrapperclass = '" . $this->configuration['cwd_events_wrapperclass'] . "'
+                data-listclass' = '" . $this->configuration['cwd_events_listclass'] . "'
+                data-itemclass = '" . $this->configuration['cwd_events_itemclass'] . "'
               ></div>",
     ];
   }
@@ -176,28 +175,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     ];
 
     // @todo add option for "Widget Type" list or row.
-
-    $form['cwd_events_display_options']['cwd_events_hidedescription'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Hide Descriptions'),
-      '#return_value' => 'true',
-      '#default_value' => isset($config['cwd_events_hidedescription']) ? $config['cwd_events_hidedescription'] : 'false',
-    ];
-
-    $form['cwd_events_display_options']['cwd_events_truncatedescription'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Truncate Description length'),
-      '#description' => $this->t('The character length of the description. Leave blank for full description.'),
-      '#default_value' => isset($config['cwd_events_truncatedescription']) ? $config['cwd_events_truncatedescription'] : 150,
-    ];
-
-    $form['cwd_events_display_options']['cwd_events_hideimages'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Hide Event Images'),
-      '#return_value' => 'true',
-      '#default_value' => isset($config['cwd_events_hideimages']) ? $config['cwd_events_hideimages'] : 'false',
-    ];
-
     $form['cwd_events_display_options']['cwd_events_readmore'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Read More Title'),
@@ -220,26 +197,46 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#default_value' => isset($config['cwd_events_filterby']) ? $config['cwd_events_filterby'] : 'group',
     ];
 
-    $form['cwd_events_display_options']['cwd_events_addcal'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Add Calendar links'),
-      '#return_value' => 'true',
-      '#default_value' => isset($config['cwd_events_addcal']) ? $config['cwd_events_addcal'] : 'false',
+    $form['cwd_events_display_options']['cwd_events_truncatedescription'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Description excerpt length'),
+      '#description' => $this->t('The character length of the description. Leave blank for full description.'),
+      '#default_value' => isset($config['cwd_events_truncatedescription']) ? $config['cwd_events_truncatedescription'] : 150,
     ];
 
-    $form['cwd_events_display_options']['cwd_events_pagination'] = [
+    $form['cwd_events_display_options']['cwd_events_hidedescription'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Pagination'),
+      '#title' => $this->t('Hide Descriptions'),
       '#return_value' => 'true',
-      '#default_value' => isset($config['cwd_events_pagination']) ? $config['cwd_events_pagination'] : 'false',
+      '#default_value' => isset($config['cwd_events_hidedescription']) ? $config['cwd_events_hidedescription'] : 'false',
     ];
 
-    $form['cwd_events_display_options']['cwd_events_styling'] = [
+    $form['cwd_events_display_options']['cwd_events_hideimages'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide Event Images'),
+      '#return_value' => 'true',
+      '#default_value' => isset($config['cwd_events_hideimages']) ? $config['cwd_events_hideimages'] : 'false',
+    ];
+
+    $form['cwd_events_display_options']['cwd_events_hideaddcal'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide Calendar links'),
+      '#return_value' => 'true',
+      '#default_value' => isset($config['cwd_events_hideaddcal']) ? $config['cwd_events_hideaddcal'] : 'false',
+    ];
+
+    $form['cwd_events_display_options']['cwd_events_hidepagination'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide Pagination'),
+      '#return_value' => 'true',
+      '#default_value' => isset($config['cwd_events_hidepagination']) ? $config['cwd_events_hidepagination'] : 'false',
+    ];
+
+    $form['cwd_events_display_options']['cwd_events_hidestyling'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Hide Styling'),
-      '#description' => $this->t('Check this box to remove all module styling.'),
-      '#return_value' => 1,
-      '#default_value' => isset($config['cwd_events_styling']) ? $config['cwd_events_styling'] : 1,
+      '#return_value' => 'true',
+      '#default_value' => isset($config['cwd_events_hidestyling']) ? $config['cwd_events_hidestyling'] : 'false',
     ];
 
     $form['cwd_events_display_options']['cwd_events_wrapperclass'] = [
@@ -285,15 +282,17 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
 
     $this->configuration['cwd_events_readmore'] = $values['cwd_events_display_options']['cwd_events_readmore'];
     $this->configuration['cwd_events_url'] = $values['cwd_events_display_options']['cwd_events_url'];
-    $this->configuration['cwd_events_hidedescription'] = $values['cwd_events_display_options']['cwd_events_hidedescription'];
-    $this->configuration['cwd_events_truncatedescription'] = $values['cwd_events_display_options']['cwd_events_truncatedescription'];
-    $this->configuration['cwd_events_hideimages'] = $values['cwd_events_display_options']['cwd_events_hideimages'];
-    $this->configuration['cwd_events_addcal'] = $values['cwd_events_display_options']['cwd_events_addcal'];
-    $this->configuration['cwd_events_pagination'] = $values['cwd_events_display_options']['cwd_events_pagination'];
     $this->configuration['cwd_events_filterby'] = $values['cwd_events_display_options']['cwd_events_filterby'];
+    $this->configuration['cwd_events_truncatedescription'] = $values['cwd_events_display_options']['cwd_events_truncatedescription'];
+    $this->configuration['cwd_events_hidedescription'] = $values['cwd_events_display_options']['cwd_events_hidedescription'];
+    $this->configuration['cwd_events_hideimages'] = $values['cwd_events_display_options']['cwd_events_hideimages'];
+    $this->configuration['cwd_events_hideaddcal'] = $values['cwd_events_display_options']['cwd_events_hideaddcal'];
+    $this->configuration['cwd_events_hidepagination'] = $values['cwd_events_display_options']['cwd_events_hidepagination'];
+    $this->configuration['cwd_events_hidestyling'] = $values['cwd_events_display_options']['cwd_events_hidestyling'];
+    $this->configuration['cwd_events_wrapperclass'] = $values['cwd_events_display_options']['cwd_events_wrapperclass'];
+    $this->configuration['cwd_events_listclass'] = $values['cwd_events_display_options']['cwd_events_listclass'];
+    $this->configuration['cwd_events_itemclass'] = $values['cwd_events_display_options']['cwd_events_itemclass'];
 
-
-    $this->configuration['cwd_events_hidestyling'] = $values['cwd_events_display_hidestyling']['cwd_events_hidestyling'];
 
   }
 

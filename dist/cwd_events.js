@@ -143,28 +143,29 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
           var data = _objectSpread({}, this.dataset);
 
           var target = data.target,
-              depts = data.depts,
-              entries = data.entries,
-              format = data.format,
-              group = data.group,
-              keyword = data.keyword,
               heading = data.heading,
-              filterby = data.filterby,
               calendarurl = data.calendarurl,
               apikey = data.apikey,
-              addcal = data.addcal,
-              pref_excerpt_length = data.pref_excerpt_length,
-              filterby_filters = data.filterby_filters,
-              days = data.days,
-              page = data.page,
-              pagination = data.pagination,
+              format = data.format,
+              entries = data.entries,
+              daysahead = data.daysahead,
+              depts = data.depts,
+              group = data.group,
+              keyword = data.keyword,
+              hidedescription = data.hidedescription,
+              truncatedescription = data.truncatedescription,
+              hideimages = data.hideimages,
+              hideaddcal = data.hideaddcal,
+              hidepagination = data.hidepagination,
+              filterby = data.filterby,
               wrapperclass = data.wrapperclass,
-              eventslistclass = data.eventslistclass,
-              eventclass = data.eventclass;
+              listclass = data.listclass,
+              itemclass = data.itemclass;
           react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
             target: target,
             depts: depts,
             entries: entries,
+            daysahead: daysahead,
             format: format,
             group: group,
             keyword: keyword,
@@ -172,15 +173,14 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
             filterby: filterby,
             calendarurl: calendarurl,
             apikey: apikey,
-            addcal: addcal,
-            pref_excerpt_length: pref_excerpt_length,
-            filterby_filters: filterby_filters,
-            days: days,
-            page: page,
-            pagination: pagination,
+            hideaddcal: hideaddcal,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hidepagination: hidepagination,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass
           }), document.getElementById(target));
         });
       }
@@ -194,29 +194,30 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
   eventListings.forEach(function (elem) {
     var _elem$dataset = _objectSpread({}, elem.dataset),
         target = _elem$dataset.target,
-        depts = _elem$dataset.depts,
-        entries = _elem$dataset.entries,
-        format = _elem$dataset.format,
-        group = _elem$dataset.group,
-        keyword = _elem$dataset.keyword,
         heading = _elem$dataset.heading,
-        filterby = _elem$dataset.filterby,
         calendarurl = _elem$dataset.calendarurl,
         apikey = _elem$dataset.apikey,
-        addcal = _elem$dataset.addcal,
-        pref_excerpt_length = _elem$dataset.pref_excerpt_length,
-        filterby_filters = _elem$dataset.filterby_filters,
-        days = _elem$dataset.days,
-        page = _elem$dataset.page,
-        pagination = _elem$dataset.pagination,
+        format = _elem$dataset.format,
+        entries = _elem$dataset.entries,
+        daysahead = _elem$dataset.daysahead,
+        depts = _elem$dataset.depts,
+        group = _elem$dataset.group,
+        keyword = _elem$dataset.keyword,
+        hidedescription = _elem$dataset.hidedescription,
+        truncatedescription = _elem$dataset.truncatedescription,
+        hideimages = _elem$dataset.hideimages,
+        hideaddcal = _elem$dataset.hideaddcal,
+        hidepagination = _elem$dataset.hidepagination,
+        filterby = _elem$dataset.filterby,
         wrapperclass = _elem$dataset.wrapperclass,
-        eventslistclass = _elem$dataset.eventslistclass,
-        eventclass = _elem$dataset.eventclass;
+        listclass = _elem$dataset.listclass,
+        itemclass = _elem$dataset.itemclass;
 
     react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
       target: target,
       depts: depts,
       entries: entries,
+      daysahead: daysahead,
       format: format,
       group: group,
       keyword: keyword,
@@ -224,15 +225,14 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
       filterby: filterby,
       calendarurl: calendarurl,
       apikey: apikey,
-      addcal: addcal,
-      pref_excerpt_length: pref_excerpt_length,
-      filterby_filters: filterby_filters,
-      days: days,
-      page: page,
-      pagination: pagination,
+      hideaddcal: hideaddcal,
+      hidedescription: hidedescription,
+      truncatedescription: truncatedescription,
+      hideimages: hideimages,
+      hidepagination: hide4pagination,
       wrapperclass: wrapperclass,
-      eventslistclass: eventslistclass,
-      eventclass: eventclass
+      listclass: listclass,
+      itemclass: itemclass
     }), document.getElementById(target));
   });
 }
@@ -347,11 +347,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var ClassicInner = function ClassicInner(props) {
   var event = props.event,
-      eventclass = props.eventclass;
+      itemclass = props.itemclass;
   var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
   var date = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventDate"])(event);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "views-row ".concat(eventclass)
+    className: "views-row ".concat(itemclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container-fluid"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -367,23 +367,23 @@ var ClassicInner = function ClassicInner(props) {
 
 ClassicInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
 var Classic = function Classic(props) {
   var events = props.events,
-      eventclass = props.eventclass,
-      eventslistclass = props.eventslistclass,
+      itemclass = props.itemclass,
+      listclass = props.listclass,
       wrapperclass = props.wrapperclass;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "view view-events view-id-events cuenergy-events ".concat(wrapperclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "events-list view-content ".concat(eventslistclass)
+    className: "events-list view-content ".concat(listclass)
   }, events.length > 0 ? events.map(function (event) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ClassicInner, {
       key: event.event.id,
       event: event.event,
-      eventclass: eventclass
+      itemclass: itemclass
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")));
 };
@@ -391,14 +391,14 @@ var Classic = function Classic(props) {
 Classic.propTypes = {
   events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 Classic.defaultProps = {
   events: [],
   wrapperclass: '',
-  eventslistclass: '',
-  eventclass: ''
+  listclass: '',
+  itemclass: ''
 };
 /* harmony default export */ __webpack_exports__["default"] = (Classic);
 
@@ -424,10 +424,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var ClassicCompactInner = function ClassicCompactInner(props) {
   var event = props.event,
-      eventclass = props.eventclass;
+      itemclass = props.itemclass;
   var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "views-row ".concat(eventclass)
+    className: "views-row ".concat(itemclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container-fluid"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -447,23 +447,23 @@ var ClassicCompactInner = function ClassicCompactInner(props) {
 
 ClassicCompactInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
 var ClassicCompact = function ClassicCompact(props) {
   var events = props.events,
-      eventclass = props.eventclass,
-      eventslistclass = props.eventslistclass,
+      itemclass = props.itemclass,
+      listclass = props.listclass,
       wrapperclass = props.wrapperclass;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "view view-events view-id-events cuenergy-events ".concat(wrapperclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "events-list view-content ".concat(eventslistclass)
+    className: "events-list view-content ".concat(listclass)
   }, events.length > 0 ? events.map(function (event) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ClassicCompactInner, {
       key: event.event.id,
       event: event.event,
-      eventclass: eventclass
+      itemclass: itemclass
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")));
 };
@@ -471,14 +471,14 @@ var ClassicCompact = function ClassicCompact(props) {
 ClassicCompact.propTypes = {
   events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 ClassicCompact.defaultProps = {
   events: [],
   wrapperclass: '',
-  eventslistclass: '',
-  eventclass: ''
+  listclass: '',
+  itemclass: ''
 };
 /* harmony default export */ __webpack_exports__["default"] = (ClassicCompact);
 
@@ -523,9 +523,9 @@ var CompactInner = function CompactInner(props) {
       addcal = props.addcal,
       thumbnail = props.thumbnail,
       excerptlength = props.excerptlength,
-      eventclass = props.eventclass;
+      itemclass = props.itemclass;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "views-row ".concat(eventclass)
+    className: "views-row ".concat(itemclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventThumbnail"], {
     photoUrl: event.photo_url,
     title: event.title,
@@ -553,7 +553,7 @@ CompactInner.propTypes = {
   addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
 var Compact = function Compact(props) {
@@ -563,8 +563,8 @@ var Compact = function Compact(props) {
       addcal = props.addcal,
       excerptlength = props.excerptlength,
       thumbnail = props.thumbnail,
-      eventclass = props.eventclass,
-      eventslistclass = props.eventslistclass,
+      itemclass = props.itemclass,
+      listclass = props.listclass,
       wrapperclass = props.wrapperclass;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
@@ -588,7 +588,7 @@ var Compact = function Compact(props) {
     handleEventFilter: handleEventFilter,
     filterby: filterby
   }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "events-list view-content ".concat(eventslistclass)
+    className: "events-list view-content ".concat(listclass)
   }, filterEvents.length > 0 ? filterEvents.map(function (event) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CompactInner, {
       key: event.event.id,
@@ -597,7 +597,7 @@ var Compact = function Compact(props) {
       addcal: addcal,
       excerptlength: excerptlength,
       thumbnail: thumbnail,
-      eventclass: eventclass
+      itemclass: itemclass
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
 };
@@ -610,8 +610,8 @@ Compact.propTypes = {
   excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 Compact.defaultProps = {
   events: [],
@@ -621,9 +621,9 @@ Compact.defaultProps = {
   thumbnail: 'true',
   wrapperclass: '',
   //cwd-card-grid three-card',
-  eventslistclass: '',
+  listclass: '',
   //cards',
-  eventclass: '' //card',
+  itemclass: '' //card',
 
 };
 /* harmony default export */ __webpack_exports__["default"] = (Compact);
@@ -760,7 +760,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var InlineCompactInner = function InlineCompactInner(props) {
   var event = props.event,
-      eventclass = props.eventclass;
+      itemclass = props.itemclass;
   var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
   var endTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventEndTime"])(event);
 
@@ -775,7 +775,7 @@ var InlineCompactInner = function InlineCompactInner(props) {
   };
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "views-row ".concat(eventclass)
+    className: "views-row ".concat(itemclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container-fluid"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -802,13 +802,13 @@ var InlineCompactInner = function InlineCompactInner(props) {
 
 InlineCompactInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
 var InlineCompact = function InlineCompact(props) {
   var events = props.events,
-      eventclass = props.eventclass,
-      eventslistclass = props.eventslistclass,
+      itemclass = props.itemclass,
+      listclass = props.listclass,
       wrapperclass = props.wrapperclass;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "modern",
@@ -819,12 +819,12 @@ var InlineCompact = function InlineCompact(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "cwd-component compact events-listing ".concat(wrapperclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "events-list view-content ".concat(eventslistclass)
+    className: "events-list view-content ".concat(listclass)
   }, events.length > 0 ? events.map(function (event) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InlineCompactInner, {
       key: event.event.id,
       event: event.event,
-      eventclass: eventclass
+      itemclass: itemclass
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
 };
@@ -832,14 +832,14 @@ var InlineCompact = function InlineCompact(props) {
 InlineCompact.propTypes = {
   events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 InlineCompact.defaultProps = {
   events: [],
   wrapperclass: '',
-  eventslistclass: '',
-  eventclass: ''
+  listclass: '',
+  itemclass: ''
 };
 /* harmony default export */ __webpack_exports__["default"] = (InlineCompact);
 
@@ -881,13 +881,25 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var ModernCompactInner = function ModernCompactInner(props) {
   var event = props.event,
-      addcal = props.addcal,
-      thumbnail = props.thumbnail,
-      excerptlength = props.excerptlength,
-      eventclass = props.eventclass;
+      hideaddcal = props.hideaddcal,
+      hideimages = props.hideimages,
+      truncatedescription = props.truncatedescription,
+      itemclass = props.itemclass,
+      hidedescription = props.hidedescription;
   var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
+
+  var getDescription = function getDescription() {
+    if (hidedescription === 'true') {
+      return '';
+    }
+
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "field field-name-summary summary"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, truncatedescription)));
+  };
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card event-node ".concat(eventclass)
+    className: "card event-node ".concat(itemclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "events"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -896,7 +908,7 @@ var ModernCompactInner = function ModernCompactInner(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventThumbnail"], {
     photoUrl: event.photo_url,
     title: event.title,
-    thumbnail: thumbnail,
+    hideimages: hideimages,
     photoCrop: "big"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("time", {
     title: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventDate"])(event),
@@ -909,30 +921,30 @@ var ModernCompactInner = function ModernCompactInner(props) {
     className: "field title"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, event.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "field meta"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, eventTime, event.location_name ? ", ".concat(event.location_name) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "field field-name-summary summary"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength)))), addcal === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, eventTime, event.location_name ? ", ".concat(event.location_name) : '')), getDescription()), hideaddcal !== 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     event: event
   }) : ''));
 };
 
 ModernCompactInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
 var ModernCompact = function ModernCompact(props) {
   var events = props.events,
       filterby = props.filterby,
       usefilterby = props.usefilterby,
-      addcal = props.addcal,
-      excerptlength = props.excerptlength,
-      thumbnail = props.thumbnail,
-      eventclass = props.eventclass,
-      eventslistclass = props.eventslistclass,
+      hideaddcal = props.hideaddcal,
+      truncatedescription = props.truncatedescription,
+      hideimages = props.hideimages,
+      itemclass = props.itemclass,
+      listclass = props.listclass,
+      hidedescription = props.hidedescription,
       wrapperclass = props.wrapperclass;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
@@ -941,10 +953,9 @@ var ModernCompact = function ModernCompact(props) {
       handleEventFilter = _useState2[1];
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
-  var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
+  var thumbNailClass = hideimages === 'true' ? 'no-thumbnails' : '';
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-    className: "modern",
-    id: "eventsModernCompact",
+    className: "events-modern-compact modern",
     title: "Events List"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "main-body"
@@ -956,16 +967,17 @@ var ModernCompact = function ModernCompact(props) {
     handleEventFilter: handleEventFilter,
     filterby: filterby
   }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "events-list view-content ".concat(eventslistclass)
+    className: "events-list view-content ".concat(listclass)
   }, filterEvents.length > 0 ? filterEvents.map(function (event) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ModernCompactInner, {
       key: event.event.id,
       event: event.event,
       filterby: filterby,
-      addcal: addcal,
-      excerptlength: excerptlength,
-      thumbnail: thumbnail,
-      eventclass: eventclass
+      hideaddcal: hideaddcal,
+      truncatedescription: truncatedescription,
+      hideimages: hideimages,
+      itemclass: itemclass,
+      hidedescription: hidedescription
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
 };
@@ -974,25 +986,27 @@ ModernCompact.propTypes = {
   events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 ModernCompact.defaultProps = {
   events: [],
   usefilterby: 'false',
-  addcal: 'false',
-  excerptlength: '150',
-  thumbnail: 'true',
+  hideaddcal: 'false',
+  truncatedescription: '150',
+  hideimages: 'true',
   wrapperclass: '',
   //cwd-card-grid three-card',
-  eventslistclass: '',
+  listclass: '',
   //cards',
-  eventclass: '' //card',
-
+  itemclass: '',
+  //card',
+  hidedescription: ''
 };
 /* harmony default export */ __webpack_exports__["default"] = (ModernCompact);
 
@@ -1034,10 +1048,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var ModernStandardInner = function ModernStandardInner(props) {
   var event = props.event,
-      addcal = props.addcal,
-      thumbnail = props.thumbnail,
+      hideaddcal = props.hideaddcal,
+      hideimages = props.hideimages,
       excerptlength = props.excerptlength,
-      eventclass = props.eventclass;
+      itemclass = props.itemclass;
   /**
    *
    * @param {obj} event_types An array of events.
@@ -1058,7 +1072,7 @@ var ModernStandardInner = function ModernStandardInner(props) {
 
   var eventTime = Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventTime"])(event);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card event-node ".concat(eventclass)
+    className: "card event-node ".concat(itemclass)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "events"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1080,30 +1094,30 @@ var ModernStandardInner = function ModernStandardInner(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventImg"], {
     photoUrl: event.photo_url,
     title: event.title,
-    thumbnail: thumbnail,
+    hideimages: hideimages,
     photoCrop: "big"
-  }), Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength), " read more"))), addcal === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength), " read more"))), hideaddcal !== 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     event: event
   }) : ''));
 };
 
 ModernStandardInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
 
 var ModernStandard = function ModernStandard(props) {
   var events = props.events,
       filterby = props.filterby,
       usefilterby = props.usefilterby,
-      addcal = props.addcal,
+      hideaddcal = props.hideaddcal,
       excerptlength = props.excerptlength,
-      thumbnail = props.thumbnail,
-      eventclass = props.eventclass,
-      eventslistclass = props.eventslistclass,
+      hideimages = props.hideimages,
+      itemclass = props.itemclass,
+      listclass = props.listclass,
       wrapperclass = props.wrapperclass;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
@@ -1112,10 +1126,9 @@ var ModernStandard = function ModernStandard(props) {
       handleEventFilter = _useState2[1];
 
   var filterObjs = Object(_helpers_buildEventWrapperFilters__WEBPACK_IMPORTED_MODULE_5__["default"])(events, filterby);
-  var thumbNailClass = thumbnail === 'false' ? 'no-thumbnails' : '';
+  var thumbNailClass = hideimages === 'true' ? 'no-thumbnails' : '';
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-    className: "modern",
-    id: "eventsModernStandard",
+    className: "events-modern-standard modern",
     title: "Events List"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "main-body"
@@ -1127,16 +1140,16 @@ var ModernStandard = function ModernStandard(props) {
     handleEventFilter: handleEventFilter,
     filterby: filterby
   }) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "events-list view-content ".concat(eventslistclass)
+    className: "events-list view-content ".concat(listclass)
   }, filterEvents.length > 0 ? filterEvents.map(function (event) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ModernStandardInner, {
       key: event.event.id,
       event: event.event,
       filterby: filterby,
-      addcal: addcal,
+      hideaddcal: hideaddcal,
       excerptlength: excerptlength,
-      thumbnail: thumbnail,
-      eventclass: eventclass
+      hideimages: hideimages,
+      itemclass: itemclass
     });
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
 };
@@ -1145,24 +1158,24 @@ ModernStandard.propTypes = {
   events: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 ModernStandard.defaultProps = {
   events: [],
   usefilterby: 'true',
-  addcal: 'false',
+  hideaddcal: 'false',
   excerptlength: '250',
-  thumbnail: 'true',
+  hideimages: 'false',
   wrapperclass: '',
   //cwd-card-grid three-card',
-  eventslistclass: '',
+  listclass: '',
   //cards',
-  eventclass: '' //card',
+  itemclass: '' //card',
 
 };
 /* harmony default export */ __webpack_exports__["default"] = (ModernStandard);
@@ -1240,63 +1253,63 @@ EventLocation.defaultProps = {
 };
 
 var EventImg = function EventImg(props) {
-  var thumbnail = props.thumbnail,
+  var hideimages = props.hideimages,
       photoUrl = props.photoUrl,
       title = props.title,
       photoCrop = props.photoCrop;
   var photo = photoUrl.replace('/huge/', "/".concat(photoCrop, "/"));
 
-  if (thumbnail === 'true') {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      alt: title,
-      height: "150",
-      src: photo,
-      loading: "lazy"
-    });
-  } else {
+  if (hideimages === 'true') {
     return '';
   }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    alt: title,
+    height: "150",
+    src: photo,
+    loading: "lazy"
+  });
 };
 
 EventImg.propTypes = {
   photoUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   photoCrop: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['huge', 'big', 'big_square'])
 };
 EventImg.defaultProps = {
-  thumbnail: null,
+  hideimages: null,
   photoCrop: 'big'
 };
 
 var EventThumbnail = function EventThumbnail(props) {
-  var thumbnail = props.thumbnail,
+  var hideimages = props.hideimages,
       photoUrl = props.photoUrl,
       title = props.title,
       photoCrop = props.photoCrop;
 
-  if (thumbnail === 'true') {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "group-image"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(EventImg, {
-      thumbnail: thumbnail,
-      photoUrl: photoUrl,
-      title: title,
-      photoCrop: photoCrop
-    }));
-  } else {
+  if (hideimages === 'true') {
     return '';
   }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "group-image"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(EventImg, {
+    hideimages: hideimages,
+    photoUrl: photoUrl,
+    title: title,
+    photoCrop: photoCrop
+  }));
 };
 
 EventThumbnail.propTypes = {
   photoUrl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   photoCrop: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['huge', 'big', 'big_square'])
 };
 EventThumbnail.defaultProps = {
-  thumbnail: null,
+  hideimages: null,
   photoCrop: 'big'
 };
 
@@ -1738,13 +1751,18 @@ var getEventDate = function getEventDate(event) {
  *   Does not support html.
  *
  * @param {obj} event the event object.
- * @param {integer} excerptLength The length of the excerpt.
+ * @param {string} excerptLength The length of the excerpt.
  *
  * @return {string} The truncated description string
  */
 
 var getTruncDesc = function getTruncDesc(event, excerptLength) {
-  var description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
+  var description = event.description_text;
+
+  if (excerptLength) {
+    description = truncate__WEBPACK_IMPORTED_MODULE_1___default()(event.description_text, excerptLength);
+  }
+
   return description;
 };
 /**
@@ -2024,7 +2042,7 @@ function (_Component) {
       format: props.format,
       group: props.group,
       keyword: props.keyword,
-      days: props.days,
+      daysahead: props.daysahead,
       page: props.page,
       loading: true
     };
@@ -2053,8 +2071,12 @@ function (_Component) {
           heading = _this$props.heading,
           filterby = _this$props.filterby,
           wrapperclass = _this$props.wrapperclass,
-          eventslistclass = _this$props.eventslistclass,
-          eventclass = _this$props.eventclass;
+          listclass = _this$props.listclass,
+          itemclass = _this$props.itemclass,
+          hidedescription = _this$props.hidedescription,
+          truncatedescription = _this$props.truncatedescription,
+          hideimages = _this$props.hideimages,
+          hideaddcal = _this$props.hideaddcal;
 
       if (loading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2072,8 +2094,12 @@ function (_Component) {
             events: events,
             filterby: filterby,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hideaddcal: hideaddcal
           });
           break;
 
@@ -2084,8 +2110,12 @@ function (_Component) {
             events: events,
             filterby: filterby,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hideaddcal: hideaddcal
           });
           break;
 
@@ -2096,8 +2126,12 @@ function (_Component) {
             events: events,
             filterby: filterby,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hideaddcal: hideaddcal
           });
           break;
 
@@ -2108,8 +2142,12 @@ function (_Component) {
             events: events,
             filterby: filterby,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hideaddcal: hideaddcal
           });
           break;
 
@@ -2120,8 +2158,12 @@ function (_Component) {
             events: events,
             filterby: filterby,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hideaddcal: hideaddcal
           });
           break;
 
@@ -2132,8 +2174,12 @@ function (_Component) {
             events: events,
             filterby: filterby,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hideaddcal: hideaddcal
           });
           break;
 
@@ -2144,8 +2190,12 @@ function (_Component) {
             events: events,
             filterby: filterby,
             wrapperclass: wrapperclass,
-            eventslistclass: eventslistclass,
-            eventclass: eventclass
+            listclass: listclass,
+            itemclass: itemclass,
+            hidedescription: hidedescription,
+            truncatedescription: truncatedescription,
+            hideimages: hideimages,
+            hideaddcal: hideaddcal
           });
           break;
 
@@ -2173,11 +2223,11 @@ function (_Component) {
           format = _this$state2.format,
           group = _this$state2.group,
           keyword = _this$state2.keyword,
-          days = _this$state2.days;
+          daysahead = _this$state2.daysahead;
       var _this$props2 = this.props,
           apikey = _this$props2.apikey,
           calendarurl = _this$props2.calendarurl;
-      Object(_services_localistApiConnector__WEBPACK_IMPORTED_MODULE_10__["default"])(depts, entries, format, group, keyword, days, apikey, calendarurl, page).then(function (response) {
+      Object(_services_localistApiConnector__WEBPACK_IMPORTED_MODULE_10__["default"])(depts, entries, format, group, keyword, daysahead, apikey, calendarurl, page).then(function (response) {
         if (typeof response.data.events !== 'undefined') {
           console.warn(response.data.page.current, response.data);
 
@@ -2205,27 +2255,29 @@ function (_Component) {
   }, {
     key: "renderPagination",
     value: function renderPagination() {
-      var pagination = this.props.pagination;
+      var hidepagination = this.props.hidepagination;
       var llPage = this.state.llPage;
       var total = llPage.total;
 
-      if (pagination === 'true') {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-          className: "pager"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_paginate__WEBPACK_IMPORTED_MODULE_2___default.a, {
-          previousLabel: "previous",
-          nextLabel: "next",
-          breakLabel: "...",
-          breakClassName: "break-me",
-          pageCount: total,
-          marginPagesDisplayed: 1,
-          pageRangeDisplayed: 3,
-          onPageChange: this.handlePageClick,
-          containerClassName: "pager_items",
-          subContainerClassName: "pager__item",
-          activeClassName: "is-active"
-        }));
+      if (!total || hidepagination === 'true') {
+        return '';
       }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        className: "pager"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_paginate__WEBPACK_IMPORTED_MODULE_2___default.a, {
+        previousLabel: "previous",
+        nextLabel: "next",
+        breakLabel: "...",
+        breakClassName: "break-me",
+        pageCount: total,
+        marginPagesDisplayed: 1,
+        pageRangeDisplayed: 3,
+        onPageChange: this.handlePageClick,
+        containerClassName: "pager_items",
+        subContainerClassName: "pager__item",
+        activeClassName: "is-active"
+      }));
     }
   }, {
     key: "renderHeading",
@@ -2245,35 +2297,35 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 Localist.propTypes = {
-  depts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  format: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  group: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  keyword: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   heading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   calendarurl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   apikey: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  // addcal: PropTypes.string.isRequired,
-  // // pref_excerpt_length: PropTypes.string,
-  pagination: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  // filterby_filters: PropTypes.string, add a value of none
+  format: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  daysahead: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  depts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  group: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  keyword: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hidepagination: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventslistclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  eventclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  days: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   page: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
 };
 Localist.defaultProps = {
-  page: 1,
-  days: '365',
+  daysahead: '365',
   heading: '',
-  // filterby_filters: 'true',
   filterby: 'group',
   pagination: 'true',
   wrapperclass: '',
-  eventslistclass: '',
-  eventclass: ''
+  listclass: '',
+  itemclass: '',
+  page: 1
 };
 /* harmony default export */ __webpack_exports__["default"] = (Localist);
 
@@ -63877,7 +63929,7 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\n\r\n$alphagrey: $alphagrey;\r\n           ^\r\n      Undefined variable.\n   ╷\n12 │ $alphagrey: $alphagrey;\n   │             ^^^^^^^^^^\n   ╵\n  stdin 12:13  root stylesheet\r\n      in e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\styles\\app.scss (line 12, column 13)\n    at runLoaders (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\webpack\\lib\\NormalModule.js:315:20)\n    at e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at render (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass-loader\\dist\\index.js:89:7)\n    at Function.call$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:53451:16)\n    at _render_closure1.call$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:33267:12)\n    at _RootZone.runBinary$3$3 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:19664:18)\n    at _RootZone.runBinary$3 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:19668:19)\n    at _FutureListener.handleError$1 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18136:19)\n    at _Future__propagateToListeners_handleError.call$0 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18421:40)\n    at Object._Future__propagateToListeners (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:3470:88)\n    at _Future._completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18257:9)\n    at _SyncCompleter._completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18123:19)\n    at _SyncCompleter.completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18092:12)\n    at _AsyncAwaitCompleter.completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:17629:25)\n    at Object._asyncRethrow (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:3226:17)\n    at e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:10407:20\n    at _wrapJsFunctionForAsync_closure.$protected (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:3249:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:17664:12)\n    at _awaitOnObject_closure0.call$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:17656:25)\n    at _RootZone.runBinary$3$3 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:19664:18)\n    at _RootZone.runBinary$3 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:19668:19)\n    at _FutureListener.handleError$1 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18136:19)\n    at _Future__propagateToListeners_handleError.call$0 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18421:40)\n    at Object._Future__propagateToListeners (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:3470:88)\n    at _Future._completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18257:9)\n    at _SyncCompleter._completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18123:19)\n    at _SyncCompleter.completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18092:12)\n    at Object.eval (eval at Closure_forwardCallTo (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:1515:14), <anonymous>:3:41)\n    at _RootZone.runBinary$3$3 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:19664:18)\n    at _RootZone.runBinary$3 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:19668:19)\n    at _FutureListener.handleError$1 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18136:19)\n    at _Future__propagateToListeners_handleError.call$0 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18421:40)\n    at Object._Future__propagateToListeners (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:3470:88)\n    at _Future._completeError$2 (e:\\mySites\\d8_psw\\modules\\custom\\CD_cwd_events\\dev\\node_modules\\sass\\sass.dart.js:18257:9)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
