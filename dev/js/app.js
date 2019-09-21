@@ -115,7 +115,7 @@ if (
             hidedescription= {hidedescription}
             truncatedescription= {truncatedescription}
             hideimages= {hideimages}
-            hidepagination = {hide4pagination}
+            hidepagination = {hidepagination}
             wrapperclass= {wrapperclass}
             listclass= {listclass}
             itemclass= {itemclass}

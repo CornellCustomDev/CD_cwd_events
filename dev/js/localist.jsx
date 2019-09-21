@@ -310,7 +310,7 @@ Localist.defaultProps = {
     daysahead : '365',
     heading: '',
     filterby: 'group',
-    pagination: 'true',
+    hidepagination: 'true',
     wrapperclass: '',
     listclass: '',
     itemclass: '',
