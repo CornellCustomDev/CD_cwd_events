@@ -78,7 +78,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
                 data-hidepagination = '" . $this->configuration['cwd_events_hidepagination'] . "'
                 data-filterby = '" . $this->configuration['cwd_events_filterby'] . "'
                 data-wrapperclass = '" . $this->configuration['cwd_events_wrapperclass'] . "'
-                data-listclass' = '" . $this->configuration['cwd_events_listclass'] . "'
+                data-listclass = '" . $this->configuration['cwd_events_listclass'] . "'
                 data-itemclass = '" . $this->configuration['cwd_events_itemclass'] . "'
               ></div>",
     ];
@@ -292,8 +292,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $this->configuration['cwd_events_wrapperclass'] = $values['cwd_events_display_options']['cwd_events_wrapperclass'];
     $this->configuration['cwd_events_listclass'] = $values['cwd_events_display_options']['cwd_events_listclass'];
     $this->configuration['cwd_events_itemclass'] = $values['cwd_events_display_options']['cwd_events_itemclass'];
-
-
   }
 
 }

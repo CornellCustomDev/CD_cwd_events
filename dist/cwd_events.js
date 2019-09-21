@@ -229,7 +229,7 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
       hidedescription: hidedescription,
       truncatedescription: truncatedescription,
       hideimages: hideimages,
-      hidepagination: hide4pagination,
+      hidepagination: hidepagination,
       wrapperclass: wrapperclass,
       listclass: listclass,
       itemclass: itemclass
@@ -2321,7 +2321,7 @@ Localist.defaultProps = {
   daysahead: '365',
   heading: '',
   filterby: 'group',
-  pagination: 'true',
+  hidepagination: 'true',
   wrapperclass: '',
   listclass: '',
   itemclass: '',
