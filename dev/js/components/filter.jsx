@@ -14,6 +14,9 @@ import {
  */
 const EventFilters = props => {
     const {filterObjs, handleEventFilter, filterby, events} = props;
+    if (filterby === 'none'){
+        return '';
+    }
     const filterKeys = Object.keys(filterObjs);
     const [active, setActive] = useState('filterAll');
 

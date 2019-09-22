@@ -95,11 +95,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _localist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./localist */ "./js/localist.jsx");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./js/index.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -119,9 +115,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* eslint-disable react/jsx-filename-extension */
 
 /* eslint-disable func-names */
-
-
-
+ //const Localist = require ('./index')
 
 __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
 /** *********************** START LOCALIST ********************************* /
@@ -142,46 +136,7 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
         $('div.events-listing', context).once('cwd_events').each(function () {
           var data = _objectSpread({}, this.dataset);
 
-          var target = data.target,
-              heading = data.heading,
-              calendarurl = data.calendarurl,
-              apikey = data.apikey,
-              format = data.format,
-              entries = data.entries,
-              daysahead = data.daysahead,
-              depts = data.depts,
-              group = data.group,
-              keyword = data.keyword,
-              hidedescription = data.hidedescription,
-              truncatedescription = data.truncatedescription,
-              hideimages = data.hideimages,
-              hideaddcal = data.hideaddcal,
-              hidepagination = data.hidepagination,
-              filterby = data.filterby,
-              wrapperclass = data.wrapperclass,
-              listclass = data.listclass,
-              itemclass = data.itemclass;
-          react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            target: target,
-            depts: depts,
-            entries: entries,
-            daysahead: daysahead,
-            format: format,
-            group: group,
-            keyword: keyword,
-            heading: heading,
-            filterby: filterby,
-            calendarurl: calendarurl,
-            apikey: apikey,
-            hideaddcal: hideaddcal,
-            hidedescription: hidedescription,
-            truncatedescription: truncatedescription,
-            hideimages: hideimages,
-            hidepagination: hidepagination,
-            wrapperclass: wrapperclass,
-            listclass: listclass,
-            itemclass: itemclass
-          }), document.getElementById(target));
+          Object(_index__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
         });
       }
     };
@@ -192,48 +147,9 @@ if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
   var eventListings = _toConsumableArray(document.getElementsByClassName('events-listing'));
 
   eventListings.forEach(function (elem) {
-    var _elem$dataset = _objectSpread({}, elem.dataset),
-        target = _elem$dataset.target,
-        heading = _elem$dataset.heading,
-        calendarurl = _elem$dataset.calendarurl,
-        apikey = _elem$dataset.apikey,
-        format = _elem$dataset.format,
-        entries = _elem$dataset.entries,
-        daysahead = _elem$dataset.daysahead,
-        depts = _elem$dataset.depts,
-        group = _elem$dataset.group,
-        keyword = _elem$dataset.keyword,
-        hidedescription = _elem$dataset.hidedescription,
-        truncatedescription = _elem$dataset.truncatedescription,
-        hideimages = _elem$dataset.hideimages,
-        hideaddcal = _elem$dataset.hideaddcal,
-        hidepagination = _elem$dataset.hidepagination,
-        filterby = _elem$dataset.filterby,
-        wrapperclass = _elem$dataset.wrapperclass,
-        listclass = _elem$dataset.listclass,
-        itemclass = _elem$dataset.itemclass;
+    var data = _objectSpread({}, elem.dataset);
 
-    react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      target: target,
-      depts: depts,
-      entries: entries,
-      daysahead: daysahead,
-      format: format,
-      group: group,
-      keyword: keyword,
-      heading: heading,
-      filterby: filterby,
-      calendarurl: calendarurl,
-      apikey: apikey,
-      hideaddcal: hideaddcal,
-      hidedescription: hidedescription,
-      truncatedescription: truncatedescription,
-      hideimages: hideimages,
-      hidepagination: hidepagination,
-      wrapperclass: wrapperclass,
-      listclass: listclass,
-      itemclass: itemclass
-    }), document.getElementById(target));
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
   });
 }
 
@@ -666,6 +582,11 @@ var EventFilters = function EventFilters(props) {
       handleEventFilter = props.handleEventFilter,
       filterby = props.filterby,
       events = props.events;
+
+  if (filterby === 'none') {
+    return '';
+  }
+
   var filterKeys = Object.keys(filterObjs);
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('filterAll'),
@@ -1967,6 +1888,83 @@ var getAbbrMonth = function getAbbrMonth(event) {
   var abbrMonth = moment__WEBPACK_IMPORTED_MODULE_0___default()(startDateTime).format('MMM');
   return abbrMonth;
 };
+
+/***/ }),
+
+/***/ "./js/index.js":
+/*!*********************!*\
+  !*** ./js/index.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _localist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./localist */ "./js/localist.jsx");
+/* eslint-disable react/jsx-filename-extension */
+
+/* eslint-disable func-names */
+
+
+ // module.exports = {
+//     run: function (args) {
+//         run(args)
+//     }
+// }
+
+var run = function run(props) {
+  var target = props.target,
+      heading = props.heading,
+      calendarurl = props.calendarurl,
+      apikey = props.apikey,
+      format = props.format,
+      entries = props.entries,
+      daysahead = props.daysahead,
+      depts = props.depts,
+      group = props.group,
+      keyword = props.keyword,
+      hidedescription = props.hidedescription,
+      truncatedescription = props.truncatedescription,
+      hideimages = props.hideimages,
+      hideaddcal = props.hideaddcal,
+      hidepagination = props.hidepagination,
+      filterby = props.filterby,
+      wrapperclass = props.wrapperclass,
+      listclass = props.listclass,
+      itemclass = props.itemclass;
+  react_dom__WEBPACK_IMPORTED_MODULE_0___default.a.render(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_localist__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    target: target,
+    depts: depts,
+    entries: entries,
+    daysahead: daysahead,
+    format: format,
+    group: group,
+    keyword: keyword,
+    heading: heading,
+    filterby: filterby,
+    calendarurl: calendarurl,
+    apikey: apikey,
+    hideaddcal: hideaddcal,
+    hidedescription: hidedescription,
+    truncatedescription: truncatedescription,
+    hideimages: hideimages,
+    hidepagination: hidepagination,
+    wrapperclass: wrapperclass,
+    listclass: listclass,
+    itemclass: itemclass
+  }), document.getElementById(target));
+}; // Add localist to the dom.
+
+
+if (typeof window !== 'undefined') {
+  window.Localist = run;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (run);
 
 /***/ }),
 

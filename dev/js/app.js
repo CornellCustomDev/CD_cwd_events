@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable func-names */
-import ReactDOM from 'react-dom';
-import React from 'react';
-import Localist from './localist';
-
+import Localist from './index';
+//const Localist = require ('./index')
 require('babel-polyfill');
 
 /** *********************** START LOCALIST ********************************* /
@@ -26,48 +24,7 @@ if (
                     .once('cwd_events')
                     .each(function() {
                         const data = { ...this.dataset };
-                        const {
-                            target,
-                            heading,
-                            calendarurl,
-                            apikey,
-                            format,
-                            entries,
-                            daysahead,
-                            depts,
-                            group,
-                            keyword,
-                            hidedescription,
-                            truncatedescription,
-                            hideimages,
-                            hideaddcal,
-                            hidepagination,
-                            filterby,
-                            wrapperclass,
-                            listclass,
-                            itemclass,
-                        } = data;
-                        ReactDOM.render(<Localist
-                            target= {target}
-                            depts= {depts}
-                            entries= {entries}
-                            daysahead= {daysahead}
-                            format= {format}
-                            group= {group}
-                            keyword= {keyword}
-                            heading= {heading}
-                            filterby= {filterby}
-                            calendarurl= {calendarurl}
-                            apikey= {apikey}
-                            hideaddcal= {hideaddcal}
-                            hidedescription= {hidedescription}
-                            truncatedescription= {truncatedescription}
-                            hideimages= {hideimages}
-                            hidepagination = {hidepagination}
-                            wrapperclass= {wrapperclass}
-                            listclass= {listclass}
-                            itemclass= {itemclass}
-                        />, document.getElementById(target));
+                        Localist(data);
                     });
             }
         };
@@ -78,47 +35,7 @@ if (
         ...document.getElementsByClassName('events-listing')
     ];
     eventListings.forEach(elem => {
-        const {
-            target,
-            heading,
-            calendarurl,
-            apikey,
-            format,
-            entries,
-            daysahead,
-            depts,
-            group,
-            keyword,
-            hidedescription,
-            truncatedescription,
-            hideimages,
-            hideaddcal,
-            hidepagination,
-            filterby,
-            wrapperclass,
-            listclass,
-            itemclass,
-        } = { ...elem.dataset };
-        ReactDOM.render(<Localist
-            target= {target}
-            depts= {depts}
-            entries= {entries}
-            daysahead= {daysahead}
-            format= {format}
-            group= {group}
-            keyword= {keyword}
-            heading= {heading}
-            filterby= {filterby}
-            calendarurl= {calendarurl}
-            apikey= {apikey}
-            hideaddcal= {hideaddcal}
-            hidedescription= {hidedescription}
-            truncatedescription= {truncatedescription}
-            hideimages= {hideimages}
-            hidepagination = {hidepagination}
-            wrapperclass= {wrapperclass}
-            listclass= {listclass}
-            itemclass= {itemclass}
-        />, document.getElementById(target));
+        const data = { ...elem.dataset };
+        Localist(data);
     });
 }
