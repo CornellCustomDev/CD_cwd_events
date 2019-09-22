@@ -16,7 +16,7 @@ import {
 } from './partials';
 
 const CompactInner = props => {
-    const {event, addcal, thumbnail, excerptlength, itemclass} = props;
+    const {event, addcal, thumbnail, truncatedescription, itemclass} = props;
     return (
         <div className={`views-row ${itemclass}`}>
             <EventThumbnail
@@ -30,7 +30,7 @@ const CompactInner = props => {
                 <EventLocation locationName={event.location_name} />
                 <EventDate date={getEventDateCompact(event)} />
                 <EventDescription
-                    description={getTruncDesc(event, excerptlength)}
+                    description={getTruncDesc(event, truncatedescription)}
                     title = {event.title}
                 />
                 {
@@ -46,7 +46,7 @@ const CompactInner = props => {
 CompactInner.propTypes = {
     event: PropTypes.object.isRequired,
     addcal: PropTypes.string.isRequired,
-    excerptlength: PropTypes.string.isRequired,
+    truncatedescription: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
     itemclass: PropTypes.string.isRequired,
 };
@@ -57,7 +57,7 @@ const Compact = (props) => {
         filterby,
         usefilterby,
         addcal,
-        excerptlength,
+        truncatedescription,
         thumbnail,
         itemclass,
         listclass,
@@ -87,7 +87,9 @@ const Compact = (props) => {
                                         event={event.event}
                                         filterby={filterby}
                                         addcal={addcal}
-                                        excerptlength={excerptlength}
+                                        truncatedescription={
+                                            truncatedescription
+                                        }
                                         thumbnail={thumbnail}
                                         itemclass={itemclass}
                                     />
@@ -106,7 +108,7 @@ Compact.propTypes = {
     filterby: PropTypes.string.isRequired,
     usefilterby: PropTypes.string,
     addcal: PropTypes.string,
-    excerptlength: PropTypes.string,
+    truncatedescription: PropTypes.string,
     thumbnail: PropTypes.string,
     wrapperclass: PropTypes.string,
     listclass: PropTypes.string,
@@ -117,7 +119,7 @@ Compact.defaultProps = {
     events: [],
     usefilterby: 'false',
     addcal: 'false',
-    excerptlength: '150',
+    truncatedescription: '150',
     thumbnail: 'true',
     wrapperclass: '', //cwd-card-grid three-card',
     listclass: '', //cards',

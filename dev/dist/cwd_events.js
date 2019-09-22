@@ -506,7 +506,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -522,7 +522,7 @@ var CompactInner = function CompactInner(props) {
   var event = props.event,
       addcal = props.addcal,
       thumbnail = props.thumbnail,
-      excerptlength = props.excerptlength,
+      truncatedescription = props.truncatedescription,
       itemclass = props.itemclass;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "views-row ".concat(itemclass)
@@ -541,7 +541,7 @@ var CompactInner = function CompactInner(props) {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventDate"], {
     date: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getEventDateCompact"])(event)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventDescription"], {
-    description: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength),
+    description: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, truncatedescription),
     title: event.title
   }), addcal === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     event: event
@@ -551,7 +551,7 @@ var CompactInner = function CompactInner(props) {
 CompactInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
   addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
@@ -561,7 +561,7 @@ var Compact = function Compact(props) {
       filterby = props.filterby,
       usefilterby = props.usefilterby,
       addcal = props.addcal,
-      excerptlength = props.excerptlength,
+      truncatedescription = props.truncatedescription,
       thumbnail = props.thumbnail,
       itemclass = props.itemclass,
       listclass = props.listclass,
@@ -595,7 +595,7 @@ var Compact = function Compact(props) {
       event: event.event,
       filterby: filterby,
       addcal: addcal,
-      excerptlength: excerptlength,
+      truncatedescription: truncatedescription,
       thumbnail: thumbnail,
       itemclass: itemclass
     });
@@ -607,7 +607,7 @@ Compact.propTypes = {
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
@@ -617,7 +617,7 @@ Compact.defaultProps = {
   events: [],
   usefilterby: 'false',
   addcal: 'false',
-  excerptlength: '150',
+  truncatedescription: '150',
   thumbnail: 'true',
   wrapperclass: '',
   //cwd-card-grid three-card',
@@ -648,7 +648,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -867,7 +867,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -1034,7 +1034,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -1050,8 +1050,9 @@ var ModernStandardInner = function ModernStandardInner(props) {
   var event = props.event,
       hideaddcal = props.hideaddcal,
       hideimages = props.hideimages,
-      excerptlength = props.excerptlength,
-      itemclass = props.itemclass;
+      truncatedescription = props.truncatedescription,
+      itemclass = props.itemclass,
+      hidedescription = props.hidedescription;
   /**
    *
    * @param {obj} event_types An array of events.
@@ -1096,7 +1097,7 @@ var ModernStandardInner = function ModernStandardInner(props) {
     title: event.title,
     hideimages: hideimages,
     photoCrop: "big"
-  }), Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength), " read more"))), hideaddcal !== 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), hidedescription !== 'true' ? Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, truncatedescription) + ' read more' : ''))), hideaddcal !== 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     event: event
   }) : ''));
 };
@@ -1104,7 +1105,8 @@ var ModernStandardInner = function ModernStandardInner(props) {
 ModernStandardInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
   hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
 };
@@ -1114,11 +1116,12 @@ var ModernStandard = function ModernStandard(props) {
       filterby = props.filterby,
       usefilterby = props.usefilterby,
       hideaddcal = props.hideaddcal,
-      excerptlength = props.excerptlength,
+      truncatedescription = props.truncatedescription,
       hideimages = props.hideimages,
       itemclass = props.itemclass,
       listclass = props.listclass,
-      wrapperclass = props.wrapperclass;
+      wrapperclass = props.wrapperclass,
+      hidedescription = props.hidedescription;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
       _useState2 = _slicedToArray(_useState, 2),
@@ -1147,7 +1150,8 @@ var ModernStandard = function ModernStandard(props) {
       event: event.event,
       filterby: filterby,
       hideaddcal: hideaddcal,
-      excerptlength: excerptlength,
+      truncatedescription: truncatedescription,
+      hidedescription: hidedescription,
       hideimages: hideimages,
       itemclass: itemclass
     });
@@ -1159,8 +1163,9 @@ ModernStandard.propTypes = {
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   listclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   itemclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
@@ -1169,14 +1174,15 @@ ModernStandard.defaultProps = {
   events: [],
   usefilterby: 'true',
   hideaddcal: 'false',
-  excerptlength: '250',
+  truncatedescription: '250',
   hideimages: 'false',
   wrapperclass: '',
   //cwd-card-grid three-card',
   listclass: '',
   //cards',
-  itemclass: '' //card',
-
+  itemclass: '',
+  //card',
+  hidedescription: 'false'
 };
 /* harmony default export */ __webpack_exports__["default"] = (ModernStandard);
 
@@ -1352,7 +1358,7 @@ var EventTypes = function EventTypes(props) {
 EventTypes.propTypes = {
   eventTypes: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
 };
-EventThumbnail.defaultProps = {
+EventTypes.defaultProps = {
   eventTypes: null
 };
 
@@ -1381,7 +1387,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -1397,7 +1403,7 @@ var StandardInner = function StandardInner(props) {
   var event = props.event,
       filterby = props.filterby,
       addcal = props.addcal,
-      excerptlength = props.excerptlength,
+      truncatedescription = props.truncatedescription,
       thumbnail = props.thumbnail,
       innerClass = props.innerClass;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1421,7 +1427,7 @@ var StandardInner = function StandardInner(props) {
     thumbnail: thumbnail,
     photoCrop: "big"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_partials__WEBPACK_IMPORTED_MODULE_6__["EventDescription"], {
-    description: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, excerptlength),
+    description: Object(_helpers_displayEvent__WEBPACK_IMPORTED_MODULE_2__["getTruncDesc"])(event, truncatedescription),
     title: event.title
   }), addcal === 'true' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addCal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     event: event
@@ -1432,7 +1438,7 @@ StandardInner.propTypes = {
   event: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object,
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   innerClass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
@@ -1446,7 +1452,7 @@ var Standard = function Standard(props) {
       filterby = props.filterby,
       usefilterby = props.usefilterby,
       addcal = props.addcal,
-      excerptlength = props.excerptlength,
+      truncatedescription = props.truncatedescription,
       thumbnail = props.thumbnail;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(events),
@@ -1510,7 +1516,7 @@ var Standard = function Standard(props) {
       event: event.event,
       filterby: filterby,
       addcal: addcal,
-      excerptlength: excerptlength,
+      truncatedescription: truncatedescription,
       thumbnail: thumbnail
     }));
   }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "There are no upcomming events.")))));
@@ -1521,14 +1527,14 @@ Standard.propTypes = {
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
   usefilterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   addcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  excerptlength: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   thumbnail: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 Standard.defaultProps = {
   events: [],
   usefilterby: 'true',
   addcal: 'true',
-  excerptlength: '250',
+  truncatedescription: '250',
   thumbnail: 'true'
 };
 /* harmony default export */ __webpack_exports__["default"] = (Standard);
@@ -1584,8 +1590,6 @@ var buildEventWrapperFilters = function buildEventWrapperFilters(events, filterb
       };
     }
   });
-  console.log('buildEventWrapperFilters');
-  console.log(filters);
   return filters;
 };
 
@@ -1905,8 +1909,7 @@ var getEventType = function getEventType(event, prefCategory) {
   }
 
   if (prefCategory === 'group' && groupName !== '') {
-    console.log(groupName);
-    eventTypes = [group_name];
+    eventTypes = [groupName];
   }
 
   return eventTypes;
@@ -2229,8 +2232,6 @@ function (_Component) {
           calendarurl = _this$props2.calendarurl;
       Object(_services_localistApiConnector__WEBPACK_IMPORTED_MODULE_10__["default"])(depts, entries, format, group, keyword, daysahead, apikey, calendarurl, page).then(function (response) {
         if (typeof response.data.events !== 'undefined') {
-          console.warn(response.data.page.current, response.data);
-
           _this2.setState({
             events: response.data.events,
             llPage: response.data.page,
@@ -2297,19 +2298,19 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 Localist.propTypes = {
-  heading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   calendarurl: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  apikey: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  format: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  entries: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   daysahead: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  depts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  group: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  keyword: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  depts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  group: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  keyword: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  format: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  apikey: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   truncatedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  heading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hidedescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideimages: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  hideaddcal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   hidepagination: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   filterby: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   wrapperclass: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
@@ -2318,10 +2319,19 @@ Localist.propTypes = {
   page: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
 };
 Localist.defaultProps = {
+  depts: '0',
+  group: '0',
+  keyword: '',
+  entries: '3',
+  format: 'standard',
+  apikey: '',
   daysahead: '365',
   heading: '',
   filterby: 'group',
+  hidedescription: 'false',
+  hideimages: 'false',
   hidepagination: 'true',
+  hideaddcal: 'false',
   wrapperclass: '',
   listclass: '',
   itemclass: '',
@@ -63940,8 +63950,8 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! e:\mySites\d8_psw\modules\custom\CD_cwd_events\dev\js\app.js */"./js/app.js");
-module.exports = __webpack_require__(/*! e:\mySites\d8_psw\modules\custom\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
+__webpack_require__(/*! e:\mySites\cd_events\CD_cwd_events\dev\js\app.js */"./js/app.js");
+module.exports = __webpack_require__(/*! e:\mySites\cd_events\CD_cwd_events\dev\styles\app.scss */"./styles/app.scss");
 
 
 /***/ })

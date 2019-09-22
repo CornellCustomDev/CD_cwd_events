@@ -24,7 +24,7 @@ const StandardInner = props => {
         event,
         filterby,
         addcal,
-        excerptlength,
+        truncatedescription,
         thumbnail,
         innerClass} = props;
 
@@ -46,7 +46,7 @@ const StandardInner = props => {
                     photoCrop='big'
                 />
                 <EventDescription
-                    description={getTruncDesc(event, excerptlength)}
+                    description={getTruncDesc(event, truncatedescription)}
                     title = {event.title}
                 />
                 {
@@ -63,7 +63,7 @@ StandardInner.propTypes = {
     event: PropTypes.object,
     filterby: PropTypes.string.isRequired,
     addcal: PropTypes.string.isRequired,
-    excerptlength: PropTypes.string.isRequired,
+    truncatedescription: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
     innerClass: PropTypes.string,
 };
@@ -79,7 +79,7 @@ const Standard = (props) => {
         filterby,
         usefilterby,
         addcal,
-        excerptlength,
+        truncatedescription,
         thumbnail} = props;
     const [filterEvents, handleEventFilter] = useState(events);
     // An object of filters id, name, filterby objects.
@@ -136,7 +136,9 @@ const Standard = (props) => {
                                             event={event.event}
                                             filterby={filterby}
                                             addcal={addcal}
-                                            excerptlength={excerptlength}
+                                            truncatedescription={
+                                                truncatedescription
+                                            }
                                             thumbnail={thumbnail}
                                         />
                                     </div>
@@ -154,7 +156,7 @@ Standard.propTypes = {
     filterby: PropTypes.string.isRequired,
     usefilterby: PropTypes.string,
     addcal: PropTypes.string,
-    excerptlength: PropTypes.string,
+    truncatedescription: PropTypes.string,
     thumbnail: PropTypes.string,
 };
 
@@ -162,7 +164,7 @@ Standard.defaultProps = {
     events: [],
     usefilterby: 'true',
     addcal: 'true',
-    excerptlength: '250',
+    truncatedescription: '250',
     thumbnail: 'true',
 };
 

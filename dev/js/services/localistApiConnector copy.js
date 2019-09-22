@@ -20,7 +20,7 @@ const checkPropTypes = (params, props) => {
     const isValid = check.all(valid);
     if (!isValid) {
         console.warn(valid);
-    }    
+    }
     return isValid
 };
 
@@ -30,7 +30,6 @@ const checkPropTypes = (params, props) => {
  * @return {axios} A axios promise;
  */
 export default props => {
-    console.log(props);
     props.days = '365';
     props.page = '1';
     if (

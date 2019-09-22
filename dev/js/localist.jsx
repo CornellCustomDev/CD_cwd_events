@@ -215,7 +215,6 @@ class Localist extends Component {
         )
             .then(response => {
                 if (typeof response.data.events !== 'undefined') {
-                    console.warn(response.data.page.current, response.data);
                     this.setState({
                         events: response.data.events,
                         llPage: response.data.page,
@@ -283,19 +282,19 @@ class Localist extends Component {
 }
 
 Localist.propTypes = {
-    heading: PropTypes.string,
     calendarurl: PropTypes.string.isRequired,
-    apikey: PropTypes.string.isRequired,
-    format: PropTypes.string.isRequired,
-    entries: PropTypes.string.isRequired,
+    entries: PropTypes.string,
     daysahead: PropTypes.string,
-    depts: PropTypes.string.isRequired,
-    group: PropTypes.string.isRequired,
-    keyword: PropTypes.string.isRequired,
-    hidedescription: PropTypes.string.isRequired,
+    depts: PropTypes.string,
+    group: PropTypes.string,
+    keyword: PropTypes.string,
+    format: PropTypes.string,
+    apikey: PropTypes.string,
     truncatedescription: PropTypes.string.isRequired,
-    hideimages: PropTypes.string.isRequired,
-    hideaddcal: PropTypes.string.isRequired,
+    heading: PropTypes.string,
+    hidedescription: PropTypes.string,
+    hideimages: PropTypes.string,
+    hideaddcal: PropTypes.string,
     hidepagination: PropTypes.string,
     filterby: PropTypes.string,
     wrapperclass: PropTypes.string,
@@ -306,11 +305,19 @@ Localist.propTypes = {
 
 
 Localist.defaultProps = {
-
+    depts: '0',
+    group: '0',
+    keyword: '',
+    entries: '3',
+    format: 'standard',
+    apikey: '',
     daysahead : '365',
     heading: '',
     filterby: 'group',
+    hidedescription: 'false',
+    hideimages: 'false',
     hidepagination: 'true',
+    hideaddcal: 'false',
     wrapperclass: '',
     listclass: '',
     itemclass: '',

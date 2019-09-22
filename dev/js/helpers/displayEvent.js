@@ -258,8 +258,7 @@ export const getEventType = (event, prefCategory) => {
         eventTypes = getFiltersDepartments(event);
     }
     if (prefCategory === 'group' && groupName !== '') {
-        console.log(groupName);
-        eventTypes = [group_name];
+        eventTypes = [groupName];
     }
     return eventTypes;
 };

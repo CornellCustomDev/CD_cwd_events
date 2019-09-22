@@ -121,7 +121,9 @@ const ModernCompact= props =>{
                                         event={event.event}
                                         filterby={filterby}
                                         hideaddcal={hideaddcal}
-                                        truncatedescription={truncatedescription}
+                                        truncatedescription={
+                                            truncatedescription
+                                        }
                                         hideimages={hideimages}
                                         itemclass={itemclass}
                                         hidedescription = {hidedescription}

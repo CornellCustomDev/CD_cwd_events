@@ -151,7 +151,7 @@ EventTypes.propTypes = {
     eventTypes: PropTypes.array,
 };
 
-EventThumbnail.defaultProps = {
+EventTypes.defaultProps = {
     eventTypes: null,
 }
 

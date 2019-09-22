@@ -49,8 +49,6 @@ const buildEventWrapperFilters = (events, filterby) => {
             };
         }
     })
-    console.log('buildEventWrapperFilters');
-    console.log(filters);
     return filters
 
 };

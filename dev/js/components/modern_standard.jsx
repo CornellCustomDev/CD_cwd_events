@@ -13,7 +13,15 @@ import buildEventWrapperFilters from '../helpers/buildEventWrapperFilters';
 import {EventImg} from './partials';
 
 const ModernStandardInner = props => {
-    const {event, hideaddcal, hideimages, excerptlength, itemclass} = props;
+    const {
+        event,
+        hideaddcal,
+        hideimages,
+        truncatedescription,
+        itemclass,
+        hidedescription,
+    }
+         = props;
 
     /**
      *
@@ -62,7 +70,9 @@ const ModernStandardInner = props => {
                                 hideimages = {hideimages}
                                 photoCrop='big'
                             />
-                            {getTruncDesc(event, excerptlength)} read more
+                            { hidedescription !== 'true'
+                                ? getTruncDesc(event, truncatedescription) + ' read more'
+                                : ''}
                         </p>
                     </div>
                 </a>
@@ -80,7 +90,8 @@ const ModernStandardInner = props => {
 ModernStandardInner.propTypes = {
     event: PropTypes.object.isRequired,
     hideaddcal: PropTypes.string.isRequired,
-    excerptlength: PropTypes.string.isRequired,
+    truncatedescription: PropTypes.string.isRequired,
+    hidedescription: PropTypes.string.isRequired,
     hideimages: PropTypes.string.isRequired,
     itemclass: PropTypes.string.isRequired,
 };
@@ -91,11 +102,13 @@ const ModernStandard= props =>{
         filterby,
         usefilterby,
         hideaddcal,
-        excerptlength,
+        truncatedescription,
         hideimages,
         itemclass,
         listclass,
-        wrapperclass} = props;
+        wrapperclass,
+        hidedescription,
+    } = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (hideimages === 'true') ? 'no-thumbnails' : '';
@@ -120,7 +133,10 @@ const ModernStandard= props =>{
                                         event={event.event}
                                         filterby={filterby}
                                         hideaddcal={hideaddcal}
-                                        excerptlength={excerptlength}
+                                        truncatedescription={
+                                            truncatedescription
+                                        }
+                                        hidedescription = {hidedescription}
                                         hideimages={hideimages}
                                         itemclass={itemclass}
                                     />
@@ -140,8 +156,9 @@ ModernStandard.propTypes = {
     filterby: PropTypes.string.isRequired,
     usefilterby: PropTypes.string,
     hideaddcal: PropTypes.string,
-    excerptlength: PropTypes.string,
+    truncatedescription: PropTypes.string,
     hideimages: PropTypes.string,
+    hidedescription: PropTypes.string,
     wrapperclass: PropTypes.string,
     listclass: PropTypes.string,
     itemclass: PropTypes.string,
@@ -151,11 +168,12 @@ ModernStandard.defaultProps = {
     events: [],
     usefilterby: 'true',
     hideaddcal: 'false',
-    excerptlength: '250',
+    truncatedescription: '250',
     hideimages: 'false',
     wrapperclass: '', //cwd-card-grid three-card',
     listclass: '', //cards',
     itemclass: '', //card',
+    hidedescription: 'false',
 
 };
 export default ModernStandard;
