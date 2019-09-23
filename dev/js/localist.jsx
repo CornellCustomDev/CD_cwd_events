@@ -7,7 +7,6 @@ import Compact from './components/compact';
 import ModernStandard from './components/modern_standard';
 import ModernCompact from './components/modern_compact';
 import Classic from './components/classic';
-import ClassicCompact from './components/classic_compact';
 import InlineCompact from './components/inline_compact';
 import localistApiConnector from './services/localistApiConnector'
 
@@ -86,6 +85,7 @@ class Localist extends Component {
                     hideaddcal = {hideaddcal}
                 />
                 break;
+
             case 'compact':
                 component = <Compact
                     key = {page}
@@ -101,6 +101,7 @@ class Localist extends Component {
                     hideaddcal = {hideaddcal}
                 />
                 break;
+
             case 'modern_standard':
                 component = <ModernStandard
                     key = {page}
@@ -116,6 +117,7 @@ class Localist extends Component {
                     hideaddcal = {hideaddcal}
                 />
                 break;
+
             case 'modern_compact':
                 component = <ModernCompact
                     key = {page}
@@ -131,6 +133,7 @@ class Localist extends Component {
                     hideaddcal = {hideaddcal}
                 />
                 break;
+
             case 'inline_compact':
                 component = <InlineCompact
                     key = {page}
@@ -146,6 +149,7 @@ class Localist extends Component {
                     hideaddcal = {hideaddcal}
                 />
                 break;
+
             case 'classic':
                 component = <Classic
                     key = {page}
@@ -161,21 +165,7 @@ class Localist extends Component {
                     hideaddcal = {hideaddcal}
                 />
                 break;
-            case 'classic_compact':
-                component = <ClassicCompact
-                    key = {page}
-                    heading= {heading}
-                    events= {events}
-                    filterby= {filterby}
-                    wrapperclass = {wrapperclass}
-                    listclass = {listclass}
-                    itemclass = {itemclass}
-                    hidedescription = {hidedescription}
-                    truncatedescription = {truncatedescription}
-                    hideimages = {hideimages}
-                    hideaddcal = {hideaddcal}
-                />
-                break;
+
             default:
                 break;
         }

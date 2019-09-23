@@ -100,7 +100,6 @@ const ModernStandard= props =>{
     const {
         events,
         filterby,
-        usefilterby,
         hideaddcal,
         truncatedescription,
         hideimages,
@@ -116,14 +115,12 @@ const ModernStandard= props =>{
         <section className='events-modern-standard modern' title="Events List">
             <div className="main-body">
                 <div className={`cwd-component cwd-card-grid three-card singles events-listing ${thumbNailClass} ${wrapperclass}`}>
-                    { usefilterby === 'true'
-                        ? <EventFilters
-                            filterObjs={filterObjs}
-                            events={events}
-                            handleEventFilter={handleEventFilter}
-                            filterby={filterby}
-                        />
-                        : ''}
+                    <EventFilters
+                        filterObjs={filterObjs}
+                        events={events}
+                        handleEventFilter={handleEventFilter}
+                        filterby={filterby}
+                    />
                     <div className={`events-list view-content ${listclass}`}>
                         {filterEvents.length > 0
                             ? filterEvents.map( event => {
@@ -154,7 +151,6 @@ const ModernStandard= props =>{
 ModernStandard.propTypes = {
     events: PropTypes.array,
     filterby: PropTypes.string.isRequired,
-    usefilterby: PropTypes.string,
     hideaddcal: PropTypes.string,
     truncatedescription: PropTypes.string,
     hideimages: PropTypes.string,
@@ -166,7 +162,6 @@ ModernStandard.propTypes = {
 
 ModernStandard.defaultProps = {
     events: [],
-    usefilterby: 'true',
     hideaddcal: 'false',
     truncatedescription: '250',
     hideimages: 'false',

@@ -16,28 +16,42 @@ import {
 } from './partials';
 
 const CompactInner = props => {
-    const {event, addcal, thumbnail, truncatedescription, itemclass} = props;
+    const {
+        event,
+        hideaddcal,
+        thumbnail,
+        truncatedescription,
+        itemclass,
+        hidedescription,
+        hideimages,
+    } = props;
     return (
         <div className={`views-row ${itemclass}`}>
-            <EventThumbnail
-                photoUrl={event.photo_url}
-                title={event.title}
-                thumbnail={thumbnail}
-                photoCrop='big'
-            />
+            { hideimages === 'true'
+                ? ''
+                : <EventThumbnail
+                    photoUrl={event.photo_url}
+                    title={event.title}
+                    thumbnail={thumbnail}
+                    photoCrop='big'
+                />}
             <div className="event-node node">
-                <EventTitle title={event.title} url={event.localist_url} />
-                <EventLocation locationName={event.location_name} />
-                <EventDate date={getEventDateCompact(event)} />
-                <EventDescription
-                    description={getTruncDesc(event, truncatedescription)}
-                    title = {event.title}
-                />
-                {
-                    addcal === 'true'
-                        ? <AddCal event={event} />
-                        : ''
-                }
+                <div className = 'events'>
+                    <EventTitle title={event.title} url={event.localist_url} />
+                    <EventLocation locationName={event.location_name} />
+                    <EventDate date={getEventDateCompact(event)} />
+                    <EventDescription
+                        description={getTruncDesc(event, truncatedescription)}
+                        title = {event.title}
+                        url = {event.localist_url}
+                        hidedescription = {hidedescription}
+                    />
+                    {
+                        hideaddcal === 'true'
+                            ? ''
+                            : <AddCal event={event} />
+                    }
+                </div>
             </div>
         </div>
     )
@@ -45,39 +59,41 @@ const CompactInner = props => {
 
 CompactInner.propTypes = {
     event: PropTypes.object.isRequired,
-    addcal: PropTypes.string.isRequired,
+    hideaddcal: PropTypes.string.isRequired,
     truncatedescription: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
     itemclass: PropTypes.string.isRequired,
+    hidedescription: PropTypes.string.isRequired,
+    hideimages: PropTypes.string.isRequired,
 };
 
 const Compact = (props) => {
     const {
         events,
         filterby,
-        usefilterby,
-        addcal,
+        hideaddcal,
         truncatedescription,
         thumbnail,
         itemclass,
         listclass,
-        wrapperclass} = props;
+        wrapperclass,
+        hidedescription,
+        hideimages,
+    } = props;
     const [filterEvents, handleEventFilter] = useState(events);
     const filterObjs = buildEventWrapperFilters(events, filterby);
     const thumbNailClass = (thumbnail === 'false') ? 'no-thumbnails' : '';
 
     return (
-        <section className='standard' id="standardCompact" title="Events List">
+        <section className='standard compact' title="Events List">
             <div className="main-body">
                 <div className={`events-listing ${thumbNailClass} compact ${wrapperclass}`}>
-                    { usefilterby === 'true'
-                        ? <EventFilters
-                            filterObjs={filterObjs}
-                            events={events}
-                            handleEventFilter={handleEventFilter}
-                            filterby={filterby}
-                        />
-                        : ''}
+                    <EventFilters
+                        filterObjs={filterObjs}
+                        events={events}
+                        handleEventFilter={handleEventFilter}
+                        filterby={filterby}
+                    />
                     <div className={`events-list view-content ${listclass}`}>
                         {filterEvents.length > 0
                             ? filterEvents.map( event => {
@@ -86,12 +102,14 @@ const Compact = (props) => {
                                         key={event.event.id}
                                         event={event.event}
                                         filterby={filterby}
-                                        addcal={addcal}
+                                        hideaddcal={hideaddcal}
                                         truncatedescription={
                                             truncatedescription
                                         }
                                         thumbnail={thumbnail}
                                         itemclass={itemclass}
+                                        hidedescription={hidedescription}
+                                        hideimages={hideimages}
                                     />
                                 )
                             })
@@ -106,24 +124,26 @@ const Compact = (props) => {
 Compact.propTypes = {
     events: PropTypes.array,
     filterby: PropTypes.string.isRequired,
-    usefilterby: PropTypes.string,
-    addcal: PropTypes.string,
+    hideaddcal: PropTypes.string,
     truncatedescription: PropTypes.string,
     thumbnail: PropTypes.string,
     wrapperclass: PropTypes.string,
     listclass: PropTypes.string,
     itemclass: PropTypes.string,
+    hidedescription: PropTypes.string,
+    hideimages: PropTypes.string
 };
 
 Compact.defaultProps = {
     events: [],
-    usefilterby: 'false',
-    addcal: 'false',
+    hideaddcal: 'false',
     truncatedescription: '150',
     thumbnail: 'true',
     wrapperclass: '', //cwd-card-grid three-card',
     listclass: '', //cards',
     itemclass: '', //card',
+    hidedescription: 'false',
+    hideimages: 'false',
 
 };
 

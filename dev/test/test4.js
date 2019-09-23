@@ -2,10 +2,10 @@
 var expect = require('chai').expect;
 require('./test');
 
-describe('Modern-Standard component', function(){
-    const eventsCount = 4
-    const targetEnabled = window.document.querySelector('div#modern_standard_enabled');
-    const targetDisabled = window.document.querySelector('div#modern_standard_disabled');
+describe('Compact component', function() {
+    const eventsCount = 4;
+    const targetEnabled = window.document.querySelector('div#compact_enabled');
+    const targetDisabled = window.document.querySelector('div#compact_disabled');
     var check = function(done){
         setTimeout(() => {
             done();
@@ -15,11 +15,11 @@ describe('Modern-Standard component', function(){
         check(done);
     });
 
-    it('should have class events-modern-standard', () => {
+    it('should have class compact', function() {
         const res = targetEnabled
             .querySelector('section')
             .classList
-            .contains('events-modern-standard');
+            .contains('compact');
         expect(res).to.be.true;
     });
 
@@ -39,7 +39,7 @@ describe('Modern-Standard component', function(){
 
         it('should have a description.', () => {
             const res = targetEnabled.querySelector('div.summary p').textContent;
-            expect(res).to.have.length(161);
+            expect(res).to.have.length(260);
         });
 
         it('should have images.', () => {

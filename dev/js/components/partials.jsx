@@ -109,27 +109,46 @@ EventThumbnail.defaultProps = {
 }
 
 const EventDescription = props =>{
-    const {description, title} = props;
+    const {description, title, url, hidedescription} = props;
+
+    const descriptionLink = <a
+        className='read-more more'
+        href={url}
+        rel='noreferrer noopener'
+        target='_blank'
+    > read more
+        <span className='visually-hidden'> about {title}
+        </span>
+    </a>
+
     return (
-        <p className='description'>
-            {description}
-            <a
-                className='read-more more'
-                href={event.localist_url}
-                rel='noreferrer noopener'
-                target='_blank'
-            > read more
-                <span className='visually-hidden'> about {title}
-                </span>
-            </a>
-        </p>
+        <div className = 'summary'>
+            <p className='description'>
+                {
+                    hidedescription === 'true'
+                        ? ''
+                        : description
+                }
+                {
+                    hidedescription === 'true'
+                        ? ''
+                        : descriptionLink
+                }
+            </p>
+        </div>
     )
 }
 
 EventDescription.propTypes = {
     description: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    hidedescription: PropTypes.string,
 };
+
+EventDescription.defaultProps = {
+    hidedescription: 'false',
+}
 
 const EventTypes = props => {
     const {eventTypes} = props;

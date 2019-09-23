@@ -22,21 +22,8 @@ const ModernCompactInner = props => {
         hidedescription} = props;
     const eventTime = getEventTime(event);
 
-    const getDescription = () => {
-        if (hidedescription === 'true') {
-            return '';
-        }
-        return (
-            <div className="field field-name-summary summary">
-                <p>
-                    {getTruncDesc(event, truncatedescription)}
-                </p>
-            </div>
-        )
-    }
-
     return (
-        <div className={`card event-node ${itemclass}`}>
+        <div className={`event-node ${itemclass}`}>
             <div className="events">
                 <a
                     href={event.localist_url}
@@ -63,7 +50,13 @@ const ModernCompactInner = props => {
                             {eventTime}{ event.location_name ? `, ${event.location_name}` : '' }
                         </p>
                     </div>
-                    {getDescription()}
+                    <div className="field field-name-summary summary">
+                        <p>
+                            { hidedescription !== 'true'
+                                ? getTruncDesc(event, truncatedescription)
+                                : ''}
+                        </p>
+                    </div>
                 </a>
                 {
                     hideaddcal !== 'true'
@@ -89,7 +82,6 @@ const ModernCompact= props =>{
     const {
         events,
         filterby,
-        usefilterby,
         hideaddcal,
         truncatedescription,
         hideimages,
@@ -104,14 +96,12 @@ const ModernCompact= props =>{
         <section className='events-modern-compact modern' title="Events List">
             <div className="main-body">
                 <div className={`cwd-component compact events-listing ${thumbNailClass} ${wrapperclass}`}>
-                    { usefilterby === 'true'
-                        ? <EventFilters
-                            filterObjs={filterObjs}
-                            events={events}
-                            handleEventFilter={handleEventFilter}
-                            filterby={filterby}
-                        />
-                        : ''}
+                    <EventFilters
+                        filterObjs={filterObjs}
+                        events={events}
+                        handleEventFilter={handleEventFilter}
+                        filterby={filterby}
+                    />
                     <div className={`events-list view-content ${listclass}`}>
                         {filterEvents.length > 0
                             ? filterEvents.map( event => {
@@ -142,7 +132,6 @@ const ModernCompact= props =>{
 ModernCompact.propTypes = {
     events: PropTypes.array,
     filterby: PropTypes.string.isRequired,
-    usefilterby: PropTypes.string,
     hideaddcal: PropTypes.string,
     truncatedescription: PropTypes.string,
     hideimages: PropTypes.string,
@@ -154,7 +143,6 @@ ModernCompact.propTypes = {
 
 ModernCompact.defaultProps = {
     events: [],
-    usefilterby: 'false',
     hideaddcal: 'false',
     truncatedescription: '150',
     hideimages: 'true',

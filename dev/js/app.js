@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable func-names */
-import Localist from './index';
+import LocalistRun from './index';
 //const Localist = require ('./index')
 require('babel-polyfill');
 
@@ -24,7 +24,7 @@ if (
                     .once('cwd_events')
                     .each(function() {
                         const data = { ...this.dataset };
-                        Localist(data);
+                        LocalistRun(data);
                     });
             }
         };
@@ -36,6 +36,6 @@ if (
     ];
     eventListings.forEach(elem => {
         const data = { ...elem.dataset };
-        Localist(data);
+        LocalistRun(data);
     });
 }

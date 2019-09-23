@@ -23,64 +23,76 @@ const StandardInner = props => {
     const {
         event,
         filterby,
-        addcal,
+        hideaddcal,
         truncatedescription,
         thumbnail,
-        innerClass} = props;
+        itemclass,
+        hidedescription,
+        hideimages,
+    } = props;
 
     return (
-        <div className={`views-row ${innerClass}`}>
-            <div className="event-node node">
-                <div className="field title">
-                    <EventTitle title={event.title} url={event.localist_url} />
+        <div className="views-row">
+            <div className={`event-node node ${itemclass}`}>
+                <div className = 'events'>
+                    <div className="field title">
+                        <EventTitle
+                            title={event.title}
+                            url={event.localist_url} />
+                    </div>
+                    <EventLocation locationName={event.location_name} />
+                    <div>
+                        <EventDate date={getEventTime(event)} />
+                        <EventTypes
+                            eventTypes={getEventType(event, filterby)} />
+                    </div>
+                    { hideimages === 'true'
+                        ? ''
+                        : <EventThumbnail
+                            photoUrl={event.photo_url}
+                            title={event.title}
+                            thumbnail={thumbnail}
+                            photoCrop='big'
+                        />}
+                    <EventDescription
+                        description={getTruncDesc(event, truncatedescription)}
+                        title = {event.title}
+                        url = {event.localist_url}
+                        hidedescription = {hidedescription}
+                    />
+                    { hideaddcal === 'true'
+                        ? ''
+                        : <AddCal event={event} />}
                 </div>
-                <EventLocation locationName={event.location_name} />
-                <div>
-                    <EventDate date={getEventTime(event)} />
-                    <EventTypes eventTypes={getEventType(event, filterby)} />
-                </div>
-                <EventThumbnail
-                    photoUrl={event.photo_url}
-                    title={event.title}
-                    thumbnail={thumbnail}
-                    photoCrop='big'
-                />
-                <EventDescription
-                    description={getTruncDesc(event, truncatedescription)}
-                    title = {event.title}
-                />
-                {
-                    addcal === 'true'
-                        ? <AddCal event={event} />
-                        : ''
-                }
             </div>
         </div>
     )
 }
 
 StandardInner.propTypes = {
-    event: PropTypes.object,
+    event: PropTypes.object.isRequired,
     filterby: PropTypes.string.isRequired,
-    addcal: PropTypes.string.isRequired,
+    hideaddcal: PropTypes.string.isRequired,
     truncatedescription: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
-    innerClass: PropTypes.string,
-};
-
-StandardInner.defaultProps = {
-    event: {},
-    innerClass: '',
+    itemclass: PropTypes.string.isRequired,
+    hidedescription: PropTypes.string.isRequired,
+    hideimages: PropTypes.string.isRequired,
 };
 
 const Standard = (props) => {
     const {
         events,
         filterby,
-        usefilterby,
-        addcal,
+        hideaddcal,
         truncatedescription,
-        thumbnail} = props;
+        thumbnail,
+        wrapperclass,
+        listclass,
+        itemclass,
+        hidedescription,
+        hideimages,
+    } = props;
     const [filterEvents, handleEventFilter] = useState(events);
     // An object of filters id, name, filterby objects.
     const filterObjs = buildEventWrapperFilters(events, filterby);
@@ -114,18 +126,16 @@ const Standard = (props) => {
     }
 
     return (
-        <section className="standard" id="eventStandard" title="Events List">
+        <section className="standard" title="Events List">
             <div className="main-body">
-                <div className={`events-listing ${thumbNailClass}`}>
-                    { usefilterby === 'true'
-                        ? <EventFilters
-                            filterObjs={filterObjs}
-                            events={events}
-                            handleEventFilter={handleEventFilter}
-                            filterby={filterby}
-                        />
-                        : ''}
-                    <div className="events-list">
+                <div className={`events-listing ${thumbNailClass} ${wrapperclass}`}>
+                    <EventFilters
+                        filterObjs={filterObjs}
+                        events={events}
+                        handleEventFilter={handleEventFilter}
+                        filterby={filterby}
+                    />
+                    <div className={`events-list ${listclass}`}>
                         { filterEvents.length > 0
                             ? filterEvents.map( event => {
                                 return (
@@ -135,11 +145,14 @@ const Standard = (props) => {
                                         <StandardInner
                                             event={event.event}
                                             filterby={filterby}
-                                            addcal={addcal}
+                                            hideaddcal={hideaddcal}
                                             truncatedescription={
                                                 truncatedescription
                                             }
+                                            itemclass = {itemclass}
                                             thumbnail={thumbnail}
+                                            hidedescription={hidedescription}
+                                            hideimages={hideimages}
                                         />
                                     </div>
                                 )})
@@ -154,18 +167,26 @@ const Standard = (props) => {
 Standard.propTypes = {
     events: PropTypes.array,
     filterby: PropTypes.string.isRequired,
-    usefilterby: PropTypes.string,
-    addcal: PropTypes.string,
+    hideaddcal: PropTypes.string,
     truncatedescription: PropTypes.string,
     thumbnail: PropTypes.string,
+    wrapperclass: PropTypes.string,
+    listclass: PropTypes.string,
+    itemclass: PropTypes.string,
+    hidedescription: PropTypes.string,
+    hideimages: PropTypes.string,
 };
 
 Standard.defaultProps = {
     events: [],
-    usefilterby: 'true',
-    addcal: 'true',
+    hideaddcal: 'true',
     truncatedescription: '250',
     thumbnail: 'true',
+    wrapperclass: '', //cwd-card-grid three-card',
+    listclass: '', //cards',
+    itemclass: '', //card',
+    hidedescription: 'false',
+    hideimages: 'false',
 };
 
 export default Standard;

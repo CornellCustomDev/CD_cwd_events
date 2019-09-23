@@ -10,6 +10,7 @@ import Localist from './localist';
 //     }
 // }
 
+
 const run = props => {
     const {
         target,
@@ -32,6 +33,10 @@ const run = props => {
         listclass,
         itemclass,
     } = props;
+    if (typeof document === 'undefined' || !document.getElementById(target)) {
+        console.warn(`invalid target: ${target}`);
+        return;
+    }
     ReactDOM.render(<Localist
         target= {target}
         depts= {depts}
