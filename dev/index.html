@@ -558,7 +558,7 @@
         ];
         // Get params from form submit.
         var url = new URL(window.location);
-        for (const val in cbs) {
+        for (var val in cbs) {
             let res = url.searchParams.get(cbs[val]);
             if (res == 'true') {
                 $('form').first().find("input[name='" + cbs[val] + "']").prop("checked", true);
@@ -573,7 +573,7 @@
             })
         }
         const searchParams = url.searchParams;
-        for (const [key, val] of searchParams) {
+        for (var [key, val] of searchParams) {
             if (cbs.indexOf(key) >= 0) {
                 // pass
             } else if (selects.indexOf(key) >= 0) {

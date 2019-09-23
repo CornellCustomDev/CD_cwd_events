@@ -1,7 +1,4 @@
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable func-names */
-import LocalistRun from './index';
-//const Localist = require ('./index')
+import LocalistRun from 'localist-viewer';
 require('babel-polyfill');
 
 /** *********************** START LOCALIST ********************************* /
@@ -28,7 +25,7 @@ if (
                     });
             }
         };
-    })(jQuery, Drupal, window);
+    })(jQuery, Drupal);
 } else {
     console.warn(`jQuery is ${typeof jQuery} and Drupal is ${typeof Drupal}`);
     const eventListings = [
