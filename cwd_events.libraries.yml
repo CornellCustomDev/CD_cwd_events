@@ -3,10 +3,11 @@ cwdeventslib:
   header: true
   css:
     theme:
-      dist/cwd_events.css: {}
+      includes/cwd_events.css: {}
   js:
-    dist/cwd_events.js: {preprocess: false}
+    includes/cwd_events.js: {preprocess: false}
   dependencies:
     - core/drupal
     - core/jquery
     - core/jquery.once
+    - core/drupalSettings

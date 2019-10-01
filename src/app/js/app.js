@@ -1,4 +1,5 @@
 import LocalistRun from 'localist-viewer';
+
 require('babel-polyfill');
 
 /** *********************** START LOCALIST ********************************* /
@@ -14,7 +15,7 @@ if (
     typeof jQuery === 'function' &&
     typeof Drupal !== 'undefined'
 ) {
-    (function($, Drupal) {
+    (function ($, Drupal, drupalSettings) {
         Drupal.behaviors.cwdEvents = {
             attach(context) {
                 $('div.events-listing', context)
@@ -25,7 +26,7 @@ if (
                     });
             }
         };
-    })(jQuery, Drupal);
+    })(jQuery, Drupal, drupalSettings);
 } else {
     console.warn(`jQuery is ${typeof jQuery} and Drupal is ${typeof Drupal}`);
     const eventListings = [
