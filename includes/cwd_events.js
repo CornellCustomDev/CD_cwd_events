@@ -129,9 +129,11 @@ __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/ind
 
 if (typeof jQuery === 'function' && typeof Drupal !== 'undefined') {
   (function ($, Drupal, drupalSettings) {
-    Drupal.behaviors.cwdEvents = {
+    Drupal.behaviors.cwd_events = {
       attach: function attach(context) {
         $('div.events-listing', context).once('cwd_events').each(function () {
+          console.log(drupalSettings.cwd_events);
+
           var data = _objectSpread({}, this.dataset);
 
           localist_viewer__WEBPACK_IMPORTED_MODULE_0___default()(data);

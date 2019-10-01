@@ -16,11 +16,12 @@ if (
     typeof Drupal !== 'undefined'
 ) {
     (function ($, Drupal, drupalSettings) {
-        Drupal.behaviors.cwdEvents = {
+        Drupal.behaviors.cwd_events = {
             attach(context) {
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
+                        console.log(drupalSettings.cwd_events);
                         const data = { ...this.dataset };
                         LocalistRun(data);
                     });
