@@ -1,4 +1,4 @@
-const LocalistRun = require('localist-viewer');
+import LocalistRun from 'localist-viewer';
 require('babel-polyfill');
 
 /** *********************** START LOCALIST ********************************* /

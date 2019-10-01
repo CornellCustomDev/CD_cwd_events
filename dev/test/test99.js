@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 require('./test');
 
 describe('test exposed LL', function(){
-    var LL = window.Localist
+    var LL = window.localistViewer
     var data = {
         apikey: "",
         calendarurl: "http://localhost:8080/test/testData.json",
