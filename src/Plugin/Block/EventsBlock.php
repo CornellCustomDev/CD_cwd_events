@@ -50,13 +50,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
   public function build() {
     $class = ($this->configuration['hidestyling'] === "true") ? '' : 'cwd-events-style' ;
     $target = $this->configuration['target'];
-    //@todo add heading and readmore to js
-    // $teaser = $this->configuration['readmore']
-    //   ? '<a class="readmore ' . $class . '" href='
-    //       . $this->configuration['url'] . '>'
-    //       . $this->t('@readmore', ["@readmore" => $this->configuration['readmore']]) .
-    //     '</a>'
-    //   : '';
     return [
       '#attached' => [
         'library' => ["cwd_events/cwdeventslib"],

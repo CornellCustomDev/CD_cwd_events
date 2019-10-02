@@ -1,5 +1,5 @@
 cwdeventslib:
-  version: 2.x
+  version: 3.x
   header: true
   css:
     theme:
