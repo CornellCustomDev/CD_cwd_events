@@ -1,0 +1,118 @@
+ /* Compact Mode
+     -------------------- */
+section.standard .events-listing {
+    &.compact {
+        // #events-filters {
+        //     display: none;
+        // }
+
+        .card{
+            border: none;
+        }
+
+        margin-top: 0;
+        .node {
+            border-bottom: 1px solid #e0e0e0;
+            margin: 0.5em 0 0.6em;
+            &:last-child {
+                border: 0;
+            }
+            h3 {
+                font-size: 14px;
+            }
+        }
+        .meta {
+            font-size: 13px;
+        }
+        .location {
+            float: left;
+            width: 60%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .description {
+            font-size: 11px;
+            padding-left: 0;
+            clear: both;
+        }
+        .event-details {
+            padding-left: 0;
+            clear: both;
+        }
+        img {
+            float: left;
+            margin: 0 20px 0px 0px;
+            object-fit: cover;
+            object-position: 100% 0;
+            width: 100%;
+            height: auto;
+            border-bottom: 8px solid $red;
+        }
+        .date .fulldate {
+            margin: 0 0 0 5px;
+            padding: 3px 7px;
+            margin-top: -3px;
+            float: right;
+            background: #f2f2f2;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+        }
+        .location {
+            width: 70%;
+        }
+    }
+    &.no-thumbnails {
+        .description, .event-details {
+            padding-left: 0;
+            clear: both;
+        }
+    }
+    .type .fa:before {
+        margin-right: 5px;
+        content: '\f124';
+        font-size: 14px;
+    }
+    .location {
+        float: left;
+        width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+}
+
+/* compact filters */
+#standardCompact{
+    ul.events-filters {
+        width: 100%;
+        float: left;
+        li {
+            margin-right: 4px;
+            &:last-child {
+                border: 0;
+                margin-right: 0;
+            }
+            a {
+                padding: 2px 10px 1px;
+                -moz-border-radius: 2px;
+                -webkit-border-radius: 2px;
+                border-radius: 2px;
+                font-size: 13px;
+            }
+        }
+    }
+
+    .win ul.events-filters li {
+        margin-right: 2px;
+        &:last-child {
+            margin-right: 0;
+        }
+        a {
+            padding: 2px 8px 1px;
+        }
+    }
+
+}

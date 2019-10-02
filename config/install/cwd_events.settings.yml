@@ -1,14 +1,24 @@
 cwd_events:
+  heading: ''
+  target: ''
+  id: ''
   calendarurl: "//events.cornell.edu/api/2.1/events"
   apikey: "KLhy2GtuSAGirYGY"
+  format: "standard"
+  entries: 3
+  daysahead: 365
   depts: 0
   group: 0
-  entries: 3
   keyword: ""
-  readmore: "Read More"
+  readmore: "More Events »"
   url: "/events"
-  format: "standard"
-  addcal: "false"
-  pagination: "false"
+  hidedescription: 'false'
+  truncatedescription: 150
+  hideimages: "false"
+  hideaddcal: "false"
+  hidepagination: "false"
   filterby: "group"
-  styling: 1
+  hidestyling: "false"
+  wrapperclass: ''
+  listclass: ''
+  itemclass: ''
