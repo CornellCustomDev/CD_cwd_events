@@ -1,8 +1,13 @@
-
 @media all {
+    .pager {
+        border-top: none !important;
+        padding-top: 0px !important;
+    }
+
     .pager ul {
         padding-left: 0;
     }
+
     .pager ul li {
         display: inline-block;
         margin: 0 4px 8px 0;
@@ -11,6 +16,7 @@
         line-height: 2;
         border: 0;
     }
+
     .pager ul li a {
         display: inline-block;
         padding: 0 0.6em;
@@ -18,12 +24,14 @@
         background: rgba(0, 0, 0, 0.04);
         border: 1px solid $alphagrey;
     }
+
     .pager ul li a:hover,
     .pager ul li a:focus {
         background: rgba(0, 0, 0, 0.06);
         border: 1px solid rgba(0, 0, 0, 0.1);
         color: black;
     }
+
     .pager ul li.pager__item a,
     .pager ul li.is-active a {
         min-width: 2.5em;
@@ -31,6 +39,7 @@
         padding: 0.2em 0.6em;
         text-align: center;
     }
+
     .pager ul li.is-active a {
         background: #3584ba !important;
         font-weight: 600;

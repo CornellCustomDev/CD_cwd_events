@@ -161,7 +161,8 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#type' => 'textfield',
       '#title' => $this->t('Read More Title'),
       '#description' => $this->t('Read More Title to be used with readmore url to link to the events page. Leave blank to remove from display.'),
-      '#default_value' => isset($config['readmore']) ? $config['readmore'] : 'Read More',
+      '#default_value' => isset($config['readmore']) ? $config['readmore'] :
+        'More Events »',
     ];
 
     $form['cwd_events_display_options']['url'] = [

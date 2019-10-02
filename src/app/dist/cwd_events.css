@@ -24,6 +24,11 @@
 }
 
 @media all {
+  .cwd-events-style .pager {
+    border-top: none !important;
+    padding-top: 0px !important;
+  }
+
   .cwd-events-style .pager ul {
     padding-left: 0;
   }
@@ -681,12 +686,16 @@
   width: 80%;
 }
 
-.cwd-events-style.cwd_events_readmore {
+.cwd-events-style .cwd_events_readmore {
   float: right;
   margin-top: 0.5em;
   position: relative;
   z-index: 1;
   font-size: 15px;
+}
+
+.cwd-events-style h2 {
+  display: inline-block;
 }
 
 .cwd-events-style .cwd-card-grid .group-image {

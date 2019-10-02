@@ -10,7 +10,7 @@ cwd_events:
   depts: 0
   group: 0
   keyword: ""
-  readmore: "Read More"
+  readmore: "More Events »"
   url: "/events"
   hidedescription: 'false'
   truncatedescription: 150

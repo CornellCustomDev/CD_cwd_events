@@ -29,13 +29,17 @@ $offwhite: #fcf3e1;
     @import 'components/modern';
     @import 'components/cuenergy';
 
-    &.cwd_events_readmore {
+    .cwd_events_readmore {
         float: right;
         margin-top: 0.5em;
         position: relative;
         z-index: 1;
         font-size: 15px;
       }
+
+    h2 {
+        display: inline-block;
+    }
 
     .cwd-card-grid .group-image{
         width: 100%;
