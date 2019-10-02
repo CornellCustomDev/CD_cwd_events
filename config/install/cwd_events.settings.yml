@@ -1,4 +1,7 @@
 cwd_events:
+  heading: ''
+  target: ''
+  id: ''
   calendarurl: "//events.cornell.edu/api/2.1/events"
   apikey: "KLhy2GtuSAGirYGY"
   format: "standard"

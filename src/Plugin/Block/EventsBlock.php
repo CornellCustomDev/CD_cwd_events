@@ -48,42 +48,21 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
-    $uuid = \Drupal::service('uuid');
-    $id = $uuid->generate();
     $class = ($this->configuration['hidestyling'] === "true") ? '' : 'cwd-events-style' ;
-    $teaser = $this->configuration['readmore']
-      ? '<a class="readmore ' . $class . '" href='
-          . $this->configuration['url'] . '>'
-          . $this->t('@readmore', ["@readmore" => $this->configuration['readmore']]) .
-        '</a>'
-      : '';
+    $target = $this->configuration['target'];
+    //@todo add heading and readmore to js
+    // $teaser = $this->configuration['readmore']
+    //   ? '<a class="readmore ' . $class . '" href='
+    //       . $this->configuration['url'] . '>'
+    //       . $this->t('@readmore', ["@readmore" => $this->configuration['readmore']]) .
+    //     '</a>'
+    //   : '';
     return [
       '#attached' => [
         'library' => ["cwd_events/cwdeventslib"],
         'drupalSettings' => ["cwd_events" => $this->configuration]
       ],
-      '#markup' => $teaser . "<div
-                id = 'events-listing-" . $id . "'
-                class = 'events-listing " . $class . "'
-                data-target = 'events-listing-" . $id . "'
-                data-calendarurl = '" . $this->configuration['calendarurl'] . "'
-                data-apikey = '" . $this->configuration['apikey'] . "'
-                data-format = '" . $this->configuration['format'] . "'
-                data-entries = '" . $this->configuration['entries'] . "'
-                data-daysahead = '" . $this->configuration['daysahead'] . "'
-                data-depts = '" . $this->configuration['depts'] . "'
-                data-group = '" . $this->configuration['group'] . "'
-                data-keyword = '" . $this->configuration['keyword'] . "'
-                data-hidedescription = '" . $this->configuration['hidedescription'] . "'
-                data-truncatedescription = '" . $this->configuration['truncatedescription'] . "'
-                data-hideimages = '" . $this->configuration['hideimages'] . "'
-                data-hideaddcal = '" . $this->configuration['hideaddcal'] . "'
-                data-hidepagination = '" . $this->configuration['hidepagination'] . "'
-                data-filterby = '" . $this->configuration['filterby'] . "'
-                data-wrapperclass = '" . $this->configuration['wrapperclass'] . "'
-                data-listclass = '" . $this->configuration['listclass'] . "'
-                data-itemclass = '" . $this->configuration['itemclass'] . "'
-              ></div>",
+      '#markup' => "<div id='$target' class='events-listing $class' ></div>",
     ];
   }
 
@@ -177,7 +156,14 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#collapsed' => TRUE,
     ];
 
+    $form['cwd_events_display_options']['heading'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Heading'),
+      '#default_value' => isset($config['heading']) ? $config['heading'] : '',
+    ];
+
     // @todo add option for "Widget Type" list or row.
+
     $form['cwd_events_display_options']['readmore'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Read More Title'),
@@ -223,7 +209,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
 
     $form['cwd_events_display_options']['hideaddcal'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Hide Calendar links'),
+      '#title' => $this->t('Hide Add to Calendar'),
       '#return_value' => 'true',
       '#default_value' => isset($config['hideaddcal']) ? $config['hideaddcal'] : 'false',
     ];
@@ -273,6 +259,11 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
     $formatOptions = $this->formatOptions;
+    $uuid = \Drupal::service('uuid');
+    $id = $uuid->generate();
+    $this->configuration['id'] = $id;
+    $this->configuration['target'] = "events-listing-$id";
+
     $this->configuration['calendarurl'] = $values['cwd_events_localist_config']['calendarurl'];
     $this->configuration['apikey'] = $values['cwd_events_localist_config']['apikey'];
 
@@ -283,6 +274,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $this->configuration['group'] = $values['cwd_events_display_config']['group'];
     $this->configuration['keyword'] = $values['cwd_events_display_config']['keyword'];
 
+    $this->configuration['heading'] = $values['cwd_events_display_options']['heading'];
     $this->configuration['readmore'] = $values['cwd_events_display_options']['readmore'];
     $this->configuration['url'] = $values['cwd_events_display_options']['url'];
     $this->configuration['filterby'] = $values['cwd_events_display_options']['filterby'];

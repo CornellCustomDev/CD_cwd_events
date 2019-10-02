@@ -1,19 +1,21 @@
-import LocalistRun from 'localist-viewer';
+import LocalistView from 'localist-viewer';
 
 require('babel-polyfill');
 
-/** *********************** START LOCALIST ********************************* /
- * Localist Events
- * javascript es6 requires {core/Drupal, core/jQuery, core/jQuery.once cwd_events.js}
+/** *********************** START LOCALIST *********************************** /
+ * CWD Events
+ * requires {Drupal, jQuery, jQuery.once drupalSettings localist-viewer}
  * @author CU Custom Development
  *  self invoking anonymous function, using drupal behaviours API.
  *
  * @param {jQuery} $
  * @param {Drupal} Drupal
- */
+ * @param {obj} drupalSettings
+ **************************************************************************** */
 if (
     typeof jQuery === 'function' &&
-    typeof Drupal !== 'undefined'
+    typeof Drupal !== 'undefined' &&
+    typeof drupalSettings !== 'undefined'
 ) {
     (function ($, Drupal, drupalSettings) {
         Drupal.behaviors.cwd_events = {
@@ -21,9 +23,7 @@ if (
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
-                        console.log(drupalSettings.cwd_events);
-                        const data = { ...this.dataset };
-                        LocalistRun(data);
+                        LocalistView(drupalSettings.cwd_events);
                     });
             }
         };
@@ -35,6 +35,6 @@ if (
     ];
     eventListings.forEach(elem => {
         const data = { ...elem.dataset };
-        LocalistRun(data);
+        LocalistView(data);
     });
 }
