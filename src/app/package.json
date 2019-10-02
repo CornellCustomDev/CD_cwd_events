@@ -48,6 +48,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "eslint-friendly-formatter": "^4.0.1",
-    "laravel-mix": "^4.1.4"
+    "laravel-mix": "^4.1.4",
+    "localist-viewer": "0.0.5"
   }
 }
