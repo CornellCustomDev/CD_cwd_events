@@ -1,0 +1,53 @@
+{
+  "name": "mix-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --require @babel/register",
+    "coverage": "./node_modules/.bin/nyc npm run test",
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.5.5",
+    "babel-eslint": "^10.0.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "jsdom": "^15.1.1",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "react": "^16.9.0",
+    "react-a11y": "^1.1.0",
+    "react-test-renderer": "^16.9.0",
+    "request": "^2.88.0",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.22.10",
+    "sass-loader": "^7.3.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "laravel-mix": "^4.1.4"
+  }
+}

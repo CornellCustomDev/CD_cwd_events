@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CWD_Localist examples</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/drupal/style.css" />
+    <!-- <link rel="import" href="demo/main.html" /> -->
+    <!-- <link rel="import" href="demo/drupalBlock.html" /> -->
+    <!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.2.0/mocha.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+
+</head>
+
+<body>
+    <nav id='nav' class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div id="nav" class='nav'>
+            <a class="navbar-brand"
+                href="https://cu-communityapps.github.io/CD_cwd_events/">CD_cwd_events</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">Drupal Config
+                            Demo <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+    <div class="flex-container p-4">
+        <div class='row'>
+            <h1>CWD_Events Interactive Demo</h1>
+            <p class='text-muted'>
+                Make changes to the drupal demo block, then click the update
+                button. The Events block will show the new changes.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div tabindex="-1" role="dialog"
+                    class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-dialog-buttons"
+                    aria-describedby="drupal-modal" aria-labelledby="ui-id-2">
+                    <div
+                        class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix">
+                        <span id="ui-id-2" class="ui-dialog-title">Configure
+                            demo block</span>
+                    </div>
+                    <div id="drupal-modal"
+                        class="ui-front ui-dialog-content ui-widget-content"
+                        style="border: solid #eee;">
+
+                        <form class="block-form"
+                            data-drupal-selector="block-form-nzchgabds3m"
+                            action="/"
+                            method="get" id="block-form--nzCHGABDs3M"
+                            accept-charset="UTF-8"
+                            data-drupal-form-fields="edit-settings-label--nUjJ9TJbOtU,edit-settings-label-display--YPA7yM5gPe0,edit-settings-cwd-events-localist-config-cwd-events-calendarurl--uRbFQfcCLpw,edit-settings-cwd-events-localist-config-cwd-events-apikey--DbQwCfGXnZc,edit-settings-cwd-events-display-config-cwd-events-format--ZQy4YjBVTho,edit-settings-cwd-events-display-config-cwd-events-entries--nK-6kV7HSQ0,edit-settings-cwd-events-display-config-cwd-events-daysahead--DwRFDMrcVq8,edit-settings-cwd-events-display-config-cwd-events-depts--ny4hRp2AKWk,edit-settings-cwd-events-display-config-cwd-events-group--ri3Be27BQKU,edit-settings-cwd-events-display-config-cwd-events-keyword--o4XD5-7nsQQ,edit-settings-cwd-events-display-options-cwd-events-readmore--bQAzCZRVm28,edit-settings-cwd-events-display-options-cwd-events-url---dcNkvn2Q5I,edit-settings-cwd-events-display-options-cwd-events-filterby--cspV6pf-aMI,edit-settings-cwd-events-display-options-cwd-events-truncatedescription--yddONSpw5zM,edit-settings-cwd-events-display-options-cwd-events-hidedescription--2pQI2nPOZQk,edit-settings-cwd-events-display-options-cwd-events-hideimages--UMTjVZyMqFw,edit-settings-cwd-events-display-options-cwd-events-hideaddcal--RhotVyYC2PI,edit-settings-cwd-events-display-options-cwd-events-hidepagination--h4-1XnV9PSA,edit-settings-cwd-events-display-options-cwd-events-hidestyling--Jovjp6LFo-w,edit-settings-cwd-events-display-options-cwd-events-wrapperclass--GDOEJAG0-IM,edit-settings-cwd-events-display-options-cwd-events-listclass--7KWOwRaDJpo,edit-settings-cwd-events-display-options-cwd-events-itemclass--IbikV_uJqS4,edit-visibility-node-type-bundles-article--mFrnv_bo7cQ,edit-visibility-node-type-bundles-page--XGtpCFqL5PU,edit-visibility-request-path-pages--GBAB5mkg98M,edit-visibility-request-path-negate-0--D2iJd9nqAVo,edit-visibility-request-path-negate-1--vNceTWuPO9I,edit-visibility-user-role-roles-anonymous--Yn1Pz1S3LKg,edit-visibility-user-role-roles-authenticated--P12BULOG9Tg,edit-visibility-user-role-roles-administrator--iDybDZIovxA,edit-id--ypTJadXJLAk,edit-region--CGBH3bnn4wc,edit-actions-submit--BKU45rlSI6M">
+                            <div
+                                class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-label form-item-settings-label">
+                                <label for="edit-settings-label--nUjJ9TJbOtU"
+                                    class="js-form-required form-required">Title</label>
+                                <input
+                                    data-drupal-selector="edit-settings-label"
+                                    type="text"
+                                    id="edit-settings-label--nUjJ9TJbOtU"
+                                    name="settings[label]" value="Events block"
+                                    size="60" maxlength="255"
+                                    class="form-text required machine-name-source"
+                                    required="required" aria-required="true"
+                                    style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                            </div>
+                            <fieldset
+                                data-drupal-selector="edit-settings-cwd-events-localist-config"
+                                id="edit-settings-cwd-events-localist-config--j4HNr-f4qbY"
+                                class="js-form-item form-item js-form-wrapper form-wrapper">
+                                <legend>
+                                    <span class="fieldset-legend">Localist API
+                                        Connection settings.</span>
+                                </legend>
+                                <div class="fieldset-wrapper">
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-localist-config-cwd-events-calendarurl form-item-settings-cwd-events-localist-config-cwd-events-calendarurl">
+                                        <label
+                                            for="edit-settings-cwd-events-localist-config-cwd-events-calendarurl--uRbFQfcCLpw">Calendar
+                                            url</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-localist-config-cwd-events-calendarurl"
+                                            aria-describedby="edit-settings-cwd-events-localist-config-cwd-events-calendarurl--uRbFQfcCLpw--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-localist-config-cwd-events-calendarurl--uRbFQfcCLpw"
+                                            name="settings[cwd_events_localist_config][cwd_events_calendarurl]"
+                                            value="/test/testData.json"
+                                            size="60" maxlength="128"
+                                            class="form-text">
+
+                                        <div id="edit-settings-cwd-events-localist-config-cwd-events-calendarurl--uRbFQfcCLpw--description"
+                                            class="description">
+                                            The localist calendar url.
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-localist-config-cwd-events-apikey form-item-settings-cwd-events-localist-config-cwd-events-apikey">
+                                        <label
+                                            for="edit-settings-cwd-events-localist-config-cwd-events-apikey--DbQwCfGXnZc">API
+                                            key</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-localist-config-cwd-events-apikey"
+                                            aria-describedby="edit-settings-cwd-events-localist-config-cwd-events-apikey--DbQwCfGXnZc--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-localist-config-cwd-events-apikey--DbQwCfGXnZc"
+                                            name="settings[cwd_events_localist_config][cwd_events_apikey]"
+                                            value="" size="60"
+                                            maxlength="128" class="form-text">
+
+                                        <div id="edit-settings-cwd-events-localist-config-cwd-events-apikey--DbQwCfGXnZc--description"
+                                            class="description">
+                                            The localist API Key.
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                            <fieldset
+                                data-drupal-selector="edit-settings-cwd-events-display-config"
+                                id="edit-settings-cwd-events-display-config--uR937va1QQo"
+                                class="js-form-item form-item js-form-wrapper form-wrapper">
+                                <legend>
+                                    <span class="fieldset-legend">Build An
+                                        Events Widget</span>
+                                </legend>
+                                <div class="fieldset-wrapper">
+                                    <div
+                                        class="js-form-item form-item js-form-type-select form-type-select js-form-item-settings-cwd-events-display-config-cwd-events-format form-item-settings-cwd-events-display-config-cwd-events-format">
+                                        <label
+                                            for="edit-settings-cwd-events-display-config-cwd-events-format--ZQy4YjBVTho">Template</label>
+                                        <select
+                                            data-drupal-selector="edit-settings-cwd-events-display-config-cwd-events-format"
+                                            aria-describedby="edit-settings-cwd-events-display-config-cwd-events-format--ZQy4YjBVTho--description"
+                                            id="edit-settings-cwd-events-display-config-cwd-events-format--ZQy4YjBVTho"
+                                            name="settings[cwd_events_display_config][cwd_events_format]"
+                                            class="form-select">
+                                            <option value="standard"
+                                                selected="selected">standard
+                                            </option>
+                                            <option value="compact">compact
+                                            </option>
+                                            <option value="inline_compact">
+                                                inline_compact</option>
+                                            <option value="modern_compact">
+                                                modern_compact</option>
+                                            <option value="modern_standard">
+                                                modern_standard</option>
+                                            <option value="classic">classic
+                                            </option>
+                                        </select>
+                                        <div id="edit-settings-cwd-events-display-config-cwd-events-format--ZQy4YjBVTho--description"
+                                            class="description">
+                                            Choices are: standard (default),
+                                            compact (omit thumbnail, type and
+                                            end time), archive (past events in
+                                            reverse order), calendar (date on
+                                            left)
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-number form-type-number js-form-item-settings-cwd-events-display-config-cwd-events-entries form-item-settings-cwd-events-display-config-cwd-events-entries">
+                                        <label
+                                            for="edit-settings-cwd-events-display-config-cwd-events-entries--nK-6kV7HSQ0">Number
+                                            of Results</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-config-cwd-events-entries"
+                                            aria-describedby="edit-settings-cwd-events-display-config-cwd-events-entries--nK-6kV7HSQ0--description"
+                                            type="number"
+                                            id="edit-settings-cwd-events-display-config-cwd-events-entries--nK-6kV7HSQ0"
+                                            name="settings[cwd_events_display_config][cwd_events_entries]"
+                                            value="3" step="1"
+                                            class="form-number">
+
+                                        <div id="edit-settings-cwd-events-display-config-cwd-events-entries--nK-6kV7HSQ0--description"
+                                            class="description">
+                                            Max number of entries to display, up
+                                            to 50
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-number form-type-number js-form-item-settings-cwd-events-display-config-cwd-events-daysahead form-item-settings-cwd-events-display-config-cwd-events-daysahead">
+                                        <label
+                                            for="edit-settings-cwd-events-display-config-cwd-events-daysahead--DwRFDMrcVq8">Days
+                                            Ahead</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-config-cwd-events-daysahead"
+                                            aria-describedby="edit-settings-cwd-events-display-config-cwd-events-daysahead--DwRFDMrcVq8--description"
+                                            type="number"
+                                            id="edit-settings-cwd-events-display-config-cwd-events-daysahead--DwRFDMrcVq8"
+                                            name="settings[cwd_events_display_config][cwd_events_daysahead]"
+                                            value="365" step="1"
+                                            class="form-number">
+
+                                        <div id="edit-settings-cwd-events-display-config-cwd-events-daysahead--DwRFDMrcVq8--description"
+                                            class="description">
+                                            Up to 365. Set to negative for
+                                            archive events.
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-display-config-cwd-events-depts form-item-settings-cwd-events-display-config-cwd-events-depts">
+                                        <label
+                                            for="edit-settings-cwd-events-display-config-cwd-events-depts--ny4hRp2AKWk">Departments</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-config-cwd-events-depts"
+                                            aria-describedby="edit-settings-cwd-events-display-config-cwd-events-depts--ny4hRp2AKWk--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-display-config-cwd-events-depts--ny4hRp2AKWk"
+                                            name="settings[cwd_events_display_config][cwd_events_depts]"
+                                            value="0" size="60" maxlength="128"
+                                            class="form-text">
+
+                                        <div id="edit-settings-cwd-events-display-config-cwd-events-depts--ny4hRp2AKWk--description"
+                                            class="description">
+                                            The department to include by ID. A
+                                            comma seperated list of groups can
+                                            be used.
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-display-config-cwd-events-group form-item-settings-cwd-events-display-config-cwd-events-group">
+                                        <label
+                                            for="edit-settings-cwd-events-display-config-cwd-events-group--ri3Be27BQKU">Groups</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-config-cwd-events-group"
+                                            aria-describedby="edit-settings-cwd-events-display-config-cwd-events-group--ri3Be27BQKU--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-display-config-cwd-events-group--ri3Be27BQKU"
+                                            name="settings[cwd_events_display_config][cwd_events_group]"
+                                            value="0" size="60" maxlength="128"
+                                            class="form-text">
+
+                                        <div id="edit-settings-cwd-events-display-config-cwd-events-group--ri3Be27BQKU--description"
+                                            class="description">
+                                            Localist filter option
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-display-config-cwd-events-keyword form-item-settings-cwd-events-display-config-cwd-events-keyword">
+                                        <label
+                                            for="edit-settings-cwd-events-display-config-cwd-events-keyword--o4XD5-7nsQQ">Keyword</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-config-cwd-events-keyword"
+                                            aria-describedby="edit-settings-cwd-events-display-config-cwd-events-keyword--o4XD5-7nsQQ--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-display-config-cwd-events-keyword--o4XD5-7nsQQ"
+                                            name="settings[cwd_events_display_config][cwd_events_keyword]"
+                                            size="60" maxlength="128"
+                                            class="form-text">
+
+                                        <div id="edit-settings-cwd-events-display-config-cwd-events-keyword--o4XD5-7nsQQ--description"
+                                            class="description">
+                                            Display events with a specific tag
+                                            or keyword (can be used alone or in
+                                            combination with "depts" and
+                                            "group")
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                            <fieldset
+                                data-drupal-selector="edit-settings-cwd-events-display-options"
+                                id="edit-settings-cwd-events-display-options--_wcXR2mTpmM"
+                                class="js-form-item form-item js-form-wrapper form-wrapper">
+                                <legend>
+                                    <span class="fieldset-legend">Display
+                                        Options</span>
+                                </legend>
+                                <div class="fieldset-wrapper">
+                                    <div
+                                        class="js-form-item form-item js-form-type-select form-type-select js-form-item-settings-cwd-events-display-options-cwd-events-filterby form-item-settings-cwd-events-display-options-cwd-events-filterby">
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-filterby--cspV6pf-aMI">Expose
+                                            filters</label>
+                                        <select
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-filterby"
+                                            aria-describedby="edit-settings-cwd-events-display-options-cwd-events-filterby--cspV6pf-aMI--description"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-filterby--cspV6pf-aMI"
+                                            name="settings[cwd_events_display_options][cwd_events_filterby]"
+                                            class="form-select">
+                                            <option value="none">none</option>
+                                            <option value="group"
+                                                selected="selected">group
+                                            </option>
+                                            <option value="dept">dept</option>
+                                            <option value="type">type</option>
+                                        </select>
+                                        <div id="edit-settings-cwd-events-display-options-cwd-events-filterby--cspV6pf-aMI--description"
+                                            class="description">
+                                            Exposes filters buttons for: group
+                                            (default), dept(department), and
+                                            type. If none is selected filters
+                                            will not be exposed.
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-number form-type-number js-form-item-settings-cwd-events-display-options-cwd-events-truncatedescription form-item-settings-cwd-events-display-options-cwd-events-truncatedescription">
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-truncatedescription--yddONSpw5zM">Description
+                                            excerpt length</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-truncatedescription"
+                                            aria-describedby="edit-settings-cwd-events-display-options-cwd-events-truncatedescription--yddONSpw5zM--description"
+                                            type="number"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-truncatedescription--yddONSpw5zM"
+                                            name="settings[cwd_events_display_options][cwd_events_truncatedescription]"
+                                            value="150" step="1"
+                                            class="form-number">
+
+                                        <div id="edit-settings-cwd-events-display-options-cwd-events-truncatedescription--yddONSpw5zM--description"
+                                            class="description">
+                                            The character length of the
+                                            description. Leave blank for full
+                                            description.
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-checkbox form-type-checkbox js-form-item-settings-cwd-events-display-options-cwd-events-hidedescription form-item-settings-cwd-events-display-options-cwd-events-hidedescription">
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-hidedescription"
+                                            type="checkbox"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-hidedescription--2pQI2nPOZQk"
+                                            name="settings[cwd_events_display_options][cwd_events_hidedescription]"
+                                            value="true" class="form-checkbox">
+
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-hidedescription--2pQI2nPOZQk"
+                                            class="option">Hide
+                                            Descriptions</label>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-checkbox form-type-checkbox js-form-item-settings-cwd-events-display-options-cwd-events-hideimages form-item-settings-cwd-events-display-options-cwd-events-hideimages">
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-hideimages"
+                                            type="checkbox"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-hideimages--UMTjVZyMqFw"
+                                            name="settings[cwd_events_display_options][cwd_events_hideimages]"
+                                            value="true" class="form-checkbox">
+
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-hideimages--UMTjVZyMqFw"
+                                            class="option">Hide Event
+                                            Images</label>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-checkbox form-type-checkbox js-form-item-settings-cwd-events-display-options-cwd-events-hideaddcal form-item-settings-cwd-events-display-options-cwd-events-hideaddcal">
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-hideaddcal"
+                                            type="checkbox"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-hideaddcal--RhotVyYC2PI"
+                                            name="settings[cwd_events_display_options][cwd_events_hideaddcal]"
+                                            value="true" class="form-checkbox">
+
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-hideaddcal--RhotVyYC2PI"
+                                            class="option">Hide Calendar
+                                            links</label>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-checkbox form-type-checkbox js-form-item-settings-cwd-events-display-options-cwd-events-hidepagination form-item-settings-cwd-events-display-options-cwd-events-hidepagination">
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-hidepagination"
+                                            type="checkbox"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-hidepagination--h4-1XnV9PSA"
+                                            name="settings[cwd_events_display_options][cwd_events_hidepagination]"
+                                            value="true" class="form-checkbox">
+
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-hidepagination--h4-1XnV9PSA"
+                                            class="option">Hide
+                                            Pagination</label>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-display-options-cwd-events-wrapperclass form-item-settings-cwd-events-display-options-cwd-events-wrapperclass">
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-wrapperclass--GDOEJAG0-IM">Add
+                                            class to events wrapper</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-wrapperclass"
+                                            aria-describedby="edit-settings-cwd-events-display-options-cwd-events-wrapperclass--GDOEJAG0-IM--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-wrapperclass--GDOEJAG0-IM"
+                                            name="settings[cwd_events_display_options][cwd_events_wrapperclass]"
+                                            value="" size="60" maxlength="128"
+                                            class="form-text">
+
+                                        <div id="edit-settings-cwd-events-display-options-cwd-events-wrapperclass--GDOEJAG0-IM--description"
+                                            class="description">
+                                            example:cwd-card-grid three-card
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-display-options-cwd-events-listclass form-item-settings-cwd-events-display-options-cwd-events-listclass">
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-listclass--7KWOwRaDJpo">Add
+                                            class to events list</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-listclass"
+                                            aria-describedby="edit-settings-cwd-events-display-options-cwd-events-listclass--7KWOwRaDJpo--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-listclass--7KWOwRaDJpo"
+                                            name="settings[cwd_events_display_options][cwd_events_listclass]"
+                                            value="" size="60" maxlength="128"
+                                            class="form-text">
+
+                                        <div id="edit-settings-cwd-events-display-options-cwd-events-listclass--7KWOwRaDJpo--description"
+                                            class="description">
+                                            example:cards
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-settings-cwd-events-display-options-cwd-events-itemclass form-item-settings-cwd-events-display-options-cwd-events-itemclass">
+                                        <label
+                                            for="edit-settings-cwd-events-display-options-cwd-events-itemclass--IbikV_uJqS4">Add
+                                            class to event list item</label>
+                                        <input
+                                            data-drupal-selector="edit-settings-cwd-events-display-options-cwd-events-itemclass"
+                                            aria-describedby="edit-settings-cwd-events-display-options-cwd-events-itemclass--IbikV_uJqS4--description"
+                                            type="text"
+                                            id="edit-settings-cwd-events-display-options-cwd-events-itemclass--IbikV_uJqS4"
+                                            name="settings[cwd_events_display_options][cwd_events_itemclass]"
+                                            value="" size="60" maxlength="128"
+                                            class="form-text">
+
+                                        <div id="edit-settings-cwd-events-display-options-cwd-events-itemclass--IbikV_uJqS4--description"
+                                            class="description">
+                                            example:card
+                                        </div>
+                                    </div>
+
+                            </fieldset>
+                            <div
+                                class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                                <div class="ui-dialog-buttonset form-actions">
+                                    <button type="submit" id='submit'
+                                        class="button button--primary js-form-submit form-submit ui-button ui-corner-all ui-widget">
+                                        Update Block
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                <div class="ui-dialog-buttonset form-actions">
+                    <button type="submit"
+                        id='submit'
+                        class="button button--primary js-form-submit form-submit ui-button ui-corner-all ui-widget">
+                        Update Block
+                    </button>
+                </div>
+            </div> -->
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class='border'>
+                    <div id="events_block"
+                        class="events-listing cwd-events-style"
+                        data-target="events_block"
+                        data-calendarurl="/test/testData.json"
+                        data-apikey=""
+                        data-format="modern_standard"
+                        data-entries="3"
+                        data-daysahead="365"
+                        data-depts="0"
+                        data-group="0"
+                        data-keyword=""
+                        data-hidedescription="0"
+                        data-truncatedescription="150"
+                        data-hideimages="0"
+                        data-hideaddcal="0"
+                        data-hidepagination="0"
+                        data-filterby="group"
+                        data-wrapperclass=""
+                        data-listclass=""
+                        data-itemclass=""
+                        data-heading="Events block">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        /**
+         * Make the form interactive
+         */
+        // checkbox names.
+        const cbs = [
+            "settings[cwd_events_display_options][cwd_events_hidedescription]",
+            "settings[cwd_events_display_options][cwd_events_hideimages]",
+            "settings[cwd_events_display_options][cwd_events_hideaddcal]",
+            "settings[cwd_events_display_options][cwd_events_hidepagination]",
+        ]
+        // select elements.
+        const selects = [
+            "settings[cwd_events_display_config][cwd_events_format]",
+            "settings[cwd_events_display_options][cwd_events_filterby]",
+        ]
+        // the data elements of the div
+        const dataArray = [
+            'calendarurl',
+            'apikey',
+            'format',
+            'entries',
+            'daysahead',
+            'depts',
+            'group',
+            'keyword',
+            // 'readmore',
+            // 'url',
+            'hidedescription',
+            'truncatedescription',
+            'hideimages',
+            'hideaddcal',
+            'hidepagination',
+            'filterby',
+            'wrapperclass',
+            'listclass',
+            'itemclass',
+        ];
+        // Get params from form submit.
+        var url = new URL(window.location);
+        for (var val in cbs) {
+            let res = url.searchParams.get(cbs[val]);
+            if (res == 'true') {
+                $('form').first().find("input[name='" + cbs[val] + "']").prop("checked", true);
+            } else {
+                res = 'false';
+                $('form').first().find("input[name='" + cbs[val] + "']").prop("checked", false);
+            }
+            dataArray.map(function (arr) {
+                if (cbs[val].indexOf(arr.toLowerCase()) >= 0) {
+                    $('#events_block').attr('data-' + arr, res);
+                }
+            })
+        }
+        const searchParams = url.searchParams;
+        for (var [key, val] of searchParams) {
+            if (cbs.indexOf(key) >= 0) {
+                // pass
+            } else if (selects.indexOf(key) >= 0) {
+                const elem = $('form').first().find("select[name='" + key + "']");
+                elem.find("option[value='" + val + "']").attr("selected", true);
+            } else {
+                $('form').first().find("input[name='" + key + "']").val(val);
+            }
+            // check the data nad see if key exists in sting
+            dataArray.map(function (arr) {
+                if (key.indexOf(arr.toLowerCase()) >= 0) {
+                    $('#events_block').attr('data-' + arr, val);
+                }
+            })
+            // set the heading unused in blocks
+            if (key == "settings[label]") {
+                $('#events_block').attr('data-heading', val);
+            }
+        }
+    </script>
+    <!-- load the app -->
+    <script src="./dist/cwd_events.js"></script>
+</body>
+
+</html>

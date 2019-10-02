@@ -1,0 +1,476 @@
+/* Homepage Image Slider
+   ************************************ */
+.slider {
+  background-image: none !important;
+  position: relative;
+}
+
+.image-loader {
+  display: none;
+}
+
+.slide-buffer {
+  float: left;
+  width: 100%;
+  height: 100%;
+  background: transparent 50% 15% no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.slide-buffer.current-slide {
+  z-index: 1;
+}
+
+.slide-buffer.incoming-slide {
+  z-index: 2;
+}
+
+.slide-data {
+  display: none;
+}
+
+.slider a:empty {
+  display: none;
+}
+
+.caption-inner {
+  z-index: -1;
+  opacity: 0;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-backface-visibility: hidden;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.caption-inner.active {
+  z-index: 5;
+  opacity: 1;
+  -webkit-transition: opacity 0.2s linear 0.6s;
+  -moz-transition: opacity 0.2s linear 0.6s;
+  -o-transition: opacity 0.2s linear 0.6s;
+  -ms-transition: opacity 0.2s linear 0.6s;
+  transition: opacity 0.2s linear 0.6s;
+}
+
+.quick .caption-inner {
+  -webkit-transition: opacity 0.08s;
+  -moz-transition: opacity 0.08s;
+  -o-transition: opacity 0.08s;
+  -ms-transition: opacity 0.08s;
+  transition: opacity 0.08s;
+}
+
+.quick .caption-inner.active {
+  -webkit-transition: opacity 0.08s linear 0.24s;
+  -moz-transition: opacity 0.08s linear 0.24s;
+  -o-transition: opacity 0.08s linear 0.24s;
+  -ms-transition: opacity 0.08s linear 0.24s;
+  transition: opacity 0.08s linear 0.24s;
+}
+
+.slider .hidden {
+  /* reinforce the "visually hidden" class used, to allow compatibility with Bootstrap class names */
+  position: absolute;
+  left: -10000em;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  display: block !important;
+}
+
+.slider .caption-focus:focus .hidden:last-child {
+  position: static;
+  width: auto;
+  height: auto;
+}
+
+.slider .empty a.caption-focus {
+  display: block;
+  min-width: 30px;
+  min-height: 28px;
+  text-align: center;
+}
+
+.slider .empty a.caption-focus:focus {
+  min-height: 1px;
+}
+
+/* Simple Design
+	- Large image sliders are typically a custom part of the site design.
+	- However, a basic generic design is available if needed.
+	- Apply .slider-container to the background container and .slider-caption to the caption container to activate the styles below.
+   ************************************ */
+main .slider-container {
+  padding: 0 0 76%;
+}
+
+.slider-container .slide-buffer {
+  background-position: 50% 30%;
+}
+
+.slider-container .container {
+  position: relative;
+  min-height: 640px;
+}
+
+.slider-caption .caption-inner {
+  position: absolute;
+  top: 5%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+}
+
+.slider-caption .caption-inner.empty {
+  padding: 0;
+}
+
+.slider-caption .caption-inner.empty .caption-focus:focus {
+  padding: 20px;
+}
+
+.slider-caption .caption-inner.empty a.caption-focus:after {
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: '\f14c';
+  font-size: 28px;
+  color: #fff;
+  position: relative;
+  top: 1px;
+}
+
+.slider-caption .caption-inner.empty a.caption-focus:focus:after {
+  content: none;
+}
+
+.slider-caption .campaign-nav {
+  position: absolute;
+  z-index: 4;
+  bottom: 5%;
+  right: 0;
+}
+
+.slider-caption .campaign-nav.left {
+  right: auto;
+  left: 0;
+}
+
+main .slider-caption .caption-inner, #main .slider-caption .caption-inner {
+  left: 5%;
+  max-width: 90%;
+}
+
+main .slider-caption .campaign-nav, #main .slider-caption .campaign-nav {
+  right: 5%;
+}
+
+main .slider-caption .campaign-nav.left, #main .slider-caption .campaign-nav.left {
+  right: auto;
+  left: 5%;
+}
+
+.slider-caption a, .slider-caption .caption-focus {
+  text-decoration: none;
+  color: #fff;
+}
+
+.slider-caption h2 {
+  font-family: Avenir Next, Proxima Nova, 'proxima-nova', Segoe UI Semibold, Helvetica Neue, sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.slider-caption p {
+  font-family: Avenir Next, Proxima Nova, 'proxima-nova', Segoe UI, Helvetica Neue, sans-serif;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+main .slider-caption h2, #main .slider-caption h2 {
+  font-size: 28px;
+  color: #fff;
+}
+
+@media only screen and (max-width: 1383px) {
+  .slider-container .container {
+    min-height: 0;
+    position: static;
+  }
+
+  .slider-caption .caption-inner {
+    left: 3%;
+  }
+
+  .slider-caption .campaign-nav {
+    right: 3%;
+  }
+
+  .slider-caption .campaign-nav.left {
+    right: auto;
+    left: 3%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .slider-caption {
+    background: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+  }
+
+  .slider-caption .caption-inner {
+    background: none;
+    top: 5% !important;
+    left: 4% !important;
+    padding: 0;
+  }
+
+  main .slider-caption .caption-inner, #main .slider-caption .caption-inner {
+    top: 4% !important;
+  }
+
+  .slider-caption h2, main .slider-caption h2 {
+    font-size: 22px;
+    margin-bottom: 0.2em;
+  }
+}
+/* Slide Navigation
+   ************************************ */
+.slider-container .campaign-nav {
+  float: left;
+  width: 95%;
+}
+
+.slider-container .campaign-nav ul {
+  margin: 0;
+  min-height: 36px;
+  width: auto;
+  clear: none;
+}
+
+.slider-container .campaign-nav li {
+  float: left;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+}
+
+.slider-container .campaign-nav li a {
+  color: #fff !important;
+  display: block;
+  padding: 4px 3px;
+  margin: 4px 0;
+  text-decoration: none;
+}
+
+.slider-container .campaign-nav .dot {
+  display: block;
+  width: 1.6em;
+  height: 1.6em;
+  line-height: 1.7em;
+  text-align: center;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+}
+
+.slider-container .campaign-nav a:hover .dot, .slider-container .campaign-nav a:focus .dot {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.slider-container .campaign-nav a.active .dot {
+  background: #fff !important;
+  color: #1f739e !important;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.slider-container .campaign-nav .next-prev {
+  float: left;
+}
+
+.slider-container .campaign-nav .next-prev a {
+  float: left;
+  display: block;
+  color: #fff;
+  background: #b31b1b;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+}
+
+.slider-container .campaign-nav .next-prev a:hover, .slider-container .campaign-nav .next-prev a:focus {
+  background: #83110e;
+}
+
+.slider-container .campaign-nav .next-prev a:active {
+  background: #4a0908;
+}
+
+.slider-container .campaign-nav .next-prev a .fa {
+  color: #fff;
+  font-size: 26px;
+  line-height: 36px;
+}
+
+.slider-container .campaign-nav .next-prev .prev {
+  margin-right: 2px;
+}
+
+.slider-container .campaign-nav .next-prev .next {
+  margin-right: 16px;
+}
+
+/* options */
+.slider-container .campaign-nav.right, .slider-container .campaign-nav.right ul, .slider-container .campaign-nav.right .next-prev {
+  float: right;
+}
+
+.slider-container .campaign-nav.right .next-prev .prev {
+  margin-left: 16px;
+}
+
+.slider-container .campaign-nav.right .next-prev .next {
+  margin-right: 0;
+}
+
+.slider-container .campaign-nav.no-numbers .num {
+  position: absolute;
+  left: -10000em;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.slider-container .campaign-nav.no-numbers li a {
+  padding: 6px 4px;
+  margin: 6px 0;
+}
+
+.slider-container .campaign-nav.no-numbers .dot {
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  background: #000;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.slider-container .campaign-nav.no-numbers a:hover .dot, .slider-container .campaign-nav.no-numbers a:focus .dot {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.slider-container .campaign-nav .active .hidden:before {
+  content: '(current slide) ';
+}
+
+@media only screen and (max-width: 767px) {
+  .slider-container .campaign-nav ul {
+    display: none;
+  }
+
+  .slider-container .campaign-nav .next-prev a {
+    background: transparent;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .slider-container .campaign-nav .next-prev a:hover {
+    border-color: white;
+  }
+
+  .slider-container .campaign-nav .next-prev a:active {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .slider-container .campaign-nav .next-prev .prev {
+    margin-right: 1px;
+  }
+}
+/* Photo Credits
+   ************************************ */
+.photo-credits .caption-focus {
+  position: relative;
+}
+
+.photo-credits .photo-credit-icon {
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  z-index: 1;
+  font-size: 18px;
+  background: rgba(0, 0, 0, 0.5);
+  width: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 2px;
+  opacity: 0.7;
+  transition: opacity 0.1s;
+  cursor: help;
+}
+
+.photo-credits .photo-credit-icon:hover, .photo-credits .photo-credit-icon:focus, .photo-credits .caption-focus:focus .photo-credit-icon, .photo-credits .caption-focus:hover .photo-credit-icon {
+  opacity: 1;
+}
+
+.photo-credits .photo-credit-text, .photo-credits .caption-focus:focus .photo-credit-text {
+  opacity: 1;
+  transition: opacity 0.1s 0.2s;
+  padding-right: 38px;
+}
+
+.photo-credits .photo-credit-text.off {
+  opacity: 0;
+  transition: opacity 0.1s 0.4s;
+}
+
+.photo-credits .photo-credit-text p {
+  text-transform: none;
+}
+
+.photo-credits .empty .photo-credit-icon {
+  display: none;
+}
+
+/* Extra Heading Animation */
+@keyframes extra-heading-fade-in {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.extra-heading-animate {
+  animation-name: extra-heading-fade-in;
+  animation-duration: 0.8s;
+}
+
+.extra-heading-animate.quick {
+  animation-duration: 0.32s;
+}
+
+/*# sourceMappingURL=cwd_slider.css.map */
