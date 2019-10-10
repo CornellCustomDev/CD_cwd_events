@@ -23,7 +23,6 @@ if (
                 $('div.events-listing', context)
                     .once('cwd_events')
                     .each(function() {
-                        console.log(drupalSettings.cwd_events);
                         LocalistView(drupalSettings.cwd_events);
                     });
             }
