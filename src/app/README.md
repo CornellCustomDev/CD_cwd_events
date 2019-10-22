@@ -2,7 +2,7 @@
 
 [babel info]( http://ccoenraets.github.io/es6-tutorial-data/babel-webpack/)
 
-Typical ussage:
+Typical usage:
 
 clone repository:  
 ```git clone https://github.com/psw58/CD_cwd_events.git```
@@ -33,7 +33,7 @@ Check package for vulnerabilities
 If security vulnerabilities are found and updates are available  
 ```npm audit fix```
 
-remove http-server dev dpendency due to github warning you must run  
+remove http-server dev dependency due to github warning you must run  
 `npm install http-server -g`
 
 Check if a package can be updated
