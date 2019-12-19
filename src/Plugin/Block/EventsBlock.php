@@ -99,7 +99,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $form['cwd_events_display_config']['format'] = [
       '#type' => 'select',
       '#title' => $this->t('Template'),
-      '#description' => $this->t('Choices are: standard (default), compact (omit thumbnail, type and end time), archive (past events in reverse order), calendar (date on left)'),
       '#options' => $formatOptions,
       '#default_value' => isset($config['format']) ? $config['format'] : 'standard',
     ];
