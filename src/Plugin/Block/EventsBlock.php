@@ -28,8 +28,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     'inline_compact' => 'inline_compact',
     'modern_compact' => 'modern_compact',
     'modern_standard' => 'modern_standard',
-    'classic' => 'classic',
-    'classic_compact' => 'classic_compact',
   ];
 
   /**
