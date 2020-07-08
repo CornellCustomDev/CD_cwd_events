@@ -113,6 +113,21 @@ This is an example of the block output:
         ></div>
   </section>
 ```
+## More about the Localist API
+The localist api docs https://developer.localist.com/doc/api#usage
+
+### API query Filters
+READ the API DOCS! In many cases just play around with the demo, until you get the results you need.
+
+The module builds a query that is made to to the localist api
+
+The localist api returns results with the three parameters Anded together:
+
+Departments are (OR)
+keywords (AND)
+Group_id (integer)
+
+Currently the Drupal module does not support multiple keywords. The API does support multiple keywords but they would be ORed together and in most cases the resulting query is very small. If you have a project that requires multiple keywords put in a issue for it.
 
 ## Built With
 
