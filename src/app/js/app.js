@@ -6,7 +6,7 @@ require('babel-polyfill');
  * CWD Events
  * requires {Drupal, jQuery, jQuery.once drupalSettings localist-viewer}
  * @author CU Custom Development
- *  self invoking anonymous function, using drupal behaviours API.
+ *  self invoking anonymous function, using drupal behaviors API.
  *
  * @param {jQuery} $
  * @param {Drupal} Drupal
@@ -17,7 +17,7 @@ if (
     typeof Drupal !== 'undefined' &&
     typeof drupalSettings !== 'undefined'
 ) {
-    (function ($, Drupal, drupalSettings) {
+    (function($, Drupal, drupalSettings) {
         Drupal.behaviors.cwd_events = {
             attach(context) {
                 $('div.events-listing', context)
