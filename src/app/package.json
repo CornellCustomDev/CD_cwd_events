@@ -19,7 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-react": "^7.10.4",
-    "@babel/register": "^7.10.5",
+    "@babel/register": "^7.11.5",
     "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
@@ -31,8 +31,9 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.4",
+    "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "is-obj": "^2.0.0",
     "jsdom": "^15.2.1",
     "mocha": "^6.2.3",
     "nyc": "^14.1.1",
@@ -43,12 +44,12 @@
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.26.10",
     "sass-loader": "^7.3.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "eslint-friendly-formatter": "^4.0.1",
     "laravel-mix": "^4.1.4",
-    "localist-viewer": "^0.2.0"
+    "localist-viewer": "^0.3.2"
   }
 }
