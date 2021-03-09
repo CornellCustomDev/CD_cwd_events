@@ -12,11 +12,11 @@ mix.setPublicPath('./dist')
                     enforce: 'pre',
                     exclude: /(node_modules)/,
                     options: {
-                        formatter: eslintFormatter
-                    }
-                }
-            ]
-        }
+                        formatter: eslintFormatter,
+                    },
+                },
+            ],
+        },
     })
     // This will process our entry point (app.js)
     // into the dist/js folder
