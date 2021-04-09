@@ -1,5 +1,14 @@
 # CD_cwd_events
 
+rename your branch to main
+
+```sh
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
+git remote set-head origin -a
+```
+
 [![Latest Stable Version](https://img.shields.io/packagist/v/cubear/cwd_events.svg?style=flat-square)](https://packagist.org/packages/cubear/cwd_events) ![Build passing](https://img.shields.io/badge/build-passing-brightgreen "All tests passed") ![Code Coverage](https://img.shields.io/badge/coverage-85%25-yellowgreen "Test cover 83% of code")
 
 A light weight Drupal module to pull localist and render in a cwd_events block. With six options for built in views.
