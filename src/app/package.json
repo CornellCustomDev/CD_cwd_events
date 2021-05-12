@@ -38,7 +38,7 @@
     "jsdom": "^16.5.1",
     "mocha": "^8.3.2",
     "nyc": "^15.1.0",
-    "postcss": "^8.2.8",
+    "postcss": "^8.2.10",
     "react": "^17.0.1",
     "react-a11y": "^1.1.0",
     "react-test-renderer": "^17.0.1",
