@@ -70,7 +70,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $form['cwd_events_localist_config'] = [
       '#type' => 'fieldset',
       '#title' => $this
-        ->t('Localist API Connection settings.'),
+        ->t('Localist API Connection settings'),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     ];
