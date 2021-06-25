@@ -2,5 +2,4 @@ name: CWD Events
 description: Creates an Events block.
 package: Custom
 type: module
-version: 8.0
-core_version_requirement: ^8
+core_version_requirement: ^8.8 || ^9
