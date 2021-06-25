@@ -1,5 +1,5 @@
 name: CWD Events
-description: Creates an Events block.
-package: Custom
 type: module
+description: Creates an Events block.
 core_version_requirement: ^8.8 || ^9
+package: Custom
