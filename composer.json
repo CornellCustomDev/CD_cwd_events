@@ -21,5 +21,8 @@
     "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "require": {
+    },
+    "conflict": {
+        "drupal/core": "<9"
     }
 }
