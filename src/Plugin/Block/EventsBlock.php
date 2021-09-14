@@ -17,6 +17,18 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class EventsBlock extends BlockBase implements BlockPluginInterface {
 
+  
+  /**
+   * List of supported format options.
+   *
+   * @var array
+   */
+  private $apiOptions = [
+    'localist' => 'localist',
+    'drupal' => 'drupal',
+    'wordpress' => 'wordpress',
+  ];
+  
   /**
    * List of supported format options.
    *
@@ -66,6 +78,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $config = $this->getConfiguration();
     $formatOptions = $this->formatOptions;
     $filterOptions = $this->filterOptions;
+    $apiOptions = $this->apiOptions;
 
     $form['cwd_events_localist_config'] = [
       '#type' => 'fieldset',
@@ -73,6 +86,14 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
         ->t('Localist API Connection settings'),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
+    ];
+
+    $form['cwd_events_localist_config']['api'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Api'),
+      '#description' => $this->t('Select the api to fetch the data from.'),
+      '#options' => $apiOptions,
+      '#default_value' => isset($config['api']) ? $config['api'] : 'localist',
     ];
 
     $form['cwd_events_localist_config']['calendarurl'] = [
@@ -160,7 +181,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#title' => $this->t('Read More Title'),
       '#description' => $this->t('Read More Title to be used with readmore url to link to the events page. Leave blank to remove from display.'),
       '#default_value' => isset($config['readmore']) ? $config['readmore'] :
-        'More Events »',
+      'More Events »',
     ];
 
     $form['cwd_events_display_options']['url'] = [
@@ -256,6 +277,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     $this->configuration['id'] = $id;
     $this->configuration['target'] = "events-listing-$id";
 
+    $this->configuration['api'] = $values['cwd_events_localist_config']['api'];
     $this->configuration['calendarurl'] = $values['cwd_events_localist_config']['calendarurl'];
     $this->configuration['apikey'] = $values['cwd_events_localist_config']['apikey'];
 

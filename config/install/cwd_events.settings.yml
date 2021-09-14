@@ -2,6 +2,7 @@ cwd_events:
   heading: ''
   target: ''
   id: ''
+  api: 'loacalist'
   calendarurl: "//events.cornell.edu/api/2.1/events"
   apikey: "KLhy2GtuSAGirYGY"
   format: "standard"
