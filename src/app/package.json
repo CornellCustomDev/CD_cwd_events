@@ -52,6 +52,6 @@
     "babel-polyfill": "^6.26.0",
     "eslint-friendly-formatter": "^4.0.1",
     "laravel-mix": "^6.0.31",
-    "localist-viewer": "^2.0.4"
+    "localist-viewer": "^2.0.5"
   }
 }
