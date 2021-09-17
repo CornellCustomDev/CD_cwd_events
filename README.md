@@ -123,12 +123,13 @@ This is an example of the block output:
   </section>
 ```
 
-## Enable The Drupal Graphql API
+## To use the Drupal API enable install and enable the Drupal Graphql Modules
 
 ```bash
 drush en graphql
 drush en graphql_core
 ```
+
 Set the Graphql permissions for anonymous users.
 
 - [x] Bypass field security (optional)
@@ -138,9 +139,11 @@ Set the Graphql permissions for anonymous users.
 - [x] Execute persisted GraphQL requests
 
 ## More about the Localist API
+
 The localist api docs https://developer.localist.com/doc/api#usage
 
 ### API query Filters
+
 READ the API DOCS! In many cases just play around with the demo, until you get the results you need.
 
 The module builds a query that is made to to the localist api
