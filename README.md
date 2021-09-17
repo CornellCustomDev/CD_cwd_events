@@ -122,6 +122,21 @@ This is an example of the block output:
         ></div>
   </section>
 ```
+
+## Enable The Drupal Graphql API
+
+```bash
+drush en graphql
+drush en graphql_core
+```
+Set the Graphql permissions for anonymous users.
+
+- [x] Bypass field security (optional)
+
+- [x] Execute arbitrary GraphQL requests
+
+- [x] Execute persisted GraphQL requests
+
 ## More about the Localist API
 The localist api docs https://developer.localist.com/doc/api#usage
 

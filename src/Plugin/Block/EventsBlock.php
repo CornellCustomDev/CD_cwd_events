@@ -17,7 +17,6 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class EventsBlock extends BlockBase implements BlockPluginInterface {
 
-  
   /**
    * List of supported format options.
    *
@@ -28,7 +27,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     'drupal' => 'drupal',
     'wordpress' => 'wordpress',
   ];
-  
+
   /**
    * List of supported format options.
    *
@@ -41,6 +40,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     'modern_compact' => 'modern_compact',
     'modern_standard' => 'modern_standard',
     'calendar' => 'calendar',
+    'cards' => 'cards',
   ];
 
   /**
@@ -59,12 +59,12 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
    * {@inheritdoc}
    */
   public function build() {
-    $class = ($this->configuration['hidestyling'] === "true") ? '' : 'cwd-events-style' ;
+    $class = ($this->configuration['hidestyling'] === "true") ? '' : 'cwd-events-style';
     $target = $this->configuration['target'];
     return [
       '#attached' => [
         'library' => ["cwd_events/cwdeventslib"],
-        'drupalSettings' => ["cwd_events" => $this->configuration]
+        'drupalSettings' => ["cwd_events" => $this->configuration],
       ],
       '#markup' => "<div id='$target' class='events-listing $class' ></div>",
     ];
@@ -173,8 +173,6 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
       '#title' => $this->t('Heading'),
       '#default_value' => isset($config['heading']) ? $config['heading'] : '',
     ];
-
-    // @todo add option for "Widget Type" list or row.
 
     $form['cwd_events_display_options']['readmore'] = [
       '#type' => 'textfield',
