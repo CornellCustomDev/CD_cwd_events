@@ -13,7 +13,8 @@ git remote set-head origin -a
 
 A light weight Drupal module to pull localist and render in a cwd_events block. With six options for built in views.
 
-## [Interactive Demo Page](https://cu-communityapps.github.io/CD_cwd_events/src/app/index.html)
+## [Interactive Demo Page](https://cu-communityapps.github.io/CD_cwd_events/src/app/index.html) (Deprecated)
+## [Component Demo Page](https://philwilliammee.github.io/react-localist-viewer/?path=/story/react-localist-viewer-localist-app--calendar)
 
 ## Getting Started
 
