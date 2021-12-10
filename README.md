@@ -178,3 +178,5 @@ This project is licensed under the GNU General Public License v2.0 - see the [LI
 ## Acknowledgments
 
 - Hat tip to Anthony M. Adinolfi for his work on localist event in Cornell Base theme.
+
+## Sites using this plugin.
