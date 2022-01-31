@@ -1,9 +1,6 @@
 cwdeventslib:
   version: 8.x
   header: true
-  css:
-    theme:
-      includes/cwd_events.css: {}
   js:
     includes/cwd_events.js: {preprocess: false}
   dependencies:
