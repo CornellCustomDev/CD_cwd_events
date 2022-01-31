@@ -3,8 +3,10 @@
 namespace Drupal\cwd_events\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Component\Uuid\Php;
 
 /**
  * Provides an Events Block containing Localist Data.
@@ -15,7 +17,33 @@ use Drupal\Core\Form\FormStateInterface;
  *   category = @Translation("Events Block"),
  * )
  */
-class EventsBlock extends BlockBase implements BlockPluginInterface {
+class EventsBlock extends BlockBase implements ContainerFactoryPluginInterface {
+  /**
+   * Service uuid.
+   *
+   * @var Drupal\Component\Uuid\Php
+   */
+  protected $uuidService;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+         $configuration,
+         $plugin_id,
+         $plugin_definition,
+         $container->get('uuid'),
+       );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, Php $uuidService) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->uuidService = $uuidService;
+  }
 
   /**
    * List of supported format options.
@@ -270,8 +298,7 @@ class EventsBlock extends BlockBase implements BlockPluginInterface {
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
     $formatOptions = $this->formatOptions;
-    $uuid = \Drupal::service('uuid');
-    $id = $uuid->generate();
+    $id = $this->uuidService->generate();
     $this->configuration['id'] = $id;
     $this->configuration['target'] = "events-listing-$id";
 
